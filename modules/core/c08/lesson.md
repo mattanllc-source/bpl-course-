@@ -1,0 +1,306 @@
+# C8: Loan structuring and sizing: leverage tests, reserves, pricing
+
+**Model policy for training - not for live lending decisions.** Fictional data only.
+
+| Item | Detail |
+| --- | --- |
+| Assets in this tab | C8-lesson-v0, C8-quiz-v0 (sets A and B), C8-ojt-v0, C8-jobaid-v0 |
+| Hours | 3 (180 minutes) plus a 45-minute OJT task |
+| Prerequisite | C3, C5 |
+| Bloom's levels | 3 and 4 (LD-02) |
+| Formulas | F-CORE-04, -06, -14 to -20, -28; F-RES-02, -04; F-MF-13; F-COM-08, -10 |
+| Rules | RES-FF-01 to -04; MF-BR-05 to -08, -14; COM-BR-03 to -06; COM-TRM; CORE-PRC-01 to -03; D-CONV-01, -06 |
+| Running deals | Worked examples: RD-RES-01 Maple Run and RD-COM-01 Birchwood Plaza. Practice: RD-MF-01 Cedar Court (LD-08) |
+| Status | v0. Self-review against Bible Section 7 is at the end of this tab |
+| Change log | v0, 20 Nov 2026: first draft; all numbers computed in code. Same day: sizing now divides by the unrounded loan constant across the policy, library and running deals (see T2) |
+
+## Timing plan
+
+| Segment (LD-04) | Minutes |
+| --- | --- |
+| 1 Hook | 5 |
+| 2 Objectives | 5 |
+| 3 Teach chunks T1-T5, with worked examples | 80 |
+| 5 Practice | 45 |
+| 6 Quiz | 30 |
+| 8 Job aid walk-through and wrap-up | 15 |
+| Total | 180 |
+| 7 OJT task (extra, per LD-03) | 45 |
+
+## 1. Hook (5 minutes)
+
+Birchwood Plaza's term loan faces three tests. LTV allows $3,900,000. DSCR allows $3,936,238.02. Debt yield allows $4,822,222.22. The borrower asks for the middle one.
+
+The answer is $3,900,000, and the memo must say LTV binds. By the end of this module you can run every test for any of our products, pick the binding one, and price the result.
+
+## 2. Objectives
+
+By the end of C8, you will be able to:
+
+1. **Calculate** the leverage tests (LTV, LTC, LTARV, purchase advance) and the loan each one allows (F-CORE-14, -15; F-RES-02, -04).
+2. **Calculate** the income tests: maximum loan by DSCR and by debt yield, using the unrounded constant (F-CORE-16 to -18).
+3. **Select** the binding test, round down correctly, and name it in the memo (F-CORE-19).
+4. **Size** an interest reserve, and decide when one is needed (F-CORE-20; COM-BR-03, -04; MF-BR-07).
+5. **Price** the loan: note rate and points (F-CORE-28, F-CORE-06; COM-BR-06; MF-BR-14).
+
+## 3. Teach
+
+### T1. Leverage tests (Objective 1, 20 minutes)
+
+Each leverage test turns a limit into a dollar amount. Run them all; never skip one because it "usually doesn't bind."
+
+| Test | Formula | Used by |
+| --- | --- | --- |
+| LTV | limit × value; value = lower of price and appraisal on a purchase | All families (F-CORE-14) |
+| LTC | limit × total cost, including future funding | All families (F-CORE-15, F-RES-04) |
+| LTARV | limit × after-repair value | Residential fix-and-flip (F-RES-02) |
+| Purchase advance | limit × price + 100% of rehab | Residential fix-and-flip (RES-FF-01, -02) |
+
+Residential limits rise with the sponsor's tier (RES-FF-01 to -04). For Tiers 0-3, LTC and purchase advance are 75% / 80% / 85% / 85%. LTARV is 65% / 70% / 70% / 70%.
+
+**Worked example 1: Maple Run leverage (RD-RES-01)**
+
+1. **Formula.** F-RES-04: LTC limit × cost. F-RES-02: LTARV limit × ARV. RES-FF-01, -02: LTP × price + rehab.
+2. **Inputs.** Dana is Tier 2 (C6): LTC 85%, LTARV 70%, purchase 85%. Price $300,000; rehab $100,000; total cost $400,000; ARV $520,000.
+3. **Substitution.** LTC: 85% × $400,000 = $340,000. LTARV: 70% × $520,000 = $364,000. Purchase: 85% × $300,000 + $100,000 = $355,000.
+4. **Result.** Lowest is $340,000: LTC binds. The day-one advance is $240,000 and $100,000 is held back for rehab.
+
+### T2. Income tests and the loan constant (Objective 2, 20 minutes)
+
+**Maximum loan by DSCR** (F-CORE-17) = income ÷ minimum DSCR ÷ loan constant. **Maximum loan by debt yield** (F-CORE-18) = income ÷ minimum debt yield. Families set the income line: NCF for multifamily and commercial.
+
+**Divide by the unrounded constant.** The constant is ADS ÷ loan (F-CORE-04). Show it to 6 decimals, but size with the full value. Until 20 Nov 2026 the course mixed 6- and 7-decimal constants. The same Birchwood test showed $3,936,215.17 in one place and $3,936,238.21 in another. The policy, library and running deals now all use ADS ÷ L, which gives $3,936,238.02.
+
+**Worked example 2: Birchwood term loan (RD-COM-01, month 24)**
+
+1. **Formula.** F-COM-08: LTV 65% × value; DSCR NCF ÷ 1.30 ÷ K; debt yield NCF ÷ 9.0%.
+2. **Inputs.** As-stabilized value $6,000,000; NCF $434,000; 7.00%, 25-year amortization; ADS $330,772.68 (C3), so K = $330,772.68 ÷ $3,900,000.
+3. **Substitution.** LTV: 65% × $6,000,000 = $3,900,000.00. DSCR: $434,000 ÷ 1.30 ÷ 0.08481351 = $3,936,238.02. Debt yield: $434,000 ÷ 9.0% = $4,822,222.22.
+4. **Result.** Feeds T3. Note how close DSCR is: NCF just $3,995.52 lower would make DSCR bind.
+
+### T3. The binding test (Objective 3, 10 minutes)
+
+The loan is the lowest result of every test that applies (F-CORE-19). Round down to the policy increment ($10,000 in the course), never up. Name the binding test in the memo, because it tells committee what would have to change for a bigger loan.
+
+**Worked example 3: Birchwood binding test (RD-COM-01)**
+
+1. **Formula.** F-CORE-19: L = min(LTV, DSCR, DY), rounded down.
+2. **Inputs.** $3,900,000.00; $3,936,238.02; $4,822,222.22.
+3. **Substitution.** min = $3,900,000.00, already a $10,000 multiple.
+4. **Result.** $3,900,000; LTV binds. A higher value, not more income, would be needed to lend more.
+
+**Bridge sizing has two stages.** The day-one advance comes from as-is tests. The total commitment adds future funding, then must pass LTC and an exit test.
+
+**Worked example 4: Birchwood bridge (RD-COM-01, closing)**
+
+1. **Formula.** COM-BR table (unanchored retail): 65% as-is, 70% LTC, exit 1.30x and 9.5% debt yield at 7.75% (F-COM-10).
+2. **Inputs.** Price $4,400,000; as-is appraisal $4,500,000; total cost $5,180,000; future funding $660,000; stabilized NCF $434,000; exit ADS on $3,520,000 = $319,050.84.
+3. **Substitution.** Day one: 65% × min($4,400,000, $4,500,000) = $2,860,000. Commitment $2,860,000 + $660,000 = $3,520,000. LTC cap 70% × $5,180,000 = $3,626,000. Exit by DSCR: $434,000 ÷ 1.30 ÷ ($319,050.84 ÷ $3,520,000) = $3,683,232.62. Exit by debt yield: $434,000 ÷ 9.5% = $4,568,421.05.
+4. **Result.** The $3,520,000 commitment is below every cap. The as-is test binds the day-one advance.
+
+### T4. Interest reserves (Objective 4, 15 minutes)
+
+A floating-rate bridge must test in-place coverage at the higher of the note rate and the cap strike plus spread (COM-BR-03, F-MF-12). If coverage is under 1.00x, an interest reserve funds the shortfall (COM-BR-04 to projected stabilization; MF-BR-07 for 12 months).
+
+A **full interest reserve** (F-CORE-20) instead holds back all the interest for a period: balance × rate ÷ 360 × actual days.
+
+**Worked example 5: Birchwood coverage, then a what-if (RD-COM-01)**
+
+1. **Formula.** Coverage = NCF ÷ (balance × test rate). Shortfall reserve = (interest − NCF) ÷ 12 × months. F-CORE-20 = L × r ÷ 360 × days.
+2. **Inputs.** Day-one balance $2,860,000; test rate max(7.65%, 4.25% + 4.00%) = 8.25%; in-place NCF $254,000. What-if NCF $200,000; 18 months to projected stabilization.
+3. **Substitution.** Interest = $2,860,000 × 8.25% = $235,950. Actual: $254,000 ÷ $235,950 = 1.08x, so no reserve. What-if: $200,000 ÷ $235,950 = 0.85x. Shortfall reserve = ($235,950 − $200,000) ÷ 12 × 18 = $53,925.00. A full 184-day reserve would be $2,860,000 × 8.25% ÷ 360 × 184 = $120,596.67.
+4. **Result.** As closed, no reserve. In the what-if, fund $53,925.00 at closing and add it to the commitment, then re-run LTC. The shortfall reserve uses nominal interest, like every test (D-CONV-01); billing is Actual/360, so check the balance quarterly.
+
+### T5. Pricing (Objective 5, 15 minutes)
+
+**Residential RTL** (F-CORE-28, CORE-PRC-02): tier base rate plus adjusters, kept within 8.50%-12.75%.
+
+| Tier | Base rate | Points |
+| --- | --- | --- |
+| 3 (10+) | 9.50% | 1.00 |
+| 2 (5-9) | 10.00% | 1.50 |
+| 1 (1-4) | 10.75% | 2.00 |
+| 0 | 11.50% | 2.50 |
+
+Adjusters: FICO 680-699 +0.50%; leverage within 2.5 points of the product maximum +0.25%; ground-up +0.75%. Points are charged on the total commitment (F-CORE-06), never below 1.00 (CORE-PRC-01).
+
+**Floating bridges** price over SOFR. Multifamily is 375 bp, plus 25 bp if the commitment is over 70% of cost (MF-BR-14). Commercial is at least 400 bp, office 500 bp, with 1.00% origination (COM-BR-06). Every combination is tested against state usury and fee rules before the term sheet (CORE-PRC-03).
+
+**Worked example 6: Maple Run pricing (RD-RES-01)**
+
+1. **Formula.** F-CORE-28: base + adjusters; F-CORE-06: commitment × points ÷ 100.
+2. **Inputs.** Tier 2; mid-score 712; LTC 85.0% at the 85% maximum; rehab, not ground-up; commitment $340,000.
+3. **Substitution.** 10.00% + 0.00% + 0.25% + 0.00% = 10.25%. Points: $340,000 × 1.50 ÷ 100 = $5,100.00.
+4. **Result.** 10.250% note rate, inside the band; $5,100 origination.
+
+## 5. Practice (45 minutes)
+
+Work alone, then check the model answer. The case is RD-MF-01 Cedar Court, a multifamily bridge. It differs from the worked examples in product, the as-is test with capex, and the debt-yield floors (LD-05).
+
+1. Run the three F-MF-13 tests: 75% LTC on $7,200,000; 70% stabilized LTV on $8,600,000; 70% as-is (lower of $6,200,000 price and $6,300,000 appraisal) plus $800,000 capex. Which binds?
+2. Find the day-one funding, and the as-is and stabilized debt yields on NCF of $395,000 and $560,000 (floors 7.0% and 8.5%, MF-BR-05, -06).
+3. Test in-place coverage at the higher of 7.65% and 4.25% + 4.00%. Is an interest reserve needed (MF-BR-07)?
+4. Exit test (MF-BR-08): 7.05% over 30 years gives a constant of 8.0240%; stabilized NCF $560,000; 1.25x. Find the take-out and the cushion over the total commitment.
+5. Price it: SOFR 3.65%, MF-BR-14, 1.00% origination on the total commitment.
+
+**Model answer**
+
+1. LTC $5,400,000; stabilized LTV $6,020,000; as-is 70% × $6,200,000 + $800,000 = $5,140,000. As-is binds (F-MF-13).
+2. Day one = $5,140,000 − $800,000 = $4,340,000. As-is DY $395,000 ÷ $4,340,000 = 9.10%; stabilized $560,000 ÷ $5,140,000 = 10.89%. Both pass.
+3. $4,340,000 × 8.25% = $358,050. $395,000 ÷ $358,050 = 1.10x ≥ 1.00x: no reserve.
+4. $560,000 ÷ 1.25 ÷ 0.080240 = $5,583,273.69 (F-MF-20); cushion $443,273.69.
+5. Commitment is 71.4% of cost, over 70%: 3.65% + 3.75% + 0.25% = 7.65%. Origination $5,140,000 × 1.00% = $51,400.00.
+
+**Self-score.** One point per correct figure (10: three test results; binding test; $4,340,000; 9.10%; 10.89%; 1.10x; $443,273.69; 7.65% with $51,400). Eight or more: move on. Fewer: redo the matching worked example.
+
+## 6. Quiz: C8-quiz-v0
+
+Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retakes, each with the other set. Items 1-6 share one flip; items 7-10 share one term loan.
+
+### Set A
+
+Flip: Tier 1 sponsor (LTC 80%, purchase 80%, LTARV 70%); price $250,000; rehab $70,000; ARV $420,000; mid-score 690. Term loan: NOI $300,000; value $4,000,000; limits 70% LTV, 1.25x DSCR, 9.0% debt yield; 7.00% over 30 years (K = 0.079836 shown).
+
+1. (O1) Maximum by LTC? A) $256,000.00 B) $272,000.00 C) $320,000.00 D) $224,000.00
+2. (O1) Maximum by LTARV? A) $336,000.00 B) $294,000.00 C) $273,000.00 D) $420,000.00
+3. (O1) Maximum by purchase advance plus rehab? A) $200,000.00 B) $256,000.00 C) $270,000.00 D) $320,000.00
+4. **(Critical, O3)** Loan and binding test? A) $294,000; LTARV B) $270,000; purchase C) $256,000; LTC D) $273,000; average
+5. (O5) Note rate (F-CORE-28)? A) 10.75% B) 11.25% C) 11.00% D) 11.50%
+6. (O5) Origination at 2.00 points on the loan? A) $5,120.00 B) $512.00 C) $5,400.00 D) $6,400.00
+7. (O1) Term loan by LTV? A) $2,800,000.00 B) $3,000,000.00 C) $2,600,000.00 D) $4,000,000.00
+8. (O2) Term loan by DSCR? A) $3,006,151.36 B) $3,428,571.43 C) $3,757,749.63 D) $2,404,921.09
+9. (O2) Term loan by debt yield? A) $2,700,000.00 B) $3,333,333.33 C) $3,000,000.00 D) $2,727,272.73
+10. **(Critical, O3)** Final loan and binding test? A) $3,006,151; DSCR B) $3,333,333; debt yield C) $2,800,000; LTV D) $3,000,000; average
+11. (O4) Full interest reserve: $1,000,000 at 9.00% for 182 actual days? A) $45,000.00 B) $45,500.00 C) $44,876.71 D) $90,000.00
+12. **(Critical, O2)** For a sizing result, which constant do you divide by? A) The note rate B) The constant rounded to two decimals C) The unrounded constant, ADS ÷ L D) The cap strike
+
+**Answer key, Set A**
+
+1. A. 80% × ($250,000 + $70,000) = $256,000.00 (F-RES-04).
+2. B. 70% × $420,000 (F-RES-02).
+3. C. 80% × $250,000 + $70,000 (RES-FF-01, -02).
+4. C. Lowest of the three (F-CORE-19).
+5. D. 10.75% + 0.50% (FICO 690) + 0.25% (LTC at the maximum) = 11.50%.
+6. A. $256,000 × 2.00 ÷ 100 (F-CORE-06).
+7. A. 70% × $4,000,000.
+8. A. $300,000 ÷ 1.25 ÷ 0.07983630 (F-CORE-17).
+9. B. $300,000 ÷ 9.0% (F-CORE-18).
+10. C. Lowest; already a $10,000 multiple.
+11. B. $1,000,000 × 9% ÷ 360 × 182 (F-CORE-20).
+12. C. T2.
+
+### Set B
+
+Flip: Tier 3 sponsor (LTC 85%, purchase 85%, LTARV 70%); price $400,000; rehab $150,000; ARV $700,000; mid-score 720. Term loan: NOI $520,000; value $8,000,000; limits 65% LTV, 1.30x DSCR, 8.5% debt yield; 7.25% over 25 years (K = 0.086737 shown).
+
+1. (O1) Maximum by LTC? A) $467,500.00 B) $495,000.00 C) $550,000.00 D) $412,500.00
+2. (O1) Maximum by LTARV? A) $595,000.00 B) $490,000.00 C) $455,000.00 D) $525,000.00
+3. (O1) Maximum by purchase advance plus rehab? A) $340,000.00 B) $467,500.00 C) $490,000.00 D) $550,000.00
+4. **(Critical, O3)** Loan and binding test? A) $490,000; LTARV B) $490,000; purchase C) $467,500; LTC D) $482,500; average
+5. (O5) Note rate (F-CORE-28)? A) 9.50% B) 9.75% C) 10.25% D) 10.00%
+6. (O5) Origination at 1.00 point on the loan? A) $467.50 B) $4,675.00 C) $5,500.00 D) $9,350.00
+7. (O1) Term loan by LTV? A) $5,200,000.00 B) $5,600,000.00 C) $4,800,000.00 D) $8,000,000.00
+8. (O2) Term loan by DSCR? A) $5,517,241.38 B) $4,611,651.46 C) $5,995,146.90 D) $4,000,000.00
+9. (O2) Term loan by debt yield? A) $6,117,647.06 B) $5,200,000.00 C) $4,420,000.00 D) $6,500,000.00
+10. **(Critical, O3)** Final loan and binding test? A) $5,200,000; LTV B) $4,611,651; DSCR C) $4,610,000; DSCR, rounded down D) $4,620,000; DSCR, rounded up
+11. (O4) Full interest reserve: $2,000,000 at 8.50% for 184 actual days? A) $85,000.00 B) $86,888.89 C) $85,698.63 D) $170,000.00
+12. **(Critical, O4)** A commercial bridge shows in-place coverage of 0.92x at the cap test rate. What does policy require? A) Nothing B) A larger loan C) An interest reserve for the shortfall to projected stabilization (COM-BR-04) D) A lower rate
+
+**Answer key, Set B**
+
+1. A. 85% × $550,000.
+2. B. 70% × $700,000.
+3. C. 85% × $400,000 + $150,000.
+4. C. Lowest.
+5. B. 9.50% + 0.25% (LTC at the maximum). No FICO adjuster at 720.
+6. B. $467,500 × 1.00 ÷ 100.
+7. A. 65% × $8,000,000.
+8. B. $520,000 ÷ 1.30 ÷ 0.08673682.
+9. A. $520,000 ÷ 8.5%.
+10. C. DSCR binds; round down to the $10,000 increment, never up.
+11. B. $2,000,000 × 8.5% ÷ 360 × 184.
+12. C.
+
+## 7. OJT task: C8-ojt-v0 (solo mode)
+
+| Item | Detail |
+| --- | --- |
+| Role | Underwriter |
+| Output | A one-page sizing table for Maple Run's refinance into a DSCR rental loan: every test, its result, the binding test and the pricing |
+| Source | RD-RES-01 refinance section; RES-DSCR rules; F-RES-07 |
+| Time allowed | 45 minutes |
+| Sign-off | Self-review against the rubric and model answer (solo mode). Record your score and gaps with the date |
+| Data | All fictional; nothing to remove |
+
+**Rubric (meets standard = all four)**
+
+1. Shows LTV, DSCR and the payoff test, each with its rule.
+2. Uses the unrounded constant and PITIA, not P&I alone, for DSCR.
+3. Names the binding test and rounds correctly.
+4. States the cash Dana needs at refinance, if any.
+
+**Model answer**
+
+| Test | Result | Rule |
+| --- | --- | --- |
+| LTV (rate-term, mid-score 712) | 70% × $520,000 = $364,000 | RES-DSCR-03 |
+| Payoff needed | $340,000 + about $7,000 costs = $347,000 (66.7% LTV) | RD-RES-01 |
+| PITIA on $347,000 at 7.75% | $347,000 × 0.00716412 + $520 + $160 = $3,165.95 | F-RES-07 |
+| DSCR on $3,100 market rent | $3,100 ÷ $3,165.95 = 0.98x: fails 1.00x | RES-DSCR-02 |
+| Binding test | DSCR: the loan must shrink until rent ÷ PITIA ≥ 1.00x | F-CORE-19 |
+| Cash at refinance | About $9,000, as RD-RES-01 states; Dana's $90,900 liquidity covers it | C6 |
+
+## 8. Job aid: C8-jobaid-v0 (one page)
+
+**Run every test, then take the lowest (F-CORE-19)**
+
+1. LTV = limit × min(price, appraisal) on a purchase (F-CORE-14).
+2. LTC = limit × total cost including future funding (F-CORE-15, F-RES-04).
+3. LTARV = limit × ARV; purchase = limit × price + rehab (F-RES-02; RES-FF-01, -02).
+4. DSCR loan = income ÷ DSCR ÷ K, with K = ADS ÷ L unrounded (F-CORE-17).
+5. Debt-yield loan = income ÷ minimum DY (F-CORE-18).
+6. Round down to $10,000; name the binding test.
+
+**Bridge**: day-one advance from as-is tests; commitment = day one + future funding; then LTC and exit.
+
+**Reserves**: coverage at max(note rate, strike + spread). Under 1.00x: fund the shortfall (COM-BR-04, MF-BR-07). Full reserve = L × r ÷ 360 × days (F-CORE-20).
+
+**Pricing**: RTL base by tier 9.50 / 10.00 / 10.75 / 11.50%; +0.50% FICO 680-699; +0.25% near max leverage; +0.75% ground-up; band 8.50-12.75%. Points 1.00 / 1.50 / 2.00 / 2.50 on the commitment.
+
+**Mini-example**: NOI $100,000; value $1,500,000; 70% LTV = $1,050,000; DSCR 1.25 at K 0.080000 = $1,000,000; DY 9% = $1,111,111. Loan $1,000,000: DSCR binds.
+
+## Alignment matrix (LD-07)
+
+| Objective | Teach | Worked example | Practice | Quiz A / B | OJT rubric |
+| --- | --- | --- | --- | --- | --- |
+| O1 Leverage tests | T1 | 1 | 1 | 1-3, 7 / 1-3, 7 | 1 |
+| O2 Income tests | T2 | 2 | 2, 4 | 8, 9, 12 / 8, 9 | 2 |
+| O3 Binding test | T3 | 3, 4 | 1 | 4, 10 / 4, 10 | 3 |
+| O4 Reserves | T4 | 5 | 3 | 11 / 11, 12 | 4 |
+| O5 Pricing | T5 | 6 | 5 | 5, 6 / 5, 6 | 1 |
+
+## Self-review against Bible Section 7 (20 Nov 2026)
+
+| Check | Result |
+| --- | --- |
+| Named code-asset-vN with change log | Met (v0) |
+| No open [POLICY], [CONFIRM] or [DATA] tags | Met. Usury checks stay [VERIFY] under CORE-PRC-03 |
+| Every calculation cites a formula ID; thresholds cite rules | Met |
+| Four-line worked formulas; re-checked by a second person | Four lines met; second-person check pending (solo: re-run in a spreadsheet) |
+| Deal numbers match the running deals | Met: RD-RES-01, RD-MF-01, RD-COM-01 (after the 20 Nov constant fix) |
+| Lesson follows LD-04 order; alignment matrix; fits 3 hours | Met (180 minutes) |
+| Quiz: 10-20 items, one per objective, critical flagged, two sets, pass mark | Met (12 items, 3 critical, sets A and B) |
+| OJT: output, source, time, rubric, sign-off, data note | Met |
+| Job aid fits one page | Met on screen; confirm when printed |
+| Accessibility (LD-09) | Tables have headers; no colour-only meaning |
+
+**Real-world check (researched 20 Nov 2026): where 2026 sizing and pricing sit.**
+
+- **Fix-and-flip leverage.** RCN describes a typical 2026 structure as 80% of the purchase price, up to 100% of rehab, and a total capped at 70-75% of ARV ([RCN Capital](https://rcncapital.com/blog/fix-and-flip-loans-for-brokers-how-to-structure-deals-right)). Experienced investors can reach about 90% LTC, and first-timers about 75%. Our 75-85% LTC and 65-70% LTARV caps sit at the conservative end.
+- **Fix-and-flip pricing.** LendingOne puts 2026 fix-and-flip interest at 9-12% with 1-2 points ([LendingOne](https://lendingone.com/?p=23855)). Our grid of 9.50-11.50% before adjusters, with 1.00-2.50 points, fits that range.
+- **Bridge spreads.** Recent CRE CLOs show weighted-average loan spreads of SOFR + 288 bp (MF1, May 2026) and SOFR + 335 bp (VMC, May 2026) ([CREFC, 5 May 2026](https://www.crefc.org/cre/cre/content/News/Items/Research_and_Data/CRE_Securitized_Debt_Update_5_5_26.aspx); [CREFC, 12 May 2026](https://www.crefc.org/cre/content/News/Items/Research_and_Data/2026/CRE_Securitized_Debt_Update_5_12_26.aspx)). Our 375-400 bp floors price above large institutional loans, which suits small-balance bridges.
+- **Negative leverage is the norm in some sectors.** In CRED iQ's 2026 new-issue CMBS data, multifamily and industrial cap rates sit below mortgage coupons. Office, retail and hotels still show positive leverage ([CRE Daily](https://www.credaily.com/?p=218947)). That is why DSCR, not LTV, binds more often on multifamily (C5).
+
+**What to look up yourself.** Nothing for this module.
+
+**How to check it:** in a spreadsheet, `=434000/1.3/(330772.68/3900000)` should give 3,936,238.02, and `=MIN(3900000,3936238.02,4822222.22)` should give 3,900,000.
