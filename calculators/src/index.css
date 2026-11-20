@@ -1,0 +1,5 @@
+body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 40rem; }
+label { display: block; margin: 1rem 0; }
+input { display: block; margin-top: 0.25rem; padding: 0.4rem; font-size: 1rem; }
+.label { color: #8a3b12; font-weight: 600; }
+output { font-weight: 700; }

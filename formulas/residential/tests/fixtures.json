@@ -1,0 +1,434 @@
+[
+  {
+    "id": "F-RES-01",
+    "name": "Total project cost (TPC)",
+    "tests": [
+      {
+        "inputs": "$300,000; $100,000",
+        "expected": "$400,000.00"
+      },
+      {
+        "inputs": "$185,000; $62,500",
+        "expected": "$247,500.00"
+      },
+      {
+        "inputs": "$420,000; $0",
+        "expected": "$420,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-02",
+    "name": "Loan-to-after-repair value (LTARV)",
+    "tests": [
+      {
+        "inputs": "$340,000; $520,000",
+        "expected": "65.4%"
+      },
+      {
+        "inputs": "$320,000; $520,000",
+        "expected": "61.5%"
+      },
+      {
+        "inputs": "$210,000; $300,000",
+        "expected": "70.0%"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-03",
+    "name": "Loan-to-as-is value (LTAIV)",
+    "tests": [
+      {
+        "inputs": "$240,000; $310,000",
+        "expected": "77.4%"
+      },
+      {
+        "inputs": "$148,000; $185,000",
+        "expected": "80.0%"
+      },
+      {
+        "inputs": "$255,000; $300,000",
+        "expected": "85.0%"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-04",
+    "name": "Loan-to-cost (flip)",
+    "tests": [
+      {
+        "inputs": "$240,000 + $100,000; $400,000",
+        "expected": "85.0%"
+      },
+      {
+        "inputs": "$220,000 + $100,000; $400,000",
+        "expected": "80.0%"
+      },
+      {
+        "inputs": "$123,125 + $62,500; $247,500",
+        "expected": "75.0%"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-05",
+    "name": "Initial advance (purchase)",
+    "tests": [
+      {
+        "inputs": "Tier 1; $300,000; $310,000",
+        "expected": "$240,000.00"
+      },
+      {
+        "inputs": "Tier 0; $185,000; $180,000",
+        "expected": "$135,000.00"
+      },
+      {
+        "inputs": "Tier 2; $300,000; $295,000",
+        "expected": "$250,750.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-06",
+    "name": "Draw percent complete",
+    "tests": [
+      {
+        "inputs": "$60,000; $100,000",
+        "expected": "60.0%"
+      },
+      {
+        "inputs": "$46,875; $62,500",
+        "expected": "75.0%"
+      },
+      {
+        "inputs": "$105,000; $100,000",
+        "expected": "105.0% (overrun)"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-07",
+    "name": "Residential DSCR",
+    "tests": [
+      {
+        "inputs": "$2,300; $1,800.60",
+        "expected": "1.28x"
+      },
+      {
+        "inputs": "$2,250; $2,262.22",
+        "expected": "0.9946 → displays 0.99x; fails 1.00x"
+      },
+      {
+        "inputs": "$3,075; $2,500",
+        "expected": "1.23x"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-08",
+    "name": "PITIA",
+    "tests": [
+      {
+        "inputs": "$200,000 at 7.000%; $300; $120; $50",
+        "expected": "$1,800.60"
+      },
+      {
+        "inputs": "$225,000 at 7.750%; $350; $120; $0",
+        "expected": "$2,081.93"
+      },
+      {
+        "inputs": "$300,000 at 7.500%; $400; $150; $75",
+        "expected": "$2,722.64"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-09",
+    "name": "Cash to close (flip purchase)",
+    "tests": [
+      {
+        "inputs": "$300,000; $9,000; $6,800; $240,000",
+        "expected": "$75,800.00"
+      },
+      {
+        "inputs": "$185,000; $5,500; $4,640.63; $123,125",
+        "expected": "$72,015.63"
+      },
+      {
+        "inputs": "$400,000; $12,000; $8,500; $320,000",
+        "expected": "$100,500.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-10",
+    "name": "Flip profit",
+    "tests": [
+      {
+        "inputs": "Bible flip",
+        "expected": "$54,300.00"
+      },
+      {
+        "inputs": "ARV $300,000; SC 6%; $185,000; $62,500; $5,500; $4,640.63; $13,000",
+        "expected": "$11,359.37"
+      },
+      {
+        "inputs": "ARV $480,000; SC 6%; $320,000; $110,000; $9,000; $8,500; $22,000",
+        "expected": "−$18,300.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-11",
+    "name": "Release price (portfolio)",
+    "tests": [
+      {
+        "inputs": "$150,000; 115%",
+        "expected": "$172,500.00"
+      },
+      {
+        "inputs": "$212,400; 115%",
+        "expected": "$244,260.00"
+      },
+      {
+        "inputs": "$98,000; 115%",
+        "expected": "$112,700.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-12",
+    "name": "Cash-out proceeds",
+    "tests": [
+      {
+        "inputs": "$260,000; $200,000; $7,000",
+        "expected": "$53,000.00"
+      },
+      {
+        "inputs": "$900,000; $350,000; $14,000",
+        "expected": "$536,000.00 (over $500,000 cap)"
+      },
+      {
+        "inputs": "$180,000; $185,000; $4,000",
+        "expected": "−$9,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-13",
+    "name": "Fix-and-flip maximum loan",
+    "tests": [
+      {
+        "inputs": "Tier 1 Bible flip",
+        "expected": "$320,000.00"
+      },
+      {
+        "inputs": "Tier 2 Bible flip",
+        "expected": "$340,000.00"
+      },
+      {
+        "inputs": "Tier 0: TPC $247,500; ARV $300,000; price $185,000; as-is $180,000; rehab $62,500",
+        "expected": "$185,625.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-14",
+    "name": "Portfolio DSCR",
+    "tests": [
+      {
+        "inputs": "$13,800; $11,200",
+        "expected": "1.23x"
+      },
+      {
+        "inputs": "$12,100; $9,600",
+        "expected": "1.26x"
+      },
+      {
+        "inputs": "$9,000; $7,560",
+        "expected": "1.1905 → 1.19x: fails 1.20x"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-15",
+    "name": "STR qualifying monthly rent",
+    "tests": [
+      {
+        "inputs": "$54,000; $49,200",
+        "expected": "$3,075.00"
+      },
+      {
+        "inputs": "$60,000; none",
+        "expected": "$3,750.00"
+      },
+      {
+        "inputs": "$41,000; $46,500",
+        "expected": "$2,562.50"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-16",
+    "name": "Ground-up interest reserve",
+    "tests": [
+      {
+        "inputs": "$600,000; 11.500%; 18 months",
+        "expected": "$62,100.00"
+      },
+      {
+        "inputs": "$450,000; 12.250%; 12 months",
+        "expected": "$33,075.00"
+      },
+      {
+        "inputs": "$800,000; 11.250%; 18 months",
+        "expected": "$81,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-17",
+    "name": "Maximum loan by DSCR (residential)",
+    "tests": [
+      {
+        "inputs": "$2,250; 1.00x; $470; 7.750%",
+        "expected": "$248,460.30"
+      },
+      {
+        "inputs": "$2,250; 1.10x; $470; 7.750%",
+        "expected": "$219,908.94"
+      },
+      {
+        "inputs": "$3,075; 1.15x; $550; 7.500%",
+        "expected": "$303,757.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-18",
+    "name": "Draw amount (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "60%; $100,000; prior $25,000",
+        "expected": "$35,000.00"
+      },
+      {
+        "inputs": "95%; $100,000; prior $60,000",
+        "expected": "$30,000.00"
+      },
+      {
+        "inputs": "100%; $100,000; prior $90,000",
+        "expected": "$10,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-19",
+    "name": "Flip profit margin (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$54,300; $400,000",
+        "expected": "13.6%"
+      },
+      {
+        "inputs": "$11,359.37; $247,500",
+        "expected": "4.6%: fails 10%"
+      },
+      {
+        "inputs": "$39,900; $400,000",
+        "expected": "9.975% → shows 10.0% but FAILS 10%"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-20",
+    "name": "Ground-up maximum loan (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "3 builds; TPC $700,000; V_AC $850,000",
+        "expected": "$560,000.00"
+      },
+      {
+        "inputs": "6 builds; TPC $700,000; V_AC $850,000",
+        "expected": "$595,000.00"
+      },
+      {
+        "inputs": "2 builds; TPC $900,000; V_AC $980,000",
+        "expected": "$686,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-21",
+    "name": "Land advance (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "Permitted; $150,000; $140,000",
+        "expected": "$91,000.00"
+      },
+      {
+        "inputs": "Unpermitted; $150,000; $140,000",
+        "expected": "$70,000.00"
+      },
+      {
+        "inputs": "Permitted; $95,000; $110,000",
+        "expected": "$61,750.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-22",
+    "name": "Equity-first requirement (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "TPC $700,000; L $560,000",
+        "expected": "$140,000.00"
+      },
+      {
+        "inputs": "TPC $700,000; L $595,000",
+        "expected": "$105,000.00"
+      },
+      {
+        "inputs": "TPC $900,000; L $686,000",
+        "expected": "$214,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-23",
+    "name": "Qualifying rent (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$2,400; $2,300",
+        "expected": "$2,300.00"
+      },
+      {
+        "inputs": "$2,150; $2,300",
+        "expected": "$2,150.00"
+      },
+      {
+        "inputs": "vacant; $2,250",
+        "expected": "$2,250.00"
+      }
+    ]
+  },
+  {
+    "id": "F-RES-24",
+    "name": "Rental exit DSCR (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$2,250; $225,000; 7.750% + 0.50%; $470",
+        "expected": "1.04x: fails 1.10x"
+      },
+      {
+        "inputs": "$2,650; $225,000; 7.750% + 0.50%; $470",
+        "expected": "1.23x"
+      },
+      {
+        "inputs": "$3,100; $300,000; 7.500% + 0.50%; $550",
+        "expected": "1.13x"
+      }
+    ]
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "name": "bpl-course",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "calculators"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "fixtures": "python3 scripts/export_formula_fixtures.py",
+    "xlsx:recalc": "python3 scripts/recalc_xlsx.py",
+    "test:excel": "python3 -m pytest excel/tests -q",
+    "test:all": "npm run lint && npm run typecheck && npm test && npm run test:excel && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "eslint": "^10.15.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.8",
+    "globals": "^17.14.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^5.1.1"
+  }
+}

@@ -21,3 +21,25 @@ Internal training course. **Model policy for training - not for live lending dec
 ## Source of truth
 
 The live Course Bible is a Claude Doc. Files in `docs/` and `modules/` are snapshots of it. See `docs/SNAPSHOT.md` for dates and freshness.
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `npm ci` | Install Node dependencies (root and `calculators/`) |
+| `pip install -r excel/requirements.txt` | Install Python dependencies |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript check for `formulas/` |
+| `npm test` | Vitest: formula tests against the Library's expected values |
+| `npm run test:excel` | pytest: Excel tests (needs LibreOffice) |
+| `npm run test:e2e` | Playwright browser tests of `calculators/`. Set `PW_CHANNEL=chrome` to use an installed Chrome |
+| `npm run fixtures` | Rebuild `formulas/*/tests/fixtures.json` from the reference scripts |
+| `npm run xlsx:recalc -- <files>` | Recalculate `.xlsx` files with LibreOffice headless |
+| `npm run dev -w @bpl/calculators` | Run the calculators locally |
+| `cd videos && npm install && npm run studio` | Open Remotion Studio |
+
+CI (`.github/workflows/tests.yml`) runs all of these checks on every push.
+
+## Formula port status
+
+The reference scripts hold 113 formulas and 339 test cases. Five more (F-CORE-40 to -43, F-RES-25) exist only in the live doc, for a total of 118 formulas and 354 test cases. Ported to TypeScript so far: F-CORE-01, -02, -14, -15.

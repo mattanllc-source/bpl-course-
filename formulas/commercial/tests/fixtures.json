@@ -1,0 +1,434 @@
+[
+  {
+    "id": "F-COM-01",
+    "name": "Weighted average lease term (WALT)",
+    "tests": [
+      {
+        "inputs": "A 6y $300k; B 2y $100k; C 4y $100k",
+        "expected": "4.80 years"
+      },
+      {
+        "inputs": "One tenant, 14y, $240k",
+        "expected": "14.00 years"
+      },
+      {
+        "inputs": "A 10y $200k; B 1y $200k; vacant $0",
+        "expected": "5.50 years"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-02",
+    "name": "Rollover risk",
+    "tests": [
+      {
+        "inputs": "$100,000; $500,000",
+        "expected": "20.0%"
+      },
+      {
+        "inputs": "$0; $480,000",
+        "expected": "0.0%"
+      },
+      {
+        "inputs": "$300,000; $500,000",
+        "expected": "60.0%"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-03",
+    "name": "Commercial net cash flow (NCF)",
+    "tests": [
+      {
+        "inputs": "NOI $480,000; 40,000 sf retail",
+        "expected": "$434,000.00"
+      },
+      {
+        "inputs": "NOI $900,000; 50,000 sf office",
+        "expected": "$815,000.00"
+      },
+      {
+        "inputs": "NOI $650,000; 100,000 sf industrial",
+        "expected": "$610,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-04",
+    "name": "Average daily rate (ADR)",
+    "tests": [
+      {
+        "inputs": "$2,920,000; 20,000",
+        "expected": "$146.00"
+      },
+      {
+        "inputs": "$1,500,000; 12,500",
+        "expected": "$120.00"
+      },
+      {
+        "inputs": "$4,380,000; 24,000",
+        "expected": "$182.50"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-05",
+    "name": "Revenue per available room (RevPAR)",
+    "tests": [
+      {
+        "inputs": "$2,920,000; 100 rooms; 365",
+        "expected": "$80.00"
+      },
+      {
+        "inputs": "$2,920,000; 100 rooms; 366",
+        "expected": "$79.78"
+      },
+      {
+        "inputs": "$1,500,000; 60 rooms; 365",
+        "expected": "$68.49"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-06",
+    "name": "Loan per square foot",
+    "tests": [
+      {
+        "inputs": "$5,000,000; 50,000 sf",
+        "expected": "$100.00"
+      },
+      {
+        "inputs": "$3,900,000; 40,000 sf",
+        "expected": "$97.50"
+      },
+      {
+        "inputs": "$5,960,000; 60,000 sf",
+        "expected": "$99.33"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-07",
+    "name": "Occupancy cost ratio",
+    "tests": [
+      {
+        "inputs": "$75,000 + $15,000; $1,000,000",
+        "expected": "9.0%"
+      },
+      {
+        "inputs": "$180,000 + $0; $1,500,000",
+        "expected": "12.0%: fails 10%"
+      },
+      {
+        "inputs": "$60,000 + $12,000; $900,000",
+        "expected": "8.0%"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-08",
+    "name": "Three-test loan sizing",
+    "tests": [
+      {
+        "inputs": "V $6.0M; NCF $434,000; 65% / 1.30x / 9.0%; 7.000%",
+        "expected": "$3,900,000.00 (LTV binds)"
+      },
+      {
+        "inputs": "NNN Tier 1: V $4.0M; NOI $240,000; 70% / 1.20x; 6.500%",
+        "expected": "$2,460,000.00 (DSCR binds; $2,468,378.24 before rounding)"
+      },
+      {
+        "inputs": "Office: V $10.0M; NCF $800,000; 60% / 1.40x / 10.0%; 8.130%",
+        "expected": "$6,000,000.00 (LTV binds; DSCR leg $6,101,503.27)"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-09",
+    "name": "Rollover-stressed NCF",
+    "tests": [
+      {
+        "inputs": "NCF $434,000; $120,000 of $600,000 expiring; retail; ADS $330,772.68",
+        "expected": "$416,000.00; 1.26x"
+      },
+      {
+        "inputs": "NCF $815,000; $300,000 of $1,000,000 expiring; office",
+        "expected": "$755,000.00"
+      },
+      {
+        "inputs": "NCF $434,000; $60,000 of $600,000 expiring (10.0%)",
+        "expected": "$434,000.00: no stress"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-10",
+    "name": "Bridge exit test (take-out DSCR)",
+    "tests": [
+      {
+        "inputs": "$4,000,000; NCF $430,000; 1.25x",
+        "expected": "1.19x: fails; max $3,790,000.00"
+      },
+      {
+        "inputs": "$3,790,000; NCF $430,000; 1.25x",
+        "expected": "1.25x: passes"
+      },
+      {
+        "inputs": "$5,960,000; NCF $720,000; 1.25x",
+        "expected": "1.33x: passes"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-11",
+    "name": "Small-balance commercial DSCR",
+    "tests": [
+      {
+        "inputs": "NOI $96,000; $800,000; 8.750%",
+        "expected": "ADS $75,523.20; 1.27x"
+      },
+      {
+        "inputs": "NOI $60,000; $600,000; 8.750%",
+        "expected": "ADS $56,642.40; 1.06x: fails 1.25x"
+      },
+      {
+        "inputs": "Office NOI $120,000; $1,000,000; 9.000%",
+        "expected": "ADS $96,554.76; 1.24x: fails 1.30x"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-12",
+    "name": "Dark-value coverage (NNN Tier 2)",
+    "tests": [
+      {
+        "inputs": "$3,500,000; dark $2,400,000",
+        "expected": "$1,920,000.00 (dark binds)"
+      },
+      {
+        "inputs": "$3,000,000; dark $2,500,000",
+        "expected": "$1,800,000.00 (LTV binds)"
+      },
+      {
+        "inputs": "$3,500,000; dark $0",
+        "expected": "$0.00: decline"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-13",
+    "name": "Lease-term cushion",
+    "tests": [
+      {
+        "inputs": "14 years; 10-year loan",
+        "expected": "4.0 years: fails"
+      },
+      {
+        "inputs": "14 years; 7-year loan",
+        "expected": "7.0 years: passes"
+      },
+      {
+        "inputs": "11.5 years; 5-year loan",
+        "expected": "6.5 years: passes"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-14",
+    "name": "Construction sizing with interest reserve",
+    "tests": [
+      {
+        "inputs": "Base $8.7M; 9.00%; 18 months; as-complete $9.8M",
+        "expected": "$5,960,000.00 (LTC binds)"
+      },
+      {
+        "inputs": "Base $5.0M; 8.50%; 15 months; as-complete $7.0M",
+        "expected": "$3,390,000.00 (LTC binds; $3,390,493.58 before rounding)"
+      },
+      {
+        "inputs": "Base $8.7M; 9.00%; 18 months; as-complete $8.8M",
+        "expected": "$5,720,000.00 (LTV binds)"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-15",
+    "name": "Underwritten vacancy (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "Retail: 3%; 6%",
+        "expected": "6.0%"
+      },
+      {
+        "inputs": "Office: 4%; 8%",
+        "expected": "10.0% (office floor)"
+      },
+      {
+        "inputs": "Industrial: 0%; 2%",
+        "expected": "5.0%"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-16",
+    "name": "Tenant rent share (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$300,000; $500,000",
+        "expected": "60.0%: estoppel, SNDA, 25% rule"
+      },
+      {
+        "inputs": "$100,000; $500,000",
+        "expected": "20.0%: estoppel, SNDA"
+      },
+      {
+        "inputs": "$40,000; $500,000",
+        "expected": "8.0%: none unless top five"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-17",
+    "name": "Bridge interest shortfall reserve (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$4,000,000; 9.000%; NCF $300,000; 18 months",
+        "expected": "$90,000.00"
+      },
+      {
+        "inputs": "$4,000,000; 9.000%; NCF $380,000; 18 months",
+        "expected": "$0.00 (coverage 1.06x)"
+      },
+      {
+        "inputs": "$3,000,000; 9.500%; NCF $150,000; 24 months",
+        "expected": "$270,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-18",
+    "name": "Fixed-rate floor (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "Term; quote 7.000%; T 5.13%",
+        "expected": "8.130%"
+      },
+      {
+        "inputs": "NNN Tier 1; quote 6.500%; T 5.13%",
+        "expected": "6.880%"
+      },
+      {
+        "inputs": "NNN Tier 2; quote 7.900%; T 5.13%",
+        "expected": "7.900% (quote above 7.630% floor)"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-19",
+    "name": "Cash sweep amount (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "NCF $360,000; ADS $330,772.68",
+        "expected": "$2,435.61"
+      },
+      {
+        "inputs": "NCF $400,000; ADS $330,772.68 (1.21x, no trigger)",
+        "expected": "$0.00"
+      },
+      {
+        "inputs": "NCF $434,000; tenant notice; ADS $330,772.68",
+        "expected": "$8,602.28"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-20",
+    "name": "Land loan maximum (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "V $2,000,000; C $1,800,000",
+        "expected": "$1,000,000.00"
+      },
+      {
+        "inputs": "V $1,500,000; C $1,200,000",
+        "expected": "$720,000.00"
+      },
+      {
+        "inputs": "V $3,000,000; C $3,200,000",
+        "expected": "$1,500,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-21",
+    "name": "Construction draw with retainage (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "30% complete; $600,000",
+        "expected": "$540,000.00"
+      },
+      {
+        "inputs": "70% complete; $900,000",
+        "expected": "$900,000.00"
+      },
+      {
+        "inputs": "45% complete; $250,000",
+        "expected": "$225,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-22",
+    "name": "Pre-leasing ratio (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "Industrial: 24,000; 60,000",
+        "expected": "40.0%: passes 30%"
+      },
+      {
+        "inputs": "Retail: 18,000; 40,000",
+        "expected": "45.0%: fails 50%"
+      },
+      {
+        "inputs": "Office: 26,000; 50,000",
+        "expected": "52.0%: passes 50%"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-23",
+    "name": "SBC DSCR maximum LTV (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "Retail purchase; 25% vacant",
+        "expected": "65.0%"
+      },
+      {
+        "inputs": "Office cash-out; 0% vacant",
+        "expected": "60.0%"
+      },
+      {
+        "inputs": "Light industrial rate-term; 10% vacant",
+        "expected": "70.0%"
+      }
+    ]
+  },
+  {
+    "id": "F-COM-24",
+    "name": "Step-down prepayment premium (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$3,850,000; year 2",
+        "expected": "$154,000.00"
+      },
+      {
+        "inputs": "$3,700,000; year 5",
+        "expected": "$37,000.00"
+      },
+      {
+        "inputs": "$3,600,000; year 6",
+        "expected": "$0.00"
+      }
+    ]
+  }
+]
