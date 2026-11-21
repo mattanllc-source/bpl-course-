@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-11-21
+- Formulas F-CORE-40 to -43 and F-RES-25 added to the reference scripts from the 21 Nov 2026 Formula Library export, and fixtures rebuilt. Core now has 41 formulas and 123 test cases; residential has 25 and 75. All 118 formulas and 354 test cases are now scripted.
 - Doc snapshots refreshed from the live Course Bible: Course Bible, Model Credit Policy, Formula Library, State Law Table (and `state-law-table.csv`), and running deals, now `running-deals.md`; the `.pdf` and `.txt` are kept but superseded (see `SNAPSHOT.md`).
 
 ## 2026-11-20

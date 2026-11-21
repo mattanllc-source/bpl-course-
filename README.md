@@ -44,4 +44,4 @@ CI (`.github/workflows/tests.yml`) runs all of these checks on every push.
 
 ## Formula port status
 
-The reference scripts hold 113 formulas and 339 test cases. Five more (F-CORE-40 to -43, F-RES-25) exist only in the live doc, for a total of 118 formulas and 354 test cases. Ported to TypeScript so far: F-CORE-01, -02, -14, -15.
+The reference scripts hold all 118 formulas and 354 test cases (core 41, residential 25, multifamily 28, commercial 24). Ported to TypeScript so far: F-CORE-01, -02, -14, -15.

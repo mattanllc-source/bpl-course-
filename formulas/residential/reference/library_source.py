@@ -361,7 +361,22 @@ add(id="F-RES-24", name="Rental exit DSCR (SUGGESTED)",
  modules="R4, R5",
  tests=[("$2,250; $225,000; 7.750% + 0.50%; $470", xx(exitd(2250,225000,.0825,470))+": fails 1.10x"), ("$2,650; $225,000; 7.750% + 0.50%; $470", xx(exitd(2650,225000,.0825,470))), ("$3,100; $300,000; 7.500% + 0.50%; $550", xx(exitd(3100,300000,.08,550)))])
 
-MOD={'01':'R2','02':'R2','03':'R2','04':'R2','05':'R2','06':'R3','07':'R4','08':'R4','09':'R2, R6','10':'R2','11':'R5','12':'R4','13':'R2, R6','14':'R5','15':'R5','16':'R3','17':'R4','18':'R3','19':'R2','20':'R3','21':'R3','22':'R3','23':'R4','24':'R2, R4'}
+def shortfall(ctc, hb, dprior): return max(0, ctc - (hb - dprior))
+add(id="F-RES-25", name="In-balance shortfall (SUGGESTED)",
+ purpose="Cash the borrower must deposit before a draw when the remaining holdback cannot finish the job.",
+ plain="Shortfall = max(0, cost to complete − undrawn holdback)",
+ latex=r"S = \max(0,\ CTC - (HB - D_{prior}))",
+ vars="CTC = unpaid budget cost, including work in place not yet drawn and revised line items (USD); HB = holdback (USD); D_prior = draws paid (USD)",
+ example=[f"Maple Run month 7: max(0, $25,000 − ($100,000 − $75,000)) = {m(shortfall(25000,100000,75000))}. In balance after the $8,000 roof overrun is moved to contingency."],
+ interp="A positive result is paid in by the borrower before the next draw (CORE-SVC-05). Applies to rehab, capex and TI/LC holdbacks in every family.",
+ rules="CORE-SVC-05; RES-FF-09; MF-BR-10; COM-BR-05",
+ mistakes=["Leaving out work in place that has not yet been drawn.", "Counting unused contingency twice."],
+ edges="An overrun inside contingency gives $0 after a written reallocation.",
+ rounding="Round to the cent.",
+ modules="C12, R3",
+ tests=[("$25,000; $100,000; $75,000", m(shortfall(25000,100000,75000))), ("$28,000; $100,000; $75,000", m(shortfall(28000,100000,75000))), ("$800,000; $800,000; $0", m(shortfall(800000,800000,0)))])
+
+MOD={'01':'R2','02':'R2','03':'R2','04':'R2','05':'R2','06':'R3','07':'R4','08':'R4','09':'R2, R6','10':'R2','11':'R5','12':'R4','13':'R2, R6','14':'R5','15':'R5','16':'R3','17':'R4','18':'R3','19':'R2','20':'R3','21':'R3','22':'R3','23':'R4','24':'R2, R4','25':'C12, R3'}
 for f in F: f['modules']=MOD[f['id'][-2:]]
 out = [md(f) for f in F]
 for f in F: print(f['id'], [t[1] for t in f['tests']])
@@ -373,6 +388,6 @@ for f in F:
     nm=f['name'].replace(" (SUGGESTED)","")
     rl=re.sub(r"\s*\([^)]*\)","",f['rules']).split(";")[0].strip()
     idx+=f"| {f['id']} | {nm} | {st} | {rl} |\n"
-chunks=[idx+"\n"+"\n\n".join(out[0:8]), "\n\n".join(out[8:16]), "\n\n".join(out[16:24])+"\n\n**Residential library complete: 17 REQUIRED and 7 SUGGESTED formulas, 72 test cases. Say \"continue\" for the Multifamily library (F-MF).**"]
+chunks=[idx+"\n"+"\n\n".join(out[0:8]), "\n\n".join(out[8:16]), "\n\n".join(out[16:25])+"\n\n**Residential library complete: 17 REQUIRED and 8 SUGGESTED formulas, 75 test cases. Say \"continue\" for the Multifamily library (F-MF).**"]
 for i,c in enumerate(chunks): open(f'rchunk{i}.json','w').write(json.dumps(c))
 print([len(c) for c in chunks]); print(idx)

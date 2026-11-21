@@ -7,7 +7,7 @@ Internal training course on business-purpose real estate lending (BPL). Solo lea
 - The live **Course Bible** (a Claude Doc) is the source of truth for course content, policy and formulas. This repo cannot reach it.
 - Files in `docs/` and `data/running-deals/` are exported snapshots. Check `docs/SNAPSHOT.md` before relying on one. If a snapshot is stale, say so; don't guess at newer content.
 - `formulas/<family>/reference/library_source.py` are the scripts that generated the Formula Library. `formulas/<family>/tests/fixtures.json` holds their test cases (rebuild with `npm run fixtures`, never edit by hand).
-- Five formulas exist only in the doc so far: F-CORE-40 to -43 and F-RES-25. Their fixtures need adding from the doc's Library tab.
+- All 118 formulas (354 test cases) are in the reference scripts. F-CORE-38 and -39 are reserved for the C7 proposals.
 
 ## Content rules (non-negotiable)
 

@@ -664,5 +664,77 @@
         "expected": "$412,500.00"
       }
     ]
+  },
+  {
+    "id": "F-CORE-40",
+    "name": "All-in annual cost screen (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "10.25%; 1.50 points; 12 months",
+        "expected": "11.75%"
+      },
+      {
+        "inputs": "7.65%; 1.00 point; 24 months",
+        "expected": "8.15%"
+      },
+      {
+        "inputs": "12.00%; 2.00 points; 6 months",
+        "expected": "16.00%"
+      }
+    ]
+  },
+  {
+    "id": "F-CORE-41",
+    "name": "Net funding wire (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$240,000; $5,100; $0; $1,161.67; $0",
+        "expected": "$233,738.33"
+      },
+      {
+        "inputs": "$4,340,000; $51,400; $0; $922.25; $68,666.67",
+        "expected": "$4,219,011.08"
+      },
+      {
+        "inputs": "$2,860,000; $35,200; $0; $7,900.75; $0",
+        "expected": "$2,816,899.25"
+      }
+    ]
+  },
+  {
+    "id": "F-CORE-42",
+    "name": "REO carrying value and charge-off (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$3,520,000; $3,400,000; $102,000",
+        "expected": "$3,298,000.00; $222,000.00"
+      },
+      {
+        "inputs": "$5,140,000; $5,000,000; $150,000",
+        "expected": "$4,850,000.00; $290,000.00"
+      },
+      {
+        "inputs": "$1,000,000; $900,000; $45,000",
+        "expected": "$855,000.00; $145,000.00"
+      }
+    ]
+  },
+  {
+    "id": "F-CORE-43",
+    "name": "Bucket headroom (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "25%; $120,000,000; $28,500,000",
+        "expected": "$2,000,000.00"
+      },
+      {
+        "inputs": "25%; $120,000,000; $26,000,000",
+        "expected": "$5,333,333.33"
+      },
+      {
+        "inputs": "15%; $120,000,000; $17,500,000",
+        "expected": "$588,235.29"
+      }
+    ]
   }
 ]

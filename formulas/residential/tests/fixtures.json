@@ -430,5 +430,23 @@
         "expected": "1.13x"
       }
     ]
+  },
+  {
+    "id": "F-RES-25",
+    "name": "In-balance shortfall (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$25,000; $100,000; $75,000",
+        "expected": "$0.00"
+      },
+      {
+        "inputs": "$28,000; $100,000; $75,000",
+        "expected": "$3,000.00"
+      },
+      {
+        "inputs": "$800,000; $800,000; $0",
+        "expected": "$0.00"
+      }
+    ]
   }
 ]

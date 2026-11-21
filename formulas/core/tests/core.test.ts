@@ -47,9 +47,9 @@ describe("F-CORE-15 LTC", () => {
 });
 
 describe("fixture catalogue", () => {
-  it("core has 37 scripted formulas with 3 cases each", () => {
+  it("core has 41 scripted formulas with 3 cases each", () => {
     const f = fixtures as Fixture[];
-    expect(f).toHaveLength(37);
+    expect(f).toHaveLength(41);
     for (const x of f) expect(x.tests).toHaveLength(3);
   });
 });

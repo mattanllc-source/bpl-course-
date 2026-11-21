@@ -613,6 +613,79 @@ add(id="F-CORE-37", name="Coinsurance recovery (SUGGESTED)",
         ("Did $1,800,000; RC $2,400,000; 90%; loss $300,000; ded $10,000", m(coins(1800000,2400000,.9,300000,10000))),
         ("Did $2,800,000; RC $4,000,000; 80%; loss $500,000; ded $25,000", m(coins(2800000,4000000,.8,500000,25000)))])
 
+# F-CORE-38 and -39 are reserved for the C7 proposals.
+
+def aic(r, p, f, T): return r + (p + f)/(T/12)
+add(id="F-CORE-40", name="All-in annual cost screen (SUGGESTED)",
+ purpose="A quick screen of rate plus up-front charges against a state usury cap. Numbers F-CORE-38 and -39 are reserved for the C7 proposals.",
+ plain="AIC = note rate + (points % + other lender fees %) ÷ term in years",
+ latex=r"AIC = r + \frac{p + f}{T/12}",
+ vars="r = note rate (%); p = points (% of commitment); f = other lender fees (% of commitment); T = term (months)",
+ example=[f"Maple Run: 10.25% + 1.50% ÷ (12 ÷ 12) = {pct(aic(.1025,.015,0,12),2)}."],
+ interp="Compare with the state cap only when no usury exemption applies. It is a screen, not an APR; counsel decides how a state counts fees.",
+ rules="CORE-PRC-03; State Law Table usury column [VERIFY: each state's fee-inclusion rule]",
+ mistakes=["Testing the rate before checking for an exemption.", "Leaving out lender fees other than points."],
+ edges="Short terms inflate AIC: 2 points over 6 months adds 4.00%. Third-party costs (title, appraisal) are left out.",
+ rounding="Nominal annual; display two decimals.",
+ modules="C10",
+ tests=[("10.25%; 1.50 points; 12 months", pct(aic(.1025,.015,0,12),2)),
+        ("7.65%; 1.00 point; 24 months", pct(aic(.0765,.01,0,24),2)),
+        ("12.00%; 2.00 points; 6 months", pct(aic(.12,.02,0,6),2))])
+
+def wire(L0, pts, fees, iodd, esc): return L0 - pts - fees - iodd - esc
+add(id="F-CORE-41", name="Net funding wire (SUGGESTED)",
+ purpose="The amount the lender wires to the closing agent.",
+ plain="Wire = initial funding − points − lender fees − prepaid interest − lender-held escrows and reserves",
+ latex=r"W = L_0 - Pts - Fees - I_{odd} - Esc",
+ vars="L_0 = initial funding ($); Pts from F-CORE-06; I_odd from F-CORE-33; Esc = escrow cushion (F-CORE-35), repair escrow and other reserves held by the lender ($)",
+ example=[f"Maple Run: $240,000 − $5,100.00 − $0 − $1,161.67 − $0 = {m(wire(240000,5100,0,1161.67,0))}."],
+ interp="The closing agent adds the borrower's cash and pays the seller and costs. Sources must equal uses.",
+ rules="CORE-CLS-03, -04; CORE-INS-02",
+ mistakes=["Wiring the full advance.", "Taking points on initial funding instead of the commitment.", "Netting a borrower-paid third-party cost, such as a rate cap paid by title."],
+ edges="Items paid outside closing are left out. A negative wire means the deal is mis-built: stop and recheck.",
+ rounding="Round to the cent.",
+ modules="C11",
+ tests=[("$240,000; $5,100; $0; $1,161.67; $0", m(wire(240000,5100,0,1161.67,0))),
+        ("$4,340,000; $51,400; $0; $922.25; $68,666.67", m(wire(4340000,51400,0,922.25,68666.67))),
+        ("$2,860,000; $35,200; $0; $7,900.75; $0", m(wire(2860000,35200,0,7900.75,0)))])
+
+def reo(L, fv, cts): return min(L, fv - cts), max(0, L - (fv - cts))
+def reo_s(L, fv, cts):
+    cv, co = reo(L, fv, cts)
+    return m(cv) + "; " + m(co)
+add(id="F-CORE-42", name="REO carrying value and charge-off (SUGGESTED)",
+ purpose="Book value of foreclosed property at title, and the loss recognised then.",
+ plain="Carrying value = min(recorded loan, fair value − cost to sell); charge-off = max(0, recorded loan − (fair value − cost to sell))",
+ latex=r"CV = \min(L,\ FV - CTS),\quad CO = \max(0,\ L - (FV - CTS))",
+ vars="L = recorded loan amount ($); FV = fair value from a new appraisal ($); CTS = estimated cost to sell ($)",
+ example=[f"Birchwood: $3,400,000 − $102,000 = $3,298,000 carrying value; charge-off $3,520,000 − $3,298,000 = {m(reo(3520000,3400000,102000)[1])}."],
+ interp="Mirrors bank accounting for foreclosed real estate. Later falls in value are written down; rises above cost are not booked.",
+ rules="CORE-DEF-06; F-CORE-23",
+ mistakes=["Using gross value instead of value less cost to sell.", "Using an old appraisal."],
+ edges="FV − CTS above the loan → carry at the loan amount; the excess is a gain only when sold.",
+ rounding="Round to the cent.",
+ modules="C13",
+ tests=[("$3,520,000; $3,400,000; $102,000", reo_s(3520000,3400000,102000)),
+        ("$5,140,000; $5,000,000; $150,000", reo_s(5140000,5000000,150000)),
+        ("$1,000,000; $900,000; $45,000", reo_s(1000000,900000,45000))])
+
+def headroom(cap, T, B): return (cap*T - B)/(1 - cap)
+add(id="F-CORE-43", name="Bucket headroom (SUGGESTED)",
+ purpose="The largest new commitment a concentration bucket can take before it breaches its cap.",
+ plain="Headroom = (cap × total commitments − bucket commitments) ÷ (1 − cap)",
+ latex=r"H = \frac{c \cdot T - B}{1 - c}",
+ vars="c = cap (%); T = total commitments for the base ($); B = commitments in the bucket ($)",
+ example=[f"Indiana, 25% cap: (25% × $120,000,000 − $28,500,000) ÷ 75% = {m(headroom(.25,120000000,28500000))}."],
+ interp="A new loan adds to both the bucket and the base, so headroom is larger than cap × total − bucket.",
+ rules="CORE-CONC-02 to -07; F-CORE-30",
+ mistakes=["Leaving the new loan out of the denominator.", "Using outstanding balances instead of commitments."],
+ edges="Negative result → the bucket is already over its cap; any new loan needs committee (CORE-CONC-07).",
+ rounding="Round to the cent.",
+ modules="C14",
+ tests=[("25%; $120,000,000; $28,500,000", m(headroom(.25,120000000,28500000))),
+        ("25%; $120,000,000; $26,000,000", m(headroom(.25,120000000,26000000))),
+        ("15%; $120,000,000; $17,500,000", m(headroom(.15,120000000,17500000)))])
+
 def md(f):
     o = [f"### {f['id']}: {f['name']}", "",
          f"**Purpose.** {f['purpose']}", "",
