@@ -41,7 +41,7 @@ def recalc(files: list[pathlib.Path], out_dir: pathlib.Path | None, timeout: int
         user = pathlib.Path(prof) / "user"
         user.mkdir(parents=True)
         (user / "registrymodifications.xcu").write_text(RECALC_PROFILE)
-        cmd = [soffice, f"-env:UserInstallation=file://{prof}", "--headless", "--norestore",
+        cmd = [soffice, f"-env:UserInstallation={pathlib.Path(prof).as_uri()}", "--headless", "--norestore",
                "--calc", "--convert-to", "xlsx:Calc MS Excel 2007 XML", "--outdir", tmp_out,
                *[str(f) for f in files]]
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
