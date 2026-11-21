@@ -630,7 +630,6 @@ def md(f):
     return "\n".join(o)
 
 out = [md(f) for f in F]
-json.dump(out, open('/home/claude/flib/core.json','w'))
 print(len(out))
 for f in F:
     print(f['id'], [t[1] for t in f['tests']])

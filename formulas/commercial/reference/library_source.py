@@ -1,5 +1,5 @@
-import json, re
-src = open('/home/claude/flib/core.py').read()
+import json, pathlib, re
+src = open(pathlib.Path(__file__).resolve().parent.parent.parent / "core" / "reference" / "library_source.py").read()
 pre, post = src.split("def md(f):")
 exec(pre.split("F = []")[0])
 F = []

@@ -38,6 +38,8 @@ The live Course Bible is a Claude Doc. Files in `docs/` and `modules/` are snaps
 | `npm run dev -w @bpl/calculators` | Run the calculators locally |
 | `cd videos && npm install && npm run studio` | Open Remotion Studio |
 
+On Windows, activate .venv first (.venv\Scripts\activate)
+
 CI (`.github/workflows/tests.yml`) runs all of these checks on every push.
 
 ## Formula port status

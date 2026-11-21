@@ -6,6 +6,7 @@ so the TypeScript formulas can be tested against the same expected values.
 Run: python3 scripts/export_formula_fixtures.py
 """
 import json
+import os
 import pathlib
 import types
 
@@ -16,13 +17,13 @@ FAMILIES = ["core", "residential", "multifamily", "commercial"]
 def load(path: pathlib.Path) -> list:
     src = path.read_text()
     fake_json = types.SimpleNamespace(dump=lambda *a, **k: None, dumps=json.dumps, load=json.load)
-    ns = {"__name__": "reference"}
+    ns = {"__name__": "reference", "__file__": str(path)}
     # Silence prints and file writes from the original generator.
     ns["print"] = lambda *a, **k: None
     code = compile(src, str(path), "exec")
     import builtins
     real_open = builtins.open
-    builtins.open = lambda *a, **k: real_open("/dev/null", "w") if ("w" in (a[1:2] or [k.get("mode", "r")])[0]) else real_open(*a, **k)
+    builtins.open = lambda *a, **k: real_open(os.devnull, "w") if ("w" in (a[1:2] or [k.get("mode", "r")])[0]) else real_open(*a, **k)
     try:
         exec(code, ns)
     finally:

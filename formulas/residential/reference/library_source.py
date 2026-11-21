@@ -1,5 +1,5 @@
-import json
-src = open('/home/claude/flib/core.py').read()
+import json, pathlib
+src = open(pathlib.Path(__file__).resolve().parent.parent.parent / "core" / "reference" / "library_source.py").read()
 pre, post = src.split("def md(f):")
 helpers = pre.split("F = []")[0]
 exec(helpers)
@@ -364,7 +364,6 @@ add(id="F-RES-24", name="Rental exit DSCR (SUGGESTED)",
 MOD={'01':'R2','02':'R2','03':'R2','04':'R2','05':'R2','06':'R3','07':'R4','08':'R4','09':'R2, R6','10':'R2','11':'R5','12':'R4','13':'R2, R6','14':'R5','15':'R5','16':'R3','17':'R4','18':'R3','19':'R2','20':'R3','21':'R3','22':'R3','23':'R4','24':'R2, R4'}
 for f in F: f['modules']=MOD[f['id'][-2:]]
 out = [md(f) for f in F]
-json.dump(out, open('/home/claude/flib/res.json','w'))
 for f in F: print(f['id'], [t[1] for t in f['tests']])
 
 import re

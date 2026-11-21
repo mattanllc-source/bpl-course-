@@ -11,9 +11,9 @@
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "fixtures": "python3 scripts/export_formula_fixtures.py",
-    "xlsx:recalc": "python3 scripts/recalc_xlsx.py",
-    "test:excel": "python3 -m pytest excel/tests -q",
+    "fixtures": "python scripts/export_formula_fixtures.py",
+    "xlsx:recalc": "python scripts/recalc_xlsx.py",
+    "test:excel": "python -m pytest excel/tests -q",
     "test:all": "npm run lint && npm run typecheck && npm test && npm run test:excel && npm run test:e2e"
   },
   "devDependencies": {
