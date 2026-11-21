@@ -56,6 +56,10 @@
 | F-CORE-35 | Monthly tax and insurance escrow | SUGGESTED | MF-BR-13, CORE-INS-01 |
 | F-CORE-36 | Appraisal age | SUGGESTED | CORE-VAL-02 |
 | F-CORE-37 | Coinsurance recovery | SUGGESTED | CORE-INS-01 |
+| F-CORE-40 | All-in annual cost screen | SUGGESTED | CORE-PRC-03 |
+| F-CORE-41 | Net funding wire | SUGGESTED | CORE-CLS-03, -04 |
+| F-CORE-42 | REO carrying value and charge-off | SUGGESTED | CORE-DEF-06 |
+| F-CORE-43 | Bucket headroom | SUGGESTED | CORE-CONC-02 to -07 |
 
 ### F-CORE-01: Interest-only payment (Actual/360)
 
@@ -1437,17 +1441,166 @@ Pay = \min\left(1, \frac{Did}{c \times RC}\right) \times Loss - Ded
 | 2 | Did $1,800,000; RC $2,400,000; 90%; loss $300,000; ded $10,000 | $240,000.00 |
 | 3 | Did $2,800,000; RC $4,000,000; 80%; loss $500,000; ded $25,000 | $412,500.00 |
 
-**Core library complete: 30 REQUIRED and 7 SUGGESTED formulas, 111 test cases.**
+### F-CORE-40: All-in annual cost screen (SUGGESTED)
+
+**Purpose.** A quick screen of rate plus up-front charges against a state usury cap. Numbers F-CORE-38 and -39 are reserved for the C7 proposals.
+
+**Formula.** AIC = note rate + (points % + other lender fees %) ÷ term in years
+
+```latex
+AIC = r + \frac{p + f}{T/12}
+```
+
+**Variables and units.** r = note rate (%); p = points (% of commitment); f = other lender fees (% of commitment); T = term (months)
+
+**Worked example.**
+
+1. Maple Run: 10.25% + 1.50% ÷ (12 ÷ 12) = 11.75%.
+
+**Interpretation.** Compare with the state cap only when no usury exemption applies. It is a screen, not an APR; counsel decides how a state counts fees.
+
+**Related rules.** CORE-PRC-03; State Law Table usury column \[VERIFY: each state's fee-inclusion rule\]
+
+**Common mistakes.**
+
+- Testing the rate before checking for an exemption.
+- Leaving out lender fees other than points.
+
+**Edge cases.** Short terms inflate AIC: 2 points over 6 months adds 4.00%. Third-party costs (title, appraisal) are left out.
+
+**Rounding and day count.** Nominal annual; display two decimals.
+
+**Modules.** C10
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | 10.25%; 1.50 points; 12 months | 11.75% |
+| 2 | 7.65%; 1.00 point; 24 months | 8.15% |
+| 3 | 12.00%; 2.00 points; 6 months | 16.00% |
+
+### F-CORE-41: Net funding wire (SUGGESTED)
+
+**Purpose.** The amount the lender wires to the closing agent.
+
+**Formula.** Wire = initial funding − points − lender fees − prepaid interest − lender-held escrows and reserves
+
+```latex
+W = L_0 - Pts - Fees - I_{odd} - Esc
+```
+
+**Variables and units.** L\_0 = initial funding (USD); Pts from F-CORE-06; I\_odd from F-CORE-33; Esc = escrow cushion (F-CORE-35), repair escrow and other reserves held by the lender (USD)
+
+**Worked example.**
+
+1. Maple Run: $240,000 − $5,100.00 − $0 − $1,161.67 − $0 = $233,738.33.
+
+**Interpretation.** The closing agent adds the borrower's cash and pays the seller and costs. Sources must equal uses.
+
+**Related rules.** CORE-CLS-03, -04; CORE-INS-02
+
+**Common mistakes.**
+
+- Wiring the full advance.
+- Taking points on initial funding instead of the commitment.
+- Netting a borrower-paid third-party cost, such as a rate cap paid by title.
+
+**Edge cases.** Items paid outside closing are left out. A negative wire means the deal is mis-built: stop and recheck.
+
+**Rounding and day count.** Round to the cent.
+
+**Modules.** C11
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | $240,000; $5,100; $0; $1,161.67; $0 | $233,738.33 |
+| 2 | $4,340,000; $51,400; $0; $922.25; $68,666.67 | $4,219,011.08 |
+| 3 | $2,860,000; $35,200; $0; $7,900.75; $0 | $2,816,899.25 |
+
+### F-CORE-42: REO carrying value and charge-off (SUGGESTED)
+
+**Purpose.** Book value of foreclosed property at title, and the loss recognised then.
+
+**Formula.** Carrying value = min(recorded loan, fair value − cost to sell); charge-off = max(0, recorded loan − (fair value − cost to sell))
+
+```latex
+CV = \min(L,\ FV - CTS),\quad CO = \max(0,\ L - (FV - CTS))
+```
+
+**Variables and units.** L = recorded loan amount (USD); FV = fair value from a new appraisal (USD); CTS = estimated cost to sell (USD)
+
+**Worked example.**
+
+1. Birchwood: $3,400,000 − $102,000 = $3,298,000 carrying value; charge-off $3,520,000 − $3,298,000 = $222,000.00.
+
+**Interpretation.** Mirrors bank accounting for foreclosed real estate. Later falls in value are written down; rises above cost are not booked.
+
+**Related rules.** CORE-DEF-06; F-CORE-23
+
+**Common mistakes.**
+
+- Using gross value instead of value less cost to sell.
+- Using an old appraisal.
+
+**Edge cases.** FV − CTS above the loan → carry at the loan amount; the excess is a gain only when sold.
+
+**Rounding and day count.** Round to the cent.
+
+**Modules.** C13
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | $3,520,000; $3,400,000; $102,000 | $3,298,000.00; $222,000.00 |
+| 2 | $5,140,000; $5,000,000; $150,000 | $4,850,000.00; $290,000.00 |
+| 3 | $1,000,000; $900,000; $45,000 | $855,000.00; $145,000.00 |
+
+### F-CORE-43: Bucket headroom (SUGGESTED)
+
+**Purpose.** The largest new commitment a concentration bucket can take before it breaches its cap.
+
+**Formula.** Headroom = (cap × total commitments − bucket commitments) ÷ (1 − cap)
+
+```latex
+H = \frac{c \cdot T - B}{1 - c}
+```
+
+**Variables and units.** c = cap (%); T = total commitments for the base (USD); B = commitments in the bucket (USD)
+
+**Worked example.**
+
+1. Indiana, 25% cap: (25% × $120,000,000 − $28,500,000) ÷ 75% = $2,000,000.00.
+
+**Interpretation.** A new loan adds to both the bucket and the base, so headroom is larger than cap × total − bucket.
+
+**Related rules.** CORE-CONC-02 to -07; F-CORE-30
+
+**Common mistakes.**
+
+- Leaving the new loan out of the denominator.
+- Using outstanding balances instead of commitments.
+
+**Edge cases.** Negative result → the bucket is already over its cap; any new loan needs committee (CORE-CONC-07).
+
+**Rounding and day count.** Round to the cent.
+
+**Modules.** C14
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | 25%; $120,000,000; $28,500,000 | $2,000,000.00 |
+| 2 | 25%; $120,000,000; $26,000,000 | $5,333,333.33 |
+| 3 | 15%; $120,000,000; $17,500,000 | $588,235.29 |
+
+**Core library complete: 30 REQUIRED and 11 SUGGESTED formulas, 123 test cases.**
 
 ## Residential formulas (F-RES)
 
 | ID | Name | Status | Main rules |
 | --- | --- | --- | --- |
-| F-RES-01 | Total project cost (TPC) | REQUIRED | RES-FF-01, RES-FF-06 |
+| F-RES-01 | Total project cost (TPC) | REQUIRED | RES-FF-03, RES-FF-06 |
 | F-RES-02 | Loan-to-after-repair value (LTARV) | REQUIRED | RES-FF-04 |
-| F-RES-03 | Loan-to-as-is value (LTAIV) | REQUIRED | RES-FF-03, CORE-VAL-01 |
-| F-RES-04 | Loan-to-cost (flip) | REQUIRED | RES-FF-01 |
-| F-RES-05 | Initial advance (purchase) | REQUIRED | RES-FF-03 |
+| F-RES-03 | Loan-to-as-is value (LTAIV) | REQUIRED | RES-FF-01, CORE-VAL-01 |
+| F-RES-04 | Loan-to-cost (flip) | REQUIRED | RES-FF-03 |
+| F-RES-05 | Initial advance (purchase) | REQUIRED | RES-FF-01, -02 |
 | F-RES-06 | Draw percent complete | REQUIRED | RES-FF-09, RES-FF-11, RES-GU-09 |
 | F-RES-07 | Residential DSCR | REQUIRED | RES-DSCR-01, -02, RES-STR-05 |
 | F-RES-08 | PITIA | REQUIRED | RES-DSCR-01, -07, -10 |
@@ -1467,6 +1620,7 @@ Pay = \min\left(1, \frac{Did}{c \times RC}\right) \times Loss - Ded
 | F-RES-22 | Equity-first requirement | SUGGESTED | RES-GU-07 |
 | F-RES-23 | Qualifying rent | SUGGESTED | RES-DSCR-01, -04 |
 | F-RES-24 | Rental exit DSCR | SUGGESTED | RES-BR-04 |
+| F-RES-25 | In-balance shortfall | SUGGESTED | CORE-SVC-05, RES-FF-09, MF-BR-10, COM-BR-05 |
 
 ### F-RES-01: Total project cost (TPC)
 
@@ -1486,7 +1640,7 @@ TPC = Price + Rehab
 
 **Interpretation.** The base for LTC (F-RES-04) and profit margin (F-RES-19).
 
-**Related rules.** RES-FF-01, RES-FF-06 (10% contingency)
+**Related rules.** RES-FF-03 (LTC base), RES-FF-06 (10% contingency)
 
 **Common mistakes.**
 
@@ -1560,7 +1714,7 @@ LTAIV = \frac{Adv_0}{V_{as\text{-}is}}
 
 **Interpretation.** Exposure if the borrower walks away before any work.
 
-**Related rules.** RES-FF-03, CORE-VAL-01
+**Related rules.** RES-FF-01, CORE-VAL-01
 
 **Common mistakes.**
 
@@ -1597,7 +1751,7 @@ LTC = \frac{Adv_0 + HB}{TPC}
 
 **Interpretation.** Borrower skin in the game; caps rise with experience.
 
-**Related rules.** RES-FF-01 (75% / 80% / 85% / 85% by tier)
+**Related rules.** RES-FF-03 (75% / 80% / 85% / 85% by tier)
 
 **Common mistakes.**
 
@@ -1634,7 +1788,7 @@ Adv_0 = a \times \min(Price, V_{as\text{-}is})
 
 **Interpretation.** Sets cash to close (F-RES-09).
 
-**Related rules.** RES-FF-03 (75% / 80% / 85% / 85%)
+**Related rules.** RES-FF-01, -02 (75% / 80% / 85% / 85%)
 
 **Common mistakes.**
 
@@ -2356,7 +2510,44 @@ DSCR_{exit} = \frac{Rent_q}{L \cdot f(r_{DSCR}+0.5\%) + TIA}
 | 2 | $2,650; $225,000; 7.750% + 0.50%; $470 | 1.23x |
 | 3 | $3,100; $300,000; 7.500% + 0.50%; $550 | 1.13x |
 
-**Residential library complete: 17 REQUIRED and 7 SUGGESTED formulas, 72 test cases.**
+### F-RES-25: In-balance shortfall (SUGGESTED)
+
+**Purpose.** Cash the borrower must deposit before a draw when the remaining holdback cannot finish the job.
+
+**Formula.** Shortfall = max(0, cost to complete − undrawn holdback)
+
+```latex
+S = \max(0,\ CTC - (HB - D_{prior}))
+```
+
+**Variables and units.** CTC = unpaid budget cost, including work in place not yet drawn and revised line items (USD); HB = holdback (USD); D\_prior = draws paid (USD)
+
+**Worked example.**
+
+1. Maple Run month 7: max(0, $25,000 − ($100,000 − $75,000)) = $0.00. In balance after the $8,000 roof overrun is moved to contingency.
+
+**Interpretation.** A positive result is paid in by the borrower before the next draw (CORE-SVC-05). Applies to rehab, capex and TI/LC holdbacks in every family.
+
+**Related rules.** CORE-SVC-05; RES-FF-09; MF-BR-10; COM-BR-05
+
+**Common mistakes.**
+
+- Leaving out work in place that has not yet been drawn.
+- Counting unused contingency twice.
+
+**Edge cases.** An overrun inside contingency gives $0 after a written reallocation.
+
+**Rounding and day count.** Round to the cent.
+
+**Modules.** C12, R3
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | $25,000; $100,000; $75,000 | $0.00 |
+| 2 | $28,000; $100,000; $75,000 | $3,000.00 |
+| 3 | $800,000; $800,000; $0 | $0.00 |
+
+**Residential library complete: 17 REQUIRED and 8 SUGGESTED formulas, 75 test cases.**
 
 ## Multifamily formulas (F-MF)
 
@@ -4421,4 +4612,4 @@ PP = P \times s_{year}
 | 2 | $3,700,000; year 5 | $37,000.00 |
 | 3 | $3,600,000; year 6 | $0.00 |
 
-**Commercial library complete: 14 REQUIRED and 10 SUGGESTED formulas, 72 test cases. All four family libraries are done: 112 formulas and 336 test cases. Next: reconcile the running deals against the library.**
+**Commercial library complete: 14 REQUIRED and 10 SUGGESTED formulas, 72 test cases. All four family libraries are done: 118 formulas and 354 test cases. Next: reconcile the running deals against the library.**

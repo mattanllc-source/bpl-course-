@@ -6,10 +6,10 @@ Nov 18, 2026 · @aj
 
 This bible is **DRAFT v0.1**. It is the single source of truth for how every BPL training asset is scoped, structured, written and accepted. When this bible and any other course document disagree, this bible wins until a reviewer changes it.
 
-**What this draft is built on.** The program Overview guide, credit policy, formula library, state law table and running deals were not available. So:
+**What this draft is built on.** The program Overview guide was not available. The policy, formula library, running deals and State Law Table now exist as tabs (19-20 Nov 2026). So:
 
 - Section 3 (program structure) is a **proposal** for sign-off, not a copy of the Overview guide.
-- Every policy limit appears as a placeholder, e.g. `[POLICY: max LTC]`. No limit in this bible is our policy.
+- Every policy limit appears as a placeholder, e.g. `[POLICY: max LTC]`. Since 19 Nov 2026 most are replaced by rule IDs from the Model Credit Policy tab; Section 8 lists the rest.
 - Industry ranges are shown only as market context, labelled "market range", with a source.
 - Legal and regulatory statements carry `[VERIFY]` with source and date.
 
@@ -79,7 +79,7 @@ Credit committee members do not take the program as learners. They act as review
 **Path rules (proposed, for sign-off)**
 
 1. Core modules C0-C2 come first and in order. After that, a family module may start once its listed prerequisites pass.
-2. A learner may not sign a credit memo, term sheet or closing checklist alone until the matching certificate is issued. \[POLICY: delegated authority rule ID\]
+2. A learner may not sign a credit memo, term sheet or closing checklist alone until the matching certificate is issued. (CORE-AUTH-01)
 3. Target time to BPL-CORE: 90 days from start. Target to first family certificate: 150 days. \[CONFIRM\]
 4. Certificates last 24 months. Renewal needs a refresher quiz and one live-file OJT review. \[CONFIRM\]
 5. Experienced hires may test out of a module by passing its quiz and OJT task at the pass mark. They may not test out of C1, C7 or the capstone.
@@ -112,7 +112,7 @@ The program has 33 modules and 98 hours: Core 38 hours, then 20 hours per family
 | OJT task | Every module | Supervisor rates "meets standard" on the module rubric | 1 redo |
 | Family capstone | R6, M6, CM6 | 85% on the rubric, no critical credit error, panel sign-off | 1 retake after coaching |
 
-A "critical credit error" is a wrong sizing result, a missed business-purpose red flag, or a breach of a policy limit. \[POLICY: confirm definition\]
+A "critical credit error" is any of: a wrong sizing result that changes the loan amount or approver; a missed business-purpose or occupancy red flag; a breach of a policy limit without an approved exception; an approval outside authority; or a missed KYC or OFAC hit. The final outcome of the loan does not matter. (Confirmed 20 Nov 2026 with C14 and CORE-AUTH-04.)
 
 **Core: C0-C14 (38 hours)**
 
@@ -167,7 +167,7 @@ A "critical credit error" is a wrong sizing result, a missed business-purpose re
 | CM5 | Specialty assets: hospitality, self-storage, mixed-use | 3 | CM3 |
 | CM6 | Commercial capstone | 4 | CM2-CM5 |
 
-**Running deals.** Each family uses one fictional deal from first module to capstone, so numbers carry forward. The running deals file was not supplied. Section 6 uses placeholder deal numbers only in worked examples, labelled "illustrative".
+**Running deals.** Each family uses one fictional deal from first module to capstone, so numbers carry forward. They live in the Running Deals tab (RD-RES-01, RD-MF-01, RD-COM-01). Section 6 glossary examples stay separate and are labelled "illustrative".
 
 ## 4. Learning design rules
 
@@ -281,7 +281,7 @@ Example: `[VERIFY: 12 CFR 1026.3(a), Official Interpretation 3(a)-4; consumerfin
 - Write legal content as "generally", "may" or "can". Never as a final legal conclusion.
 - Prefer primary sources (statute, regulation, agency guidance) over law-firm or industry summaries.
 - A VERIFY tag older than 6 months must be re-checked before any re-release. \[CONFIRM\]
-- State-law statements also cite the state law table row, e.g. `SLT-CA-04`. \[CONFIRM: table row ID format\]
+- State-law statements also cite the State Law Table row, e.g. `SLT-CA-01`. Format SLT-XX-NN: -01 = 1-4 unit business purpose, -02 = commercial and 5+ multifamily, -03 = changes and sources.
 
 ### 5.7 Policy rule IDs: `FAMILY-TOPIC-NN`
 
@@ -298,13 +298,13 @@ Note: COM-RTL means commercial retail. Residential transition loans are RES-FF.
 
 ### 5.8 Formula IDs: `F-FAMILY-NN`
 
-Example: `F-RES-07` is formula 7 in the Residential library. The IDs in Section 6 are **confirmed**: since 19 Nov 2026 every ID here matches an entry in the Formula Library tab (112 formulas, 336 test cases). The library governs if the two ever differ.
+Example: `F-RES-07` is formula 7 in the Residential library. The IDs in Section 6 are **confirmed**: since 19 Nov 2026 every ID here matches an entry in the Formula Library tab (118 formulas, 354 test cases, after F-CORE-40 to -43 (C10, C11, C13, C14) and F-RES-25 (C12) were added as of 20 Nov 2026). The library governs if the two ever differ.
 
 ## 6. Glossary (150 terms)
 
 The glossary holds 150 terms: 80 Core, 28 Residential, 21 Multifamily and 21 Commercial. Each formula term has a proposed formula ID and a worked example.
 
-**Read this first.** All worked-example numbers are illustrative and fictional. Any limit shown in an example (e.g. a 1.25x minimum DSCR) is for arithmetic only, never policy. Formula IDs are proposed until reconciled with the formula library. Interest accrues Actual/360 (decided 19 Nov 2026; see the Formula Library tab).
+**Read this first.** All worked-example numbers are illustrative and fictional. Any limit shown in an example (e.g. a 1.25x minimum DSCR) is for arithmetic only, never policy. Formula IDs match the Formula Library (5.8). Interest accrues Actual/360 (decided 19 Nov 2026; see the Formula Library tab).
 
 ### 6.1 Core (C0-C14): 80 terms
 
@@ -319,30 +319,30 @@ The glossary holds 150 terms: 80 Core, 28 Residential, 21 Multifamily and 21 Com
 | 7 | RESPA / Regulation X | Federal settlement-procedures law for consumer mortgage loans. Business-purpose credit is generally exempt. \[VERIFY: 12 CFR 1024.5(b)(2); checked 18 Nov 2026\] | None | C1 |
 | 8 | ECOA / Regulation B | Federal fair-lending law. It applies to business credit as well as consumer credit. \[VERIFY: 12 CFR 1002.2(g); eCFR; checked 18 Nov 2026\] | None | C1 |
 | 9 | Spousal signature rule | Reg B generally bars requiring a spouse's signature or guaranty when the applicant qualifies alone. It covers guarantors' spouses too. \[VERIFY: 12 CFR 1002.7(d); FDIC FIL-9-2002; checked 18 Nov 2026\] | None | C6 |
-| 10 | Mortgage licensing (state) | Some states require a lender or broker license even for business-purpose loans, often on 1-4 unit collateral. \[VERIFY: state law table; checked 18 Nov 2026\] | None | C10 |
-| 11 | Usury | A state-law cap on interest and charges. Rules for business and entity borrowers vary by state. \[VERIFY: state law table\] | None | C10 |
+| 10 | Mortgage licensing (state) | Some states require a lender or broker license even for business-purpose loans, often on 1-4 unit collateral. \[VERIFY: State Law Table, licence columns (CA requires one; OH, NC, IN none found for business purpose); checked 20 Nov 2026\] | None | C10 |
+| 11 | Usury | A state-law cap on interest and charges. Rules for business and entity borrowers vary by state. \[VERIFY: State Law Table, usury column; checked 20 Nov 2026\] | None | C10 |
 | 12 | Bridge loan | A short-term, usually interest-only loan that carries a property to a sale, refinance or stabilization. | None | C0 |
 | 13 | Credit box | The set of policy limits and eligibility rules a loan must fit, by product. | None | C2 |
 | 14 | Five Cs of credit | Character, capacity, capital, collateral and conditions: the frame for every credit decision. | None | C2 |
-| 15 | Risk rating | A grade assigned to a loan for its probability and severity of loss. \[POLICY: rating scale\] | None | C2 |
+| 15 | Risk rating | A grade assigned to a loan for its probability and severity of loss. Scale 1 Pass, 2 Pass/Watch, 3 Special mention, 4 Substandard, 5 Doubtful/Loss (CORE-SVC-07, set 20 Nov 2026). | None | C2 |
 | 16 | Term sheet | A non-binding summary of proposed loan amount, rate, fees, term and conditions. | None | C2 |
 | 17 | Recourse | The lender's right to pursue the borrower or guarantor personally beyond the collateral. | None | C2 |
 | 18 | Non-recourse carve-outs | Acts, such as fraud or unpermitted transfer, that make a non-recourse loan recourse. Also called "bad-boy" carve-outs. | None | C9 |
 | 19 | Personal guaranty | A person's promise to pay the loan if the borrower does not. | None | C6 |
-| 20 | Interest-only payment | The monthly payment when no principal is repaid. | F-CORE-01: Loan × annual rate ÷ 12. $500,000 × 10.000% ÷ 12 = $4,166.67 per month. | C3 |
+| 20 | Interest-only payment | The monthly payment when no principal is repaid. | F-CORE-01: Balance × rate ÷ 360 × actual days. $500,000 × 10.000% ÷ 360 × 30 = $4,166.67 for a 30-day month; a 31-day month is $4,305.56. | C3 |
 | 21 | Amortizing payment | A level monthly payment that repays principal and interest over the term. | F-CORE-02: P × r ÷ (1 − (1 + r)^−n), r = rate ÷ 12. $500,000, 7.000%, 360 months: r = 0.0058333. Payment = $3,326.51. | C3 |
 | 22 | Annual debt service (ADS) | Total scheduled loan payments in one year. | F-CORE-03: Monthly payment × 12. $3,326.51 × 12 = $39,918.12. | C3 |
-| 23 | Loan constant | Annual debt service as a share of loan amount. | F-CORE-04: ADS ÷ loan. $39,918.12 ÷ $500,000 = 7.98%. | C3 |
+| 23 | Loan constant | Annual debt service as a share of loan amount. | F-CORE-04: ADS ÷ loan. $39,918.12 ÷ $500,000 = 0.079836 (6 decimals; sizing uses the unrounded value). | C3 |
 | 24 | Per diem interest | One day's interest, used at closing and payoff. | F-CORE-05: Loan × rate ÷ 360. $500,000 × 10.000% ÷ 360 = $138.89 per day. | C3 |
 | 25 | Origination points | An upfront fee stated as a percent of the loan. One point = 1%. | F-CORE-06: Loan × points. $500,000 × 2.00% = $10,000. | C8 |
-| 26 | Prepayment penalty | A charge for repaying early, e.g. a step-down or minimum interest. Some states limit them. \[VERIFY: state law table\] | None | C8 |
+| 26 | Prepayment penalty | A charge for repaying early, e.g. a step-down or minimum interest. Some states limit them. \[VERIFY: State Law Table, prepayment column; checked 20 Nov 2026\] | None | C8 |
 | 27 | Gross potential rent (GPR) | Rent if every unit leased at market rent all year. | F-CORE-07: Units × monthly rent × 12. 10 × $1,500 × 12 = $180,000. | C4 |
 | 28 | Vacancy and credit loss | Rent lost to empty units and non-payment. | F-CORE-08: GPR × vacancy rate. $180,000 × 5.0% = $9,000. | C4 |
 | 29 | Effective gross income (EGI) | Income actually expected after vacancy, plus other income. | F-CORE-09: GPR − vacancy + other income. $180,000 − $9,000 + $6,000 = $177,000. | C4 |
 | 30 | Operating expenses (OpEx) | Recurring costs to run the property: taxes, insurance, utilities, repairs, management. Excludes debt service and capital items. | None | C4 |
 | 31 | Net operating income (NOI) | Income left after operating expenses, before debt service. | F-CORE-10: EGI − OpEx. $177,000 − $72,000 = $105,000. | C4 |
 | 32 | T-12 | The trailing twelve months of actual income and expenses. | None | C4 |
-| 33 | Pro forma | A projected operating statement based on the sponsor's plan. Never sized on alone. \[POLICY\] | None | C4 |
+| 33 | Pro forma | A projected operating statement based on the sponsor's plan. Never sized on alone: day-one loans size on in-place income, and pro forma is tested only at exit (MF-BR-08, F-COM-10). | None | C4 |
 | 34 | Debt service coverage ratio (DSCR) | How many times NOI covers annual debt service. | F-CORE-11: NOI ÷ ADS. $105,000 ÷ $84,000 = 1.25x. | C4 |
 | 35 | Break-even occupancy | Occupancy needed to pay operating costs and debt service. | F-CORE-12: (OpEx + ADS) ÷ GPR. ($72,000 + $84,000) ÷ $180,000 = 86.7%. | C4 |
 | 36 | Appraisal | A licensed appraiser's opinion of value for a stated date and premise. | None | C5 |
@@ -357,39 +357,39 @@ The glossary holds 150 terms: 80 Core, 28 Residential, 21 Multifamily and 21 Com
 | 45 | Max loan by DSCR | Largest loan whose debt service meets the minimum DSCR. | F-CORE-17: NOI ÷ min DSCR ÷ loan constant. $105,000 ÷ 1.25 ÷ 8.00% = $1,050,000. | C8 |
 | 46 | Max loan by debt yield | Largest loan that meets the minimum debt yield. | F-CORE-18: NOI ÷ min debt yield. $105,000 ÷ 10.50% = $1,000,000. | C8 |
 | 47 | Binding constraint | The sizing test that gives the smallest loan; it sets the loan amount. | F-CORE-19: Min of all test results. Min($1,125,000 LTV; $1,050,000 DSCR; $1,000,000 debt yield) = $1,000,000. Debt yield binds. | C8 |
-| 48 | Interest reserve | Loan proceeds set aside to pay interest for a set period. | F-CORE-20: Monthly interest × months. $4,166.67 × 6 = $25,000. | C8 |
+| 48 | Interest reserve | Loan proceeds set aside to pay interest for a set period. | F-CORE-20: Balance × rate ÷ 360 × days. $500,000 × 10.000% ÷ 360 × 180 = $25,000.00. | C8 |
 | 49 | Sponsor | The person or team who controls the borrower and runs the business plan. | None | C6 |
 | 50 | Liquidity | Cash and near-cash a borrower or guarantor can reach quickly. | F-CORE-21: Liquid assets ÷ monthly payment = months of reserves. $60,000 ÷ $5,000 = 12.0 months. | C6 |
-| 51 | Net worth | Total assets minus total liabilities. \[POLICY: guarantor minimum\] | None | C6 |
-| 52 | Beneficial owner | An individual who owns or controls the borrowing entity. FinCEN's CDD rule uses a 25% ownership prong plus one control person. \[VERIFY: 31 CFR 1010.230; whether it binds us\] | None | C7 |
+| 51 | Net worth | Total assets minus total liabilities. Guarantor minimum: CORE-BOR-14 (F-CORE-26). | None | C6 |
+| 52 | Beneficial owner | An individual who owns or controls the borrowing entity. FinCEN's CDD rule uses a 25% ownership prong plus one control person. We use 20% by policy (CORE-KYC-02). \[VERIFY: 31 CFR 1010.230 is written for banks and other covered institutions; C6 and C7; checked 20 Nov 2026\] | None | C7 |
 | 53 | OFAC screening | Checking every party against US sanctions lists before any deal. \[VERIFY: 31 CFR Part 501; treasury.gov\] | None | C7 |
 | 54 | Straw buyer | A person who fronts a deal for someone hidden. A key fraud red flag. | None | C7 |
 | 55 | Occupancy fraud | Claiming a property is non-owner-occupied when the borrower lives there. It can convert a loan to consumer credit. | None | C7 |
-| 56 | FinCEN Real Estate Report | A report due on certain non-financed transfers of residential property to entities or trusts. Effective 1 Mar 2026. Private lender financing may still count as "non-financed". \[VERIFY: 31 CFR 1031.320; Eversheds Sutherland, Mar 2026\] | None | C7 |
+| 56 | FinCEN Real Estate Report | A report due on certain non-financed transfers of residential property to entities or trusts. It took effect 1 Mar 2026, but a federal court vacated it nationwide on 19 Mar 2026 (C7). Before that, private lender financing could still count as "non-financed". \[VERIFY: 31 CFR 1031.320; Gibson Dunn, 1 Apr 2026; checked 20 Nov 2026\] | None | C7 |
 | 57 | Promissory note | The borrower's written promise to repay, stating amount, rate and terms. | None | C9 |
-| 58 | Mortgage / deed of trust | The security instrument that pledges real property for the note. Type depends on state. \[VERIFY: state law table\] | None | C9 |
+| 58 | Mortgage / deed of trust | The security instrument that pledges real property for the note. Type depends on state. \[VERIFY: State Law Table, foreclosure column; checked 20 Nov 2026\] | None | C9 |
 | 59 | Assignment of leases and rents (ALR) | Gives the lender rights to property rents, usually on default. | None | C9 |
 | 60 | UCC financing statement | A public filing that perfects a lien on personal property or entity interests. | None | C9 |
 | 61 | Lender's title policy | Insurance that protects the lender's lien priority against title defects. | None | C9 |
-| 62 | Hazard insurance | Property cover against fire, wind and other perils, naming the lender as mortgagee. \[POLICY: coverage minimums\] | None | C9 |
-| 63 | Flood insurance | Cover for flood loss. Federally regulated lenders must require it in special flood hazard areas. \[VERIFY: 42 USC 4012a; whether it binds us\] | None | C9 |
+| 62 | Hazard insurance | Property cover against fire, wind and other perils, naming the lender as mortgagee. Minimums: CORE-INS-01, RES-GEN-08, MF-GEN-10, COM-GEN-16 (C9). | None | C9 |
+| 63 | Flood insurance | Cover for flood loss. Federally regulated lenders must require it in special flood hazard areas. It does not bind non-bank lenders directly; see C9. \[VERIFY: 42 USC 4012a(b); checked 20 Nov 2026\] | None | C9 |
 | 64 | Covenant | A borrower promise in the loan documents, such as a minimum DSCR or reporting duty. | None | C9 |
 | 65 | Closing conditions | Items that must be met before funding, such as title, insurance and entity documents. | None | C11 |
 | 66 | Settlement statement | The itemized list of every dollar paid and received at closing. | None | C11 |
 | 67 | Wire fraud verification | Confirming wire instructions by a known, independent phone number before sending funds. | None | C11 |
 | 68 | Escrow / impounds | Monthly collections held to pay taxes and insurance. | None | C12 |
-| 69 | Extension option | A borrower right to extend maturity if stated tests are met, usually for a fee. | F-CORE-22: Balance × extension fee. $500,000 × 0.50% = $2,500. | C12 |
+| 69 | Extension option | A borrower right to extend maturity if stated tests are met, usually for a fee. | F-CORE-22: Commitment × extension fee (CORE-SVC-02). $500,000 × 0.50% = $2,500. | C12 |
 | 70 | Event of default | A breach that lets the lender use its remedies, such as non-payment or unpermitted transfer. | None | C13 |
 | 71 | Forbearance | A lender's agreement not to enforce remedies for a set time, on conditions. | None | C13 |
-| 72 | Judicial foreclosure | Foreclosure through a court case. Used in some states. \[VERIFY: state law table\] | None | C10 |
-| 73 | Non-judicial foreclosure | Foreclosure by power of sale without court, where state law allows. \[VERIFY: state law table\] | None | C10 |
+| 72 | Judicial foreclosure | Foreclosure through a court case. Used in Ohio and Indiana, for example. \[VERIFY: State Law Table SLT-OH-01, SLT-IN-01; checked 20 Nov 2026\] | None | C10 |
+| 73 | Non-judicial foreclosure | Foreclosure by power of sale without court, where state law allows, e.g. California and North Carolina. \[VERIFY: State Law Table SLT-CA-01, SLT-NC-01; checked 20 Nov 2026\] | None | C10 |
 | 74 | Deed in lieu | The borrower deeds the property to the lender to settle the debt. | None | C13 |
 | 75 | REO (real estate owned) | Property the lender owns after foreclosure or deed in lieu. | None | C13 |
 | 76 | Loss severity | Loss as a share of the loan balance at default. | F-CORE-23: (Balance + costs − net proceeds) ÷ balance. ($500,000 + $40,000 − $430,000) ÷ $500,000 = 22.0%. | C13 |
 | 77 | Credit memo | The written case for a loan: deal, sizing, risks, mitigants and recommendation, citing rule IDs. | None | C14 |
-| 78 | Credit committee | The body that approves loans above delegated authority. \[POLICY: authority matrix\] | None | C14 |
+| 78 | Credit committee | The body that approves loans above delegated authority. Matrix: CORE-AUTH-01. | None | C14 |
 | 79 | Policy exception | Approval of a loan outside a policy limit, with stated mitigants and approver. | None | C14 |
-| 80 | Concentration limit | A cap on exposure to one borrower, market, product or property type. \[POLICY\] | None | C14 |
+| 80 | Concentration limit | A cap on exposure to one borrower, market, product or property type. Limits: CORE-CONC-01, -02. | None | C14 |
 
 *Added from the Model Credit Policy tab (19 Nov 2026), with worked examples there:* F-CORE-24 adjusted liquid assets · F-CORE-25 required post-closing liquidity · F-CORE-26 adjusted net worth · F-CORE-27 experience count and tier · F-CORE-28 note rate · F-CORE-29 aggregate sponsor exposure · F-CORE-30 bucket concentration.
 
@@ -402,7 +402,7 @@ RTL examples use one illustrative flip: purchase $300,000, rehab $100,000, closi
 | 81 | Residential transition loan (RTL) | A short-term business-purpose loan to buy, renovate or build a 1-4 unit home, then sell or refinance. Includes fix-and-flip. | None | R1 |
 | 82 | Ground-up construction loan | An RTL that funds land plus new construction of a 1-4 unit home, released in draws. | None | R1 |
 | 83 | DSCR loan | A long-term rental loan sized on the property's rent, not the borrower's personal income. | None | R1 |
-| 84 | Total project cost | Purchase price plus rehab budget. Whether closing costs count is a policy choice. \[POLICY\] | F-RES-01: Purchase + rehab. $300,000 + $100,000 = $400,000. | R2 |
+| 84 | Total project cost | Purchase price plus rehab budget. Closing costs are excluded (F-RES-01). | F-RES-01: Purchase + rehab. $300,000 + $100,000 = $400,000. | R2 |
 | 85 | Rehab budget | The line-item scope of work, cost and timeline for renovation. | None | R2 |
 | 86 | After-repair value (ARV) | Appraised value once the planned rehab is complete. | None | R2 |
 | 87 | Loan-to-ARV (LTARV) | Total loan commitment as a share of ARV. | F-RES-02: Total loan ÷ ARV. $340,000 ÷ $520,000 = 65.4%. | R2 |
@@ -417,15 +417,15 @@ RTL examples use one illustrative flip: purchase $300,000, rehab $100,000, closi
 | 96 | Cash to close | Money the borrower must bring to closing. | F-RES-09: Purchase + closing costs + points − initial advance. $300,000 + $9,000 + $6,800 − $240,000 = $75,800. | R2 |
 | 97 | Projected flip profit | Expected borrower profit after sale and all costs. | F-RES-10: ARV − selling costs − purchase − rehab − closing − points − interest. $520,000 − $31,200 − $300,000 − $100,000 − $9,000 − $6,800 − $18,700 = $54,300. | R2 |
 | 98 | Market rent schedule | The appraiser's estimate of market rent from comparable rentals. | None | R4 |
-| 99 | Short-term rental (STR) | A home rented by the night or week. Income is seasonal and harder to verify. \[POLICY: STR income rules\] | None | R5 |
+| 99 | Short-term rental (STR) | A home rented by the night or week. Income is seasonal and harder to verify. Rules: RES-STR-01 to -05. | None | R5 |
 | 100 | Rental portfolio loan | One loan secured by several rental properties, often called a blanket loan. | None | R5 |
 | 101 | Partial release price | The payoff needed to release one property from a blanket lien. | F-RES-11: Allocated loan × release premium. $150,000 × 115% = $172,500. | R5 |
 | 102 | Cash-out refinance | A new loan larger than the payoff, with the difference paid to the borrower. | F-RES-12: New loan − payoff − closing costs. $260,000 − $200,000 − $7,000 = $53,000. | R4 |
 | 103 | BRRRR | Buy, rehab, rent, refinance, repeat: an RTL exits into a DSCR loan. | None | R6 |
-| 104 | Experience tier | A borrower grade based on completed similar projects. It drives allowed leverage. \[POLICY: tiers and lookback\] | None | R2 |
+| 104 | Experience tier | A borrower grade based on completed similar projects. It drives allowed leverage. Tiers: CORE-BOR-15, -16 (36-month lookback). | None | R2 |
 | 105 | Broker price opinion (BPO) | A broker's estimate of value; not an appraisal. | None | R2 |
-| 106 | Automated valuation model (AVM) | A computer-generated value estimate from data. Used for screening, not sizing. \[POLICY\] | None | R4 |
-| 107 | Seasoning | Time since the borrower acquired the property. It decides whether value or cost basis is used. \[POLICY\] | None | R4 |
+| 106 | Automated valuation model (AVM) | A computer-generated value estimate from data. Used for screening, not sizing (CORE-VAL-03, RES-GEN-06). | None | R4 |
+| 107 | Seasoning | Time since the borrower acquired the property. It decides whether value or cost basis is used (RES-DSCR-05). | None | R4 |
 | 108 | Exit strategy | How the loan will be repaid: sale, refinance or both. Underwrite each exit. | None | R2 |
 
 *Added from the Model Credit Policy tab (19 Nov 2026):* F-RES-13 fix-and-flip maximum loan · F-RES-14 portfolio DSCR · F-RES-15 STR qualifying monthly rent · F-RES-16 ground-up interest reserve (60% average balance) · F-RES-17 max loan by DSCR.
@@ -446,12 +446,12 @@ Examples use one illustrative 50-unit property: market rent $1,300 per unit per 
 | 116 | RUBS | Ratio utility billing system: charging tenants a share of utility costs. Counts as other income. | None | M2 |
 | 117 | Expense ratio | Operating expenses as a share of EGI. | F-MF-04: OpEx ÷ EGI. $310,000 ÷ $720,000 = 43.1%. | M2 |
 | 118 | Expense per unit | Annual operating expenses per apartment unit. | F-MF-05: OpEx ÷ units. $310,000 ÷ 50 = $6,200. | M2 |
-| 119 | Replacement reserves | An annual allowance for roofs, HVAC and other capital items, deducted in underwriting. | F-MF-06: Units × reserve per unit. 50 × $300 = $15,000. \[POLICY: $ per unit\] | M3 |
+| 119 | Replacement reserves | An annual allowance for roofs, HVAC and other capital items, deducted in underwriting. | F-MF-06: Units × reserve per unit. 50 × $300 = $15,000. Policy: 300 dollars per unit (MF-GEN-06, MF-BR-13). | M3 |
 | 120 | Loan per unit | Loan amount divided by unit count; a quick leverage check. | F-MF-07: Loan ÷ units. $6,000,000 ÷ 50 = $120,000. | M3 |
 | 121 | Value-add business plan | The sponsor's plan to raise NOI through renovation, re-leasing or better management. | None | M4 |
 | 122 | Return on cost | Stabilized NOI as a share of all-in cost; tests whether the plan creates value. | F-MF-08: Stabilized NOI ÷ total cost. $520,000 ÷ $8,000,000 = 6.50%. | M4 |
 | 123 | Future funding | Loan proceeds committed for capex or leasing, released after closing. | None | M4 |
-| 124 | Extension test | DSCR, debt yield or LTV hurdles the loan must pass to extend maturity. \[POLICY\] | None | M4 |
+| 124 | Extension test | DSCR, debt yield or LTV hurdles the loan must pass to extend maturity (MF-BR-11, COM-BR-02). | None | M4 |
 | 125 | Interest rate cap | A purchased contract that limits a floating rate's exposure above a strike rate. | None | M4 |
 | 126 | SOFR | Secured Overnight Financing Rate, the main US floating-rate index. \[VERIFY: published by the New York Fed; checked 18 Nov 2026\] | None | M4 |
 | 127 | Completion guaranty | A guarantor's promise to finish construction and pay overruns. | None | M5 |
@@ -482,7 +482,7 @@ Lease examples use one illustrative three-tenant building of 50,000 sf. Tenant A
 | 143 | Loan per square foot | Loan amount divided by rentable area. | F-COM-06: Loan ÷ rentable sf. $5,000,000 ÷ 50,000 sf = $100.00 per sf. | CM4 |
 | 144 | Occupancy cost ratio | A retail tenant's rent and charges as a share of its sales. | F-COM-07: (Rent + CAM) ÷ tenant sales. ($75,000 + $15,000) ÷ $1,000,000 = 9.0%. | CM5 |
 | 145 | Lockbox | An account that receives tenant rents directly, controlled by the lender. Hard or springing. | None | CM4 |
-| 146 | Cash sweep | Trapping excess cash flow when a trigger, such as low DSCR, is hit. \[POLICY: triggers\] | None | CM4 |
+| 146 | Cash sweep | Trapping excess cash flow when a trigger, such as low DSCR, is hit. Triggers: COM-GEN-12. | None | CM4 |
 | 147 | Yield maintenance | A prepayment charge that gives the lender the yield it would have earned. | None | CM4 |
 | 148 | Defeasance | Replacing the loan's collateral with government securities instead of prepaying. | None | CM4 |
 | 149 | CMBS | Commercial mortgage-backed securities: CRE loans pooled and sold as bonds. A common take-out for our bridge loans. | None | CM4 |
@@ -540,12 +540,14 @@ An asset is done when it meets every common check below, every check for its typ
 **MANUAL GAPS you must fill**
 
 - [ ] Program Overview guide: real module titles, hours, certificates and pass marks (replaces Section 3).
-- [ ] Credit policy: every `[POLICY]` tag, including day-count, rounding, leverage limits, DSCR minimums, experience tiers, STR rules and authority matrix.
-- [ ] Formula library: reconcile all proposed F-CORE, F-RES, F-MF and F-COM IDs.
-- [ ] State law table: row ID format and content for licensing, usury, prepayment and foreclosure.
-- [ ] Running deals file: one deal per family to replace the illustrative numbers.
+- [ ] Credit policy: every `[POLICY]` tag, including day-count, rounding, leverage limits, DSCR minimums, experience tiers, STR rules and authority matrix. Mostly done 19-20 Nov 2026 (Model Credit Policy tab). Risk rating scale set by CORE-SVC-07 (20 Nov 2026). Done 20 Nov 2026: the critical-credit-error definition (Section 3).
+- [x] Formula library: reconcile all proposed F-CORE, F-RES, F-MF and F-COM IDs. Done: Formula Library tab.
+- [x] State law table: row ID format and content for licensing, usury, prepayment and foreclosure.
+
+  Done 20 Nov 2026 for OH, NC, IN and CA. Add a state before using a deal located there.
+- [x] Running deals file: one deal per family to replace the illustrative numbers. Done: Running Deals tab.
 - [ ] Decisions marked `[CONFIRM]`: committee role, time-to-certificate targets, certificate life, VERIFY re-check cycle.
-- [ ] Whether FinCEN CDD beneficial-ownership rules and federal flood requirements bind us as a lender type.
+- [x] Whether FinCEN CDD beneficial-ownership rules and federal flood requirements bind us as a lender type. Answered in C7 and C9: neither binds a non-bank lender directly; we follow CDD by policy (CORE-KYC-02).
 
 **Suggested reviewers**
 

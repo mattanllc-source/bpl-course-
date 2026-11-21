@@ -163,6 +163,8 @@ Every loan goes to a US entity, guaranteed by every 20% owner, with at least one
 | CORE-BOR-05 | A spouse is not required to sign as guarantor if the guarantor qualifies alone. A spouse who is a 20% owner signs as an owner. | LEGAL | \[VERIFY: 12 CFR 1002.7(d); FDIC FIL-9-2002; checked 18 Nov 2026\] |
 | CORE-BP-01 | Borrower and every guarantor sign a business-purpose and non-occupancy certification before closing. | LEGAL | Standard in BPL guidelines (FundLoans Arete, Oct 2025). \[VERIFY: 12 CFR 1026.3(a) and commentary; checked 18 Nov 2026\] |
 | CORE-BP-02 | No guarantor or relative may occupy, or intend to occupy, a 1-4 unit collateral property. A red flag stops the file until a credit officer clears it. | LEGAL | Occupancy decides consumer coverage. \[VERIFY: Official Interpretation 3(a)-4, 14-day test; checked 18 Nov 2026\] |
+| CORE-BP-03 | Before the term sheet, check the property state's State Law Table row. Proceed only if we hold every lender or broker licence it lists, or meet a listed exemption. A state with no row gets no term sheet until one is added. | LEGAL | Licensing varies by state: California licenses commercial lenders; Ohio and North Carolina license consumer-purpose loans only. Added 20 Nov 2026 with C10. \[VERIFY: State Law Table licence columns; checked 20 Nov 2026\] |
+| CORE-BP-04 | On any refinance with cash out, the borrower states the use of proceeds in writing. If more than half will go to personal, family or household use, treat the loan as consumer purpose and decline. No exception (CORE-EXC-03). | LEGAL | Mirrors Ohio's 'more than half' consumer-purpose test and closes the cash-out gap left by the Reg Z rental rule. Added 20 Nov 2026 with C1. \[VERIFY: OAC 1301:8-7-02(F); Reg Z comment 3(a)-3; checked 20 Nov 2026\] |
 
 **Credit and background**
 
@@ -256,7 +258,8 @@ Residential loans carry full-recourse guaranties; multifamily and commercial bri
 | CORE-DOC-01 | Residential loans (RTL and DSCR): full-recourse guaranty of payment from every guarantor under CORE-BOR-03. | JUDGMENT | Market is mixed: some RTL lenders offer non-recourse (Lima One via FlipperForce, N.D.). Full recourse is the conservative teaching default |
 | CORE-DOC-02 | Multifamily and commercial bridge: non-recourse, with full recourse for fraud, misapplied funds, unpermitted transfer or voluntary bankruptcy. Carve-out guaranty from the qualifying guarantor. | MARKET | Institutional bridge is "generally non-recourse with standard carve-outs" ([Arbor, Structured Financing Bridge, 2 Sep 2025](https://arbor.com/wp-content/uploads/2025/04/Structured-Financing-Bridge-090225.pdf)) |
 | CORE-DOC-03 | Any loan with future funding or construction adds a completion guaranty. Multifamily and commercial add an environmental indemnity. | JUDGMENT | Completion risk sits with the sponsor; not separately sourced in Core research |
-| CORE-DOC-04 | Guaranty and remedy terms must be checked against state anti-deficiency and one-action rules before term sheet. | LEGAL | \[VERIFY: state law table; checked 18 Nov 2026\] |
+| CORE-DOC-04 | Guaranty and remedy terms must be checked against state anti-deficiency and one-action rules before term sheet. | LEGAL | \[VERIFY: State Law Table, deficiency column, SLT-XX-01/-02; checked 20 Nov 2026\] |
+| CORE-DOC-05 | Every guaranty on California collateral includes the guarantor waivers allowed by Civ. Code 2856, including those for anti-deficiency, one-action and election-of-remedies defences. Without them, foreclose judicially if the guaranty is needed. | LEGAL | CCP 580d(b): the borrower's protection does not affect guarantor liability. Civ. Code 2856(a)(3) and (d) let guarantors waive real-property and election-of-remedies defences. Added 20 Nov 2026. \[VERIFY: SLT-CA-01; checked 20 Nov 2026\] |
 
 **Third-party reports (every loan; families add more)**
 
@@ -266,8 +269,13 @@ Residential loans carry full-recourse guaranties; multifamily and commercial bri
 | CORE-VAL-02 | Appraisal effective date no more than 120 days before closing. | JUDGMENT | CLS cites 6 months as the outer limit; 120 days is the conservative choice |
 | CORE-VAL-03 | Every appraisal gets an internal or third-party desk review. BPOs and AVMs are secondary checks only. | JUDGMENT | Reflects rating-agency focus on valuation (DBRS, May 2026); review depth not sourced |
 | CORE-CLS-01 | Title commitment with lender's policy; entity documents and good-standing certificate; credit, background and OFAC under 2A. | JUDGMENT | Standard closing items; not separately sourced in Core research |
+| CORE-CLS-02 | The closing agent is a title agent or approved attorney of a title insurer. An ALTA closing protection letter naming the lender is in hand before funds move. Written closing instructions list every condition, the exact disbursements and the policy to be issued. | MARKET | A CPL indemnifies the lender for the agent's fraud or dishonesty or failure to follow written closing instructions (ALTA CPL form; Starfield & Smith, 2016, OLD). Cover depends on the insurer's solvency (MBA Newslink). Added 20 Nov 2026 with C11. \[VERIFY: insurer's CPL form\] |
+| CORE-CLS-03 | Funding needs a signed checklist showing every condition cleared, including a same-day OFAC re-run. One person prepares the wire and a second releases it. Instructions are verified under CORE-KYC-07 and match the CPL agent's escrow account. Receipt is confirmed with the agent by the number on file. | JUDGMENT | Real estate fraud losses $275.1 million and BEC over $3 billion in 2025; voice cloning now used in BEC (FBI IC3 2025 report, via ALTA, Apr 2026, and SecureWorld). Two-person release not separately sourced. Added 20 Nov 2026. |
+| CORE-CLS-04 | Prepaid interest is collected at closing on the initial funding, from the funding day (counted) to month-end (F-CORE-33). Regular interest is billed monthly in arrears from the first of the next month. | MARKET | Per diem interest from closing to month-end is standard mortgage practice (Rocket Mortgage; Virginia Housing); private DSCR lenders call it stub interest (BiggerPockets lender post). Consumer sources applied by analogy. Added 20 Nov 2026. |
+| CORE-CLS-05 | Every trailing document is logged at funding: recorded security instrument, final lender's title policy, recorded assignment of leases and rents and UCC filings where used. Each is chased until received; open items are reported monthly. | JUDGMENT | Until recording, the lien rests on the title commitment and CPL. Monthly reporting matches CORE-CONC-07. Added 20 Nov 2026. |
 | CORE-INS-01 | Hazard insurance at replacement cost, general liability, flood determination; builder's risk on construction. Lender named as mortgagee. | JUDGMENT | Standard; coverage amounts set per family. Flood rules \[VERIFY: 42 USC 4012a(b) mandatory purchase binds regulated lending institutions, not non-bank lenders directly; NFIP authorized only to 11 Dec 2026 (CRS R44593, 5 Oct 2026); checked 20 Nov 2026\] |
 | CORE-INS-02 | Where taxes and insurance are escrowed, collect a cushion at closing of 2 months' deposits, one-sixth of the annual total (F-CORE-35). | JUDGMENT | Mirrors the consumer cap in 12 CFR 1024.17(c)(5); RESPA exempts business-purpose loans under 1024.5(b)(2), so this is a benchmark, not a legal duty \[VERIFY: eCFR, checked 20 Nov 2026\]. Set by the course owner, 20 Nov 2026 |
+| CORE-INS-03 | Any building in a FEMA special flood hazard area (Zone A or V) carries flood cover of at least the lesser of the loan amount and the building's replacement cost. Use the NFIP up to its cap, plus private or excess cover above it. Lender named as mortgagee. This is what "flood where required" means in MF-GEN-10 and COM-GEN-16. | JUDGMENT | Mirrors the mandatory purchase rule for regulated lenders, which does not bind us directly \[VERIFY: 42 USC 4012a(b); NFIP caps 44 CFR 61.6; checked 20 Nov 2026\]. Set by the course owner, 20 Nov 2026 |
 
 **Pricing structure (CORE-PRC)**
 
@@ -275,7 +283,7 @@ Residential loans carry full-recourse guaranties; multifamily and commercial bri
 | --- | --- | --- | --- |
 | CORE-PRC-01 | Rate = tier base rate + adjusters (F-CORE-28). Points are set by tier, never below 1.00. | MARKET | Market prices by experience, FICO and leverage (Huge Capital, N.D.; Crestmont, Jun 2026); 1-3 points typical (Mortgage-Info, Oct 2026) |
 | CORE-PRC-02 | RTL grid: see table below. Final rate must stay within 8.50%-12.75%. | JUDGMENT | Grid placed inside the 8.5-12% typical band (Mortgage-Info, Oct 2026; New Silver 8.5-11%, N.D.); allocation by tier is a recommendation |
-| CORE-PRC-03 | Every rate, point and fee combination is tested against the state usury and fee rules before term sheet. | LEGAL | \[VERIFY: state law table\] |
+| CORE-PRC-03 | Every rate, point and fee combination is tested against the state usury and fee rules before term sheet. | LEGAL | \[VERIFY: State Law Table, usury and fee columns, SLT-XX-01/-02; checked 20 Nov 2026\] |
 | CORE-PRC-04 | Multifamily and commercial grids are set in their family policies. | JUDGMENT | Different spread drivers; see later parts |
 
 **RTL pricing grid (illustrative course figures)**
@@ -310,7 +318,17 @@ Rate = \min(\max(BaseRate_{tier} + \sum Adjusters,\ 8.50\%),\ 12.75\%)
 | --- | --- | --- | --- |
 | CORE-SVC-01 | An extension needs: no default, payments current, family progress test met, fee paid, and an updated value if requested. | JUDGMENT | Servicers evaluate extension requests against set terms (Mayer Brown, Jun 2023, OLD) |
 | CORE-SVC-02 | RTL extension: 3 months per extension, at most 2, fee 0.50 point of the commitment each. | JUDGMENT | Market 0.5-1 point per 3-6 months (Mortgage-Info, Oct 2026, single source); low end of the fee is matched with the short term |
-| CORE-SVC-03 | Default interest = note rate + 5.00%, capped by state usury. | JUDGMENT + LEGAL | Not sourced in Core research. \[VERIFY: state law table\] |
+| CORE-SVC-03 | Default interest = note rate + 5.00%, capped by state usury. | JUDGMENT + LEGAL | Not sourced in Core research. \[VERIFY: State Law Table, default interest column; CA bars it on the full balance before maturity (SLT-CA-01); checked 20 Nov 2026\] |
+| CORE-SVC-04 | Late fee = 5% of the late installment, charged once, only after 10 days. Never charged on the full balance or the balloon at maturity. Where the State Law Table shows a lower cap, the cap applies. | MARKET + LEGAL | Lenders often charge 5% of the unpaid installment (Richards Layton & Finger, Delaware Banker, Jun 2026). California broker-arranged loans cap at 10% after 10 days (B&P 10242.5); NC caps 24-1.1 loans at 4% (SLT-NC-01). Fees on the whole balance are penalties in California (Honchariw, 2022). Added 20 Nov 2026. \[VERIFY: State Law Table; checked 20 Nov 2026\] |
+| CORE-SVC-05 | Before each draw: third-party inspection of work in place against budget lines; conditional lien waivers for this draw and unconditional waivers for the last; title date-down with no new liens; insurance in force; loan in balance (F-RES-25), with any shortfall deposited by the borrower first. | MARKET | Each draw needs inspection, budget analysis, lien waivers and compliance review (Built, 2025); date-down confirming no mechanics' liens (Live Oak Bank draw requirements, N.D.); title update per draw (Rabbet draw package standard). Added 20 Nov 2026 with C12. |
+| CORE-SVC-06 | Reporting: MF and COM rent roll and operating statement monthly within 45 days of month-end; borrower and guarantor statements annually within 90 days of year-end; insurance evidence before expiry; tax payment confirmed each cycle unless escrowed; site inspection at each draw and annually. A late item is a reporting default after written notice. | MARKET + JUDGMENT | Sample loan agreements: monthly rent roll and operating statement 45 days after month-end; annual statements 90 days after year-end (Law Insider clause samples). Annual inspection mirrors agency surveillance (Fannie Mae Multifamily Guide Part V Ch. 5); frequency is JUDGMENT. Added 20 Nov 2026. |
+| CORE-SVC-07 | Risk rating at each monthly review: 1 Pass; 2 Pass/Watch (a trigger fired, still performing); 3 Special mention (potential weakness); 4 Substandard (well-defined weakness, loss possible); 5 Doubtful/Loss. Ratings 2-5 go on the watch list with an action and owner; reviewed monthly. Maturity within 90 days with no confirmed exit is at least a 2 (90 days is JUDGMENT, decided 20 Nov 2026). | LEGAL + MARKET | Regulators share the scale special mention, substandard, doubtful, loss; all else is pass; many banks split pass further (OCC Bulletin 2026-56, 10 Nov 2026). Refinance risk reviewed near maturity (OCC Bulletin 2024-29). Added 20 Nov 2026. \[VERIFY: OCC bulletins; checked 20 Nov 2026\] |
+| CORE-DEF-01 | Before any workout discussion, the borrower and every guarantor sign a pre-negotiation letter: talks, partial payments and delays waive no rights; only a signed written agreement changes the loan. | MARKET | Fannie Mae requires a signed pre-negotiation letter before any workout discussion, to block oral-modification claims (Fannie Mae pre-negotiation form instructions, N.D.). Added 20 Nov 2026 with C13. |
+| CORE-DEF-02 | Every resolution memo compares forbearance, modification, deed in lieu and foreclosure by F-CORE-23 net loss, including lost interest, legal, receiver and sale costs and income collected. Guarantor recovery is shown separately. Recommend the lowest expected loss, or explain why not. | JUDGMENT | Regulators view prudent accommodations and workouts as often in the interest of lender and borrower (Interagency Policy Statement, 29 Jun 2023). Added 20 Nov 2026. |
+| CORE-DEF-03 | Forbearance or modification is written and time-limited, and needs: a signed pre-negotiation letter; guarantor reaffirmation; all net operating income paid to the lender; current taxes and insurance; a plan with dated milestones. Default interest is waived only on full performance. Approval per the authority matrix for the original loan. | MARKET + JUDGMENT | Fannie Mae makes remittance of net operating income a condition of workout talks (pre-negotiation form, N.D.). Other conditions JUDGMENT. Added 20 Nov 2026. |
+| CORE-DEF-04 | A deed in lieu is accepted only after: a title, UCC and judgment search with no junior liens or each released; a borrower estoppel affidavit; anti-merger wording and, where available, a non-merger title endorsement; and an environmental review. Otherwise foreclose. | MARKET | Junior liens are not extinguished by a deed in lieu (WealthManagement.com; Blank Rome); estoppel affidavit required by title insurers (Virtual Underwriter). New York may bar non-merger endorsements (First American blog). Added 20 Nov 2026. California offers CLTA 107.11 (non-merger after lender acquires title), which needs anti-merger recitals in the deed of trust and note (Stewart guideline); availability elsewhere varies by insurer. \[VERIFY: insurer for OH, NC, IN\] |
+| CORE-DEF-05 | In judicial-foreclosure states, seek a receiver on multifamily and commercial loans at filing, where the loan documents allow. In power-of-sale states, seek one if the sale will take longer than the property can safely run unmanaged. | MARKET | Without a receiver the mortgagor keeps possession and rents during foreclosure (National Law Review, Wisconsin). Added 20 Nov 2026. Written consent in the loan documents is a statutory ground in OH (ORC 2735.01(A)(2)(b)), IN (IC 32-30-5-1) and NC (G.S. 1-507.24(f)(2)); CA uses CCP 564(b)(11). So every deed of trust and mortgage must include receiver consent. \[VERIFY: State Law Table group (b) foreclosure column; checked 20 Nov 2026\] |
+| CORE-DEF-06 | REO at title: new appraisal; record at F-CORE-42 (fair value less cost to sell); secure, insure and manage; list with a broker under a written sale plan; re-test value quarterly and write down if it falls. Every offer goes to the approver for the original loan. | LEGAL + JUDGMENT | Banks record foreclosed real estate at fair value less cost to sell; any excess loan amount is a loss (FDIC FIL-62-2008; Federal Reserve OREO Q&A). Quarterly re-test is JUDGMENT. Added 20 Nov 2026. |
 
 ## Core Part 2D: Concentration, exceptions and approval authority
 
@@ -371,6 +389,14 @@ Every approval needs a written underwriter recommendation and a separate approve
 | Credit committee (3 voters incl. Chief Credit Officer) | Above $2,000,000 | Above $5,000,000 | Up to two: leverage +5.0 points; DSCR −0.10x; FICO −40; liquidity −25% of requirement | Beyond these limits the loan is declined; no one has authority |
 
 Committee approval is also required, at any size, for: related-party or employee loans, Tier 0 ground-up, and any CONC breach.
+
+**Approval process (added 20 Nov 2026 with C14)**
+
+| Rule ID | Rule (course baseline) | BASIS | Rationale (Part 1 source) |
+| --- | --- | --- | --- |
+| CORE-AUTH-02 | Every credit memo has eleven sections in order: request and recommendation; borrower and guarantors; property and valuation; cash flow or budget; sizing table with rule and formula IDs; exit with cushion; state law check; portfolio impact; risks paired with mitigants; risk rating; conditions to close. | MARKET | Regulators expect a credit approval document before origination, renewal, annual review or workout (NCUA Examiner's Guide); memos end in a rating and recommendation (Abrigo) |
+| CORE-AUTH-03 | Committee: three voters including the Chief Credit Officer; the underwriter presents but does not vote. Two votes decide; the CCO may veto an approval, not a decline. Minutes record each vote, dissent with reasons, and every condition. A tabled loan returns with written answers. | JUDGMENT | Separation of underwriting and approval follows CORE-AUTH-01 and OCC loan-approval guidance (Mar 2022) |
+| CORE-AUTH-04 | A reviewer independent of underwriting re-tests a sample of new loans each year, including every committee loan: sizing, rule citations and risk rating. Findings go to the CCO; a critical credit error (Main Section 3) goes to committee within one month. | MARKET + JUDGMENT | An independent source, usually loan review, should periodically validate ratings (Federal Reserve, credit risk guidance); sample and timing are JUDGMENT |
 
 ---
 
@@ -555,7 +581,7 @@ Most programs size on gross rent divided by PITIA, with a 1.00x minimum. Purchas
 | Rate | 6.0% | 6.0-8.0% | 8.75% | RentalRealEstate, Apr 2026; Griffin from 6.375%, Aug 2026 |
 | Spread vs agency investor loans | 0.5 point | 1-3 points | 3 points | REInvestorGuide (N.D.); MortgageQuote, 2026 |
 | Term | 30-year fixed | 30-year fixed or 5/6, 7/6 ARM | 40-year with 10-year IO | Spring EQ; Plaza; CIVIC (N.D.) |
-| Prepayment penalty | None (priced up) | 5-year step-down 5/4/3/2/1 | 6 months' interest on amount over 20% | Spring EQ, Jan 2026; AD Mortgage, Aug 2026. State limits apply \[VERIFY: state law table\] |
+| Prepayment penalty | None (priced up) | 5-year step-down 5/4/3/2/1 | 6 months' interest on amount over 20% | Spring EQ, Jan 2026; AD Mortgage, Aug 2026. State limits apply \[VERIFY: State Law Table, prepayment column, SLT-XX-01\] |
 | Pool leverage (rated) | n/a | WA CLTV 65.5% | n/a | KBRA, PMT 2026-DSC1, 19 Oct 2026 |
 
 ## Residential Part 1F: DSCR portfolio and blanket loans
@@ -663,7 +689,7 @@ Every residential loan is secured by a non-owner-occupied 1-4 unit property wort
 | RES-GEN-07 | Recourse: full-recourse guaranty on every residential loan (CORE-DOC-01). | JUDGMENT | Core decision D-CORE-09 |
 | RES-GEN-08 | Insurance: vacant or builder's risk cover during rehab or construction; landlord policy with 6 months' rent-loss cover on rentals. | JUDGMENT | Coverage types not sourced numerically |
 | RES-GEN-09 | Business purpose: no guarantor or relative may live in the property (CORE-BP-02). A guarantor's former home is eligible only if they have moved out and it is leased to a third party. | LEGAL | \[VERIFY: Official Interpretation 3(a)-4; checked 18 Nov 2026\] |
-| RES-GEN-10 | Prepayment penalties are allowed only where state law permits them (DSCR products). | LEGAL | State limits noted in lender guides (A&D Mortgage, Aug 2026). \[VERIFY: state law table\] |
+| RES-GEN-10 | Prepayment penalties are allowed only where state law permits them (DSCR products). | LEGAL | State limits noted in lender guides (A&D Mortgage, Aug 2026). \[VERIFY: State Law Table, prepayment column, SLT-XX-01\] |
 
 **Third-party reports by product**
 
@@ -814,7 +840,7 @@ DSCR = \frac{QualifyingMonthlyRent}{P\&I_{fully\ amortizing\ at\ note\ rate} + T
 | RES-DSCR-08 | Post-closing reserves in months of PITIA: 3 (loan to $1M); 6 ($1M-$2M). Cash-out proceeds do not count. | MARKET | A&D, Aug 2026; Plaza matrix; Forward Lending excludes cash-out, May 2026 |
 | RES-DSCR-09 | Mortgage history 0 × 30 days late in the last 12 months. | JUDGMENT | 1x30x12 (FundLoans) and 0x30x12 (Forward Lending); stricter one used |
 | RES-DSCR-10 | Term: 30-year fixed, fully amortizing. 5/6 and 7/6 ARMs allowed. | MARKET | Spring EQ, Plaza, CIVIC |
-| RES-DSCR-11 | Prepayment: 5-year step-down 5/4/3/2/1 where allowed; no-penalty option priced +0.75%. | MARKET + LEGAL | 5/4/3/2/1 typical (Spring EQ, Jan 2026). \[VERIFY: state law table\] |
+| RES-DSCR-11 | Prepayment: 5-year step-down 5/4/3/2/1 where allowed; no-penalty option priced +0.75%. | MARKET + LEGAL | 5/4/3/2/1 typical (Spring EQ, Jan 2026). \[VERIFY: State Law Table, prepayment column, SLT-XX-01\] |
 | RES-DSCR-12 | Pricing: DSCR grid below; 1.00 point. | JUDGMENT | Market 6.0-8.0% (RentalRealEstate, Apr 2026); grid allocation is a recommendation |
 
 **RES-DSCR-03 maximum LTV matrix (DSCR 1.00x or higher)**
@@ -866,7 +892,7 @@ MaxLoan_{DSCR} = \frac{QualifyingRent / DSCR_{min} - (Taxes + Insurance + HOA)}{
 | RES-PF-03 | Min portfolio DSCR 1.20x (F-RES-14); no single property below 0.80x. | MARKET | 1.00-1.20x; CoreVest sizes to 1.20x (FAQ). The 0.80x floor is JUDGMENT |
 | RES-PF-04 | At least 90% of units leased at closing. | JUDGMENT | CIVIC 90% (N.D.; single source) |
 | RES-PF-05 | Release price 115% of the property's allocated loan amount (F-RES-11). The rest must still pass RES-PF-02 and RES-PF-03 after release. | JUDGMENT | Release terms are set loan by loan (Janover, Oct 2026); not published |
-| RES-PF-06 | Term 5, 7 or 10 years fixed on 30-year amortization; step-down prepayment over the first 5 years. | MARKET + LEGAL | CoreVest terms (N.D.); 5/4/3/2/1 (Easy Street). \[VERIFY: state law table\] |
+| RES-PF-06 | Term 5, 7 or 10 years fixed on 30-year amortization; step-down prepayment over the first 5 years. | MARKET + LEGAL | CoreVest terms (N.D.); 5/4/3/2/1 (Easy Street). \[VERIFY: State Law Table, prepayment column, SLT-XX-01\] |
 | RES-PF-07 | Escrow taxes and insurance; capital reserve $250 per unit per year; 6 months' aggregate PITIA in liquidity. | JUDGMENT | Market often has no capex escrow (Rental Home Financing); conservative choice |
 | RES-PF-08 | Pricing: DSCR grid less 0.25%. | JUDGMENT | Portfolio rates from 6.25-6.3% (Lima One, CIVIC) |
 
@@ -1055,7 +1081,7 @@ Non-QM lenders extend residential-style DSCR loans to 5-8 or 5-10 unit buildings
 | Experience | First-time investors allowed | One prior 5+ unit property, or three 1-4 unit rentals | n/a | A&D (N.D.); Ridge Street, May 2026 |
 | Vacancy | n/a | Max 2 vacant units | n/a | A&D (N.D.) |
 | Credit events | 36 months | 36 months | n/a | LoanStream, Feb 2025; Forward Lending, May 2026 |
-| Prepayment | n/a | Up to 3-5 year step-down; state limits | n/a | LoanStream, Forward Lending. \[VERIFY: state law table\] |
+| Prepayment | n/a | Up to 3-5 year step-down; state limits | n/a | LoanStream, Forward Lending. \[VERIFY: State Law Table, prepayment column, SLT-XX-02\] |
 | Rate | 6.50% | 6.50-8.25% (30-year fixed, Sep 2026 surveys, all DSCR) | 8.25% | FreeFinCalc, Oct 2026 |
 
 ## Multifamily Part 1F: Small-balance multifamily term loans (NOI-based)
@@ -1198,7 +1224,7 @@ Every multifamily loan is underwritten on a reconciled rent roll and T-12, with 
 | MF-GEN-07 | Sponsor experience: at least 2 apartment properties (5+ units) owned or managed in the last 5 years, one at least half the subject's unit count. | JUDGMENT | 5+ unit DSCR lenders want one 5+ unit property or three 1-4 rentals (Ridge Street, May 2026); bridge needs more |
 | MF-GEN-08 | Reports: MAI appraisal (as-is and as-stabilized), property condition report, Phase I environmental report, zoning report, flood determination. | MARKET | Greystone bridge (OLD) and Monticello (2024); agency practice |
 | MF-GEN-09 | Local rent regulation (rent control, just-cause eviction) must be checked and reflected in rent growth assumptions. | LEGAL | \[VERIFY: state and city rent regulation at the address\] |
-| MF-GEN-10 | Insurance: replacement-cost property, general liability, flood where required, 12 months' loss of rents. | JUDGMENT | Coverage amounts not sourced |
+| MF-GEN-10 | Insurance: replacement-cost property, general liability, flood where required (CORE-INS-03), 12 months' loss of rents. | JUDGMENT | Coverage amounts not sourced |
 | MF-GEN-11 | Every loan reports all three tests that apply: DSCR (definition below), debt yield, LTV/LTC. | MARKET | Lenders size on LTV, LTC, DSCR and debt yield together (Part 1A) |
 
 **The three DSCR definitions used in this policy**
@@ -1309,7 +1335,7 @@ Small 5-10 unit DSCR loans need 1.20x on gross rent ÷ PITIA, and the NCF method
 | MF-DSCR-03 | Also compute F-MF-10 on NCF. Below 1.00x is not a decline but needs credit officer review. | JUDGMENT | Some brokers size on rent roll less expenses (DSCR simulator; REInvestorGuide); teaches the gap between methods |
 | MF-DSCR-04 | Max LTV by FICO: 740+: 75% purchase / 70% rate-term / 65% cash-out; 720-739: 70 / 70 / 60; 700-719: 70 / 65 / 60; below 700 ineligible. | JUDGMENT | Forward Lending 75 / 75 / 65 at 720 (May 2026); LoanStream 75%; set 5 points lower for training |
 | MF-DSCR-05 | Reserves 6 months' PITIA; experience of one 5+ unit property or three 1-4 unit rentals held 12+ months. | MARKET | A&D 6 months (N.D.); Ridge Street, May 2026 |
-| MF-DSCR-06 | Loan $400,000 to $2,000,000; 30-year fixed; prepayment 3/2/1 step-down where allowed. | MARKET + LEGAL | A&D $400k minimum (N.D.); LoanStream up to $3M. \[VERIFY: state law table\] |
+| MF-DSCR-06 | Loan $400,000 to $2,000,000; 30-year fixed; prepayment 3/2/1 step-down where allowed. | MARKET + LEGAL | A&D $400k minimum (N.D.); LoanStream up to $3M. \[VERIFY: State Law Table, prepayment column, SLT-XX-02\] |
 | MF-DSCR-07 | Pricing: Residential DSCR grid (RES-DSCR-12) + 0.50%. | JUDGMENT | Not sourced separately |
 
 **Worked example: 8-unit building, both DSCR methods (illustrative)**
@@ -1330,7 +1356,7 @@ Small 5-10 unit DSCR loans need 1.20x on gross rent ÷ PITIA, and the NCF method
 | MF-TRM-03 | Max LTV 75% (purchase and rate-term); 70% cash-out. | MARKET | 75-80% typical; agency 75% cash-out (Greystone Fannie, 2026) |
 | MF-TRM-04 | Min debt yield 8.0% on NCF. | JUDGMENT | Not sourced for term loans; ties to bridge exit floors |
 | MF-TRM-05 | Term 5, 7 or 10 years fixed. Interest-only only at LTV 65% or less and DSCR 1.35x or more. | MARKET | Freddie full-term IO at 65% (Greystone, Apr 2026) |
-| MF-TRM-06 | Prepayment: 5-4-3-2-1 step-down (5-year term), longer terms by year. | MARKET + LEGAL | Freddie SBL options (Lument, Jul 2025). \[VERIFY: state law table\] |
+| MF-TRM-06 | Prepayment: 5-4-3-2-1 step-down (5-year term), longer terms by year. | MARKET + LEGAL | Freddie SBL options (Lument, Jul 2025). \[VERIFY: State Law Table, prepayment column, SLT-XX-02\] |
 | MF-TRM-07 | Loan $750,000 to $10,000,000. Under $2,000,000 full recourse; above, non-recourse with carve-outs. | JUDGMENT | Agencies non-recourse from $1-2M; small private loans recourse (Part 1F) |
 | MF-TRM-08 | Pricing: 7.00% base (LTV ≤ 65%, DSCR ≥ 1.35x); +0.25% for LTV 65.01-75%; +0.25% for DSCR 1.25-1.34x; +0.25% interest-only; 1.00 point. | JUDGMENT | Agency small loans 6.4-6.8% (Walker & Dunlop, Apr 2026); private premium is a recommendation |
 
@@ -1728,11 +1754,11 @@ Every commercial loan is underwritten on signed leases, a reconciled rent roll a
 | COM-GEN-09 | Estoppels from tenants paying 20%+ of rent and the top five tenants; SNDAs from tenants paying 10%+. | JUDGMENT | Standard diligence; thresholds not sourced |
 | COM-GEN-10 | A tenant paying more than 25% of rent must have a lease running past maturity, or a cash sweep applies. | JUDGMENT | Concentration control; not sourced |
 | COM-GEN-11 | Every loan reports LTV or LTC, DSCR and debt yield, on NCF. Exceptions: NNN (COM-NNN-02) and SBC DSCR (F-COM-11) test DSCR on NOI. Loan = lowest of the tests (F-COM-08). | MARKET | Lowest of LTV, DSCR and debt yield (CommercialCafe, 2026) |
-| COM-GEN-12 | Cash management: springing lockbox on all loans. Hard lockbox on office bridge and NNN Tier 2. Sweep if DSCR falls below 1.10x or a 20%+ tenant gives notice. | MARKET | Springing to hard lockbox and sweeps (Commercial Loan Direct, May 2026); trigger levels JUDGMENT |
+| COM-GEN-12 | Cash management: springing lockbox on all loans. Hard lockbox on office bridge and NNN Tier 2. Sweep if DSCR falls below 1.10x or a 20%+ tenant gives notice. Sweep DSCR = trailing 3 months' NCF, annualized, ÷ debt service actually due: interest at the note rate net of any cap payment, or scheduled P&I on amortizing loans. | MARKET | Springing to hard lockbox and sweeps (Commercial Loan Direct, May 2026); trigger levels JUDGMENT. Sweep DSCR basis set by the course owner, 20 Nov 2026 |
 | COM-GEN-13 | Reports: MAI appraisal (as-is, and as-stabilized or as-complete), property condition report, zoning report, flood determination. | MARKET | Same report set as MF-GEN-08 |
 | COM-GEN-14 | Phase I environmental report on every loan; Phase II if it finds a recognized environmental condition (dry cleaners, gas stations, auto service). | LEGAL | \[VERIFY: 40 CFR Part 312 recognizes ASTM E1527-21 from 13 Feb 2023; E1527-13 not accepted from 13 Feb 2024 (Beveridge & Diamond; EnSafe). Checked 18 Nov 2026 through law-firm summaries, not the CFR text\] |
 | COM-GEN-15 | Sponsor experience: bridge and construction need 2+ properties of the same type owned or managed in the last 5 years. Term, SBC DSCR and NNN need 1 year in the last 3. | MARKET | 1 year in 3 (eLEND, May 2026); bridge stricter (JUDGMENT) |
-| COM-GEN-16 | Insurance: replacement-cost property, general liability, flood where required, 12 months' loss of rents. | JUDGMENT | Mirrors MF-GEN-10 |
+| COM-GEN-16 | Insurance: replacement-cost property, general liability, flood where required (CORE-INS-03), 12 months' loss of rents. | JUDGMENT | Mirrors MF-GEN-10 |
 
 **F-COM-03 (existing): Commercial net cash flow**
 

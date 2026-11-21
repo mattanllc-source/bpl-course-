@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-21
+- Doc snapshots refreshed from the live Course Bible: Course Bible, Model Credit Policy, Formula Library, State Law Table (and `state-law-table.csv`), and running deals, now `running-deals.md`; the `.pdf` and `.txt` are kept but superseded (see `SNAPSHOT.md`).
+
 ## 2026-11-20
 - Repository created. Folder layout set up.
 - Snapshots of the Course Bible, policy, formula library, State Law Table and running deals added (see `SNAPSHOT.md`).
