@@ -2,7 +2,9 @@
 
 Reads modules/core/c00-c14/lesson.md, module titles and hours from docs/course-bible.md
 (Section 3, Core table), and the references the lessons cite. Writes one self-contained
-HTML page (minus two pinned CDN scripts) to exports/core-course.html, ready to publish.
+HTML page to exports/core-course.html, ready to publish. This is the redesigned
+"BPL Academy" reader. It shares the exercises folder and the formula bundler with
+scripts/course_site/ and keeps its own template, styles and app scripts in this folder.
 
 Run: python scripts/course_site/build.py
 Model policy for training - not for live lending decisions.
@@ -15,11 +17,11 @@ import shutil
 import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-TEMPLATE = pathlib.Path(__file__).with_name("template.html")
+HERE = pathlib.Path(__file__).resolve().parent
+SHARED = HERE                             # scripts/course_site: exercises, bundle_formulas.mjs, check_exercises.mjs
+TEMPLATE = HERE / "template.html"
 OUT = pathlib.Path(os.environ["BPL_OUT"]) if os.environ.get("BPL_OUT") else ROOT / "exports" / "core-course.html"
 
-# docs/SNAPSHOT.md: c00-c02 are current; c03-c14 are working drafts to check against the doc.
-DRAFT = {f"c{n:02d}" for n in range(3, 15)}
 
 REFS = [
     ("policy", "Model Credit Policy", "docs/credit-policy/model-credit-policy.md"),
@@ -40,6 +42,7 @@ AUTHOR_SECTIONS = ("Timing plan", "Alignment matrix")
 # Rules stay linked in the lesson text, where each chip shows the rule's name on hover.
 KEEP_FACTS = ("Formulas", "Running deals")
 # Author placeholders that must never reach the learner page.
+AUTHOR_NOTE_RE = re.compile(r"^\s*[*_]{0,2}Author note\b", re.I)
 PLACEHOLDER_RE = re.compile(r"^\s*(\*\*)?Review questions\.?(\*\*)?\s*Added in Phase 3\b.*$", re.I)
 
 
@@ -123,7 +126,7 @@ def clean_line(line: str) -> str:
 
 def clean_heading(h: str) -> str:
     h = re.sub(r"^(#+ )\d+\.\s+", r"\1", h)                             # "## 6. Quiz" -> "## Quiz"
-    h = re.sub(r":\s*C\d+-(quiz|ojt|jobaid|lesson)-v\d+", "", h)        # asset codes
+    h = re.sub(r":\s*C\d+-(quiz|ojt|jobaid|lesson)-v[\d.]+(?:-draft)?", "", h)   # asset codes, e.g. C3-jobaid-v1.0-draft
     h = re.sub(r"\(Objective \d+,\s*", "(", h)
     h = re.sub(r"\s*\((solo mode|one page)\)", "", h)
     h = re.sub(r"\s*\((?:Objectives? [\d,\- ]+,\s*)?\d+ minutes?\)", "", h)   # "(15 minutes)"
@@ -156,20 +159,21 @@ def learner_view(md: str) -> str:
     lines = md.replace("\r\n", "\n").split("\n")
     out, i, in_code, seen_section = [], 0, False, False
     # The page already shows the training label; drop it from the first paragraph.
-    while i < len(lines) and not lines[i].strip():
-        i += 1
-    if i < len(lines) and LABEL in lines[i]:
-        rest = lines[i].replace(LABEL, "").strip()
-        if rest:
-            out.append(rest)
-        i += 1
+    # The label sits under the "# C3: ..." title line. The notice bar shows it once, on every screen.
+    for j, l in enumerate(lines):
+        if l.startswith("## "):
+            break
+        if LABEL in l:
+            rest = l.replace(LABEL, "").strip()
+            lines[j] = "" if rest in ("", "Fictional data only.") else rest
+            break
     while i < len(lines):
         line = lines[i]
         if line.startswith("```"):
             in_code = not in_code
         if in_code:
             out.append(line); i += 1; continue
-        if PLACEHOLDER_RE.match(line):
+        if PLACEHOLDER_RE.match(line) or AUTHOR_NOTE_RE.match(line):
             i += 1; continue
         # Module facts table (the one before the first section) -> short "In this module" list.
         # Later Item/Detail tables are OJT briefs and stay.
@@ -263,11 +267,12 @@ def snapshot_note(rel: str) -> str:
         name = rel.split("/", 1)[1] if rel.startswith("docs/") else "../" + rel
         if f"`{name}`" in line:
             cells = [c.strip() for c in line.strip("|").split("|")]
-            return f"Snapshot taken {cells[1]} ({cells[2].lower()})"
+            status = re.sub(r"[*`]", "", cells[2]).strip().rstrip(".")
+            return f"Snapshot taken {re.sub(r'[*`]', '', cells[1])}. {status}."
     return "Snapshot of the live Course Bible"
 
 
-EX_DIR = pathlib.Path(os.environ["BPL_EX_DIR"]) if os.environ.get("BPL_EX_DIR") else pathlib.Path(__file__).with_name("exercises")
+EX_DIR = pathlib.Path(os.environ["BPL_EX_DIR"]) if os.environ.get("BPL_EX_DIR") else SHARED / "exercises"
 
 
 def run_node(*args: str) -> str:
@@ -282,7 +287,7 @@ def run_node(*args: str) -> str:
 
 def bundle_and_exercises() -> tuple[str, dict]:
     """Browser bundle of the core formulas, plus every exercise spec, validated against it."""
-    here = pathlib.Path(__file__).parent
+    here = SHARED
     bundle = run_node(str(here / "bundle_formulas.mjs"))
     tmp = ROOT / "exports" / ".bplf.js"
     tmp.parent.mkdir(exist_ok=True)
@@ -298,6 +303,85 @@ def bundle_and_exercises() -> tuple[str, dict]:
     return bundle.replace("</script", "<" + chr(92) + "/script"), ex
 
 
+MONTHS = {m: i + 1 for i, m in enumerate("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split())}
+DATE_RE = re.compile(r"\b(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})\b")
+
+
+def module_meta(raw: str) -> dict:
+    """Version, last-reviewed date and CPE credits from the lesson's own header table."""
+    cells = {}
+    for line in raw.splitlines():
+        if line.startswith("## "):
+            break
+        m = re.match(r"^\|\s*([^|]+?)\s*\|\s*(.*?)\s*\|\s*$", line)
+        if m:
+            cells[m.group(1).lower()] = m.group(2)
+    meta = {"version": None, "reviewed": None, "credits": None, "projected": False}
+    # Newest version named in the Status cell or the change log ("v1.0-draft, 22 Nov 2026: ...").
+    found = re.findall(r"^(v\d[\d.]*(?:-draft)?)", cells.get("status", ""))
+    found += re.findall(r"\b(v\d[\d.]*(?:-draft)?),? \d{1,2} [A-Z][a-z]{2} \d{4}", cells.get("change log", ""))
+    if found:
+        num = lambda v: [int(x) for x in re.findall(r"\d+", v)]
+        meta["version"] = max((v.rstrip(".") for v in found), key=num)
+    hours = cells.get("hours", "") or cells.get("cpe credits", "") or cells.get("credits", "")
+    cm = re.search(r"(\d+(?:\.\d+)?)\s*CPE credits?", hours)
+    if cm:
+        meta["credits"] = float(cm.group(1))
+        meta["projected"] = bool(re.search(r"project", hours, re.I))
+    # Last reviewed: the newest date in the self-review heading or the change log.
+    sr = re.search(r"^## Self-review.*$", raw, re.M)
+    dates = (DATE_RE.findall(sr.group(0)) if sr else []) + DATE_RE.findall(cells.get("change log", ""))
+    if dates:
+        d = max(dates, key=lambda x: (int(x[2]), MONTHS[x[1]], int(x[0])))
+        meta["reviewed"] = f"{int(d[0])} {d[1]} {d[2]}"
+    return meta
+
+
+def glossary() -> list:
+    """The Course Bible glossary (section 6): one entry per term, with its family."""
+    md = read("docs/course-bible.md")
+    m = re.search(r"^## 6\. Glossary.*?(?=^## 7\. )", md, re.M | re.S)
+    if not m:
+        raise SystemExit("Glossary (section 6) not found in docs/course-bible.md")
+    out, family = [], ""
+    for line in m.group(0).splitlines():
+        h = re.match(r"^### 6\.\d+\s+([A-Za-z]+)", line)
+        if h:
+            family = h.group(1)
+            continue
+        cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip())[1:-1]]
+        if len(cells) >= 5 and cells[0].isdigit():
+            out.append({"n": int(cells[0]), "term": cells[1], "def": cells[2],
+                        "ex": "" if cells[3].lower() in ("none", "-", "") else cells[3],
+                        "first": cells[4], "family": family})
+    return out
+
+
+STATES = ("Ohio", "North Carolina", "Indiana")
+
+
+def deals() -> list:
+    """Card facts for the three running deals, taken verbatim from data/running-deals/running-deals.md."""
+    md = read("data/running-deals/running-deals.md")
+    out = []
+    for m in re.finditer(r"^## (RD-[A-Z]+-\d+): (.+?) \((\w+)\)\s*$", md, re.M):
+        body = md[m.end():]
+        nxt = re.search(r"^## ", body, re.M)
+        body = body[:nxt.start()] if nxt else body
+        intro = next((l.strip() for l in body.splitlines() if l.strip() and not l.startswith(("|", "#", "*"))), "")
+        first = re.match(r"(.*?[.!?])(\s|$)", intro)
+        bm = re.search(r"^\|\s*Borrower\s*\|\s*(.+?)\s*\|\s*$", body, re.M)
+        borrower = bm.group(1) if bm else ""
+        state = next((s for s in STATES if s in borrower), "")
+        out.append({"id": m.group(1), "title": m.group(2), "family": m.group(3),
+                    "summary": first.group(1) if first else intro, "borrower": borrower.split(",")[0], "state": state})
+    return out
+
+
+def inline_js(path: pathlib.Path) -> str:
+    return path.read_text(encoding="utf-8").replace("</script", "<" + chr(92) + "/script")
+
+
 def main() -> None:
     FORMULA_NAMES.update(formula_names())
     table = core_table()
@@ -307,19 +391,29 @@ def main() -> None:
         key, code = f"c{n:02d}", f"C{n}"
         if code not in table:
             raise SystemExit(f"{code} missing from the Course Bible Core table")
-        md = learner_view(read(f"modules/core/{key}/lesson.md"))
-        modules.append({"key": key, "code": code, **table[code], "draft": key in DRAFT, "md": md,
+        raw = read(f"modules/core/{key}/lesson.md")
+        md = learner_view(raw)
+        modules.append({"key": key, "code": code, **table[code], **module_meta(raw), "md": md,
                         "exercises": exercises.get(key, [])})
     refs = [{"key": k, "title": t, "note": snapshot_note(p), "md": read(p)} for k, t, p in REFS]
-    data = json.dumps({"modules": modules, "refs": refs}, ensure_ascii=False)
+    gloss = glossary()
+    data = json.dumps({"modules": modules, "refs": refs, "glossary": gloss, "deals": deals()}, ensure_ascii=False)
     data = data.replace("</", "<\\/")  # never close the JSON <script> early
-    html = (TEMPLATE.read_text(encoding="utf-8").replace("/*__BPLF__*/", bplf)
-            .replace("/*__DATA__*/", data))
+    app = "\n".join(inline_js(f) for f in sorted((HERE / "app").glob("*.js")))
+    html = TEMPLATE.read_text(encoding="utf-8")
+    for mark, text in (("/*__CSS__*/", (HERE / "styles.css").read_text(encoding="utf-8")),
+                       ("/*__MARKED__*/", inline_js(HERE / "vendor" / "marked.min.js")),
+                       ("/*__PURIFY__*/", inline_js(HERE / "vendor" / "purify.min.js")),
+                       ("/*__BPLF__*/", bplf), ("/*__APP__*/", app), ("/*__DATA__*/", data)):
+        if mark not in html:
+            raise SystemExit(f"template.html is missing the {mark} placeholder")
+        html = html.replace(mark, text)
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(html, encoding="utf-8")
     hours = sum(m["hours"] for m in modules)
     nex = sum(len(v) for v in exercises.values())
     print(f"{nex} exercises in {len(exercises)} modules")
+    print(f"{len(gloss)} glossary terms")
     print(f"{len(modules)} modules ({hours} hours), {len(refs)} references -> {OUT} "
           f"({OUT.stat().st_size / 1024:.0f} KB)")
 
