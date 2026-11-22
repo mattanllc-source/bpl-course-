@@ -6,10 +6,11 @@
 | Hours | 3 (180 minutes) plus a 45-minute OJT task |
 | Prerequisite | C11 |
 | Bloom's levels | 3 and 4 (LD-02) |
-| Formulas | F-CORE-01, -05, -22, -32; F-RES-06, -18, -25 (SUGGESTED); F-COM-19 |
-| Rules | CORE-SVC-01, -02, -05 to -07; RES-GEN-11; RES-FF-08, -09, -11; MF-BR-09 to -11; COM-BR-02, -03, -05; COM-GEN-12; CORE-CLS-04, -05 |
+| Formulas | F-CORE-01, -05, -22, -32, -42; F-RES-06, -18, -25 (SUGGESTED); F-COM-19 |
+| Rules | CORE-SVC-01, -02, -05 to -08; RES-GEN-11; RES-FF-08, -09, -11; MF-BR-09 to -11; COM-BR-02, -03, -05; COM-GEN-12; CORE-CLS-04, -05; decision D-CORE-23 |
 | Running deals | Worked examples: RD-RES-01 Maple Run (draws, extension) and RD-COM-01 Birchwood Plaza (sweep). Practice: RD-MF-01 Cedar Court (LD-08) |
-| Status | v0. Self-review against Bible Section 7 is at the end of this tab |
+| Status | v0.2. Self-review against Bible Section 7 is at the end of this tab |
+| Change log | v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -47,7 +48,7 @@ By the end of C12, you will be able to:
 
 A rehab or capex holdback is paid in arrears, after we see the work (RES-FF-09, MF-BR-10, COM-BR-05). Interest runs on drawn funds only (RES-FF-08).
 
-Every draw is a small new loan decision. Lenders check the inspection, the budget, the lien waivers and the title before money moves [VERIFY: Built, construction lending primer, 2025; checked 20 Nov 2026]. Missing lien waivers matter because unpaid trades can file mechanics' liens. Depending on state law, those liens can rank ahead of our later advances [VERIFY: ORC 1311.13 and 1311.14 (OH), G.S. 44A-11.1 and -11.2 (NC), IC 32-28-3 (IN); not yet checked].
+Every draw is a small new loan decision. Lenders confirm the work is done, and review lien waivers and a title date-down, before money moves [VERIFY: Built, "Title and lien waiver requirements for draw requests", getbuilt.com, 14 Nov 2017, an industry source; checked 22 Nov 2026]. Our draw rule adds the budget check (CORE-SVC-05). Missing lien waivers matter because unpaid trades can file mechanics' liens. Depending on state law, those liens can rank ahead of our later advances [VERIFY: ORC 1311.13 and 1311.14 (OH), G.S. 44A-11.1 and 44A-11.2(m) (NC), IC 32-28-3-16 (IN), read on FindLaw's state code mirrors because the official sites blocked access; checked 22 Nov 2026].
 
 **New rule CORE-SVC-05.** Before each draw:
 
@@ -142,7 +143,7 @@ A late report counts as a reporting default after written notice. It also goes o
 
 ### T5. Risk rating and the watch list (Objective 5, 15 minutes)
 
-US bank regulators share one scale. Special mention, substandard, doubtful and loss mark rising weakness; everything else is pass [VERIFY: OCC Bulletin 2026-56, 10 Nov 2026; checked 20 Nov 2026]. Many banks split pass further, for example a pass/watch grade. We use the same scale so our ratings read the way any examiner or buyer expects.
+US bank regulators share one scale. Special mention, substandard, doubtful and loss mark rising weakness; everything else is pass [VERIFY: OCC Bulletin 2026-56, 10 Nov 2026; checked 22 Nov 2026]. Many banks split pass further, for example a pass/watch grade. We use the same scale so our ratings read the way any examiner or buyer expects.
 
 **New rule CORE-SVC-07.**
 
@@ -150,13 +151,32 @@ US bank regulators share one scale. Special mention, substandard, doubtful and l
 | --- | --- | --- |
 | 1 Pass | Performing to plan | Draws on schedule; reports on time |
 | 2 Pass/Watch | Performing, but a trigger has fired | Sweep started; overrun covered by contingency; maturity within 90 days with no confirmed exit |
-| 3 Special mention | Potential weakness that could worsen if not fixed | Out of balance; extension test failed; payment 30+ days late |
-| 4 Substandard | Well-defined weakness; loss possible if not corrected | In default; exit no longer covers the loan |
-| 5 Doubtful / Loss | Full collection unlikely, or uncollectable | Move to C13 workout |
+| 3 Special mention | Potential weakness that could worsen if not fixed | Out of balance; extension test failed; a non-monetary default, such as a report late after written notice, with payments current and exit cover of 1.00 or more (CORE-SVC-08) |
+| 4 Substandard | Well-defined weakness; loss possible if not corrected | Payment default (a payment unpaid at the next due date, or the loan unpaid at maturity) with exit cover of 1.00 or more; a non-monetary default not cured in its cure period (CORE-SVC-08) |
+| 5 Doubtful / Loss | Full collection unlikely, or uncollectable | Exit cover under 1.00 with no guarantor able to pay the gap, or a loss expected but not yet measurable. The memo splits the balance: the F-CORE-42 shortfall is Loss, the rest Substandard. Move to C13 workout (CORE-SVC-08) |
 
 Rate every loan at each monthly review. Ratings 2 to 5 go on the watch list, with an action and an owner. Review the watch list monthly.
 
-**Worked example 7: Maple Run ratings.** Month 6: 1 Pass. Month 7, overrun covered by contingency: 2 Pass/Watch. Month 10, rehab complete: back to 1. What-if, 45 days late in month 8: 3 Special mention, and the DSCR exit fails (RES-DSCR-09).
+**Rating a loan in default (CORE-SVC-08, D-CORE-23).** Regulators say a special mention loan is more likely to default than a pass loan, but its default is not imminent [VERIFY: OCC Comptroller's Handbook, Rating Credit Risk, p. 15; checked 22 Nov 2026]. So a missed payment is never a 3. For a problem CRE loan repaid by selling the collateral, the part above fair value less costs to sell is classed loss. The covered part is generally no worse than substandard [VERIFY: Fed SR 23-5 attachment, Interagency Policy Statement on Prudent CRE Loan Accommodations and Workouts, Section V.C; checked 22 Nov 2026]. Our rule turns this into one test: exit cover.
+
+- **3 Special mention:** a non-monetary default, such as a report still late after written notice (CORE-SVC-06). Payments are current and exit cover is 1.00 or more.
+- **4 Substandard:** a payment default with exit cover of 1.00 or more. A payment default is a payment still unpaid at the next due date, or the loan unpaid at maturity. A non-monetary default not cured in its cure period is also a 4.
+- **5 Doubtful/Loss:** exit cover under 1.00 with no guarantor able to pay the gap, or a loss expected but not yet measurable. C13 shows the Loss and Substandard split.
+- **Upgrade:** only after the default is cured and 6 straight months of payments on the loan terms.
+
+```latex
+\text{Exit cover} = \frac{\text{As-is value} - \text{Cost to sell}}{\text{Balance} + \text{Accrued interest and fees}}
+```
+
+**Exit cover, step by step.** A fictional loan. The 8% cost to sell is an example input, not policy.
+
+1. Balance plus accrued interest and fees: $1,020,000.
+2. As-is value $1,150,000. Cost to sell: 8% × $1,150,000 = $92,000.
+3. Net value: $1,150,000 − $92,000 = $1,058,000 (F-CORE-42 terms).
+4. Exit cover: $1,058,000 ÷ $1,020,000 = 1.0373. That is 1.00 or more.
+5. Result: a missed payment still unpaid at the next due date makes this a 4 Substandard. A late report after notice, with payments current, would be a 3 (CORE-SVC-08).
+
+**Worked example 7: Maple Run ratings.** Month 6: 1 Pass. Month 7, overrun covered by contingency: 2 Pass/Watch. Month 10, rehab complete: back to 1. What-if, a payment 45 days late in month 8: it is still unpaid at the next due date, so it is a payment default. With exit cover of 1.00 or more it is a 4 Substandard, not a 3. Under 1.00, with no guarantor able to pay the gap, it is a 5 (CORE-SVC-08; D-CORE-23). The DSCR exit also fails (RES-DSCR-09).
 
 ### T6. Payoff (Objective 6, 5 minutes)
 
@@ -184,12 +204,11 @@ Use RD-MF-01 Cedar Court. Facts from the deal file: commitment $5,140,000; $4,34
 
 1. Total capex funded becomes $400,000, equal to work in place (MF-BR-10, CORE-SVC-05). This draw pays $400,000 less the earlier monthly draws. Undrawn capex after it is $800,000 − $400,000 = $400,000. F-RES-25: max(0, $400,000 − $400,000) = $0, in balance. Balance becomes $4,340,000 + $400,000 = $4,740,000.
 2. Interest $4,740,000 × 9.00% ÷ 360 × 30 = $35,550.00. Cap $4,740,000 × 0.75% ÷ 360 × 30 = $2,962.50. Net $32,587.50.
-3. It is 15 days past the 45-day deadline (CORE-SVC-06). Send written notice; add the loan to the watch list as 2 Pass/Watch until it arrives (CORE-SVC-07). If it is still missing after the notice, it is a reporting default (CORE-SVC-06).
+3. It is 15 days past the 45-day deadline (CORE-SVC-06). Send written notice; add the loan to the watch list as 2 Pass/Watch until it arrives (CORE-SVC-07). If it is still missing after the notice, it is a reporting default (CORE-SVC-06). With payments current and exit cover of 1.00 or more, that is a 3 Special mention (CORE-SVC-08).
 4. Debt yield $520,000 ÷ $5,140,000 = 10.12%, above 7.5%. Approve 6 months (MF-BR-11). Fee $5,140,000 × 0.50% = $25,700.00 (F-CORE-22).
 5. Month 10: 2 Pass/Watch while the report is late; otherwise 1. Month 24: at least 2 Pass/Watch. The loan is at maturity and the term-loan refinance is not yet confirmed (CORE-SVC-07). It can return to 1 once the refinance is committed.
 6. With the fee: $5,140,000 + $5,140,000 × 9.00% ÷ 360 × 9 + $25,700 = $5,177,265.00. Refinanced into our term loan, the fee is waived (deal file): $5,151,565.00.
-
-**Common wrong answers.** Paying a draw without a title date-down. Charging the extension fee on the funded balance instead of the commitment. Leaving a late report off the watch list.
+7. Common wrong answers: paying a draw without a title date-down; charging the extension fee on the funded balance instead of the commitment; leaving a late report off the watch list; rating a missed payment 3 instead of 4 (CORE-SVC-08).
 
 ## 6. Quiz: C12-quiz-v0
 
@@ -207,7 +226,7 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 8. (O4) When is a multifamily rent roll due? **Answer:** monthly, within 45 days of month-end (CORE-SVC-06).
 9. (O4) DSCR on debt service due falls to 1.08x on a commercial bridge. Action? **Answer:** start the cash sweep (COM-GEN-12). (C)
 10. (O5) Which ratings go on the watch list? **Answer:** ratings 2 to 5 (CORE-SVC-07).
-11. (O5) A payment is 35 days late. Rating? **Answer:** 3 Special mention (CORE-SVC-07).
+11. (O5) A payment is 35 days late and still unpaid at the next due date. Exit cover is 1.04. Rating? **Answer:** 4 Substandard: a payment default with exit cover of 1.00 or more (CORE-SVC-08).
 12. (O6) Does the payoff day accrue interest? **Answer:** no (D-CONV-02).
 
 ### Set B
@@ -221,7 +240,7 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 7. (O3) RTL: how many extensions, how long? **Answer:** at most 2 × 3 months (CORE-SVC-02).
 8. (O4) Guarantor annual statements: due when? **Answer:** within 90 days of year-end (CORE-SVC-06).
 9. (O4) NCF $360,000; debt service $330,772.68; trigger hit. Monthly sweep? **Answer:** $2,435.61 (F-COM-19).
-10. (O5) In default and the exit no longer covers the loan. Rating? **Answer:** 4 Substandard (CORE-SVC-07). (C)
+10. (O5) A payment default; exit cover is 0.90 and no guarantor can pay the gap. Rating? **Answer:** 5 Doubtful/Loss. The memo splits the balance: the F-CORE-42 shortfall is Loss, the rest Substandard (CORE-SVC-08). (C)
 11. (O5) How often is the watch list reviewed? **Answer:** monthly (CORE-SVC-07).
 12. (O6) $500,000 at 10.00%, 12 days since paid-to, no fees. Payoff? **Answer:** $501,666.67 (F-CORE-32).
 
@@ -264,7 +283,7 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 2. **Bill.** Balance × rate ÷ 360 × actual days. Check the cap payment (F-CORE-01; MF-BR-09).
 3. **Reports.** Rent roll and statement by day 45; annual statements by day 90. Residential: executed lease within 10 business days (CORE-SVC-06; RES-GEN-11).
 4. **Cash.** Sweep test on debt service due (COM-GEN-12; F-COM-19).
-5. **Rate.** 1-5; ratings 2 to 5 go on the watch list (CORE-SVC-07).
+5. **Rate.** 1-5; ratings 2 to 5 go on the watch list (CORE-SVC-07). Rate a loan in default on exit cover (CORE-SVC-08).
 6. **Maturity.** Extension tests and fee on commitment (CORE-SVC-01; F-CORE-22).
 7. **Payoff.** Principal + interest to the day before payoff + fees (F-CORE-32).
 
@@ -288,10 +307,10 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 | LD-04 order; fits 3 hours | Met: 180 minutes plus 45 OJT |
 | Every threshold cites a rule; every calculation a formula | Met. Three new rules and F-RES-25 added |
 | Formulas worked in four lines | Met; computed in code |
-| Deal numbers match the running deals file | Met. Draws, month-18 Birchwood interest, Cedar month 10 and 24, and the Cedar payoff match the deal file and library tests. The month-9 sweep figure and the $12,000 overrun are labelled what-ifs |
+| Deal numbers match the running deals file | Met. Draws, month-18 Birchwood interest, Cedar month 10 and 24, and the Cedar payoff match the deal file and library tests. The month-9 sweep figure and the $12,000 overrun are labeled what-ifs |
 | Quiz sets; one item per objective; critical items | Met: 12 items each; 3 critical in A, 4 in B |
 | O4 in OJT | Met: OJT step 4 checks the month-11 lease (CORE-SVC-06; RES-GEN-11) |
-| No open tags | Not met: [VERIFY] on Built and OCC sources. Stays v0. The 90-day maturity trigger was decided as JUDGMENT on 20 Nov 2026 |
+| No open tags | Met: [VERIFY] tags on Built, OCC, Fed SR 23-5 and the state lien statutes checked 22 Nov 2026. Now v0.2. The 90-day maturity trigger was decided as JUDGMENT on 20 Nov 2026 |
 
 **Self-check.**
 
@@ -300,10 +319,11 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 3. Maple Run's lease is signed in month 11. What must it look like, and when is the copy due? **Answer:** written, to an unrelated tenant, with a 12-36 month initial term; the full executed copy within 10 business days of signing (RES-GEN-11; CORE-SVC-06).
 4. A bridge loan matures in 60 days and its refinance is not confirmed. What is the lowest rating it can have? **Answer:** 2 Pass/Watch, so it goes on the watch list (CORE-SVC-07).
 5. Payoff on $340,000 at 10.25%, 10 days after the paid-to date, no fees? **Answer:** $340,000 + $340,000 × 10.25% ÷ 360 × 10 = $340,968.06 (F-CORE-32).
+6. Balance plus accrued $500,000; as-is value $560,000; cost to sell 10% (an example input). A payment is unpaid at the next due date. Rating? **Answer:** net $560,000 − $56,000 = $504,000; cover $504,000 ÷ $500,000 = 1.0080; a payment default with cover of 1.00 or more is a 4 Substandard (CORE-SVC-08).
 
 **What to look up yourself.**
 
 1. Whether a title date-down endorsement is available, and its cost, in each SLT state.
-2. Lien-waiver rules in the three deal states. Secondary guides found on 22 Nov 2026 say none of Ohio, North Carolina or Indiana prescribes a statutory waiver form. They say Indiana voids a lien waiver given before payment (IC 32-28-3-16). North Carolina has a lien agent system that affects lender priority (G.S. 44A-11.1, -11.2). Ohio gives a qualifying construction mortgage priority over later mechanics' liens (ORC 1311.14). Read each statute on the state's official code site to confirm [VERIFY: IC 32-28-3-16; G.S. 44A-11.1; ORC 1311.14; not yet checked].
+2. Lien-waiver forms in the three deal states. The statutes read on 22 Nov 2026 confirm the priority points. Indiana voids a contract term that requires a lien waiver before payment (IC 32-28-3-16(b)). In North Carolina, an unperfected lien is subordinate to an earlier-recorded deed of trust unless notice reached the lien agent in time (G.S. 44A-11.2(m)). Ohio gives a construction mortgage priority over later liens only for funds paid out under ORC 1311.14 [VERIFY: IC 32-28-3-16; G.S. 44A-11.2; ORC 1311.14; FindLaw state code mirrors; checked 22 Nov 2026]. Still to look up: whether any of the three prescribes a statutory waiver form. Secondary guides say none does. Confirm on each official code site, which blocked automated access.
 
 **How to check it.** Maple Run draws add to $30,000 + $25,000 + $20,000 + $15,000 + $10,000 = $100,000. The balance ends at $240,000 + $100,000 = $340,000.

@@ -1,0 +1,222 @@
+{
+  "module": "c10",
+  "exercises": [
+    {
+      "id": "c10-1",
+      "type": "decision",
+      "title": "State picker",
+      "intro": "Route a business-purpose loan to an LLC through the State Law Table. See the license, rate cap, late-fee cap and foreclosure path for each state.",
+      "sources": [
+        "CORE-BP-02",
+        "CORE-BP-03",
+        "CORE-PRC-03",
+        "CORE-SVC-04",
+        "SLT-OH-01",
+        "SLT-NC-01",
+        "SLT-NC-02",
+        "SLT-IN-01",
+        "SLT-IN-02",
+        "SLT-CA-01"
+      ],
+      "deal": null,
+      "decision": {
+        "nodes": {
+          "start": {
+            "q": "Will a guarantor or a relative live in the property?",
+            "options": [
+              {
+                "label": "Yes",
+                "next": "occ_stop"
+              },
+              {
+                "label": "No",
+                "next": "state"
+              }
+            ]
+          },
+          "state": {
+            "q": "Which state is the property in?",
+            "options": [
+              {
+                "label": "Ohio",
+                "next": "oh"
+              },
+              {
+                "label": "North Carolina",
+                "next": "nc"
+              },
+              {
+                "label": "Indiana",
+                "next": "in"
+              },
+              {
+                "label": "California",
+                "next": "ca_q"
+              },
+              {
+                "label": "A state with no SLT row",
+                "next": "norow"
+              }
+            ]
+          },
+          "ca_q": {
+            "q": "Do we hold a California Financing Law license, or does a licensed real estate broker make or arrange the loan?",
+            "options": [
+              {
+                "label": "Yes",
+                "next": "ca_ok"
+              },
+              {
+                "label": "No",
+                "next": "ca_stop"
+              }
+            ]
+          },
+          "occ_stop": {
+            "result": "Stop the file.",
+            "explain": "A guarantor or relative in occupancy is a red flag (CORE-BP-02). A credit officer clears it. The BSA officer gets it the same business day (CORE-KYC-05, -07). In Ohio the license carve-out may fall away (SLT-OH-01). [VERIFY: State Law Table; checked 20 Nov 2026]"
+          },
+          "oh": {
+            "result": "Ohio: proceed.",
+            "explain": "License: none needed for a loan to buy a dwelling to lease (OAC 1301:8-7-02(G); SLT-OH-01). Rate cap: 8% base, but loans over $100,000 and business loans to an LLC are exempt (ORC 1343.01(B)(1), (B)(6)). Late fee: no statute found, so CORE-SVC-04's 5% applies. Foreclosure: judicial only, about 6 to 24 months; deficiency allowed. [VERIFY: State Law Table; checked 20 Nov 2026]"
+          },
+          "nc": {
+            "result": "North Carolina: proceed.",
+            "explain": "License: none found; NC licenses cover consumer-purpose residential loans only (SLT-NC-02). Rate cap: a G.S. 24-9 loan is exempt if it is $300,000 or more, or the borrower is not a natural person. Late fee: the 4% cap appears not to bind 24-9 exempt loans (SLT-NC-01). Foreclosure: power of sale before the clerk, typically 60 to 90 days, with 10-day upset bids. Deficiency allowed, subject to the fair-value defense. [VERIFY: State Law Table; checked 20 Nov 2026]"
+          },
+          "in": {
+            "result": "Indiana: proceed, but check any broker.",
+            "explain": "Lender license: none found for commercial loans (SLT-IN-02). Broker: the Loan Broker Act turns on collateral, not purpose, so ask counsel (SLT-IN-01). Rate cap: none found for non-consumer loans. Late fee: no cap found, so CORE-SVC-04 applies. Foreclosure: judicial, no sale until 3 months after filing. Our consent to waive that wait bars a deficiency (IC 32-29-7-5). [VERIFY: State Law Table; checked 20 Nov 2026]"
+          },
+          "ca_ok": {
+            "result": "California: proceed with care.",
+            "explain": "The license condition is met (SLT-CA-01). Rate cap: Article XV caps non-exempt lenders at 10%; the loan works only through a licensed lender or a broker-arranged structure (Civ. Code 1916.1). Late-fee caps cover owner-occupied single-family homes only. Default interest on the whole balance before maturity is treated as a penalty. After a trustee's sale there is no deficiency against the borrower (CCP 580d). [VERIFY: State Law Table; checked 20 Nov 2026]"
+          },
+          "ca_stop": {
+            "result": "California: stop.",
+            "explain": "Without a California Financing Law license or a licensed broker, CORE-BP-03 stops the deal (SLT-CA-01). Maple Run's 10.25% note rate would also break the 10% cap. [VERIFY: State Law Table; checked 20 Nov 2026]"
+          },
+          "norow": {
+            "result": "No term sheet.",
+            "explain": "A state with no SLT row gets no term sheet until one is added (CORE-BP-03)."
+          }
+        },
+        "cases": [
+          {
+            "text": "Maple Run, Columbus, Ohio: $340,000 to Harborline Holdings LLC. The house is vacant and will be leased to an unrelated tenant. Dana Reyes lives elsewhere.",
+            "expect": "oh"
+          },
+          {
+            "text": "What-if: the same Ohio loan, but Dana Reyes's sister will rent the house.",
+            "expect": "occ_stop"
+          },
+          {
+            "text": "Cedar Court, Charlotte, North Carolina: $5,140,000 to Cedar Court Partners LLC. No sponsor lives on site.",
+            "expect": "nc"
+          },
+          {
+            "text": "Birchwood Plaza, Indianapolis, Indiana: $3,520,000 to Birchwood Plaza LLC, with no broker involved.",
+            "expect": "in"
+          },
+          {
+            "text": "What-if: Maple Run sits in California. We hold no California Financing Law license and no broker arranges the loan.",
+            "expect": "ca_stop"
+          },
+          {
+            "text": "A deal arrives for a Texas rental. The State Law Table has no Texas row.",
+            "expect": "norow"
+          }
+        ]
+      }
+    },
+    {
+      "id": "c10-2",
+      "type": "buildup",
+      "title": "Late fee against a state cap",
+      "intro": "Work Cedar Court's month-1 late fee under policy, then compare it with North Carolina's 4% cap.",
+      "sources": [
+        "CORE-SVC-04",
+        "CORE-SVC-03",
+        "F-CORE-01",
+        "F-CORE-31",
+        "SLT-NC-01"
+      ],
+      "deal": "RD-MF-01",
+      "buildup": {
+        "context": "What-if: Cedar Court's first payment is 30 days late. Capex draws start in month 2, so the balance is $4,340,000 at 7.65%. Our policy late fee is 5% of the late installment, charged once (CORE-SVC-04). North Carolina caps late fees at 4% for G.S. 24-1.1 loans. Cedar Court is a G.S. 24-9 exempt loan, where the parties may agree any charges [VERIFY: SLT-NC-01; checked 20 Nov 2026].",
+        "lines": [
+          {
+            "label": "Normal interest for the 30 days: the late installment",
+            "hint": "$4,340,000 × 7.65% ÷ 360 × 30 (F-CORE-01).",
+            "expected": 27667.5,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Policy late fee: 5% of the installment",
+            "hint": "$27,667.50 × 5% (CORE-SVC-04). Never on the full balance.",
+            "expected": 1383.375,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "The fee at North Carolina's 4% cap",
+            "hint": "$27,667.50 × 4% (SLT-NC-01).",
+            "expected": 1106.7,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "How much more is the policy fee than the 4% figure?",
+            "hint": "$1,383.38 − $1,106.70. The 4% cap covers 24-1.1 loans, so the 5% fee applies here [VERIFY].",
+            "expected": 276.675,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Default interest for the same 30 days",
+            "hint": "$4,340,000 × (7.65% + 5.00%) ÷ 360 × 30 (F-CORE-31; CORE-SVC-03).",
+            "expected": 45750.833333333336,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Default interest over normal interest",
+            "hint": "$45,750.83 − $27,667.50.",
+            "expected": 18083.333333333336,
+            "format": "money",
+            "tolerance": 0.005
+          }
+        ]
+      }
+    },
+    {
+      "id": "c10-3",
+      "type": "scenario",
+      "title": "A California guarantor after foreclosure",
+      "intro": "Birchwood Plaza moves to California in this what-if. Decide what the guaranty is worth after a trustee's sale, then reveal the model answer.",
+      "sources": [
+        "CORE-DOC-04",
+        "CORE-DOC-05",
+        "COM-BR-07",
+        "SLT-CA-01",
+        "SLT-CA-02",
+        "F-CORE-23"
+      ],
+      "deal": "RD-COM-01",
+      "scenario": {
+        "case": "What-if: Birchwood Plaza sits in California, not Indiana. Use worked example 5's figures: balance $3,520,000, costs $310,000, net recovery $3,150,000. That is a 19.3% severity and a $680,000 shortfall (F-CORE-23). We sold by trustee's sale. Dana Whitlow and Leo Marsh signed a full guarantee that burns off at stabilization (COM-BR-07). Dana Whitlow's net worth is $5,200,000.",
+        "prompt": "Can we recover the $680,000 shortfall? From whom, and what do you check first? Write your call before you reveal the answer.",
+        "model_answer": "Not from the borrower. CCP 580d bars a deficiency against the borrower after a trustee's sale. The guarantors may still pay. CCP 580d(b) says the borrower's protection does not affect guarantor liability. That holds only if the guaranty carries Civ. Code 2856 waivers (CORE-DOC-05). So first read the guaranty for those waivers. Then confirm it has not burned off at stabilization (COM-BR-07). If both hold, Dana Whitlow's $5,200,000 net worth covers $680,000. Without the waivers, the guarantor may raise the borrower's protections. To keep a deficiency, we would have had to foreclose judicially, at the cost of time. The one-action rule also makes us foreclose before suing on the note (CCP 726). CORE-DOC-04 puts this check before the term sheet, not after the sale. [VERIFY: SLT-CA-01, -02; checked 20 Nov 2026]",
+        "rubric": [
+          "Says no deficiency against the borrower after a trustee's sale (CCP 580d).",
+          "Says the guarantors can still be pursued only with Civ. Code 2856 waivers (CORE-DOC-05).",
+          "Checks that the guarantee has not burned off at stabilization (COM-BR-07).",
+          "Notes Dana Whitlow's $5,200,000 net worth covers the $680,000 shortfall.",
+          "Names judicial foreclosure as the way to keep a deficiency without waivers, at the cost of time.",
+          "Ties the check to CORE-DOC-04 before the term sheet and tags the legal points [VERIFY]."
+        ]
+      }
+    }
+  ]
+}

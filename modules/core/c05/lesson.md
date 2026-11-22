@@ -8,11 +8,11 @@
 | Hours | 3 (180 minutes) plus a 45-minute OJT task |
 | Prerequisite | C4 |
 | Bloom's levels | 2, 3 and 4 (LD-02) |
-| Formulas | F-CORE-13, F-CORE-14, F-CORE-36; F-RES-02, F-RES-03 (as family examples) |
-| Rules | CORE-VAL-01, CORE-VAL-02, CORE-VAL-03; MF-BR-02, MF-BR-04; CORE-PRC-05 |
+| Formulas | F-CORE-13, F-CORE-14, F-CORE-36, F-CORE-44; F-RES-02, F-RES-03 (as family examples) |
+| Rules | CORE-VAL-01, CORE-VAL-02, CORE-VAL-03; MF-BR-02, MF-BR-04; COM-TRM-09, COM-BR-09; CORE-PRC-05 |
 | Running deals | Worked examples: RD-COM-01 Birchwood Plaza and RD-RES-01 Maple Run. Practice: RD-MF-01 Cedar Court (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft; all numbers computed in code; market and legal facts researched 19-20 Nov 2026 |
+| Change log | v0, 20 Nov 2026: first draft; all numbers computed in code; market and legal facts researched 19-20 Nov 2026 v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -55,9 +55,9 @@ An appraisal can report more than one value. Each answers a different question, 
 | As-completed (ARV) | What will it be worth when the work is done? | Projected completion date | Loan-to-ARV (F-RES-02) for fix-and-flip and construction |
 | As-stabilized | What will it be worth once leased up to normal occupancy? | Projected stabilization date | Bridge stabilized LTV (F-MF-13); term loan sizing at refinance |
 
-The federal definition of market value is "the most probable price" in a competitive, open market. It assumes typical motivation, informed parties, reasonable exposure time and cash-equivalent terms (12 CFR 323.2(h) [VERIFY: eCFR via Cornell LII, checked 20 Nov 2026]). For renovation loans, a lender generally asks for the as-is value. As needed, it also asks for prospective values on completion and stabilization [VERIFY: Interagency Appraisal and Evaluation Guidelines, 75 FR 77450, 10 Dec 2010].
+The federal definition of market value is "the most probable price" in a competitive, open market. It assumes typical motivation, informed parties, reasonable exposure time and cash-equivalent terms (12 CFR 323.2(h) [VERIFY: 12 CFR 323.2(h), eCFR (ecfr.gov); checked 22 Nov 2026]). For renovation loans, a lender generally asks for the as-is value. As needed, it also asks for prospective values on completion and stabilization [VERIFY: Interagency Appraisal and Evaluation Guidelines, 75 FR 77450, 10 Dec 2010, Section VIII and Appendix C, via govinfo.gov; checked 22 Nov 2026].
 
-**Two terms to know.** A prospective value is an opinion as of a future date. It rests on extraordinary assumptions that must be disclosed (Freddie Mac appraisal guidance). A hypothetical value assumes something that is not true today, such as "renovations complete now." Never put either one in an as-is test.
+**Two terms to know.** A prospective value is an opinion as of a future date. It reflects what market participants expect for that date. It often rests on extraordinary assumptions: assumptions that, if false, could change the value [VERIFY: Interagency Appraisal and Evaluation Guidelines, 75 FR 77450, glossary, via govinfo.gov; checked 22 Nov 2026]. A hypothetical value assumes something that is not true today, such as "renovations complete now." Never put either one in an as-is test.
 
 ### T2. Direct capitalization (Objective 2, 20 minutes)
 
@@ -68,7 +68,7 @@ A lower cap rate means a higher value for the same NOI. Small rate moves create 
 **Worked example 1: Birchwood as-stabilized value and sensitivity (RD-COM-01)**
 
 1. **Formula.** F-CORE-13: V = NOI ÷ CR. F-CORE-14: LTV = L ÷ V.
-2. **Inputs.** Stabilized NOI $480,000 (C4 practice); appraiser's cap rate 8.00%; term loan $3,900,000; 65% LTV limit for unanchored retail (COM-TRM limits table).
+2. **Inputs.** Stabilized NOI $480,000 (C4 practice); appraiser's cap rate 8.00%; term loan $3,900,000; 65% LTV limit (COM-TRM-09 unanchored retail: 65% LTV, 1.30x, 9.0%).
 3. **Substitution.** At 8.00%: $480,000 ÷ 0.0800 = $6,000,000.00; LTV $3,900,000 ÷ $6,000,000 = 65.00%. At 8.25%: $480,000 ÷ 0.0825 = $5,818,181.82; LTV 67.03%. At 7.75%: $480,000 ÷ 0.0775 = $6,193,548.39; LTV 62.97%.
 4. **Result.** The base case passes at exactly 65.00%. At 8.25%, the 65% test allows $3,781,818.18. Rounded down to the nearest $1,000 (CORE-PRC-05), the loan is $3,781,000, which is $119,000 less. A 25-basis-point move is worth about $182,000 to $194,000 of value.
 
@@ -76,12 +76,12 @@ A lower cap rate means a higher value for the same NOI. Small rate moves create 
 
 ### T3. Lower of cost or value (Objective 3, 15 minutes)
 
-On a purchase, value for LTV is the lower of the price and the appraisal (F-CORE-14). That is also the federal value definition for purchase loans [VERIFY: 12 CFR 365 Appendix A, eCFR, checked 19 Nov 2026]. A high appraisal cannot create equity the buyer has not paid for.
+On a purchase, value for LTV is the lower of the price and the appraisal (F-CORE-14). That is also the federal value definition for purchase loans [VERIFY: 12 CFR 365 Appendix A, definition of value, eCFR; checked 22 Nov 2026]. A high appraisal cannot create equity the buyer has not paid for.
 
 **Worked example 2: Birchwood bridge LTV (RD-COM-01)**
 
 1. **Formula.** F-CORE-14: LTV = L ÷ min(price, appraisal).
-2. **Inputs.** Price $4,400,000; as-is appraisal $4,500,000; bridge loan $2,860,000; limit 65% as-is for unanchored retail (COM-BR limits table).
+2. **Inputs.** Price $4,400,000; as-is appraisal $4,500,000; bridge loan $2,860,000; limit 65% as-is (COM-BR-09 unanchored retail: 65% as-is LTV, 70% LTC, 1.30x, 9.5%).
 3. **Substitution.** min($4,400,000, $4,500,000) = $4,400,000. LTV = $2,860,000 ÷ $4,400,000 = 65.00%.
 4. **Result.** Passes at exactly 65.00%. Dividing by the appraisal would show 63.56% and invite a $2,925,000 loan, $65,000 too much.
 
@@ -102,7 +102,7 @@ On a purchase, value for LTV is the lower of the price and the appraisal (F-CORE
 
 **Measure age from the effective date, not the report date.** The effective date is when the value applies. The report is often signed days or weeks later.
 
-**Federal thresholds, for context [VERIFY: 12 CFR 323.3(a) and (b), Cornell LII, checked 20 Nov 2026].** Regulated banks need no certified appraisal in three cases:
+**Federal thresholds, for context [VERIFY: 12 CFR 323.3(a) and (b), eCFR; checked 22 Nov 2026].** Regulated banks need no certified appraisal in three cases:
 
 - commercial real estate transactions of $500,000 or less;
 - residential transactions of $400,000 or less;
@@ -123,9 +123,9 @@ They must still get an evaluation. Maple Run's $340,000 loan falls under the res
 
 **Worked example 5: Birchwood term loan (RD-COM-01)**
 
-1. **Formula.** Loan constant = ADS ÷ L (F-CORE-04). Cash-on-cash = (NOI − ADS) ÷ equity.
+1. **Formula.** Loan constant = ADS ÷ L (F-CORE-04). Cash-on-cash (F-CORE-44, SUGGESTED; no policy limit) = (NOI − ADS) ÷ total cash invested (equity).
 2. **Inputs.** NOI $480,000; value $6,000,000 (cap 8.00%); loan $3,900,000; ADS $330,772.68 (C3).
-3. **Substitution.** Constant = $330,772.68 ÷ $3,900,000 = 8.4814%. Equity = $6,000,000 − $3,900,000 = $2,100,000. Cash-on-cash = ($480,000 − $330,772.68) ÷ $2,100,000 = 7.11%.
+3. **Substitution.** Constant = $330,772.68 ÷ $3,900,000 = 8.4814%. Equity = $6,000,000 − $3,900,000 = $2,100,000. Cash-on-cash (F-CORE-44) = ($480,000 − $330,772.68) ÷ $2,100,000 = 7.11%.
 4. **Result.** The cap rate (8.00%) is below the constant (8.4814%): negative leverage. Equity earns 7.11% against 8.00% unlevered.
 
 **Why a lender cares.** Under negative leverage, value growth or rent growth must do the work. There is less cash cushion for a dip. DSCR still passes here (C4: 1.31x on NCF), but the borrower's incentive to keep investing is weaker.
@@ -246,7 +246,7 @@ A retail building has NOI of $315,000. Items 1, 2, 6 and 11 use it.
 | Values and uses | As-is $4,500,000 fed the bridge, capped by the $4,400,000 price. As-stabilized $6,000,000 feeds the term loan | F-CORE-14; T1 |
 | Direct cap | $480,000 ÷ 8.00% = $6,000,000.00. At 8.25%: $5,818,181.82 (LTV 67.03%, fails). At 7.75%: $6,193,548.39 (62.97%) | F-CORE-13 |
 | Market evidence | CBRE's H1 2026 survey reports Class A neighborhood retail at 6.75%-7.25% in Albuquerque and 6.00%-6.75% in Houston. A 70%-leased unanchored strip should price wider, so 8.00% looks reasonable to conservative. Neither market is in the Midwest, so treat them as rough context and check an Indianapolis range (see What to look up yourself) | CORE-VAL-03 |
-| Leverage | Constant 8.4814% vs cap 8.00%: negative. Cash-on-cash 7.11% | T5 |
+| Leverage | Constant 8.4814% vs cap 8.00%: negative. Cash-on-cash 7.11% (F-CORE-44) | T5 |
 | Recommendation | Accept the value. Condition the term loan on 65% of the lower of $6,000,000 and any updated value at closing. Note that a 25 bp cap move takes $119,000 off the loan, after rounding down to the nearest $1,000 (CORE-PRC-05) | CORE-VAL-02 |
 
 ## 8. Job aid: C5-jobaid-v0 (one page)
@@ -255,7 +255,7 @@ A retail building has NOI of $315,000. Items 1, 2, 6 and 11 use it.
 
 1. Day-one advance and purchase LTV: as-is, capped at the price (F-CORE-14, F-RES-03).
 2. Fix-and-flip and construction exit: as-completed / ARV (F-RES-02).
-3. Bridge stabilized test and term loan: as-stabilized (F-MF-13, COM-TRM).
+3. Bridge stabilized test and term loan: as-stabilized (F-MF-13, COM-TRM-09).
 
 **Direct cap (F-CORE-13)**: value = NOI ÷ cap rate; implied cap = NOI ÷ price. Always run ±25 bp.
 
@@ -290,7 +290,7 @@ A retail building has NOI of $315,000. Items 1, 2, 6 and 11 use it.
 | Quiz: 10-20 items, one per objective, critical flagged, two sets, pass mark | Met (12 items, 3 critical, sets A and B) |
 | OJT: output, source, time, rubric, sign-off, data note | Met |
 | Job aid fits one page | Met on screen; confirm when printed |
-| Accessibility (LD-09) | Tables have headers; no colour-only meaning |
+| Accessibility (LD-09) | Tables have headers; no color-only meaning |
 
 **Self-check.**
 
@@ -304,8 +304,8 @@ A retail building has NOI of $315,000. Items 1, 2, 6 and 11 use it.
 
 - **Cap rates held flat in H1 2026.** CBRE's survey drew on about 3,600 estimates in over 50 markets, gathered in late June. The 10-year Treasury peaked at 4.67% in mid-May. Neighborhood retail compressed the most; infill multifamily drew the most bearish outlook ([CBRE, 12 Aug 2026](https://www.cbre.com/insights/reports/us-cap-rate-survey-h1-2026); market ranges via [Orion summary](https://www.orionprop.com/?p=32516)).
 - **Negative leverage is common now.** A broker's Q2 2026 report puts multifamily cap rates near 5.2% and retail near 6.7% (secondary source, [Apartment Loan Store, 10 Aug 2026](https://apartmentloanstore.com/index.php/node/12718)). Freddie Mac's 10-year small-balance rate was 6.55% on 16 Nov 2026 (C3 research), a constant above 7.6%. So most stabilized multifamily buys at today's caps sit in negative leverage, like Cedar Court.
-- **Appraisal standards.** The 2024 edition of USPAP took effect 1 Jan 2024. It has no set end date; the Appraisal Standards Board updates it as needed [VERIFY: [The Appraisal Foundation, USPAP page](https://www.appraisalfoundation.org/pages/uspap); checked 22 Nov 2026]. New appraiser qualification criteria took effect 1 Jan 2026 [VERIFY: AQB Criteria, via Iowa rulemaking, 2026].
-- **New federal law.** The 21st Century ROAD to Housing Act (P.L. 119-101) became law on 11 Jul 2026. Its appraisal provisions mainly cover federally backed home mortgages, such as reconsideration-of-value procedures and FHA appraiser eligibility. They do not change business-purpose lending thresholds [VERIFY: [govinfo P.L. 119-101](https://www.govinfo.gov/content/pkg/PLAW-119publ101/pdf/PLAW-119publ101.pdf); Appraisal Institute, 21 Jul 2026].
+- **Appraisal standards.** The 2024 edition of USPAP took effect 1 Jan 2024. It has no set end date; the Appraisal Standards Board updates it as needed [VERIFY: [The Appraisal Foundation, USPAP page](https://www.appraisalfoundation.org/pages/uspap); checked 22 Nov 2026]. New appraiser qualification criteria took effect 1 Jan 2026 [VERIFY: AQB Criteria dated 1 Jan 2026, per Iowa Real Estate Appraiser Examining Board ARC 0079D, rules.iowa.gov; checked 22 Nov 2026].
+- **New federal law.** The 21st Century ROAD to Housing Act (P.L. 119-101) became law on 11 Jul 2026. Its appraisal provisions mainly cover federally backed home mortgages, such as reconsideration-of-value procedures and FHA appraiser eligibility. They do not change business-purpose lending thresholds [VERIFY: [govinfo P.L. 119-101](https://www.govinfo.gov/content/pkg/PLAW-119publ101/pdf/PLAW-119publ101.pdf), Secs. 403 and 704; checked 22 Nov 2026].
 
 **What to look up yourself.** CBRE's full cap rate tables by market and class sit behind a registration form. Register there to get the Class B and C neighborhood retail range for Indianapolis or the nearest Midwest market. Compare it with Birchwood's 8.00% cap rate. Everything else in this tab was found and cited.
 

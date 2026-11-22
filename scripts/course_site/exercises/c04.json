@@ -1,0 +1,66 @@
+{
+  "module": "c04",
+  "exercises": [
+    {
+      "id": "c04-1",
+      "type": "buildup",
+      "title": "Cedar Court: GPR to DSCR",
+      "intro": "Build Cedar Court's underwritten cash flow one line at a time, from GPR to DSCR. Each line is checked before the next opens.",
+      "sources": ["F-CORE-07", "F-CORE-08", "F-CORE-09", "F-CORE-10", "F-CORE-11", "F-MF-09", "F-MF-12", "MF-GEN-05", "MF-GEN-06"],
+      "deal": "RD-MF-01",
+      "buildup": {
+        "context": "Cedar Court (RD-MF-01): 50 units at $1,300 market rent. Rent-roll collections annualized $702,000; trailing 3 months annualized $708,000; other income (T-12) $18,000. Expenses: T-12 $298,000; appraiser $310,000, including 4% management. Replacement reserves $15,000 a year. Bridge test debt service is $4,340,000 × 8.25% = $358,050.00.",
+        "lines": [
+          { "label": "Gross potential rent (F-CORE-07)", "hint": "50 units × $1,300 × 12.", "expected": 780000, "format": "money", "tolerance": 0.005 },
+          { "label": "Underwritten vacancy rate (MF-GEN-05)", "hint": "Collections are the lesser of $702,000 and $708,000. Vacancy rate = 1 − $702,000 ÷ $780,000. It is above the 5% floor.", "expected": 0.1, "format": "pct1", "tolerance": 0.005 },
+          { "label": "Vacancy and credit loss (F-CORE-08)", "hint": "GPR × vacancy rate: $780,000 × 10.0%.", "expected": 78000, "format": "money", "tolerance": 0.005 },
+          { "label": "Effective gross income (F-CORE-09)", "hint": "GPR − vacancy + other income: $780,000 − $78,000 + $18,000.", "expected": 720000, "format": "money", "tolerance": 0.005 },
+          { "label": "Underwritten operating expenses (MF-GEN-06)", "hint": "Take the greater of the T-12 and the appraiser's estimate. Management at 4% of EGI clears the 3% floor.", "expected": 310000, "format": "money", "tolerance": 0.005 },
+          { "label": "Net operating income (F-CORE-10)", "hint": "EGI − operating expenses.", "expected": 410000, "format": "money", "tolerance": 0.005 },
+          { "label": "DSCR on NOI (F-CORE-11)", "hint": "$410,000 ÷ $358,050. Compare at full precision: it is 1.1451.", "expected": 1.145091467672113, "format": "ratioX", "tolerance": 0.005 },
+          { "label": "Net cash flow (F-MF-09)", "hint": "NOI − $15,000 replacement reserves.", "expected": 395000, "format": "money", "tolerance": 0.005 },
+          { "label": "Interest coverage on NCF (F-MF-12)", "hint": "$395,000 ÷ $358,050. MF-BR-07 tests this against 1.00x.", "expected": 1.1031978773914257, "format": "ratioX", "tolerance": 0.005 }
+        ]
+      }
+    },
+    {
+      "id": "c04-2",
+      "type": "calculator",
+      "title": "Break-even occupancy",
+      "intro": "Find Cedar Court's break-even occupancy and its cushion. Then change expenses, debt service or GPR to see how fast the cushion moves.",
+      "sources": ["F-CORE-12", "F-CORE-03", "F-MF-02", "MF-BR-09"],
+      "deal": "RD-MF-01",
+      "calculator": {
+        "function": "breakEvenOccupancy",
+        "args": [
+          { "name": "operatingExpenses", "label": "Operating expenses", "kind": "money", "value": 310000 },
+          { "name": "annualDebtService", "label": "Annual debt service (test basis)", "kind": "money", "value": 358050 },
+          { "name": "gpr", "label": "Gross potential rent", "kind": "money", "value": 780000 }
+        ],
+        "output": { "label": "Break-even occupancy", "format": "pct1" },
+        "task": "Cedar Court: OpEx $310,000, test ADS $358,050 and GPR $780,000. What is break-even occupancy (F-CORE-12)? Then subtract it from 90.0% economic occupancy to get the cushion.",
+        "answer": "85.6%"
+      }
+    },
+    {
+      "id": "c04-3",
+      "type": "scenario",
+      "title": "Spot the error: the broker's NOI",
+      "intro": "A broker's package shows a much higher NOI than your underwriting. Find what is wrong with it, and say which figure we lend on.",
+      "sources": ["MF-GEN-05", "MF-GEN-06", "MF-BR-08", "F-CORE-10", "F-CORE-11", "F-MF-20"],
+      "deal": "RD-MF-01",
+      "scenario": {
+        "case": "The broker's one-page summary for Cedar Court shows NOI of $575,000. It divides that by the $358,050 bridge test debt service and reports DSCR of 1.61x. Your underwriting shows NOI of $410,000 and DSCR of 1.15x.",
+        "prompt": "What is wrong with the broker's $575,000? Name where the gap comes from, which NOI we size the day-one loan on, and where the $575,000 does belong.",
+        "model_answer": "The $575,000 is a pro forma. It is stabilized NOI after the $800,000 renovation: stabilized NCF $560,000 plus $15,000 reserves. The renovation has not happened, so the $165,000 gap is not yet earned. We size the day-one loan on in-place NOI of $410,000 (F-CORE-10). That uses the lesser of rent roll and trailing 3 months for income (MF-GEN-05). It also uses the greater of T-12 and appraiser for expenses (MF-GEN-06). DSCR on that NOI is $410,000 ÷ $358,050 = 1.15x (F-CORE-11), not 1.61x. The stabilized figures belong only in the exit test: $560,000 NCF (MF-BR-08, F-MF-20). At a 7.00% loan constant, the $165,000 gap is worth about $2.4 million of loan.",
+        "rubric": [
+          "Says the $575,000 is stabilized, pro forma NOI after the renovation, not in-place NOI",
+          "Uses in-place NOI of $410,000 for day-one sizing",
+          "Names the income and expense rules: lesser of rent roll and T-3 (MF-GEN-05); greater of T-12 and appraiser (MF-GEN-06)",
+          "Recomputes DSCR on in-place NOI: $410,000 ÷ $358,050 = 1.15x (F-CORE-11)",
+          "Places the stabilized figure in the exit test only: $560,000 NCF = $575,000 − $15,000 reserves (MF-BR-08)"
+        ]
+      }
+    }
+  ]
+}

@@ -102,8 +102,8 @@
         "expected": "$97.50"
       },
       {
-        "inputs": "$5,960,000; 60,000 sf",
-        "expected": "$99.33"
+        "inputs": "$5,969,000; 60,000 sf",
+        "expected": "$99.48"
       }
     ]
   },
@@ -135,7 +135,7 @@
       },
       {
         "inputs": "NNN Tier 1: V $4.0M; NOI $240,000; 70% / 1.20x; 6.500%",
-        "expected": "$2,460,000.00 (DSCR binds; $2,468,378.24 before rounding)"
+        "expected": "$2,468,000.00 (DSCR binds; $2,468,378.24 before rounding)"
       },
       {
         "inputs": "Office: V $10.0M; NCF $800,000; 60% / 1.40x / 10.0%; 8.130%",
@@ -167,14 +167,14 @@
     "tests": [
       {
         "inputs": "$4,000,000; NCF $430,000; 1.25x",
-        "expected": "1.19x: fails; max $3,790,000.00"
+        "expected": "1.19x: fails; max $3,795,000.00"
       },
       {
-        "inputs": "$3,790,000; NCF $430,000; 1.25x",
+        "inputs": "$3,795,000; NCF $430,000; 1.25x",
         "expected": "1.25x: passes"
       },
       {
-        "inputs": "$5,960,000; NCF $720,000; 1.25x",
+        "inputs": "$5,969,000; NCF $720,000; 1.25x",
         "expected": "1.33x: passes"
       }
     ]
@@ -239,7 +239,7 @@
     "tests": [
       {
         "inputs": "Base $8.7M; 9.00%; 18 months; as-complete $9.8M",
-        "expected": "$5,960,000.00 (LTC binds)"
+        "expected": "$5,969,000.00 (LTC binds)"
       },
       {
         "inputs": "Base $5.0M; 8.50%; 15 months; as-complete $7.0M",

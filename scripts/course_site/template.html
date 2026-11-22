@@ -237,6 +237,67 @@ details.key[open] > summary { margin-bottom: .4em; }
 .plist small { color: var(--muted); display: block; font-size: 0.76rem; }
 .howto h2 { margin-top: 0 !important; border-top: 0 !important; padding-top: 0 !important; }
 
+/* ---- exercises, diagrams, listen ---- */
+.steptools { display: flex; justify-content: flex-end; margin: 0 0 8px; }
+.listen { display: inline-flex; gap: 6px; align-items: center; }
+.listen-note { font-size: 0.8rem; color: var(--muted); margin-left: 10px; align-self: center; }
+.exlist { display: grid; gap: 14px; margin-top: 1em; }
+.exsum { font-size: 0.86rem; color: var(--muted); margin: 0; }
+.ex { border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: grid; gap: 12px; background: var(--panel); min-width: 0; }
+.ex[data-done="1"] { border-left: 4px solid var(--accent); }
+.ex h3 { margin: 0 !important; font-size: 1.05rem; }
+.exhead { display: grid; gap: 6px; }
+.exmeta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 0.78rem; }
+.extype, .exdeal { font: 600 0.72rem var(--font-mono); text-transform: uppercase; letter-spacing: .05em; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); }
+.exdeal { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); text-transform: none; }
+.ex p { margin: 0; max-width: 68ch; overflow-wrap: anywhere; }
+.exbody { display: grid; gap: 12px; min-width: 0; }
+.exfields { border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px 12px; margin: 0; display: grid; gap: 10px; min-width: 0; }
+.exfields legend { font-weight: 700; font-size: 0.85rem; padding: 0 6px; }
+.exgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 10px; }
+.exfield { display: grid; gap: 3px; min-width: 0; }
+.exfield label, .exlab { font-size: 0.84rem; font-weight: 600; }
+.exfield.chk { grid-template-columns: auto 1fr; align-items: center; justify-content: start; gap: 8px; }
+.ex input[type="text"], .ex input[type="date"], .ex select, .ex textarea {
+  width: 100%; font: 0.95rem var(--font-body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 10px; min-width: 0;
+}
+.ex textarea { min-height: 7rem; resize: vertical; font-family: var(--font-body); line-height: 1.5; }
+.ex input[type="checkbox"] { width: 1.1rem; height: 1.1rem; accent-color: var(--accent); }
+.exrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.exres { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 8px 12px; display: grid; gap: 4px; }
+.exres b { font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.exok { color: var(--accent); font-weight: 700; }
+.exbad { color: #b3261e; font-weight: 700; }
+.exnote { font-size: 0.84rem; color: var(--muted); }
+.exlines { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.exline { border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; display: grid; gap: 6px; background: var(--bg); }
+.exline[data-ok="1"] { border-left: 4px solid var(--accent); }
+.exline .exrow input { flex: 1 1 10rem; width: auto; }
+.sortrow, .orderrow { border: 1px solid var(--rule); border-radius: 6px; padding: 8px 12px; display: grid; gap: 6px; background: var(--bg); }
+.sortrow[data-r="right"], .orderrow[data-r="right"] { border-left: 4px solid var(--accent); }
+.sortrow[data-r="wrong"], .orderrow[data-r="wrong"] { border-left: 4px solid #b3261e; }
+.ex .btn[aria-pressed="true"].choice { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.orderlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: o; }
+.orderrow { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; }
+.orderrow::before { counter-increment: o; content: counter(o); font: 600 0.8rem var(--font-mono); color: var(--accent); min-width: 1.4em; }
+.orderrow .exrow { flex-wrap: nowrap; }
+.dpath { margin: 0; padding-left: 1.2em; font-size: 0.84rem; color: var(--muted); }
+.dopts { display: grid; gap: 6px; justify-items: start; }
+.dend { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 6px; padding: 10px 12px; display: grid; gap: 6px; }
+.dend b { font-size: 1.05rem; }
+.rubric-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.rubric-list label { display: flex; gap: 8px; align-items: flex-start; font-size: 0.92rem; }
+.rubric-list input { margin-top: .3em; }
+.prose .exlines, .prose .orderlist, .prose .dpath { padding-left: 0; }
+.prose .dpath { padding-left: 1.2em; }
+.prose .exline, .prose .orderrow { margin: 0; }
+.mermaid-figure { margin: 1.2em 0; display: grid; gap: 6px; min-width: 0; }
+.mermaid-diagram { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; padding: 10px; background: var(--panel); text-align: center; max-width: 100%; }
+.mermaid-diagram:not([data-processed]) { white-space: pre; text-align: left; font: 0.8rem var(--font-mono); color: var(--muted); }
+.mermaid-diagram svg { max-width: 100%; height: auto; }
+.mermaid-figure details > summary { cursor: pointer; font-size: 0.84rem; color: var(--accent); font-weight: 600; }
+.mermaid-figure pre { margin: 6px 0 0; }
+
 @media (max-width: 599px) {
   .tbl.stack { border: 0; overflow: visible; }
   .tbl.stack table, .tbl.stack tbody, .tbl.stack tr, .tbl.stack td { display: block; width: 100%; }
@@ -248,6 +309,9 @@ details.key[open] > summary { margin-bottom: .4em; }
   .tbl.stack td[data-label=""] { display: block; }
   .prose { padding: 14px; }
   .steps button { padding: 4px 9px; font-size: 0.8rem; }
+  .ex { padding: 12px; }
+  .orderrow { grid-template-columns: auto minmax(0, 1fr); }
+  .orderrow .exrow { grid-column: 1 / -1; }
 }
 
 @media (max-width: 860px) {
@@ -285,6 +349,8 @@ details.key[open] > summary { margin-bottom: .4em; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<script>/*__BPLF__*/</script>
 <script id="course-data" type="application/json">/*__DATA__*/</script>
 <script>
 "use strict";
@@ -395,7 +461,7 @@ function tagBadge(text) {
 }
 function textNodes(root) {
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-    acceptNode: (n) => n.parentElement.closest("a, button, .ref, .tag, pre, textarea") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
+    acceptNode: (n) => n.parentElement.closest("a, button, .ref, .tag, pre, textarea, .mermaid-diagram") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
   });
   const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
   return nodes;
@@ -535,10 +601,10 @@ const store = {
     if (this.mode === "db") {
       try { const s = await this.db.doc(`data/users/${this.uid}/quiz-${key}`).get(); v = s.exists ? s.data() : null; } catch { v = null; }
     } else v = this.localGet("quiz-" + key);
-    return { answers: { ...(v && v.answers) }, marks: { ...(v && v.marks) }, practice: { ...(v && v.practice) } };
+    return { answers: { ...(v && v.answers) }, marks: { ...(v && v.marks) }, practice: { ...(v && v.practice) }, exercises: { ...(v && v.exercises) } };
   },
   saveQuiz(key, qs) {
-    const body = { answers: qs.answers, marks: qs.marks, practice: qs.practice };
+    const body = { answers: qs.answers, marks: qs.marks, practice: qs.practice, exercises: qs.exercises || {} };
     if (this.mode === "db") return this.write(`data/users/${this.uid}/quiz-${key}`, { ...body, updatedAt: new Date().toISOString() });
     this.localSet("quiz-" + key, body);
     return Promise.resolve();
@@ -633,7 +699,9 @@ function showHome() {
   }
   const how = el("section", "prose howto");
   how.innerHTML = `<h2>How this works</h2><ul>
-<li>Work the modules in order. Each is a short series of steps: Overview, Learn, Practice, Quiz, OJT task, Job aid and Wrap-up.</li>
+<li>Work the modules in order. Each is a short series of steps: Overview, Learn, Exercises (where a module has them), Practice, Quiz, OJT task, Job aid and Wrap-up.</li>
+<li>Exercises are hands-on: calculators on the running deals, build-ups, sorting, ordering, decision paths and short scenarios. Do them before you check.</li>
+<li>Press Listen at the top of a step to hear it read aloud, if your viewer allows it.</li>
 <li>Answers stay hidden. Write your own first, then reveal and mark yourself honestly.</li>
 <li>Click any rule or formula ID, such as <span class="x"></span>, to read it without leaving the page.</li>
 <li>Your answers, notes and progress save automatically.</li></ul>`;
@@ -769,6 +837,488 @@ function buildPractice(sec, qs, saver) {
   }
 }
 
+/* ---------- exercises ---------- */
+const TYPE_LABEL = { calculator: "Calculator", buildup: "Build-up", sort: "Sort", order: "Put in order", decision: "Decision path", scenario: "Scenario" };
+const HALF = { money: 0.005, pct1: 0.0005, pct2: 0.00005, ratioX: 0.005, fixed6: 0.0000005, days: 0.5, months1: 0.05, text: 0 };
+const isPct = (f) => f === "pct1" || f === "pct2";
+function parseNum(s) {
+  const t = String(s ?? "").trim().replace(/[−–]/g, "-").replace(/[$,%\sx]/gi, "");
+  return /^-?(\d+\.?\d*|\.\d+)$/.test(t) ? Number(t) : NaN;
+}
+const showNum = (v) => String(BPLF.round.roundHalfUp(v, 8));
+/** The learner's number matches the exact value, to the half-unit of the display format. */
+function numMatches(typed, exact, format) {
+  const v = parseNum(typed); if (Number.isNaN(v)) return false;
+  const cands = isPct(format) ? [v / 100, v] : [v];
+  return cands.some((c) => Math.abs(c - exact) <= (HALF[format] || 0) * 1.0001 + 1e-12);
+}
+function shuffled(n, seedStr, avoidIdentity) {
+  let seed = 0; for (const ch of seedStr) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+  const idx = [...Array(n).keys()];
+  const key = (i) => { let x = (seed + (i + 1) * 2654435761) >>> 0; x ^= x >>> 15; x = Math.imul(x, 2246822519) >>> 0; x ^= x >>> 13; return x; };
+  idx.sort((a, b) => key(a) - key(b));
+  if (avoidIdentity && idx.every((v, i) => v === i) && n > 1) idx.push(idx.shift());
+  return idx;
+}
+function exFrame(ex, ctl) {
+  const card = el("article", "ex"); card.dataset.id = ex.id; card.dataset.type = ex.type;
+  const head = el("div", "exhead");
+  head.append(el("h3", "", ex.title));
+  const meta = el("div", "exmeta"); meta.append(el("span", "extype", TYPE_LABEL[ex.type] || ex.type));
+  if (ex.deal) meta.append(el("span", "exdeal", ex.deal));
+  for (const id of ex.sources || []) meta.append(FORMULAS.has(id) || RULES.has(id) ? chipEl(id) : el("span", "exdeal", id));
+  head.append(meta);
+  const intro = el("p", "speak", ex.intro);
+  const foot = el("div", "exrow");
+  const doneBtn = el("button", "btn sm", "Mark done"); doneBtn.type = "button";
+  const paintDone = () => { const d = !!ctl.st.done; card.dataset.done = d ? "1" : ""; doneBtn.setAttribute("aria-pressed", String(d)); doneBtn.textContent = d ? "Done. Undo" : "Mark done"; };
+  ctl.setDone = (v) => { if (!!ctl.st.done === v) return; ctl.st.done = v; paintDone(); ctl.save(); ctl.onDone(); };
+  doneBtn.addEventListener("click", () => ctl.setDone(!ctl.st.done));
+  foot.append(doneBtn);
+  paintDone();
+  return { card, head, intro, foot };
+}
+function field(id, label, input, cls) {
+  const row = el("div", "exfield" + (cls ? " " + cls : "")); const l = el("label", "", label); l.htmlFor = id; input.id = id;
+  if (cls === "chk") row.append(input, l); else row.append(l, input);
+  return row;
+}
+function textInput(kind) { const i = el("input"); i.type = "text"; i.autocomplete = "off"; i.spellcheck = false; i.inputMode = kind === "money" || kind === "rate" ? "decimal" : kind === "list-money" ? "text" : "numeric"; return i; }
+
+function exCalculator(ex, ctl) {
+  const c = ex.calculator, st = ctl.st, root = el("div", "exbody");
+  root.append(el("p", "speak", c.task));
+  const fs = el("fieldset", "exfields"); fs.append(el("legend", "", "Inputs from the deal"));
+  const grid = el("div", "exgrid"); fs.append(grid);
+  const scales = c.args.map((a) => (a.kind === "rate" && Math.abs(a.value) <= 1 ? 100 : 1));
+  const dflt = (a, i) => a.kind === "bool" ? !!a.value : a.kind === "rate" ? showNum(a.value * scales[i]) : a.kind === "list-money" ? [].concat(a.value).join(", ") : String(a.value);
+  st.inputs = Array.isArray(st.inputs) ? st.inputs : [];
+  const ctrls = c.args.map((a, i) => {
+    let inp;
+    if (a.kind === "bool") { inp = el("input"); inp.type = "checkbox"; }
+    else if (a.kind === "tier") { inp = el("select"); for (let t = 0; t <= 3; t++) { const o = el("option", "", "Tier " + t); o.value = String(t); inp.append(o); } }
+    else if (a.kind === "date") { inp = el("input"); inp.type = "date"; }
+    else inp = textInput(a.kind);
+    const v = st.inputs[i] !== undefined ? st.inputs[i] : dflt(a, i);
+    if (a.kind === "bool") inp.checked = !!v; else inp.value = v;
+    inp.addEventListener(a.kind === "bool" || a.kind === "tier" ? "change" : "input", () => { st.inputs[i] = a.kind === "bool" ? inp.checked : inp.value; ctl.save(); });
+    grid.append(field(`${ex.id}-in-${i}`, a.label + (scales[i] === 100 ? " (%)" : ""), inp, a.kind === "bool" ? "chk" : ""));
+    return inp;
+  });
+  const reset = el("button", "btn sm", "Reset to the deal"); reset.type = "button";
+  const resetRow = el("div", "exrow"); resetRow.append(reset);
+  const mine = textInput("money"); mine.value = st.mine || ""; mine.inputMode = "text";
+  mine.addEventListener("input", () => { st.mine = mine.value; ctl.save(); });
+  const mineRow = field(`${ex.id}-mine`, `Your answer: ${c.output.label}`, mine);
+  const go = el("button", "btn sm primary", "Calculate and compare"); go.type = "button";
+  const out = el("div", "exres"); out.hidden = true; out.setAttribute("role", "status");
+  const readArgs = () => c.args.map((a, i) => {
+    const raw = a.kind === "bool" ? ctrls[i].checked : ctrls[i].value;
+    if (a.kind === "bool") return raw;
+    if (a.kind === "date") { if (!raw) throw new RangeError(`Pick a date for ${a.label}.`); return raw; }
+    if (a.kind === "tier") return Number(raw);
+    if (a.kind === "list-money") { const xs = String(raw).split(",").map(parseNum); if (!xs.length || xs.some(Number.isNaN)) throw new RangeError(`Enter ${a.label} as numbers separated by commas.`); return xs; }
+    const n = parseNum(raw); if (Number.isNaN(n)) throw new RangeError(`Enter a number for ${a.label}.`);
+    return a.kind === "rate" ? n / scales[i] : n;
+  });
+  const same = (a, b) => Array.isArray(b) ? Array.isArray(a) && a.length === b.length && a.every((x, k) => Math.abs(x - b[k]) < 1e-9) : typeof b === "number" ? Math.abs(a - b) < 1e-9 : a === b;
+  function compute() {
+    out.hidden = false; out.replaceChildren();
+    try {
+      const vals = readArgs();
+      const fn = BPLF.funcs[c.function];
+      let r = c.argStyle === "object" ? fn(Object.fromEntries(c.args.map((a, i) => [a.name, vals[i]]))) : fn(...vals);
+      if (c.output.path) r = r[c.output.path];
+      const shown = BPLF.fmt(c.output.format, r);
+      out.append(el("span", "exnote", c.output.label), el("b", "", shown));
+      const atDefault = vals.every((v, i) => same(v, c.args[i].value));
+      const typed = mine.value.trim();
+      let ok = false;
+      if (typed) {
+        ok = c.output.format === "text" ? typed.toLowerCase() === String(r).toLowerCase() : numMatches(typed, r, c.output.format);
+        out.append(el("span", ok ? "exok" : "exbad", ok ? "Your answer matches." : `Your answer (${typed}) does not match. Check your steps.`));
+      }
+      if (!atDefault) out.append(el("span", "exnote", "You changed the inputs, so this is a what-if. Use “Reset to the deal” to go back."));
+      else if (ok) ctl.setDone(true);
+      st.revealed = true; ctl.save();
+    } catch (e) {
+      out.append(el("span", "exbad", e instanceof RangeError ? e.message : "Could not calculate with these inputs."));
+    }
+  }
+  go.addEventListener("click", () => {
+    if (!mine.value.trim() && !st.revealed) { out.hidden = false; out.replaceChildren(el("span", "exnote", "Type your own answer first, then calculate to compare.")); mine.focus(); return; }
+    compute();
+  });
+  reset.addEventListener("click", () => {
+    c.args.forEach((a, i) => { if (a.kind === "bool") ctrls[i].checked = !!a.value; else ctrls[i].value = dflt(a, i); });
+    st.inputs = c.args.map((a, i) => dflt(a, i)); out.hidden = true; out.replaceChildren(); ctl.save();
+  });
+  const goRow = el("div", "exrow"); goRow.append(go);
+  root.append(fs, resetRow, mineRow, goRow, out);
+  if (st.revealed && st.done) compute();
+  return root;
+}
+
+function exBuildup(ex, ctl) {
+  const b = ex.buildup, st = ctl.st, root = el("div", "exbody");
+  st.ok = st.ok || {}; st.vals = st.vals || {}; st.tries = st.tries || {};
+  root.append(el("p", "speak", b.context));
+  const list = el("ol", "exlines");
+  const firstOpen = () => { const i = b.lines.findIndex((_, k) => !st.ok[k]); return i < 0 ? b.lines.length : i; };
+  function paint(focusIdx) {
+    list.replaceChildren();
+    const open = firstOpen();
+    b.lines.forEach((l, i) => {
+      if (i > open) return;
+      const li = el("li", "exline"); li.dataset.ok = st.ok[i] ? "1" : "";
+      const id = `${ex.id}-l${i}`;
+      const lab = el("label", "speak", `${i + 1}. ${l.label}`); lab.htmlFor = id;
+      const inp = textInput("money"); inp.id = id; inp.value = st.vals[i] || ""; inp.inputMode = "text"; inp.readOnly = !!st.ok[i];
+      const btn = el("button", "btn sm primary", "Check"); btn.type = "button"; btn.hidden = !!st.ok[i];
+      const fb = el("div", "exnote"); fb.setAttribute("aria-live", "polite");
+      const row = el("div", "exrow"); row.append(inp, btn);
+      li.append(lab, row, fb);
+      if (st.ok[i]) fb.replaceChildren(el("span", "exok", `Correct: ${BPLF.fmt(l.format, l.expected)}`));
+      else if (st.tries[i]) fb.replaceChildren(el("span", "exbad", "Not quite. "), document.createTextNode("Hint: " + l.hint));
+      const check = () => {
+        const tol = Math.min(l.tolerance ?? 0.005, HALF[l.format] || 0.005);
+        const typed = inp.value.trim(); st.vals[i] = typed;
+        const v = parseNum(typed);
+        const cands = isPct(l.format) ? [v, v / 100] : [v];
+        const ok = !Number.isNaN(v) && cands.some((x) => Math.abs(x - l.expected) <= tol * 1.0001 + 1e-12);
+        if (ok) st.ok[i] = true; else st.tries[i] = (st.tries[i] || 0) + 1;
+        ctl.save();
+        if (firstOpen() >= b.lines.length) ctl.setDone(true);
+        paint(ok ? i + 1 : i);
+      };
+      btn.addEventListener("click", check);
+      inp.addEventListener("keydown", (e) => { if (e.key === "Enter" && !inp.readOnly) { e.preventDefault(); check(); } });
+      list.append(li);
+    });
+    const target = focusIdx != null ? list.children[Math.min(focusIdx, list.children.length - 1)] : null;
+    if (target) { const f = target.querySelector("input:not([readonly])") || target.querySelector("input"); if (f) f.focus(); }
+  }
+  paint();
+  root.append(list);
+  return root;
+}
+
+function exSort(ex, ctl) {
+  const s = ex.sort, st = ctl.st, root = el("div", "exbody");
+  st.assign = st.assign || {};
+  const order = shuffled(s.items.length, ex.id, false);
+  root.append(el("p", "exnote", "Choose a bucket for each item, then check. The buttons work with the keyboard."));
+  const list = el("div", "exlist"); list.style.marginTop = "0";
+  const msg = el("p", "exnote"); msg.setAttribute("aria-live", "polite");
+  const rows = order.map((idx) => {
+    const it = s.items[idx];
+    const row = el("div", "sortrow"); row.dataset.r = "";
+    row.append(el("div", "speak", it.text));
+    const grp = el("div", "exrow"); grp.setAttribute("role", "group"); grp.setAttribute("aria-label", `Bucket for ${it.text}`);
+    const btns = s.buckets.map((bk) => {
+      const b = el("button", "btn sm choice", bk); b.type = "button";
+      b.addEventListener("click", () => { st.assign[idx] = bk; st.checked = false; paint(); ctl.save(); });
+      grp.append(b); return b;
+    });
+    const why = el("p", "exnote"); why.hidden = true;
+    row.append(grp, why); list.append(row);
+    return { idx, it, row, btns, why };
+  });
+  function paint() {
+    for (const r of rows) {
+      r.btns.forEach((b, k) => b.setAttribute("aria-pressed", String(st.assign[r.idx] === s.buckets[k])));
+      r.row.dataset.r = ""; r.why.hidden = true;
+      if (st.checked) {
+        const right = st.assign[r.idx] === r.it.bucket;
+        r.row.dataset.r = right ? "right" : "wrong"; r.why.hidden = false;
+        r.why.textContent = (right ? "Right. " : `Not quite. It belongs in “${r.it.bucket}”. `) + r.it.why;
+      }
+    }
+    if (st.checked) {
+      const n = rows.filter((r) => st.assign[r.idx] === r.it.bucket).length;
+      msg.textContent = `${n} of ${rows.length} right.`;
+      if (n === rows.length) ctl.setDone(true);
+    } else msg.textContent = "";
+  }
+  const chk = el("button", "btn sm primary", "Check"); chk.type = "button";
+  chk.addEventListener("click", () => {
+    if (rows.some((r) => !st.assign[r.idx])) { msg.textContent = "Choose a bucket for every item first."; return; }
+    st.checked = true; paint(); ctl.save();
+  });
+  const act = el("div", "exrow"); act.append(chk);
+  root.append(list, act, msg);
+  paint();
+  return root;
+}
+
+function exOrder(ex, ctl) {
+  const o = ex.order, st = ctl.st, root = el("div", "exbody"), n = o.steps.length;
+  if (!Array.isArray(st.seq) || st.seq.length !== n) st.seq = shuffled(n, ex.id, true);
+  root.append(el("p", "exnote", "Use the move buttons to put the steps in the right order, then check."));
+  const list = el("ol", "orderlist"); list.setAttribute("aria-label", "Steps");
+  const live = el("p", "exnote"); live.setAttribute("aria-live", "polite");
+  const why = el("p", "speak"); why.hidden = true;
+  function paint(focus) {
+    list.replaceChildren();
+    st.seq.forEach((orig, pos) => {
+      const li = el("li", "orderrow"); li.dataset.r = st.checked ? (orig === pos ? "right" : "wrong") : "";
+      li.append(el("span", "speak", o.steps[orig]));
+      const row = el("div", "exrow");
+      const up = el("button", "btn sm", "Move up"), dn = el("button", "btn sm", "Move down");
+      up.type = dn.type = "button"; up.disabled = pos === 0; dn.disabled = pos === n - 1;
+      up.setAttribute("aria-label", `Move up: ${o.steps[orig]}`); dn.setAttribute("aria-label", `Move down: ${o.steps[orig]}`);
+      const move = (d, which) => {
+        [st.seq[pos], st.seq[pos + d]] = [st.seq[pos + d], st.seq[pos]]; st.checked = false; ctl.save();
+        live.textContent = `Moved to position ${pos + d + 1} of ${n}.`;
+        paint({ pos: pos + d, which });
+      };
+      up.addEventListener("click", () => move(-1, "up")); dn.addEventListener("click", () => move(1, "down"));
+      row.append(up, dn); li.append(row); list.append(li);
+    });
+    why.hidden = true;
+    if (st.checked) {
+      const good = st.seq.filter((orig, pos) => orig === pos).length;
+      if (good === n) { why.hidden = false; why.textContent = "Right order. " + o.why; live.textContent = `${n} of ${n} in place.`; ctl.setDone(true); }
+      else live.textContent = `${good} of ${n} in the right place. Keep moving steps.`;
+    }
+    if (focus) {
+      const bs = list.children[focus.pos].querySelectorAll("button");
+      const pick = focus.which === "up" ? bs[0] : bs[1];
+      (pick && !pick.disabled ? pick : (bs[0].disabled ? bs[1] : bs[0])).focus();
+    }
+  }
+  const chk = el("button", "btn sm primary", "Check order"); chk.type = "button";
+  chk.addEventListener("click", () => { st.checked = true; ctl.save(); paint(); });
+  const act = el("div", "exrow"); act.append(chk);
+  root.append(list, act, live, why);
+  paint();
+  return root;
+}
+
+function exDecision(ex, ctl) {
+  const d = ex.decision, st = ctl.st, root = el("div", "exbody");
+  st.path = Array.isArray(st.path) ? st.path : []; st.matched = st.matched || {}; if (st.case == null) st.case = "";
+  const cases = d.cases || [];
+  const caseSel = el("select"); const o0 = el("option", "", "Walk the tree freely"); o0.value = ""; caseSel.append(o0);
+  cases.forEach((c, i) => { const o = el("option", "", ""); o.value = String(i); caseSel.append(o); });
+  const paintOpts = () => caseSel.querySelectorAll("option").forEach((o, k) => { if (k > 0) o.textContent = `Case ${k}${st.matched[k - 1] ? " (matched)" : ""}`; });
+  paintOpts(); caseSel.value = String(st.case);
+  const caseText = el("p", "speak");
+  const stage = el("div", "exbody"); stage.setAttribute("aria-live", "polite");
+  const cur = () => { let id = "start"; for (const p of st.path) id = d.nodes[id].options[p].next; return id; };
+  function paint() {
+    caseText.textContent = st.case === "" ? "" : "Case: " + cases[Number(st.case)].text;
+    stage.replaceChildren();
+    if (st.path.length) {
+      const pl = el("ol", "dpath"); let id = "start";
+      for (const p of st.path) { const n = d.nodes[id]; pl.append(el("li", "", `${n.q} → ${n.options[p].label}`)); id = n.options[p].next; }
+      stage.append(pl);
+    }
+    const id = cur(), n = d.nodes[id];
+    if (n.options) {
+      stage.append(el("p", "speak", n.q));
+      const box = el("div", "dopts");
+      n.options.forEach((op, i) => { const b = el("button", "btn sm", op.label); b.type = "button"; b.addEventListener("click", () => { st.path.push(i); ctl.save(); paint(); const nb = stage.querySelector(".dopts button"); if (nb) nb.focus(); }); box.append(b); });
+      stage.append(box);
+    } else {
+      const end = el("div", "dend"); end.append(el("b", "", n.result), el("p", "speak", n.explain));
+      if (st.case !== "") {
+        const c = cases[Number(st.case)], ok = id === c.expect;
+        if (ok) { st.matched[st.case] = true; paintOpts(); if (cases.every((_, i) => st.matched[i])) ctl.setDone(true); }
+        end.append(el("span", ok ? "exok" : "exbad", ok ? "Your path matches the expected outcome for this case." : `This is not the expected outcome for this case. Expected: ${d.nodes[c.expect].result}. Start over and recheck each question.`));
+      }
+      stage.append(end);
+    }
+    const acts = el("div", "exrow");
+    const undo = el("button", "btn sm", "Undo last choice"); undo.type = "button"; undo.disabled = !st.path.length;
+    undo.addEventListener("click", () => { st.path.pop(); ctl.save(); paint(); });
+    const again = el("button", "btn sm", "Start over"); again.type = "button"; again.disabled = !st.path.length;
+    again.addEventListener("click", () => { st.path = []; ctl.save(); paint(); });
+    acts.append(undo, again); stage.append(acts);
+  }
+  caseSel.addEventListener("change", () => { st.case = caseSel.value; st.path = []; ctl.save(); paint(); });
+  root.append(field(`${ex.id}-case`, "Pick a case to run, or walk the tree freely", caseSel), caseText, stage);
+  paint();
+  return root;
+}
+
+function exScenario(ex, ctl) {
+  const s = ex.scenario, st = ctl.st, root = el("div", "exbody");
+  st.rubric = st.rubric || {};
+  root.append(el("p", "speak", s.case), el("p", "speak", s.prompt));
+  const ta = el("textarea"); ta.value = st.text || ""; ta.setAttribute("aria-label", "Your answer");
+  ta.placeholder = "Write your answer first. Use fictional data only.";
+  ta.addEventListener("input", () => { st.text = ta.value; ctl.save(); });
+  const rev = el("button", "btn sm primary", "Show model answer"); rev.type = "button";
+  const box = el("div", "exres"); box.hidden = true;
+  box.append(el("b", "", "Model answer"), el("p", "speak", s.model_answer), el("span", "exlab", "Check your answer against each point"));
+  const ul = el("ul", "rubric-list");
+  s.rubric.forEach((r, i) => {
+    const li = el("li"); const lab = el("label"); const cb = el("input"); cb.type = "checkbox"; cb.checked = !!st.rubric[i];
+    cb.addEventListener("change", () => { st.rubric[i] = cb.checked; ctl.save(); if (s.rubric.every((_, k) => st.rubric[k])) ctl.setDone(true); });
+    lab.append(cb, el("span", "", r)); li.append(lab); ul.append(li);
+  });
+  box.append(ul);
+  const show = () => { box.hidden = false; rev.textContent = "Hide model answer"; };
+  rev.addEventListener("click", () => {
+    if (!box.hidden) { box.hidden = true; rev.textContent = "Show model answer"; return; }
+    if (!ta.value.trim() && !st.revealed) { ta.placeholder = "Write your answer first, then reveal the model answer."; ta.focus(); return; }
+    st.revealed = true; ctl.save(); show();
+  });
+  if (st.revealed) show();
+  const act = el("div", "exrow"); act.append(rev);
+  root.append(ta, act, box);
+  return root;
+}
+const EX_BUILDERS = { calculator: exCalculator, buildup: exBuildup, sort: exSort, order: exOrder, decision: exDecision, scenario: exScenario };
+
+function buildExercises(m, qs, saver) {
+  const sec = el("section", "prose step"); sec.dataset.step = "exercises";
+  qs.exercises = qs.exercises || {};
+  const h = el("h2", "", "Exercises");
+  const sum = el("p", "exsum"); sum.setAttribute("aria-live", "polite");
+  const intro = el("p", "speak", "Work each exercise yourself first. Your answers and progress save automatically.");
+  const list = el("div", "exlist");
+  const count = () => { const n = m.exercises.filter((e) => (qs.exercises[e.id] || {}).done).length; sum.textContent = `${n} of ${m.exercises.length} exercises done`; };
+  for (const ex of m.exercises) {
+    const st = (qs.exercises[ex.id] = qs.exercises[ex.id] || {});
+    const ctl = { st, save: () => saver.touch(), onDone: count };
+    const f = exFrame(ex, ctl);
+    const body = EX_BUILDERS[ex.type] ? EX_BUILDERS[ex.type](ex, ctl) : el("p", "", "This exercise type is not supported.");
+    f.card.append(f.head, f.intro, body, f.foot);
+    list.append(f.card);
+  }
+  count();
+  sec.append(h, intro, sum, list);
+  return sec;
+}
+
+/* ---------- diagrams (mermaid) ---------- */
+function prepareDiagrams(root) {
+  for (const code of [...root.querySelectorAll("pre > code.language-mermaid")]) {
+    const pre = code.parentElement, src = code.textContent;
+    const fig = el("figure", "mermaid-figure");
+    const box = el("div", "mermaid-diagram"); box.dataset.src = src; box.textContent = src;
+    box.setAttribute("role", "img"); box.setAttribute("aria-label", "Diagram. A text version is in the source below.");
+    const det = el("details"); det.append(el("summary", "", "Diagram as text"));
+    const p2 = el("pre"); p2.append(el("code", "", src)); det.append(p2);
+    fig.append(box, det); pre.replaceWith(fig);
+  }
+}
+const themeKey = () => document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+const cssVar = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let mermaidTheme = null, diagramBusy = Promise.resolve();
+function initMermaid() {
+  const key = themeKey() + "|" + cssVar("--accent") + "|" + cssVar("--panel");
+  if (mermaidTheme === key) return;
+  mermaid.initialize({
+    startOnLoad: false, securityLevel: "strict", logLevel: 5, theme: "base",
+    themeVariables: {
+      darkMode: themeKey() === "dark", background: cssVar("--panel"), fontFamily: cssVar("--font-body"),
+      primaryColor: cssVar("--accent-soft"), primaryTextColor: cssVar("--ink"), primaryBorderColor: cssVar("--accent"),
+      lineColor: cssVar("--muted"), secondaryColor: cssVar("--code-bg"), tertiaryColor: cssVar("--panel"),
+      textColor: cssVar("--ink"), nodeBorder: cssVar("--accent"), clusterBkg: cssVar("--code-bg"), edgeLabelBackground: cssVar("--panel"),
+    },
+  });
+  mermaidTheme = key;
+}
+function diagramFallback(box) {
+  const fig = box.closest(".mermaid-figure");
+  const pre = el("pre"); pre.append(el("code", "", box.dataset.src));
+  if (fig) fig.replaceChildren(pre); else box.replaceWith(pre);
+}
+function renderDiagrams(scope) {
+  const boxes = [...scope.querySelectorAll(".mermaid-diagram")];
+  if (!boxes.length) return;
+  diagramBusy = diagramBusy.then(async () => {
+    for (const box of boxes) {
+      if (!box.isConnected) continue;
+      const src = box.dataset.src;
+      if (typeof mermaid === "undefined") { diagramFallback(box); continue; }
+      try {
+        initMermaid();
+        if (box.dataset.theme === mermaidTheme && box.querySelector("svg")) continue;
+        box.textContent = src; box.removeAttribute("data-processed");
+        const ok = await mermaid.parse(src, { suppressErrors: true });
+        if (!ok) { diagramFallback(box); continue; }
+        await mermaid.run({ nodes: [box], suppressErrors: true });
+        if (box.querySelector("svg")) box.dataset.theme = mermaidTheme; else diagramFallback(box);
+      } catch { if (box.isConnected) diagramFallback(box); }
+    }
+  }).catch(() => { /* diagrams are optional */ });
+}
+function onThemeChange() { const st = document.querySelector(".stage"); if (st) renderDiagrams(st); }
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", onThemeChange);
+new MutationObserver(onThemeChange).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+/* ---------- narration ---------- */
+const BLOCK_SEL = "h1, h2, h3, h4, p, li, blockquote, .speak, table";
+const NESTED = new Set(["UL", "OL", "LI", "P", "BLOCKQUOTE", "TABLE", "PRE", "DIV", "DETAILS", "FIGURE", "ARTICLE", "SECTION", "FIELDSET", "H1", "H2", "H3", "H4", "H5", "H6"]);
+const hiddenNode = (e) => !!e.closest("[hidden], details:not([open]) > :not(summary), .mermaid-diagram, .tag, .steptools");
+function ownSpeech(e) {
+  let s = "";
+  for (const n of e.childNodes) {
+    if (n.nodeType === 3) s += n.nodeValue;
+    else if (n.nodeType === 1) {
+      if (NESTED.has(n.tagName) || n.hidden || n.classList.contains("tag")) continue;
+      if (["BUTTON", "INPUT", "TEXTAREA", "SELECT", "SUMMARY", "SCRIPT", "STYLE"].includes(n.tagName) && !n.classList.contains("ref")) continue;
+      s += ownSpeech(n);
+    }
+  }
+  return s;
+}
+function speechLines(root) {
+  const lines = [];
+  for (const e of root.querySelectorAll(BLOCK_SEL)) {
+    if (hiddenNode(e)) continue;
+    if (e.tagName === "TABLE") { lines.push("There is a table here. Read it on the screen."); continue; }
+    if (e.closest("table, pre")) continue;
+    const t = ownSpeech(e).replace(/\s+/g, " ").trim();
+    if (t) lines.push(t);
+  }
+  const out = [];
+  for (const l of lines) {
+    if (l.length < 2000) { out.push(l); continue; }
+    let cur = "";
+    for (const sentence of l.split(/(?<=[.!?])\s+/)) {
+      if ((cur + " " + sentence).length >= 1900) { if (cur) out.push(cur); cur = sentence.slice(0, 1900); } else cur = cur ? cur + " " + sentence : sentence;
+    }
+    if (cur) out.push(cur);
+  }
+  return out;
+}
+const tts = { api: null, speaking: false };
+function hideListen() { for (const b of document.querySelectorAll(".steptools")) b.hidden = true; }
+async function stopListening() {
+  tts.speaking = false;
+  for (const b of document.querySelectorAll(".listen")) b.textContent = "Listen";
+  try { if (tts.api) await tts.api.stop(); } catch { /* ignore */ }
+}
+function listenTools(getSec) {
+  const bar = el("div", "steptools");
+  if (!(window.claude && typeof window.claude.use === "function")) { bar.hidden = true; return bar; }
+  const b = el("button", "btn sm listen", "Listen"); b.type = "button";
+  const note = el("span", "listen-note"); note.setAttribute("role", "status");
+  b.addEventListener("click", async () => {
+    note.textContent = "";
+    if (tts.speaking) { await stopListening(); return; }
+    try { if (!tts.api) tts.api = await window.claude.use("tts"); } catch { hideListen(); return; }
+    if (!tts.api) { hideListen(); return; }
+    const lines = speechLines(getSec());
+    if (!lines.length) return;
+    tts.speaking = true; b.textContent = "Stop";
+    try { await tts.api.speak(lines.map((text) => ({ text }))); }
+    catch (e) {
+      const code = e && e.code;
+      if (code === "not_granted") hideListen();
+      else if (code === "busy" || code === "rate_limited") note.textContent = code === "busy" ? "Narration is busy. Try again in a moment." : "Too many requests. Try again shortly.";
+    }
+    if (tts.speaking) { tts.speaking = false; b.textContent = "Listen"; }
+  });
+  bar.append(b, note);
+  return bar;
+}
+
 /* ---------- module page: steps ---------- */
 const STEPS = [
   { id: "overview", label: "Overview", re: /^(hook|objectives?)/i },
@@ -813,9 +1363,15 @@ async function showModule(m) {
   }
   // content
   const box = render(m.md);
+  prepareDiagrams(box);
   const steps = splitSteps(box);
   const saver = makeSaver(qs, m.key);
+  if ((m.exercises || []).length) {
+    const at = steps.findIndex((x) => x.id === "learn");
+    steps.splice(at + 1, 0, { id: "exercises", label: "Exercises", sec: buildExercises(m, qs, saver) });
+  }
   for (const s of steps) {
+    if (s.id === "exercises") continue;
     if (s.id === "quiz") buildQuiz(s.sec, qs, saver);
     if (s.id === "practice") buildPractice(s.sec, qs, saver);
     frameBlocks(s.sec); hideAnswers(s.sec);
@@ -861,7 +1417,9 @@ async function showModule(m) {
   });
   function go(i, scroll) {
     cur = i; stepOf[m.key] = i;
-    stage.replaceChildren(steps[i].sec, ...(i === steps.length - 1 ? [end] : []));
+    stopListening();
+    stage.replaceChildren(listenTools(() => steps[cur].sec), steps[i].sec, ...(i === steps.length - 1 ? [end] : []));
+    renderDiagrams(stage);
     tabBtns.forEach((b, j) => { if (j === i) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
     barLabel.textContent = `Step ${i + 1} of ${steps.length}: ${steps[i].label}`;
     fill.style.width = `${((i + 1) / steps.length) * 100}%`;

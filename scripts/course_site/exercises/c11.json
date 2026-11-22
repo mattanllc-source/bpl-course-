@@ -1,0 +1,195 @@
+{
+  "module": "c11",
+  "exercises": [
+    {
+      "id": "c11-1",
+      "type": "buildup",
+      "title": "Balance it: Maple Run closing",
+      "intro": "Build Maple Run's settlement statement line by line until sources equal uses.",
+      "sources": [
+        "F-RES-09",
+        "F-CORE-06",
+        "F-CORE-33",
+        "CORE-CLS-04",
+        "RES-FF-01"
+      ],
+      "deal": "RD-RES-01",
+      "buildup": {
+        "context": "Maple Run closes on 15 Jan 2027. Price $300,000. Closing costs $9,000 (title, recording, legal, appraisal). Commitment $340,000 at 10.25%, with 1.50 points. Initial advance $240,000 (RES-FF-01). No escrows. Prepaid interest runs from the funding day, counted, to month-end (CORE-CLS-04).",
+        "lines": [
+          {
+            "label": "Origination points",
+            "hint": "1.50 × $340,000 ÷ 100 (F-CORE-06). Points are on the commitment, not the advance.",
+            "expected": 5100.0,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Days of prepaid interest, 15 to 31 Jan",
+            "hint": "Count the funding day: 31 − 15 + 1.",
+            "expected": 17,
+            "format": "days",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Prepaid interest",
+            "hint": "$240,000 × 10.25% ÷ 360 × 17 (F-CORE-33).",
+            "expected": 1161.6666666666665,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Total uses",
+            "hint": "$300,000 + $9,000 + $5,100 + $1,161.67.",
+            "expected": 315261.6666666667,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Cash to close for sizing (F-RES-09)",
+            "hint": "$300,000 + $9,000 + $5,100 − $240,000.",
+            "expected": 74100,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Borrower cash at the closing table",
+            "hint": "$74,100 + prepaid interest. Maple Run has no escrow.",
+            "expected": 75261.66666666667,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Total sources",
+            "hint": "$240,000 advance + the borrower's cash. It must equal total uses.",
+            "expected": 315261.6666666667,
+            "format": "money",
+            "tolerance": 0.005
+          }
+        ]
+      }
+    },
+    {
+      "id": "c11-2",
+      "type": "calculator",
+      "title": "Cedar Court funding wire",
+      "intro": "Net Cedar Court's charges out of the initial funding to find the wire to the closing agent.",
+      "sources": [
+        "F-CORE-41",
+        "F-CORE-33",
+        "F-CORE-06",
+        "F-CORE-35",
+        "CORE-CLS-04"
+      ],
+      "deal": "RD-MF-01",
+      "calculator": {
+        "function": "netFundingWire",
+        "args": [
+          {
+            "name": "initialFunding",
+            "label": "Initial funding",
+            "kind": "money",
+            "value": 4340000
+          },
+          {
+            "name": "points",
+            "label": "Origination: 1.00% of the $5,140,000 commitment",
+            "kind": "money",
+            "value": 51400
+          },
+          {
+            "name": "lenderFees",
+            "label": "Other lender fees",
+            "kind": "money",
+            "value": 0
+          },
+          {
+            "name": "prepaid",
+            "label": "Prepaid interest (F-CORE-33)",
+            "kind": "money",
+            "value": 922.25
+          },
+          {
+            "name": "escrows",
+            "label": "Lender-held escrows: $50,000 repair + $18,666.67 cushion",
+            "kind": "money",
+            "value": 68666.67
+          }
+        ],
+        "output": {
+          "label": "Net funding wire",
+          "format": "money"
+        },
+        "task": "Cedar Court funds on the last day of the month, so 1 day of prepaid interest. Check it first: $4,340,000 × 7.65% ÷ 360 × 1. Then read the wire. Try wiring the full $4,340,000 and see why that is wrong.",
+        "answer": "$4,219,011.08"
+      }
+    },
+    {
+      "id": "c11-3",
+      "type": "sort",
+      "title": "Wire check: spot the red flag",
+      "intro": "It is Cedar Court's funding day. Sort each fact: does it stop the wire, call for a slower check, or allow release?",
+      "sources": [
+        "CORE-CLS-02",
+        "CORE-CLS-03",
+        "CORE-KYC-01",
+        "CORE-KYC-07"
+      ],
+      "deal": "RD-MF-01",
+      "sort": {
+        "buckets": [
+          "Stop the wire",
+          "Slow down and verify",
+          "OK to release"
+        ],
+        "items": [
+          {
+            "text": "At 3 p.m. the title agent emails new wire details \"because of an audit\".",
+            "bucket": "Stop the wire",
+            "why": "Details changed after our instructions went out. Call the number in our file and send it to the BSA officer the same day (CORE-KYC-07)."
+          },
+          {
+            "text": "The receiving account name differs from the CPL agent's escrow account.",
+            "bucket": "Stop the wire",
+            "why": "The account must match the CPL agent's escrow account (CORE-CLS-03)."
+          },
+          {
+            "text": "You confirmed the details by calling the phone number printed in the request.",
+            "bucket": "Stop the wire",
+            "why": "A call-back must use a number already in our file, never one from the request (CORE-KYC-07)."
+          },
+          {
+            "text": "The funding checklist shows every condition cleared, but nobody has signed it.",
+            "bucket": "Stop the wire",
+            "why": "Funding needs a signed checklist (CORE-CLS-03)."
+          },
+          {
+            "text": "OFAC was last run at approval, two weeks ago.",
+            "bucket": "Stop the wire",
+            "why": "OFAC is re-run on the funding day, before funds move (CORE-KYC-01, CORE-CLS-03)."
+          },
+          {
+            "text": "The agent asks you to rush the wire out before 2 p.m.",
+            "bucket": "Slow down and verify",
+            "why": "A rush request is a common fraud sign. Policy does not list it as a stop, so verify by call-back (CORE-KYC-07)."
+          },
+          {
+            "text": "A known contact at the title agent writes from a new email address.",
+            "bucket": "Slow down and verify",
+            "why": "A new email address is a common fraud sign, not a listed stop. Verify by a call to the number on file."
+          },
+          {
+            "text": "Details match our instructions and the CPL escrow account, confirmed by a call to the number on file. OFAC was re-run this morning.",
+            "bucket": "OK to release",
+            "why": "Every CORE-CLS-03 control is met. A second person releases the wire, then receipt is confirmed by the number on file."
+          },
+          {
+            "text": "A colleague prepared the wire. You, a second person, release it after the checks pass.",
+            "bucket": "OK to release",
+            "why": "One person prepares and a second releases (CORE-CLS-03)."
+          }
+        ]
+      }
+    }
+  ]
+}

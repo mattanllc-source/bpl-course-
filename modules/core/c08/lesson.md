@@ -9,10 +9,10 @@
 | Prerequisite | C3, C5 |
 | Bloom's levels | 3 and 4 (LD-02) |
 | Formulas | F-CORE-04, -06, -14 to -20, -28; F-RES-02, -04, -07, -08, -17; F-MF-12, -13, -20; F-COM-08, -10, -17 |
-| Rules | RES-FF-01 to -04; MF-BR-05 to -08, -14; COM-BR-03 to -06; COM-TRM; RES-DSCR-01 to -03, -07, -08, -10, -12; CORE-PRC-01 to -03, -05; D-CONV-01, -06 |
+| Rules | RES-FF-01 to -04; MF-BR-05 to -08, -14; COM-BR-03 to -06; COM-TRM-09; COM-BR-09; RES-DSCR-01 to -03, -07, -08, -10, -12; CORE-PRC-01 to -03, -05; D-CONV-01, -06; D-CORE-17, -27 |
 | Running deals | Worked examples: RD-RES-01 Maple Run and RD-COM-01 Birchwood Plaza. Practice: RD-MF-01 Cedar Court (LD-08) |
-| Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft; all numbers computed in code. Same day: sizing now divides by the unrounded loan constant across the policy, library and running deals |
+| Status | v0.2. Self-review against Bible Section 7 is at the end of this tab |
+| Change log | v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check. v0, 20 Nov 2026: first draft; all numbers computed in code. Same day: sizing now divides by the unrounded loan constant across the policy, library and running deals |
 
 ## Timing plan
 
@@ -75,14 +75,14 @@ Residential limits rise with the sponsor's tier (RES-FF-01 to -04). For Tiers 0-
 
 **Worked example 2: Birchwood term loan (RD-COM-01, month 24)**
 
-1. **Formula.** F-COM-08: LTV 65% × value; DSCR NCF ÷ 1.30 ÷ K; debt yield NCF ÷ 9.0%.
+1. **Formula.** COM-TRM-09 unanchored retail: 65% LTV, 1.30x, 9.0%. F-COM-08: LTV 65% × value; DSCR NCF ÷ 1.30 ÷ K; debt yield NCF ÷ 9.0%.
 2. **Inputs.** As-stabilized value $6,000,000; NCF $434,000; 7.00%, 25-year amortization; ADS $330,772.68 (C3), so K = $330,772.68 ÷ $3,900,000.
 3. **Substitution.** LTV: 65% × $6,000,000 = $3,900,000.00. DSCR: K = $330,772.68 ÷ $3,900,000 = 0.0848135077 (unrounded), so $434,000 ÷ 1.30 ÷ 0.0848135077 = $3,936,238.02. Debt yield: $434,000 ÷ 9.0% = $4,822,222.22.
 4. **Result.** Feeds T3. Note how close DSCR is: NCF just $3,995.52 lower would make DSCR bind.
 
 ### T3. The binding test (Objective 3, 10 minutes)
 
-The loan is the lowest result of every test that applies (F-CORE-19). Round down to the nearest $1,000, never up past any test (CORE-PRC-05). Keep every test result at full precision. Name the binding test in the memo, because it tells committee what would have to change for a bigger loan.
+The loan is the lowest result of every test that applies (F-CORE-19). Round down to the nearest $1,000, never up past any test (CORE-PRC-05, D-CORE-17). Keep every test result at full precision. Name the binding test in the memo, because it tells committee what would have to change for a bigger loan.
 
 **Worked example 3: Birchwood binding test (RD-COM-01)**
 
@@ -101,7 +101,7 @@ The loan is the lowest result of every test that applies (F-CORE-19). Round down
 
 **Worked example 4: Birchwood bridge (RD-COM-01, closing)**
 
-1. **Formula.** COM-BR table (unanchored retail): 65% as-is, 70% LTC, exit 1.30x and 9.5% debt yield at 7.75% (F-COM-10).
+1. **Formula.** COM-BR-09 unanchored retail: 65% as-is, 70% LTC, exit 1.30x and 9.5% debt yield at 7.75% (F-COM-10).
 2. **Inputs.** Price $4,400,000; as-is appraisal $4,500,000; total cost $5,180,000; future funding $660,000; stabilized NCF $434,000; exit ADS on $3,520,000 = $319,050.84.
 3. **Substitution.** Day one: 65% × min($4,400,000, $4,500,000) = $2,860,000. Commitment $2,860,000 + $660,000 = $3,520,000. LTC cap 70% × $5,180,000 = $3,626,000. Exit by DSCR: $434,000 ÷ 1.30 ÷ ($319,050.84 ÷ $3,520,000) = $3,683,232.62. Exit by debt yield: $434,000 ÷ 9.5% = $4,568,421.05.
 4. **Result.** The $3,520,000 commitment is below every cap. The as-is test binds the day-one advance.
@@ -164,7 +164,7 @@ Work alone, then check the model answer. The case is RD-MF-01 Cedar Court, a mul
 2. Find the day-one funding, and the as-is and stabilized debt yields on NCF of $395,000 and $560,000 (floors 7.0% and 8.5%, MF-BR-05, -06).
 3. Test in-place coverage at the higher of 7.65% and 4.25% + 4.00%. Is an interest reserve needed (MF-BR-07)?
 4. Exit test (MF-BR-08): 7.05% over 30 years gives an unrounded constant of 0.0802396631; stabilized NCF $560,000; 1.25x. Find the take-out and the cushion over the total commitment.
-5. Price it: SOFR 3.65%, MF-BR-14, 1.00% origination on the total commitment.
+5. Price it: SOFR 3.65% (the latest stated SOFR, carried forward as a course assumption, D-CORE-27), MF-BR-14, 1.00% origination on the total commitment.
 
 **Model answer**
 
@@ -315,7 +315,7 @@ Flip: Tier 3 sponsor (LTC 85%, purchase 85%, LTARV 70%); price $400,000; rehab $
 | Quiz: 10-20 items, one per objective, critical flagged, two sets, pass mark | Met (12 items, 3 critical, sets A and B) |
 | OJT: output, source, time, rubric, sign-off, data note | Met |
 | Job aid fits one page | Met on screen; confirm when printed |
-| Accessibility (LD-09) | Tables have headers; no colour-only meaning |
+| Accessibility (LD-09) | Tables have headers; no color-only meaning |
 
 **Real-world check (researched 20 Nov 2026): where 2026 sizing and pricing sit.**
 
@@ -331,6 +331,7 @@ Flip: Tier 3 sponsor (LTC 85%, purchase 85%, LTARV 70%); price $400,000; rehab $
 3. Three tests give $512,400.00, $498,765.43 and $530,000.00. What is the loan? **Answer:** The lowest, $498,765.43, rounded down to $498,000 (F-CORE-19, CORE-PRC-05).
 4. What is a full interest reserve on $2,000,000 at 8.25% for 91 actual days? **Answer:** $2,000,000 × 8.25% ÷ 360 × 91 = $41,708.33 (F-CORE-20).
 5. A Tier 1 RTL sponsor has FICO 690 and leverage 1 point under the maximum, on a rehab. What is the note rate? **Answer:** 10.75% + 0.50% + 0.25% = 11.50% (F-CORE-28).
+6. Birchwood Plaza is unanchored retail. Which rule sets its bridge limits, and what are they? **Answer:** COM-BR-09 unanchored retail: 65% as-is LTV, 70% LTC, 1.30x and 9.5% debt yield. Its term-loan test is COM-TRM-09: 65% LTV, 1.30x, 9.0%.
 
 **What to look up yourself.** Nothing for this module.
 

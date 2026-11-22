@@ -7,10 +7,10 @@
 | Prerequisite | C9 |
 | Bloom's levels | 3 and 4 (LD-02) |
 | Formulas | F-RES-09; F-CORE-06, -33, -35, -41 |
-| Rules | CORE-CLS-01 to -06; CORE-BP-01; CORE-KYC-01, -07; CORE-VAL-02; CORE-BOR-07, -13; CORE-INS-01, -02, -04; CORE-EXC-01; CORE-DOC-01, -03 |
+| Rules | CORE-CLS-01 to -06; CORE-BP-01; CORE-KYC-01, -05, -07; CORE-VAL-02; CORE-BOR-07, -13; CORE-INS-01, -02, -04; CORE-EXC-01; CORE-DOC-01, -03 |
 | Running deals | Worked examples: RD-RES-01 Maple Run. Practice: RD-MF-01 Cedar Court. OJT: RD-COM-01 Birchwood Plaza (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026. v0.1, 22 Nov 2026 |
+| Change log | v0, 20 Nov 2026. v0.1, 22 Nov 2026. v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -27,7 +27,7 @@
 
 ## 1. Hook (5 minutes)
 
-In 2025 the FBI logged 12,368 real estate fraud complaints and $275.1 million in losses. Business email compromise, which often targets closing wires, cost over $3 billion across all industries [VERIFY: FBI IC3 2025 report, via ALTA and HousingWire; checked 20 Nov 2026].
+In 2025 the FBI logged 12,368 real estate fraud complaints and $275.1 million in losses. Business email compromise, which often targets closing wires, cost over $3 billion across all industries [VERIFY: FBI IC3 2025 Internet Crime Report, ic3.gov, Real Estate and BEC tables; checked 22 Nov 2026].
 
 A loan can pass every credit test and still be lost in the last hour. One changed wire instruction sends the money to a thief. This module covers the steps between "approved" and "funded".
 
@@ -57,6 +57,7 @@ Approval comes with conditions. Funding comes only when every condition is clear
 - [ ] Title commitment, entity documents and good standing in hand; lender's policy for the full commitment (CORE-CLS-01, -06)
 - [ ] Insurance bound, naming the lender as mortgagee and loss payee; builder's risk at 100% of completed value during rehab (CORE-INS-01, -04)
 - [ ] Guaranties signed, including a completion guaranty where needed (CORE-DOC-01, -03)
+- [ ] No open stop-and-verify flag: any rush request, or new or changed email, domain or phone, cleared by a callback to the number on file (CORE-KYC-07; D-CORE-25)
 
 An item that cannot be cleared is an exception. It is approved before closing, never after (CORE-EXC-01).
 
@@ -106,15 +107,15 @@ The closing agent adds the borrower's $75,261.67 and pays the seller and costs.
 
 ### T4. The closing agent, instructions and wire controls (Objective 4, 16 minutes)
 
-A title agent or closing attorney holds our money for a few hours. A closing protection letter (CPL) protects us if that agent fails us. The title insurer indemnifies the lender for the agent's fraud or dishonesty, or failure to follow written closing instructions [VERIFY: ALTA CPL form; checked 20 Nov 2026].
+A title agent or closing attorney holds our money for a few hours. A closing protection letter (CPL) protects us if that agent fails us. The title insurer indemnifies the lender for the agent's fraud or dishonesty, or failure to follow written closing instructions, where that harms our title or lien [VERIFY: ALTA CPL Single Transaction form, as filed with the Florida Office of Insurance Regulation; checked 22 Nov 2026].
 
 Two consequences follow. The CPL covers only written instructions, so we always send them. And the cover depends on the insurer's solvency, so the agent's own controls still matter.
 
 **Rule CORE-CLS-02.** The closing agent is a title agent or approved attorney of a title insurer. We hold an ALTA closing protection letter naming us before any funds move. Our written closing instructions list every condition, the exact disbursements and the policy to be issued.
 
-**Wire controls.** Wire instructions are confirmed by a call to a number already in our file, never one from the request (CORE-KYC-07). Fraudsters now clone voices, so a familiar voice is not proof on its own [VERIFY: FBI IC3 2025 report, via SecureWorld; checked 20 Nov 2026].
+**Wire controls.** Wire instructions are confirmed by a call to a number already in our file, never one from the request (CORE-KYC-07). Fraudsters now clone voices, so a familiar voice is not proof on its own [VERIFY: FBI IC3 2025 Internet Crime Report, ic3.gov, AI section; checked 22 Nov 2026].
 
-**Rule CORE-CLS-03.** Funding needs a signed checklist showing every condition cleared, including the same-day OFAC re-run. One person prepares the wire and a second releases it. Instructions are verified under CORE-KYC-07 and match the CPL agent's escrow account. After sending, confirm receipt with the agent by the number on file.
+**Rule CORE-CLS-03.** Funding needs a signed checklist showing every condition cleared, including the same-day OFAC re-run. One person prepares the wire and a second releases it. Instructions are verified under CORE-KYC-07, including its stop-and-verify flags, and match the CPL agent's escrow account. After sending, confirm receipt with the agent by the number on file.
 
 **Stop the wire if any of these is true:**
 
@@ -123,11 +124,18 @@ Two consequences follow. The CPL covers only written instructions, so we always 
 3. The call-back used a number from the request, not one already in our file (CORE-KYC-07).
 4. The funding checklist is unsigned, or the same-day OFAC re-run is missing (CORE-CLS-03).
 
-A rush request or a new email address is a common fraud sign. Policy does not list it as a stop, so slow down and verify by call-back.
+**Stop-and-verify flags (CORE-KYC-07; D-CORE-25).** Two signs hold the wire, not the file, until the callback is done. One is a rush request to fund early or skip a step. The other is a new or changed email address, domain or phone number for any party. Changed wire instructions are still a full red flag that the BSA officer clears.
+
+1. A flag holds the wire. The rest of the closing can go on.
+2. The callback goes to the number already in our file, never one from the request (CORE-KYC-07).
+3. If the callback confirms the details, the second person releases the wire (CORE-CLS-03).
+4. If the callback fails or is refused, the item goes to the BSA officer the same business day (CORE-KYC-05).
+
+**Scenario.** At 11 a.m. an email says "please wire today, we lost the earlier email." The sender's domain differs from the agent's usual one by one letter. Both flags are present: a rush and a new domain. Hold the wire and call the agent on the number in our file. The FBI advises checking the sender's address and verifying any change by a second channel [VERIFY: FBI IC3 PSA I-060923-PSA, 9 Jun 2023, ic3.gov; checked 22 Nov 2026].
 
 ### T5. After closing (Objective 5, 7 minutes)
 
-Funding is not the end. The security instrument must be recorded and the final title policy issued. Until it is recorded, a later buyer or lender who records first could take priority. In that gap our protection is the title commitment and the CPL, not the public record [VERIFY: property state's recording act; not yet checked].
+Funding is not the end. The security instrument must be recorded and the final title policy issued. Until it is recorded, a later buyer or lender who records first could take priority. In that gap our protection is the title commitment and the CPL, not the public record [VERIFY: ORC 5301.23(A); N.C. Gen. Stat. 47-20; IC 32-21-4-1, via codes.findlaw.com; checked 22 Nov 2026].
 
 **Rule CORE-CLS-05.** Log every trailing document at funding. These include the recorded mortgage or deed of trust and the final lender's title policy. Add the recorded assignment of leases and rents and UCC filings where used. Chase each until received. Report open items monthly.
 
@@ -272,8 +280,8 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 | Formulas worked in four lines with real numbers | Met; computed in code |
 | Deal numbers match the running deals file | Met. Cedar and Birchwood funding dates are C11 assumptions |
 | Two quiz sets; at least one item per objective; critical items flagged | Met: 10 items each; 3 critical in each set |
-| Objective 5 practised | Met: practice 6, quiz and job aid |
-| No open tags | Not met: [VERIFY] on the FBI and ALTA sources. Stays v0 |
+| Objective 5 practiced | Met: practice 6, quiz and job aid |
+| No open tags | Met. FBI, ALTA and recording-act sources opened; tags checked 22 Nov 2026 |
 
 **Self-check.**
 
@@ -282,11 +290,12 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 3. The liquidity statements are 75 days old on the funding day. Can you fund? **Answer:** No. They must be dated within 60 days (CORE-BOR-13).
 4. Who releases the wire? **Answer:** A second person, not the one who prepared it (CORE-CLS-03).
 5. At month 2 the final title policy has not arrived. What do you do? **Answer:** Keep it on the trailing log, chase it, and report it monthly (CORE-CLS-05).
+6. On funding day the borrower's email asks to fund a day early. Everything else is cleared. What happens? **Answer:** The wire is held, not the file. Call the borrower on the number in our file. If the call fails, send it to the BSA officer the same business day (CORE-KYC-07, -05; D-CORE-25).
 
 **What to look up yourself.**
 
 1. The ALTA closing protection letter form your title insurer uses, and its exclusions.
-2. The recording act in each deal state (Ohio, North Carolina, Indiana): who wins when two mortgages record out of order. The Ohio code site did not load on 22 Nov 2026; try codes.ohio.gov, ncleg.gov and iga.in.gov.
-3. The FBI's own 2025 Internet Crime Report on ic3.gov, to confirm the hook's real estate and business email compromise figures.
+2. The recording act in each deal state: ORC 5301.23, N.C. Gen. Stat. 47-20 and IC 32-21-4-1. We read them on FindLaw because the official sites blocked us on 22 Nov 2026. Compare with codes.ohio.gov, ncleg.gov and iga.in.gov.
+3. The FBI's PSA I-060923-PSA on ic3.gov and ALTA's Outgoing Wire Preparation Checklist (v2.0), the sources behind the stop-and-verify flags.
 
 **How to check it.** Maple Run: $240,000 + $75,261.67 = $315,261.67, which equals $300,000 + $9,000 + $5,100 + $1,161.67. Wire: $240,000 − $5,100 − $1,161.67 = $233,738.33.

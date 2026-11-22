@@ -11,7 +11,7 @@
 | Glossary | Items 13 to 17 (credit box, five Cs, risk rating, term sheet, recourse) |
 | Running deals | Worked examples: RD-RES-01 Maple Run. Practice: all three deals (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft |
+| Change log | v0, 20 Nov 2026: first draft v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -45,7 +45,7 @@ By the end of C2, you will be able to:
 
 ### T1. The five Cs of credit (Objective 1, 15 minutes)
 
-The five Cs are a standard frame for any credit decision. Federal rules use them too. USDA guaranteed-loan rules require lenders to review and comment on each C in writing [VERIFY: 7 CFR 5001.202(b); eCFR; checked 20 Nov 2026].
+The five Cs are a standard frame for any credit decision. Federal rules use them too. USDA guaranteed-loan rules require lenders to review and comment on each C in writing [VERIFY: 7 CFR 5001.202 and 5001.202(b); eCFR API; checked 22 Nov 2026].
 
 | C | Question | In a business-purpose loan, look at | Module |
 | --- | --- | --- | --- |
@@ -87,10 +87,10 @@ You will learn each formula properly in C3, C8 and R2. Here, see only that every
 | Approver | Max single loan (commitment) | Max sponsor exposure (F-CORE-29) | Exceptions allowed | Must go higher when |
 | --- | --- | --- | --- | --- |
 | Senior underwriter | $500,000, Residential only | $1,000,000 | None | Any exception; any Multifamily or Commercial loan |
-| Credit officer | $2,000,000 | $5,000,000 | One: leverage +2.5 points; DSCR −0.05x; FICO −20; liquidity −10% of requirement | Tier 0 ground-up; first loan in a new state |
+| Credit officer | $2,000,000 | $5,000,000 | One: leverage +2.5 points; DSCR −0.05x; FICO −20; liquidity −10% of requirement | Ground-up with one completed build (RES-GU-01); first loan in a new state |
 | Credit committee | Above $2,000,000 | Above $5,000,000 | Up to two: leverage +5.0 points; DSCR −0.10x; FICO −40; liquidity −25% of requirement | Beyond these limits the loan is declined; no one has authority |
 
-Committee approval is also needed at any size for related-party or employee loans, Tier 0 ground-up, and any concentration breach. A sponsor above their tier's exposure cap is a breach (CORE-CONC-01). Check loan size, sponsor exposure, exceptions and triggers. The highest approver any of them needs makes the decision.
+Committee approval is also needed at any size for related-party or employee loans, ground-up with one completed build (RES-GU-01), and any concentration breach. Ground-up with no completed build is declined (D-CORE-26). A sponsor above their tier's exposure cap is a breach (CORE-CONC-01). Check loan size, sponsor exposure, exceptions and triggers. The highest approver any of them needs makes the decision.
 
 Maple Run is a $340,000 Residential loan with no exceptions. Harborline has no other loans with us, so sponsor exposure is $340,000. That is under $1,000,000 and under Dana Reyes's Tier 2 cap of $7,500,000 (CORE-CONC-01). A senior underwriter may approve it. The approver cannot be the underwriter of record.
 
@@ -109,6 +109,16 @@ Maple Run is a $340,000 Residential loan with no exceptions. Harborline has no o
 | 7 Exit | Payoff, extension, or refinance | Release of lien | CORE-SVC-01, -02 | C12 |
 | 8 Default (if needed) | Workout, foreclosure, REO | Recovery | CORE-DEF-01 to -06 | C13 |
 
+```mermaid
+flowchart LR
+  S1["1 Screen"] --> S2["2 Term sheet"] --> S3["3 Underwrite"] --> S4["4 Approve"] --> S5["5 Document and close"] --> S6["6 Service"] --> S7["7 Exit"]
+  S6 -.->|"if needed"| S8["8 Default"]
+  S7 -.->|"unpaid at maturity"| S8
+  S7 -.->|"refinance: a new loan"| S1
+```
+
+The flow shows the eight stages in order. Dotted lines mark the default path and a refinance that starts a new loan at stage 1.
+
 **Recourse sets what stage 8 can reach (glossary 17).** With full recourse, we can pursue the guarantors personally for any shortfall. Every Residential loan is full recourse (CORE-DOC-01). Cedar Court is non-recourse, except for "bad-boy" carve-outs (CORE-DOC-02; glossary 18). These make the guarantor fully liable for fraud, misapplied funds, an unpermitted transfer or a voluntary bankruptcy. Birchwood Plaza instead has a full guarantee that burns off at stabilization (COM-BR-07). State law can limit this (C10).
 
 **Worked example 2: Maple Run's timeline.** Closing 15 Jan 2027 (stage 5). Draws in months 2, 4, 6 and 8 (stage 6). A lease signed in month 11, with a copy to us within 10 business days (stage 6; RES-GEN-11). Maturity 15 Jan 2028, with an extension request (stage 7). A DSCR refinance request in month 14 (stage 7, then a new loan at stage 1).
@@ -125,7 +135,9 @@ Every loan is rated at each monthly review (CORE-SVC-07).
 | 4 | Substandard | Well-defined weakness; loss possible |
 | 5 | Doubtful/Loss | Loss likely or certain |
 
-Ratings 2 to 5 go on the watch list with an action and an owner. Regulators share the special mention, substandard, doubtful and loss grades [VERIFY: OCC Bulletin 2026-56, 10 Nov 2026; checked 20 Nov 2026].
+Ratings 2 to 5 go on the watch list with an action and an owner. Regulators share the special mention, substandard, doubtful and loss grades [VERIFY: OCC Bulletin 2026-56, 10 Nov 2026, occ.gov; checked 22 Nov 2026].
+
+**Loans in default (CORE-SVC-08; D-CORE-23).** A loan in default is rated on exit cover. Exit cover is as-is value less cost to sell, divided by balance plus accrued interest and fees (F-CORE-42 terms). A non-monetary default still in its cure period, with payments current and cover of 1.00 or more, is a 3. If it is not cured in time, it is a 4. A payment default with cover of 1.00 or more is a 4. Cover under 1.00, with no guarantor able to pay the gap, is a 5. C12 works the numbers. Special mention means default is not imminent, so a missed payment is never a 3 [VERIFY: OCC Rating Credit Risk; Fed SR 23-5 attachment; checked 22 Nov 2026].
 
 **Worked example 3: when does Maple Run reach watch?** Maturity is 15 Jan 2028. A loan within 90 days of maturity with no confirmed exit is at least a 2 (CORE-SVC-07).
 
@@ -217,10 +229,10 @@ Pass mark 80%. Items marked (C) are critical. Each set has 10 items and covers a
 
 1. **Five Cs:** character, capacity, capital, collateral, conditions. One fact each.
 2. **Credit box:** every ratio against its family limit. Any fail is an exception or a decline.
-3. **Route (CORE-AUTH-01):** senior underwriter for Residential up to $500,000, sponsor exposure up to $1,000,000, no exceptions. Credit officer up to $2,000,000 and $5,000,000 exposure, with one exception. Committee above those, or at any size for related-party or employee loans, Tier 0 ground-up or a concentration breach.
+3. **Route (CORE-AUTH-01):** senior underwriter for Residential up to $500,000, sponsor exposure up to $1,000,000, no exceptions. Credit officer up to $2,000,000 and $5,000,000 exposure, with one exception. Committee above those, or at any size for related-party or employee loans, ground-up with one completed build or a concentration breach.
 4. **No exceptions** to business-purpose rules (CORE-EXC-03). Exceptions before closing only.
 5. **Life cycle:** screen, term sheet, underwrite, approve, close, service, exit, default.
-6. **Ratings:** 1 Pass; 2 Pass/Watch; 3 Special mention; 4 Substandard; 5 Doubtful/Loss. Within 90 days of maturity with no exit: at least 2.
+6. **Ratings:** 1 Pass; 2 Pass/Watch; 3 Special mention; 4 Substandard; 5 Doubtful/Loss. Within 90 days of maturity with no exit: at least 2. In default: rate under CORE-SVC-08.
 
 **Mini-example.** Maple Run: $340,000; 85.00% LTC at the cap; senior underwriter approves; rated 1 at closing.
 
@@ -242,7 +254,7 @@ Pass mark 80%. Items marked (C) are critical. Each set has 10 items and covers a
 | Numbers worked step by step | Met: 80.00%, 85.00%, 65.38%, 87.18%; cash $74,100; 61 and 90 days |
 | Deal numbers match the running deals file | Met (Role 1 answer key and timeline) |
 | Quiz sets; critical items | Met: 10 items each; 3 critical in each set |
-| No open tags | Not met: [VERIFY] on the USDA five-Cs rule and the OCC grades. Stays v0 |
+| No open tags | In part: [VERIFY] tags on the USDA five-Cs rule, the OCC grades and the default rating rechecked 22 Nov 2026; compliance counsel has not yet confirmed them |
 
 **Self-check.**
 

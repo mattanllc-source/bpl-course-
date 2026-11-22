@@ -1,0 +1,199 @@
+{
+  "module": "c13",
+  "exercises": [
+    {
+      "id": "c13-1",
+      "type": "buildup",
+      "title": "Compare options: Cedar Court",
+      "intro": "Put modification, deed in lieu and foreclosure side by side for Cedar Court, with time, loss and guarantor recovery.",
+      "sources": [
+        "CORE-DEF-02",
+        "CORE-DEF-03",
+        "CORE-DEF-04",
+        "CORE-DOC-02",
+        "F-CORE-05",
+        "F-CORE-23",
+        "F-CORE-22",
+        "MF-BR-11"
+      ],
+      "deal": "RD-MF-01",
+      "buildup": {
+        "context": "C13 what-if: Cedar Court's month-27 refinance falls through, and payments stop at month 28. Balance $5,140,000 at 7.65%. As-is value $5,000,000; sale costs 3% ($150,000); NCF $35,000 a month. Foreclosure takes 270 days with $60,000 legal costs. A deed in lieu takes 180 days with $35,000. Title shows a $40,000 mechanic's lien. The loan is non-recourse with carve-outs (CORE-DOC-02).",
+        "lines": [
+          {
+            "label": "Foreclosure: lost interest over 270 days",
+            "hint": "$5,140,000 × 7.65% ÷ 360 × 270 (F-CORE-05).",
+            "expected": 294907.5,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Foreclosure: total costs",
+            "hint": "Lost interest + $60,000 legal + $150,000 sale costs.",
+            "expected": 504907.5,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Foreclosure: recovery",
+            "hint": "$5,000,000 + 9 months × $35,000 NCF.",
+            "expected": 5315000,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Foreclosure: loss",
+            "hint": "$5,140,000 + costs − recovery (F-CORE-23).",
+            "expected": 329907.5,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Foreclosure: severity",
+            "hint": "Loss ÷ $5,140,000 (F-CORE-23).",
+            "expected": 0.06418433852140078,
+            "format": "pct1",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Deed in lieu: lost interest over 180 days",
+            "hint": "$5,140,000 × 7.65% ÷ 360 × 180 (F-CORE-05).",
+            "expected": 196605.0,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Deed in lieu: total costs",
+            "hint": "Lost interest + $35,000 legal + $150,000 sale costs.",
+            "expected": 381605.0,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Deed in lieu: recovery",
+            "hint": "$5,000,000 + 6 months × $35,000 NCF.",
+            "expected": 5210000,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Deed in lieu: loss",
+            "hint": "$5,140,000 + costs − recovery (F-CORE-23).",
+            "expected": 311605.0,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Deed in lieu: severity",
+            "hint": "Loss ÷ $5,140,000.",
+            "expected": 0.06062354085603113,
+            "format": "pct1",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Deed in lieu loss if we pay off the $40,000 lien",
+            "hint": "A deed in lieu leaves the lien on title (CORE-DEF-04): $311,605 + $40,000. Compare with foreclosure.",
+            "expected": 351605.0,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Guarantor recovery with no carve-out triggered",
+            "hint": "Non-recourse: guarantors pay only if a carve-out is triggered (CORE-DOC-02).",
+            "expected": 0,
+            "format": "money",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Modification after a full cure: debt yield on $35,000 × 12",
+            "hint": "$420,000 ÷ $5,140,000. MF-BR-11 needs 7.5% and no default.",
+            "expected": 0.08171206225680934,
+            "format": "pct2",
+            "tolerance": 0.005
+          },
+          {
+            "label": "Modification: extension fee",
+            "hint": "$5,140,000 × 0.50% (F-CORE-22), on the commitment.",
+            "expected": 25700.0,
+            "format": "money",
+            "tolerance": 0.005
+          }
+        ]
+      }
+    },
+    {
+      "id": "c13-2",
+      "type": "calculator",
+      "title": "REO carrying value and charge-off",
+      "intro": "Record Cedar Court as REO at fair value less cost to sell, and find the charge-off at title.",
+      "sources": [
+        "F-CORE-42",
+        "CORE-DEF-06",
+        "F-CORE-23"
+      ],
+      "deal": "RD-MF-01",
+      "calculator": {
+        "function": "reoCarryingValue",
+        "args": [
+          {
+            "name": "recordedLoan",
+            "label": "Recorded loan",
+            "kind": "money",
+            "value": 5140000
+          },
+          {
+            "name": "fairValue",
+            "label": "Fair value (new appraisal)",
+            "kind": "money",
+            "value": 5000000
+          },
+          {
+            "name": "costToSell",
+            "label": "Cost to sell (3%)",
+            "kind": "money",
+            "value": 150000
+          }
+        ],
+        "output": {
+          "label": "Charge-off at title",
+          "format": "money",
+          "path": "chargeOff"
+        },
+        "task": "Cedar Court goes to REO: loan $5,140,000, fair value $5,000,000, cost to sell 3% = $150,000. What is the charge-off at title? Then try Birchwood: $3,520,000, $3,400,000 and $102,000. Why is the charge-off smaller than the F-CORE-23 loss?",
+        "answer": "$290,000.00"
+      }
+    },
+    {
+      "id": "c13-3",
+      "type": "order",
+      "title": "Missed payment to REO sale",
+      "intro": "Put the steps from a missed payment to the REO sale in the right order.",
+      "sources": [
+        "CORE-SVC-03",
+        "CORE-SVC-07",
+        "CORE-DEF-01",
+        "CORE-DEF-02",
+        "CORE-DEF-03",
+        "CORE-DEF-04",
+        "CORE-DEF-05",
+        "CORE-DEF-06",
+        "F-CORE-42"
+      ],
+      "deal": "RD-COM-01",
+      "order": {
+        "steps": [
+          "Send written notice of default; default interest runs as the note allows (CORE-SVC-03).",
+          "Re-rate the loan and put it on the watch list (CORE-SVC-07).",
+          "Check the state's SLT row: default interest, foreclosure method and deficiency.",
+          "Get a pre-negotiation letter signed by the borrower and every guarantor (CORE-DEF-01).",
+          "Compare the options by F-CORE-23 net loss, counting lost interest (CORE-DEF-02).",
+          "If a workout loses least, offer a written, time-limited modification or forbearance (CORE-DEF-03).",
+          "If there is no workout, search title, UCC and judgments. Take a deed in lieu only if clean; otherwise foreclose with a receiver (CORE-DEF-04, -05).",
+          "At title, get a new appraisal and record the REO at fair value less cost to sell (CORE-DEF-06; F-CORE-42).",
+          "List with a broker under a written sale plan, re-test value quarterly, and send each offer to the original approver (CORE-DEF-06)."
+        ],
+        "why": "Notice, rating and the state check come first, as in T1. No workout talk happens before the letter is signed (CORE-DEF-01). Options are compared by loss before one is chosen (CORE-DEF-02). The option with the lowest expected loss is recommended (CORE-DEF-02). A deed in lieu needs clean title, or we foreclose (CORE-DEF-04). REO is recorded at title, then sold under a plan (CORE-DEF-06)."
+      }
+    }
+  ]
+}

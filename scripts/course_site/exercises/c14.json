@@ -1,0 +1,247 @@
+{
+  "module": "c14",
+  "exercises": [
+    {
+      "id": "c14-1",
+      "type": "sort",
+      "title": "Memo builder: Birchwood",
+      "intro": "Place each Birchwood fact in its CORE-AUTH-02 credit memo section. Section 10, the risk rating, is left out here.",
+      "sources": [
+        "CORE-AUTH-02",
+        "CORE-AUTH-01",
+        "SLT-IN-02",
+        "F-CORE-30",
+        "F-CORE-43"
+      ],
+      "deal": "RD-COM-01",
+      "sort": {
+        "buckets": [
+          "1 Request and recommendation",
+          "2 Borrower and guarantors",
+          "3 Property and valuation",
+          "4 Cash flow",
+          "5 Sizing table",
+          "6 Exit analysis",
+          "7 State law check",
+          "8 Portfolio impact",
+          "9 Risks and mitigants",
+          "11 Conditions to close"
+        ],
+        "items": [
+          {
+            "text": "Approve a $3,520,000 retail bridge to Birchwood Plaza LLC. Committee approval required.",
+            "bucket": "1 Request and recommendation",
+            "why": "The answer comes first: amount, product and approver (CORE-AUTH-02; CORE-AUTH-01)."
+          },
+          {
+            "text": "Dana Whitlow 75% and Leo Marsh 25%. Dana is Tier 1, mid-score 742, liquidity $760,000, net worth $5,200,000.",
+            "bucket": "2 Borrower and guarantors",
+            "why": "Entity, ownership, tier, credit, liquidity and net worth belong in section 2."
+          },
+          {
+            "text": "40,000 sf unanchored strip center, 70% leased. As-is $4,500,000; as-stabilized $6,000,000.",
+            "bucket": "3 Property and valuation",
+            "why": "The property and the values used go in section 3."
+          },
+          {
+            "text": "In-place NCF $254,000; stabilized NCF $434,000.",
+            "bucket": "4 Cash flow",
+            "why": "Income and expenses go in section 4."
+          },
+          {
+            "text": "LTC 68.0% against 70%; in-place coverage 1.08x at the 8.25% test rate.",
+            "bucket": "5 Sizing table",
+            "why": "Each test against its limit, with rule IDs, goes in the sizing table."
+          },
+          {
+            "text": "Exit DSCR 1.36x at 7.75% against 1.30x; exit debt yield 12.3%.",
+            "bucket": "6 Exit analysis",
+            "why": "The exit and its cushion go in section 6."
+          },
+          {
+            "text": "Indiana: no lender license or rate cap found; deficiency allowed (SLT-IN-02).",
+            "bucket": "7 State law check",
+            "why": "Section 7 covers CORE-BP-03, CORE-PRC-03 and CORE-DOC-04."
+          },
+          {
+            "text": "Indiana rises to 25.9% of the book against a 25% cap; headroom is $2,000,000.",
+            "bucket": "8 Portfolio impact",
+            "why": "CORE-CONC tests go in section 8 (F-CORE-30, -43)."
+          },
+          {
+            "text": "Lease-up of 12,000 sf, paired with Leo Marsh's 9 years of leasing and the cash sweep.",
+            "bucket": "9 Risks and mitigants",
+            "why": "Each risk is paired with a mitigant (CORE-AUTH-02)."
+          },
+          {
+            "text": "Rate cap bought and assigned; estoppels and SNDAs in hand; springing lockbox in place.",
+            "bucket": "11 Conditions to close",
+            "why": "Each condition to close is listed in section 11."
+          }
+        ]
+      }
+    },
+    {
+      "id": "c14-2",
+      "type": "decision",
+      "title": "Who approves?",
+      "intro": "Route five loans to the right approver by always-committee items, exceptions, size and exposure.",
+      "sources": [
+        "CORE-AUTH-01",
+        "CORE-CONC-01",
+        "CORE-CONC-07",
+        "CORE-EXC-02",
+        "F-CORE-29"
+      ],
+      "deal": null,
+      "decision": {
+        "nodes": {
+          "start": {
+            "q": "Does any always-committee item apply? These are related-party or employee loans, Tier 0 ground-up, a first loan in a new state, or any CONC breach.",
+            "options": [
+              {
+                "label": "Yes",
+                "next": "committee"
+              },
+              {
+                "label": "No",
+                "next": "exc"
+              }
+            ]
+          },
+          "exc": {
+            "q": "How many policy exceptions, and how big?",
+            "options": [
+              {
+                "label": "None",
+                "next": "size0"
+              },
+              {
+                "label": "One, within credit-officer limits (leverage +2.5 points; DSCR −0.05x; FICO −20; liquidity −10%)",
+                "next": "size1"
+              },
+              {
+                "label": "Two, or one beyond credit-officer limits but within committee limits",
+                "next": "committee"
+              },
+              {
+                "label": "Beyond committee limits",
+                "next": "decline"
+              }
+            ]
+          },
+          "size0": {
+            "q": "What are the loan size and sponsor exposure (F-CORE-29)?",
+            "options": [
+              {
+                "label": "Residential, up to $500,000, exposure up to $1,000,000",
+                "next": "suw"
+              },
+              {
+                "label": "Any other loan up to $2,000,000, exposure up to $5,000,000",
+                "next": "co"
+              },
+              {
+                "label": "Over $2,000,000, or exposure over $5,000,000",
+                "next": "committee"
+              }
+            ]
+          },
+          "size1": {
+            "q": "What are the loan size and sponsor exposure (F-CORE-29)?",
+            "options": [
+              {
+                "label": "Up to $2,000,000, exposure up to $5,000,000",
+                "next": "co"
+              },
+              {
+                "label": "Over $2,000,000, or exposure over $5,000,000",
+                "next": "committee"
+              }
+            ]
+          },
+          "suw": {
+            "result": "Senior underwriter.",
+            "explain": "Residential only, up to $500,000 and $1,000,000 of exposure, with no exceptions (CORE-AUTH-01). The approver is never the underwriter of record."
+          },
+          "co": {
+            "result": "Credit officer.",
+            "explain": "Up to $2,000,000 and $5,000,000 of exposure, with at most one exception inside credit-officer limits (CORE-AUTH-01). Any exception still needs two compensating factors (CORE-EXC-02)."
+          },
+          "committee": {
+            "result": "Committee.",
+            "explain": "Committee approves loans over $2,000,000, exposure over $5,000,000, up to two exceptions and every always-committee item (CORE-AUTH-01; CORE-CONC-07)."
+          },
+          "decline": {
+            "result": "Decline.",
+            "explain": "Beyond the committee limits no one has authority, so the loan is declined (CORE-AUTH-01)."
+          }
+        },
+        "cases": [
+          {
+            "text": "Maple Run: $340,000 residential fix-and-flip. Exposure $340,000, under Dana Reyes's Tier 2 cap. No exceptions.",
+            "expect": "suw"
+          },
+          {
+            "text": "A $450,000 multifamily loan. The sponsor has no other loans with us. No exceptions.",
+            "expect": "co"
+          },
+          {
+            "text": "Dana Reyes asks for 87.5% LTC: $350,000 on Maple Run, one leverage exception of +2.5 points.",
+            "expect": "co"
+          },
+          {
+            "text": "A $1,800,000 commercial loan. Sponsor exposure is $5,600,000. No exceptions.",
+            "expect": "committee"
+          },
+          {
+            "text": "Birchwood: $3,520,000, over Dana Whitlow's Tier 1 cap, and Indiana rises to 25.9% against a 25% cap.",
+            "expect": "committee"
+          }
+        ]
+      }
+    },
+    {
+      "id": "c14-3",
+      "type": "calculator",
+      "title": "Bucket headroom",
+      "intro": "Find how large a new loan North Carolina's state bucket can take, then test Cedar Court's share after it.",
+      "sources": [
+        "F-CORE-43",
+        "F-CORE-30",
+        "CORE-CONC-06",
+        "CORE-CONC-02"
+      ],
+      "deal": "RD-MF-01",
+      "calculator": {
+        "function": "bucketHeadroom",
+        "args": [
+          {
+            "name": "cap",
+            "label": "State cap (CORE-CONC-06)",
+            "kind": "rate",
+            "value": 0.25
+          },
+          {
+            "name": "totalCommitments",
+            "label": "Total book commitments",
+            "kind": "money",
+            "value": 120000000
+          },
+          {
+            "name": "bucketCommitments",
+            "label": "North Carolina commitments",
+            "kind": "money",
+            "value": 26000000
+          }
+        ],
+        "output": {
+          "label": "Headroom before Cedar Court",
+          "format": "money"
+        },
+        "task": "The C14 book is $120,000,000, with $26,000,000 in North Carolina and a 25% state cap. What is the headroom before Cedar Court? Does the $5,140,000 loan fit? Check the share after with F-CORE-30: $31,140,000 ÷ $125,140,000.",
+        "answer": "$5,333,333.33"
+      }
+    }
+  ]
+}

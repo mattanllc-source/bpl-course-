@@ -12,7 +12,7 @@
 | Rules | CORE-DOC-01 to -05; CORE-CLS-01, -06; CORE-INS-01 to -04; CORE-SVC-05; RES-GEN-07, -08; MF-GEN-08, -10; MF-BR-12, -13; COM-GEN-09, -12 to -14, -16; COM-BR-07; RES-GEN-11 |
 | Running deals | Worked examples: RD-RES-01 Maple Run and RD-COM-01 Birchwood Plaza. Practice: RD-MF-01 Cedar Court (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026. v0.1, 22 Nov 2026 |
+| Change log | v0, 20 Nov 2026. v0.1, 22 Nov 2026. v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -29,7 +29,7 @@
 
 ## 1. Hook (5 minutes)
 
-A fire damages $500,000 of a strip center. The policy carries $4,400,000 against a $5,200,000 replacement cost, with a 90% coinsurance clause. The insurer pays $445,085.47, not $475,000.
+A fire damages $500,000 of a strip center. The policy carries $4,400,000 against a $5,200,000 replacement cost, with a 90% coinsurance clause. The insurer pays $445,085.47, not $475,000. CORE-INS-01 bars that clause, and F-CORE-37 shows what it costs.
 
 Nobody missed a payment, and the loan still lost cover. Closing documents decide what we can collect when things go wrong. This module teaches you to check them before the money goes out.
 
@@ -74,13 +74,13 @@ On top of any row, future funding adds a completion guaranty. Multifamily and co
 
 | Deal | State row | Foreclosure | Deficiency |
 | --- | --- | --- | --- |
-| RD-RES-01 Maple Run | Ohio, SLT-OH-01 | Judicial only; about 6 months to 2 years from filing to sale | Allowed; an investor-held house is likely outside the 2-year home limit |
+| RD-RES-01 Maple Run | Ohio, SLT-OH-01 | Judicial only; about 6 months to 2 years from filing to sale | Allowed; the 2-year limit (ORC 2329.08) covers 1-2 family dwellings used as a home. Ask counsel whether a rented house counts |
 | RD-MF-01 Cedar Court | North Carolina, SLT-NC-02 | Power of sale before the clerk; 10-day upset-bid periods | Allowed, but the borrower may prove fair value as a defense |
 | RD-COM-01 Birchwood Plaza | Indiana, SLT-IN-02 | Judicial; no sale until 3 months after filing | Allowed, unless the borrower waives the wait with our consent |
 
-[VERIFY: State Law Table SLT-OH-01, SLT-NC-02, SLT-IN-02; checked 20 Nov 2026]
+[VERIFY: State Law Table SLT-OH-01, SLT-NC-02, SLT-IN-02; ORC 2329.08; N.C. Gen. Stat. 45-21.27, 45-21.36; IC 32-29-7-3, -5, via codes.findlaw.com; checked 22 Nov 2026]
 
-California is the classic contrast. Its one-action rule, Code of Civil Procedure 726, makes a lender foreclose before other remedies on the debt. Section 580d bars a deficiency judgment after a trustee's sale [VERIFY: Cal. Code Civ. Proc. 726, 580d; Black Sky Capital v. Cobb (Cal. 2019); checked 20 Nov 2026]. A guaranty on California collateral carries the Civ. Code 2856 waivers (CORE-DOC-05). Local counsel confirms every state point on each live deal.
+California is the classic contrast. Its one-action rule, Code of Civil Procedure 726, makes a lender foreclose before other remedies on the debt. Section 580d bars a deficiency judgment after a trustee's sale [VERIFY: Cal. Code Civ. Proc. 726(a), 580d, Civ. Code 2856, via codes.findlaw.com; Black Sky Capital v. Cobb (Cal. 2019), courts.ca.gov opinion S243294; checked 22 Nov 2026]. A guaranty on California collateral carries the Civ. Code 2856 waivers (CORE-DOC-05). Local counsel confirms every state point on each live deal.
 
 **Worked example 1: Birchwood recourse (RD-COM-01)**
 
@@ -137,11 +137,11 @@ CORE-INS-01 sets the base for all families. Property cover is special-form, at r
 
 **Insurance-to-value** (F-CORE-34) = coverage ÷ replacement cost. Below 100% fails CORE-INS-01. Test against replacement cost, never market value or the loan amount.
 
-**Coinsurance** (F-CORE-37) is why a gap matters even for small claims. Payment = (carried ÷ required) × loss − deductible, where required = coinsurance % × replacement cost. Apply the ratio first, then the deductible. CORE-INS-01 does not accept a coinsurance clause unless an agreed-amount provision of at least 100% applies. F-CORE-37 shows what a clause costs, so you can explain the condition to the borrower.
+**Coinsurance** (F-CORE-37) measures what a coinsurance clause costs the owner when cover falls short. Payment = (carried ÷ required) × loss − deductible, where required = coinsurance % × replacement cost. Apply the ratio first, then the deductible. CORE-INS-01 does not accept a coinsurance clause unless an agreed-amount provision of at least 100% applies. F-CORE-37 shows what a clause costs, so you can explain the condition to the borrower.
 
-**Flood.** Every loan gets a flood determination (CORE-INS-01). Federal law makes regulated lenders require flood cover on buildings in special flood hazard areas (42 USC 4012a) [VERIFY: 42 USC 4012a(b); checked 20 Nov 2026]. That law does not bind us directly, so our policy sets its own rule. Any building in Zone A or V needs flood cover of at least the lesser of the loan and its replacement cost (CORE-INS-03). The NFIP caps building cover at $250,000 for one-to-four-family homes. Other residential and non-residential buildings are capped at $500,000 [VERIFY: 44 CFR 61.6; checked 20 Nov 2026]. Larger buildings need excess or private flood cover.
+**Flood.** Every loan gets a flood determination (CORE-INS-01). Federal law makes regulated lenders require flood cover on buildings in special flood hazard areas (42 USC 4012a) [VERIFY: 42 USC 4012a(b), law.cornell.edu; checked 22 Nov 2026]. That law does not bind us directly, so our policy sets its own rule. Any building in Zone A or V needs flood cover of at least the lesser of the loan and its replacement cost (CORE-INS-03). The NFIP caps building cover at $250,000 for one-to-four-family homes. Other residential and non-residential buildings are capped at $500,000 [VERIFY: 44 CFR 61.6, ecfr.gov; checked 22 Nov 2026]. Larger buildings need excess or private flood cover.
 
-**NFIP lapse risk.** The NFIP is authorized only to 11 December 2026. It lapsed from 1 October to 12 November 2025, and again on 1-3 February 2026. During a lapse no new NFIP policies are sold or renewed [VERIFY: CRS IN10835, 11 Sep 2026]. A loan that needs NFIP cover cannot close then. Plan private flood cover or move the closing date.
+**NFIP lapse risk.** The NFIP is authorized only to 11 December 2026. It lapsed from 1 October to 12 November 2025, and again on 1-3 February 2026. During a lapse no new NFIP policies are sold or renewed [VERIFY: CRS Insight IN10835, updated 11 Sep 2026, via everycrsreport.com; checked 22 Nov 2026]. A loan that needs NFIP cover cannot close then. Plan private flood cover or move the closing date.
 
 **Worked example 4: Birchwood cover test (RD-COM-01; what-if values)**
 
@@ -163,7 +163,7 @@ Replacement cost, limit, clause and loss are what-if figures, not deal facts.
 
 **Tax and insurance escrow** (F-CORE-35): monthly deposit = (annual taxes + annual insurance) ÷ 12. MF bridges require it (MF-BR-13). Where any loan escrows, CORE-INS-02 adds a closing cushion of 2 months' deposits.
 
-**Why 2 months?** It mirrors the consumer cap in Regulation X, 12 CFR 1024.17(c)(5): one-sixth of annual payments. RESPA does not apply to business-purpose loans (1024.5(b)(2)), so this is our choice, not a legal duty [VERIFY: 12 CFR 1024.17(c)(5), 1024.5(b)(2); checked 20 Nov 2026].
+**Why 2 months?** It mirrors the consumer cap in Regulation X, 12 CFR 1024.17(c)(1) and (c)(5): a cushion of no more than one-sixth of the estimated annual escrow payments or disbursements. RESPA does not apply to business-purpose loans (1024.5(b)(2)), so this is our choice, not a legal duty [VERIFY: 12 CFR 1024.17(c)(1), (c)(5), 1024.5(b)(2), ecfr.gov; checked 22 Nov 2026].
 
 **Other MF bridge reserves** (MF-BR-13): replacement reserves of $300 per unit per year. A repair escrow of 125% of immediate repairs, funded at closing.
 
@@ -178,7 +178,7 @@ Replacement cost, limit, clause and loss are what-if figures, not deal facts.
 
 ### T5. Collateral reports and tenant documents (Objective 5, 15 minutes)
 
-**Phase I.** COM-GEN-14 requires one on every commercial loan; MF-GEN-08 lists it for multifamily. The standard is ASTM E1527-21. A recognized environmental condition (REC) triggers a Phase II (COM-GEN-14). EPA's rule sets the age limits. The whole inquiry must be within one year before acquisition. Interviews, lien and records searches, the site visit and the EP's declaration must be within 180 days [VERIFY: 40 CFR 312.20(a)-(b); checked 20 Nov 2026]. An older report needs an update.
+**Phase I.** COM-GEN-14 requires one on every commercial loan; MF-GEN-08 lists it for multifamily. The standard is ASTM E1527-21. A recognized environmental condition (REC) triggers a Phase II (COM-GEN-14). EPA's rule sets the age limits. The whole inquiry must be within one year before acquisition. Interviews, lien and records searches, the site visit and the EP's declaration must be within 180 days [VERIFY: 40 CFR 312.20(a)-(b), ecfr.gov; checked 22 Nov 2026]. An older report needs an update.
 
 **Estoppels and SNDAs** (COM-GEN-09). An estoppel is the tenant's signed certificate of its lease terms and of any defaults. An SNDA subordinates the lease to our mortgage. It also keeps the lease in place if we foreclose, and binds the tenant to us. Collect estoppels from tenants paying 20% or more of rent and from the top five. Collect SNDAs from tenants paying 10% or more.
 

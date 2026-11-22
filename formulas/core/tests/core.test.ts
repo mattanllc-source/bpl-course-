@@ -15,7 +15,7 @@ const byId = (id: string) => {
 /** Every core formula ID has a port, tested against its fixtures below (F-CORE-38 and -39 are reserved). */
 const PORTED = [
   ...Array.from({ length: 37 }, (_, i) => `F-CORE-${String(i + 1).padStart(2, "0")}`),
-  "F-CORE-40", "F-CORE-41", "F-CORE-42", "F-CORE-43",
+  "F-CORE-40", "F-CORE-41", "F-CORE-42", "F-CORE-43", "F-CORE-44",
 ];
 
 describe("F-CORE-01 interest-only (Actual/360)", () => {
@@ -493,9 +493,21 @@ describe("F-CORE-43 bucket headroom", () => {
   it("rejects a cap of 100%", () => expect(() => core.bucketHeadroom(1, 1, 0)).toThrow(RangeError));
 });
 
+describe("F-CORE-44 cash-on-cash return", () => {
+  const exp = byId("F-CORE-44");
+  it.each([
+    [480_000, 330_772.68, 2_100_000, exp[0]],
+    [480_000, 330_772.68, 1_918_181.82, exp[1]],
+    [300_000, 330_772.68, 2_100_000, exp[2]],
+  ])("NOI %d; ADS %d; cash %d", (noi, ads, cash, want) => expect(pct(core.cashOnCash(noi, ads, cash), 2)).toBe(want));
+  it("rejects zero cash invested", () => expect(() => core.cashOnCash(480_000, 330_772.68, 0)).toThrow(RangeError));
+  it("rejects negative cash invested", () => expect(() => core.cashOnCash(480_000, 330_772.68, -1)).toThrow(RangeError));
+  it("rejects negative debt service", () => expect(() => core.cashOnCash(480_000, -1, 2_100_000)).toThrow(RangeError));
+});
+
 describe("fixture catalogue", () => {
-  it("core has 41 scripted formulas with 3 cases each", () => {
-    expect(all).toHaveLength(41);
+  it("core has 42 scripted formulas with 3 cases each", () => {
+    expect(all).toHaveLength(42);
     for (const x of all) expect(x.tests).toHaveLength(3);
   });
   it("every fixture ID is ported, and nothing else", () => {

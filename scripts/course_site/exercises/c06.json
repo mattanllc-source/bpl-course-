@@ -1,0 +1,114 @@
+{
+  "module": "c06",
+  "exercises": [
+    {
+      "id": "c06-1",
+      "type": "calculator",
+      "title": "Liquidity after haircuts",
+      "intro": "Liquidity counts assets after haircuts and after cash to close (F-CORE-24, CORE-BOR-11). Then compare it with the post-closing requirement (F-CORE-25, CORE-BOR-12).",
+      "sources": ["F-CORE-24", "F-CORE-25", "CORE-BOR-11", "CORE-BOR-12", "RD-RES-01"],
+      "deal": "RD-RES-01",
+      "calculator": {
+        "function": "adjustedLiquidAssets",
+        "argStyle": "object",
+        "args": [
+          { "name": "cash", "label": "Cash", "kind": "money", "value": 95000 },
+          { "name": "securities", "label": "Listed securities (brokerage)", "kind": "money", "value": 40000 },
+          { "name": "retirement", "label": "Vested retirement (401(k))", "kind": "money", "value": 60000 },
+          { "name": "creditLines", "label": "Unused credit lines (HELOC)", "kind": "money", "value": 75000 },
+          { "name": "cashToClose", "label": "Cash to close", "kind": "money", "value": 74100 }
+        ],
+        "output": { "label": "Adjusted liquid assets", "format": "money" },
+        "task": "Work out Dana Reyes's adjusted liquidity for Maple Run. The requirement is max(10% × $340,000 = $34,000; 6 × $340,000 × 10.25% ÷ 12 = $17,425) = $34,000. Does she pass, and by how much? Then set the HELOC to $0: does the result change?",
+        "answer": "$90,900.00"
+      }
+    },
+    {
+      "id": "c06-2",
+      "type": "sort",
+      "title": "Does it count toward the tier?",
+      "intro": "Experience counts projects completed in the last 36 months with at least 20% ownership (F-CORE-27, CORE-BOR-15). Sort each project.",
+      "sources": ["F-CORE-27", "CORE-BOR-15", "CORE-BOR-16", "CORE-BOR-18", "D-CONV-03", "RD-RES-01", "RD-MF-01"],
+      "deal": null,
+      "sort": {
+        "buckets": ["Counts", "Does not count"],
+        "items": [
+          { "text": "Dana Reyes: one of six flips sold in the last 36 months, owned 50-100%", "bucket": "Counts", "why": "Sold inside 36 months with at least 20% ownership. All six count, so Dana's count is 6: Tier 2 (CORE-BOR-16)." },
+          { "text": "Dana Reyes: a flip sold 14 months ago where she owned 15%", "bucket": "Does not count", "why": "15% is under the 20% ownership test (CORE-BOR-15)." },
+          { "text": "Marcus Hale: 40-unit property, owned 50%, held and operated since 2021", "bucket": "Counts", "why": "A property held and operated 12 months or more counts as completed (CORE-BOR-18), as rental experience." },
+          { "text": "Marcus Hale: 24-unit property, owned 35%, sold in 2025", "bucket": "Counts", "why": "Sold inside 36 months at 35% ownership. With the 40-unit, Marcus counts 2: Tier 1." },
+          { "text": "Marcus Hale: 18-unit property, owned 8%", "bucket": "Does not count", "why": "8% is under the 20% ownership test (CORE-BOR-15)." },
+          { "text": "A flip sold in the last 36 months where the guarantor owned exactly 20%", "bucket": "Counts", "why": "Exactly 20% meets the test (CORE-BOR-15; quiz A10)." },
+          { "text": "A flip sold 38 months ago, owned 100%", "bucket": "Does not count", "why": "38 months is outside the 36-month lookback. Exactly 36 months would count (D-CONV-03)." },
+          { "text": "A flip renovated and refinanced into a rental 10 months ago, owned 25%", "bucket": "Counts", "why": "A refinance into a term rental loan is a completion (CORE-BOR-15; quiz B10)." },
+          { "text": "A rental owned 30%, held and operated for exactly 12 months in the lookback", "bucket": "Counts", "why": "A hold of exactly 12 months counts, as rental experience (CORE-BOR-18)." },
+          { "text": "Priya Nand: 12 years as a property manager, with no ownership", "bucket": "Does not count", "why": "Managing can help the MF-GEN-07 gate, but the tier counts only ownership (F-CORE-27)." }
+        ]
+      }
+    },
+    {
+      "id": "c06-3",
+      "type": "decision",
+      "title": "Tier, caps and approver",
+      "intro": "Exposure is the new commitment plus every open commitment to the sponsor and affiliates (F-CORE-29). Test it against the tier caps, then name the approver (CORE-CONC-01, CORE-AUTH-01).",
+      "sources": ["F-CORE-27", "F-CORE-29", "CORE-BOR-16", "CORE-CONC-01", "CORE-AUTH-01", "RD-RES-01", "RD-MF-01", "RD-COM-01"],
+      "deal": null,
+      "decision": {
+        "nodes": {
+          "start": {
+            "q": "Is sponsor exposure above the tier's dollar cap? (Tier 0 $1,000,000; Tier 1 $3,000,000; Tier 2 $7,500,000; Tier 3 $15,000,000)",
+            "options": [
+              { "label": "Yes, above the dollar cap", "next": "end_conc" },
+              { "label": "No, within the dollar cap", "next": "loans" }
+            ]
+          },
+          "loans": {
+            "q": "Counting the new loan, are open loans above the tier's loan cap? (Tier 0: 2; Tier 1: 5; Tier 2: 10; Tier 3: 20)",
+            "options": [
+              { "label": "Yes, above the loan cap", "next": "end_conc" },
+              { "label": "No, within the loan cap", "next": "size" }
+            ]
+          },
+          "size": {
+            "q": "Is the loan over $2,000,000, or exposure over $5,000,000?",
+            "options": [
+              { "label": "Yes", "next": "end_committee" },
+              { "label": "No", "next": "su" }
+            ]
+          },
+          "su": {
+            "q": "Is it Residential, with the loan up to $500,000, exposure up to $1,000,000 and no exceptions?",
+            "options": [
+              { "label": "Yes, all four", "next": "end_su" },
+              { "label": "No, at least one fails", "next": "end_co" }
+            ]
+          },
+          "end_conc": {
+            "result": "Committee only: a concentration cap is breached.",
+            "explain": "Above either the dollar cap or the loan cap, only committee can approve (CORE-CONC-01, CORE-AUTH-01)."
+          },
+          "end_committee": {
+            "result": "Credit committee.",
+            "explain": "Committee approves loans above $2,000,000 or exposure above $5,000,000 (CORE-AUTH-01)."
+          },
+          "end_co": {
+            "result": "Credit officer.",
+            "explain": "A credit officer approves up to a $2,000,000 loan and $5,000,000 exposure, with one exception at most (CORE-AUTH-01)."
+          },
+          "end_su": {
+            "result": "Senior underwriter.",
+            "explain": "A senior underwriter with the family certificate approves Residential loans up to $500,000 and $1,000,000 exposure, with no exceptions (CORE-AUTH-01)."
+          }
+        },
+        "cases": [
+          { "text": "Maple Run: Dana Reyes is Tier 2 (6 projects). $340,000 Residential loan; no other loans with us; no exceptions (RD-RES-01)", "expect": "end_su" },
+          { "text": "Cedar Court: Marcus Hale is Tier 1 (2 projects). $5,140,000 multifamily bridge; no other loans with us (RD-MF-01)", "expect": "end_conc" },
+          { "text": "Birchwood Plaza: Dana Whitlow is Tier 1 (2 projects). $3,520,000 commercial bridge; no other loans with us (RD-COM-01)", "expect": "end_conc" },
+          { "text": "A Tier 1 sponsor asks for $600,000 and has 5 open loans totaling $1,500,000 (self-check 4)", "expect": "end_conc" },
+          { "text": "A Tier 2 sponsor's $450,000 Residential loan brings exposure to $1,200,000; no exceptions (self-check 5)", "expect": "end_co" },
+          { "text": "A Tier 0 sponsor: new $400,000; open $300,000; an affiliate LLC's open loan $450,000 (quiz A11)", "expect": "end_conc" }
+        ]
+      }
+    }
+  ]
+}

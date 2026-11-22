@@ -686,6 +686,27 @@ add(id="F-CORE-43", name="Bucket headroom (SUGGESTED)",
         ("25%; $120,000,000; $26,000,000", m(headroom(.25,120000000,26000000))),
         ("15%; $120,000,000; $17,500,000", m(headroom(.15,120000000,17500000)))])
 
+def coc(noi, ads_, E): return (noi - ads_)/E
+def pct_s(x, n): return pct(x, n).replace("-", "−")
+add(id="F-CORE-44", name="Cash-on-cash return (SUGGESTED)",
+ purpose="The owner's annual pre-tax cash return on the cash put into the deal.",
+ plain="Cash-on-cash = (NOI − annual debt service) ÷ total cash invested",
+ latex=r"CoC = \frac{NOI - ADS}{E}",
+ vars="NOI ($/year) from F-CORE-10; ADS ($/year) from F-CORE-03; E = total cash invested by the owner ($); C5 takes E = value − loan",
+ example=["Birchwood term loan (C5 worked example 5): NOI $480,000; value $6,000,000; loan $3,900,000; ADS $330,772.68.",
+          f"Cash flow after debt service = $480,000 − $330,772.68 = {m(480000-330772.68)}.",
+          "Cash invested = $6,000,000 − $3,900,000 = $2,100,000.",
+          f"Cash-on-cash = $149,227.32 ÷ $2,100,000 = {coc(480000,330772.68,2100000):.6f} = {pct_s(coc(480000,330772.68,2100000),2)}."],
+ interp="A borrower's measure, not a credit test; the policy sets no minimum. Below the cap rate (F-CORE-13) means negative leverage: the loan constant (F-CORE-04) is above the cap rate.",
+ rules="No policy limit. F-CORE-03, F-CORE-04, F-CORE-10, F-CORE-13",
+ mistakes=["Leaving debt service out of the numerator; that gives the unlevered cap rate.", "Dividing by the value or the price instead of the cash invested.", "Using one month's payment instead of annual debt service."],
+ edges="Cash flow below debt service → a negative return, shown with a minus sign. Cash invested zero or negative → undefined; do not report it.",
+ rounding="Full precision; display two decimals.",
+ modules="C5",
+ tests=[("NOI $480,000; ADS $330,772.68; cash $2,100,000", pct_s(coc(480000,330772.68,2100000),2)),
+        ("NOI $480,000; ADS $330,772.68; cash $1,918,181.82 (value at 8.25% cap)", pct_s(coc(480000,330772.68,1918181.82),2)),
+        ("NOI $300,000 (in place); ADS $330,772.68; cash $2,100,000", pct_s(coc(300000,330772.68,2100000),2))])
+
 def md(f):
     o = [f"### {f['id']}: {f['name']}", "",
          f"**Purpose.** {f['purpose']}", "",

@@ -1,0 +1,104 @@
+{
+  "module": "c05",
+  "exercises": [
+    {
+      "id": "c05-1",
+      "type": "calculator",
+      "title": "Cap rate both ways",
+      "intro": "Value is NOI divided by a cap rate (F-CORE-13). Small rate moves make large value moves, so always test plus and minus 25 basis points.",
+      "sources": ["F-CORE-13", "F-CORE-14", "CORE-PRC-05", "RD-COM-01"],
+      "deal": "RD-COM-01",
+      "calculator": {
+        "function": "valueFromCapRate",
+        "args": [
+          { "name": "noi", "label": "Stabilized NOI", "kind": "money", "value": 480000 },
+          { "name": "rate", "label": "Cap rate", "kind": "rate", "value": 0.0825 }
+        ],
+        "output": { "label": "Value (NOI ÷ cap rate)", "format": "money" },
+        "task": "Birchwood Plaza's stabilized NOI is $480,000. The appraiser used 8.00%, which gives $6,000,000. What is the value if the cap rate is 8.25%? Then try 7.75%. Going the other way, $480,000 ÷ $6,000,000 gives the implied cap rate of 8.00%. At 8.25%, does the $3,900,000 term loan still pass the 65% LTV limit?",
+        "answer": "$5,818,181.82"
+      }
+    },
+    {
+      "id": "c05-2",
+      "type": "decision",
+      "title": "Which value do we lend on?",
+      "intro": "Each loan test uses one value. On a purchase, the as-is value is the lower of the price and the appraisal (F-CORE-14). Pick a case, then walk the path.",
+      "sources": ["F-CORE-14", "F-RES-02", "F-RES-03", "F-MF-13", "MF-BR-02", "RD-RES-01", "RD-MF-01", "RD-COM-01"],
+      "deal": null,
+      "decision": {
+        "nodes": {
+          "start": {
+            "q": "Which test are you sizing?",
+            "options": [
+              { "label": "Day-one advance or purchase LTV (as-is test)", "next": "purchase" },
+              { "label": "Loan-to-ARV on a fix-and-flip", "next": "end_arv" },
+              { "label": "Bridge stabilized test or term loan at refinance", "next": "end_stab" }
+            ]
+          },
+          "purchase": {
+            "q": "Is the loan financing a purchase?",
+            "options": [
+              { "label": "Yes, a purchase", "next": "compare" },
+              { "label": "No, a refinance", "next": "end_refi" }
+            ]
+          },
+          "compare": {
+            "q": "Is the as-is appraisal below the purchase price?",
+            "options": [
+              { "label": "Yes, the appraisal is lower", "next": "end_appraisal" },
+              { "label": "No, the appraisal is equal or higher", "next": "end_price" }
+            ]
+          },
+          "end_price": {
+            "result": "Lend on the purchase price.",
+            "explain": "On a purchase, value is the lower of price and appraisal (F-CORE-14). A high appraisal cannot create equity the buyer has not paid for."
+          },
+          "end_appraisal": {
+            "result": "Lend on the as-is appraisal.",
+            "explain": "The appraisal is the lower figure, so it is the value (F-CORE-14). The day-one loan shrinks and the buyer brings more equity."
+          },
+          "end_refi": {
+            "result": "Lend on the as-is appraisal alone.",
+            "explain": "There is no price on a refinance, so LTV uses the appraisal (F-CORE-14, job aid)."
+          },
+          "end_arv": {
+            "result": "Use the as-completed value (ARV).",
+            "explain": "Loan-to-ARV divides the total loan by the after-repair value (F-RES-02). ARV never replaces as-is in the day-one test."
+          },
+          "end_stab": {
+            "result": "Use the as-stabilized value.",
+            "explain": "The bridge stabilized LTV and the term loan use the value once leased up (F-MF-13; COM-TRM). Never put it in an as-is test."
+          }
+        },
+        "cases": [
+          { "text": "Maple Run day-one advance: price $300,000; as-is appraisal $310,000 (RD-RES-01)", "expect": "end_price" },
+          { "text": "Cedar Court day-one funding: price $6,200,000; as-is appraisal $6,300,000 (RD-MF-01)", "expect": "end_price" },
+          { "text": "Birchwood Plaza bridge: price $4,400,000; as-is appraisal $4,500,000 (RD-COM-01)", "expect": "end_price" },
+          { "text": "What-if: Cedar Court's as-is appraisal comes in at $6,000,000, below the $6,200,000 price (practice 6)", "expect": "end_appraisal" },
+          { "text": "Purchase: price $1,500,000; appraisal $1,440,000; loan $1,008,000 (quiz B3)", "expect": "end_appraisal" },
+          { "text": "Maple Run loan-to-ARV: $340,000 total loan; ARV $520,000 (RD-RES-01)", "expect": "end_arv" },
+          { "text": "Birchwood term loan at month 24: as-stabilized value $6,000,000 (RD-COM-01)", "expect": "end_stab" }
+        ]
+      }
+    },
+    {
+      "id": "c05-3",
+      "type": "calculator",
+      "title": "Is the appraisal too old?",
+      "intro": "Appraisal age runs from the effective date of value to closing, in actual days (F-CORE-36). It passes at no more than 120 days (CORE-VAL-02).",
+      "sources": ["F-CORE-36", "CORE-VAL-02", "RD-MF-01"],
+      "deal": "RD-MF-01",
+      "calculator": {
+        "function": "appraisalAge",
+        "args": [
+          { "name": "effectiveDate", "label": "Appraisal effective date", "kind": "date", "value": "2026-07-19" },
+          { "name": "closingDate", "label": "Closing date", "kind": "date", "value": "2026-11-20" }
+        ],
+        "output": { "label": "Appraisal age at closing", "format": "days", "path": "days" },
+        "task": "Suppose Cedar Court's appraisal is effective 19 Jul 2026 and closing is 20 Nov 2026 (practice 4). How old is it at closing? Does it pass CORE-VAL-02? Then change the effective date to 23 Jul 2026 and check again.",
+        "answer": "124 days"
+      }
+    }
+  ]
+}

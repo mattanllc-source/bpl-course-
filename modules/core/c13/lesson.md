@@ -7,9 +7,10 @@
 | Prerequisites | C10, C12 |
 | Bloom's levels | 4 and 5 (LD-02) |
 | Formulas | F-CORE-05, -22, -23, -31, -42 (SUGGESTED) |
-| Rules | CORE-DEF-01 to -06; CORE-SVC-03, -07; CORE-DOC-01, -02, -04, -05; COM-BR-02, -07; SLT rows |
+| Rules | CORE-DEF-01 to -06; CORE-SVC-03, -07, -08; CORE-DOC-01, -02, -04, -05; COM-BR-02, -07; SLT rows; decision D-CORE-23 |
 | Running deals | Worked examples: RD-COM-01 Birchwood Plaza, extending its deal-file what-if (NCF $380,000). Practice: RD-MF-01 Cedar Court. Quiz also uses RD-RES-01 Maple Run (C10 numbers) |
-| Status | v0. Self-review against Bible Section 7 is at the end of this tab |
+| Status | v0.2. Self-review against Bible Section 7 is at the end of this tab |
+| Change log | v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -48,7 +49,7 @@ By the end of C13, you will be able to:
 A missed payment starts a sequence. Do it in this order.
 
 1. **Send written notice** of default under the loan documents. Default interest runs as the note allows (CORE-SVC-03).
-2. **Re-rate the loan** and put it on the watch list (CORE-SVC-07).
+2. **Re-rate the loan** on exit cover and put it on the watch list (CORE-SVC-07, -08).
 3. **Check the state row.** Default interest, foreclosure method and deficiency rules all come from the State Law Table (C10).
 4. **Get a pre-negotiation letter signed** before any workout talk (CORE-DEF-01).
 
@@ -63,11 +64,20 @@ A missed payment starts a sequence. Do it in this order.
 3. Substitution: $3,520,000 × 12.65% ÷ 360 × 30.
 4. Result: $37,106.67, which is $14,666.67 more than normal interest of $22,440.00.
 
-Indiana check: no rate cap found for non-consumer loans (SLT-IN-02) [VERIFY: State Law Table SLT-IN-02; checked 20 Nov 2026]. Rating: 4 Substandard. The loan is in default and the exit no longer covers it (CORE-SVC-07).
+Indiana check: no rate cap found for non-consumer loans (SLT-IN-02) [VERIFY: State Law Table SLT-IN-02; checked 20 Nov 2026]. Rating (CORE-SVC-08, D-CORE-23): exit cover = ($3,400,000 − $102,000) ÷ $3,520,000 = $3,298,000 ÷ $3,520,000 = 0.9369, before accrued interest. That is under 1.00. But Dana Whitlow has $850,000 of liquid assets, more than the gap of about $222,000 plus accrued interest. So the 5 test is not met. Rating: 4 Substandard, a payment default. If her guarantee could not be collected, it would be a 5.
+
+**Rating 5 and the split (CORE-SVC-08, D-CORE-23).** Take the C12 exit-cover loan with a lower value. The 8% cost to sell is an example input, not policy. No guarantor can pay the gap.
+
+1. Balance plus accrued interest and fees: $1,020,000.
+2. As-is value $1,000,000. Cost to sell: 8% × $1,000,000 = $80,000. Net: $1,000,000 − $80,000 = $920,000.
+3. Exit cover: $920,000 ÷ $1,020,000 = 0.9020. That is under 1.00 with no guarantor, so the rating is 5.
+4. Split (F-CORE-42): shortfall $1,020,000 − $920,000 = $100,000. The memo shows $100,000 as Loss and $920,000 as Substandard.
+
+Regulators class the part of a problem CRE loan above fair value less costs to sell as loss, when no capable guarantor exists. The covered part is generally no worse than substandard [VERIFY: Fed SR 23-5 attachment, Interagency Policy Statement on Prudent CRE Loan Accommodations and Workouts, Section V.C; checked 22 Nov 2026].
 
 ### T2. Comparing the options (Objective 2, 25 minutes)
 
-US bank regulators say prudent workouts are often in the interest of both lender and borrower. Their 2023 policy statement covers short-term accommodations as well as longer workouts [VERIFY: Interagency Policy Statement on Prudent CRE Loan Accommodations and Workouts, 29 Jun 2023; checked 20 Nov 2026]. We follow the same idea. A workout is not a favour to the borrower; it is chosen when it loses us less.
+US bank regulators say prudent workouts are often in the interest of both lender and borrower. Their 2023 policy statement covers short-term accommodations as well as longer workouts [VERIFY: Interagency Policy Statement on Prudent CRE Loan Accommodations and Workouts, June 2023, Fed SR 23-5 attachment; checked 22 Nov 2026]. We follow the same idea. A workout is not a favor to the borrower; it is chosen when it loses us less.
 
 The options, from lightest to heaviest:
 
@@ -108,6 +118,8 @@ A forbearance buys time for a plan that can work. A modification changes the loa
 
 Default interest may be waived only on full performance. Approval follows the authority matrix for the original loan amount.
 
+**Upgrade only after cure and 6 months (CORE-SVC-08, D-CORE-23).** A forbearance or workout under CORE-DEF-03 does not raise the rating by itself. The rating can improve only after the default is cured and the borrower makes 6 straight months of payments on the loan terms. Regulators use a similar test for accrual: a restructured loan needs sustained repayment, generally at least six months [VERIFY: Fed SR 23-5 attachment, Section VI.B; checked 22 Nov 2026].
+
 **Worked example 3: Birchwood modification with a paydown.** Dana Whitlow has $850,000 of liquid assets (deal file). She offers to pay down $300,000.
 
 1. New balance: $3,520,000 − $300,000 = $3,220,000.
@@ -130,7 +142,7 @@ Terms: the second and last 6-month extension, to month 36 (COM-BR-01 allows two)
 
 Otherwise, foreclose.
 
-**Receivers.** In a judicial foreclosure, the borrower keeps control and the rents until sale unless a receiver is appointed. A receiver collects rent, pays taxes and keeps the property running [VERIFY: IC 32-30-5-1 (IN), ORC 2735.01(A)(2)(b) (OH) and G.S. 1-507.24(f)(2) (NC), per the State Law Table group (b) foreclosure column; checked 20 Nov 2026].
+**Receivers.** In a judicial foreclosure, the borrower keeps control and the rents until sale unless a receiver is appointed. A receiver collects rent, pays taxes and keeps the property running [VERIFY: IC 32-30-5-1 (IN), ORC 2735.01(A)(2)(b) (OH) and G.S. 1-507.24(f)(2) (NC), read on FindLaw's state code mirrors; checked 22 Nov 2026].
 
 **New rule CORE-DEF-05.** In judicial-foreclosure states, ask for a receiver on multifamily and commercial loans when we file. The loan documents must allow it. In a power-of-sale state, ask for one if the sale will take longer than the property can safely run unmanaged. In Ohio, Indiana and North Carolina, the borrower's written consent in the loan documents is a ground for appointment. California's ground is an assignment of rents, and consent there helps the case (State Law Table, group b). So every deed of trust and mortgage includes receiver consent.
 
@@ -148,13 +160,13 @@ The best property outcome is not always the best total outcome. Ask: after the s
 | Deed in lieu | $238,960.00 | Only if the agreement keeps the guarantee alive for the shortfall | Up to $238,960.00 if agreed; $0 if released | $0 if agreed and paid; $238,960.00 if released |
 | Foreclosure | $265,920.00 | Yes: Indiana allows a deficiency (SLT-IN-02) | Up to $265,920.00; net worth $5,200,000 | Near $0 if Dana Whitlow pays |
 
-Two traps from C10. First, if we consent to waive Indiana's 3-month wait, no deficiency is allowed (IC 32-29-7-5) [VERIFY: State Law Table SLT-IN-02; checked 20 Nov 2026]. Second, in California the guarantee survives a trustee's sale only with Civ. Code 2856 waivers (CORE-DOC-05) [VERIFY: State Law Table, California deficiency column; checked 20 Nov 2026].
+Two traps from C10. First, if we consent to waive Indiana's 3-month wait, no deficiency is allowed (IC 32-29-7-5) [VERIFY: IC 32-29-7-3 and 32-29-7-5, FindLaw mirror of the Indiana Code; checked 22 Nov 2026]. Second, in California the guarantee survives a trustee's sale only with Civ. Code 2856 waivers (CORE-DOC-05) [VERIFY: Cal. Civ. Code 2856(a) and (d), FindLaw mirror; checked 22 Nov 2026].
 
 **Recommendation.** Offer the modification first (CORE-DEF-03). If Dana Whitlow refuses, take a deed in lieu only with a written guarantee of the shortfall. Otherwise, foreclose with a receiver and pursue the deficiency.
 
 ### T6. REO (Objective 6, 10 minutes)
 
-Property we take back is real estate owned (REO). Banks record it at fair value less cost to sell when they take title. Any excess of the loan over that amount is a loss [VERIFY: Federal Reserve OREO Q&A; FDIC FIL-62-2008; checked 20 Nov 2026]. We follow the same rule.
+Property we take back is real estate owned (REO). Banks record it at fair value less cost to sell when they take title. Any excess of the loan over that amount is a loss [VERIFY: Fed SR 12-10 attachment, OREO Questions and Answers, revised Oct 2025; checked 22 Nov 2026]. We follow the same rule.
 
 **F-CORE-42: REO carrying value and charge-off (SUGGESTED).**
 
@@ -180,7 +192,7 @@ Use RD-MF-01 Cedar Court, North Carolina. C13 what-if facts: the month-27 refina
 
 **Answer key.**
 
-1. Written notice and default interest (CORE-SVC-03); re-rate to 4 Substandard (CORE-SVC-07); check SLT-NC-02; pre-negotiation letter signed by borrower and guarantors (CORE-DEF-01).
+1. Written notice and default interest (CORE-SVC-03); re-rate to 5 Doubtful/Loss. Exit cover = ($5,000,000 − 3% × $5,000,000) ÷ $5,140,000 = $4,850,000 ÷ $5,140,000 = 0.9436, before accrued interest. The loan is non-recourse, so no guarantor pays the gap. Split (F-CORE-42): $290,000 Loss, $4,850,000 Substandard (CORE-SVC-08); check SLT-NC-02; pre-negotiation letter signed by borrower and guarantors (CORE-DEF-01).
 2. Foreclosure: lost interest $5,140,000 × 7.65% ÷ 360 × 270 = $294,907.50 (F-CORE-05). Add legal $60,000 and sale costs $150,000: $504,907.50. Recovery $5,000,000 + 9 × $35,000 = $5,315,000. Loss $5,140,000 + $504,907.50 − $5,315,000 = $329,907.50, severity 6.4%. Deed in lieu: $196,605.00 + $35,000 + $150,000 = $381,605.00. Recovery $5,000,000 + 6 × $35,000 = $5,210,000. Loss $311,605.00, severity 6.1%.
 3. Foreclose, unless the borrower clears the lien first. A deed in lieu leaves the $40,000 lien on title (CORE-DEF-04). Paying it off makes the deed in lieu cost $311,605 + $40,000 = $351,605, more than foreclosure at $329,907.50. NC power of sale is fast anyway (SLT-NC-02).
 4. Not for an ordinary loss. The loan is non-recourse; the guarantors pay only if a carve-out is triggered (CORE-DOC-02).
@@ -210,7 +222,7 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 ### Set B
 
 1. (O1) A default interest bill: $1,000,000 at 10.00% + 5.00% for 30 days? **Answer:** $12,500.00 (F-CORE-31).
-2. (O1) What rating does a loan in default with no exit get? **Answer:** 4 Substandard (CORE-SVC-07).
+2. (O1) A payment default; exit cover is under 1.00 and no guarantor can pay the gap. Rating? **Answer:** 5 Doubtful/Loss, with the F-CORE-42 shortfall as Loss and the rest Substandard (CORE-SVC-08).
 3. (O2) Option A loses $300,000; option B loses $250,000; no other factor. Which? **Answer:** B (CORE-DEF-02).
 4. (O2) Loss $265,920 on $3,520,000. Severity? **Answer:** 7.6% (F-CORE-23).
 5. (O3) Paydown leaves $3,220,000 at the 8.25% test rate; NCF $300,000. Coverage? **Answer:** 1.13x (COM-BR-02 needs 1.00x).
@@ -253,7 +265,7 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 **Default to resolution**
 
 1. **Notice** and default interest (CORE-SVC-03; F-CORE-31).
-2. **Rate** and watch list (CORE-SVC-07).
+2. **Rate** on exit cover and watch list (CORE-SVC-07, -08). Upgrade only after cure plus 6 months of payments.
 3. **Letter** signed before any talk (CORE-DEF-01).
 4. **Compare** options by F-CORE-23, with lost interest (CORE-DEF-02).
 5. **Workout** terms: written, time-limited, NOI to us, guarantor reaffirms (CORE-DEF-03).
@@ -261,6 +273,24 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 7. **Foreclose** with a receiver where judicial (CORE-DEF-05; SLT row).
 8. **Guaranty** shortfall pursued where the state allows (CORE-DOC-04, -05).
 9. **REO** at fair value less cost to sell; quarterly re-test (CORE-DEF-06; F-CORE-42).
+
+```mermaid
+flowchart TD
+  A[Default] --> B[Notice and default interest]
+  B --> C[Re-rate on exit cover]
+  C --> D[Pre-negotiation letter signed]
+  D --> E[Compare options with lost interest]
+  E --> F[Workout or forbearance]
+  E --> G[Deed in lieu: clean title only]
+  E --> H[Foreclose, receiver if judicial]
+  F -->|Cured + 6 months paid| I[Upgrade rating]
+  F -->|Milestones missed| H
+  G --> J[REO at fair value less cost to sell]
+  H --> J
+  H --> K[Pursue guaranty shortfall]
+```
+
+The flow shows the job aid's order from default to REO, and where a workout leads back to an upgrade.
 
 **Mini-example.** Birchwood: deed in lieu loses $238,960; foreclosure $265,920; modification with a $300,000 paydown, nothing if the plan works.
 
@@ -282,10 +312,10 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 | LD-04 order; fits 3 hours | Met: 180 minutes plus 45 OJT |
 | Every threshold cites a rule; every calculation a formula | Met. Six new rules and F-CORE-42 added |
 | Formulas worked in four lines | Met; computed in code |
-| Deal numbers match the running deals file | Met for deal facts. Values, timelines and costs after month 30 are labelled C13 what-ifs, because the deal file stops at month 24-27 |
+| Deal numbers match the running deals file | Met for deal facts. Values, timelines and costs after month 30 are labeled C13 what-ifs, because the deal file stops at month 24-27 |
 | Quiz sets; critical items | Met: 12 items each; 3 critical in each set |
-| O3 practised; O6 in OJT | Partly met: P6 practises a modification. REO is not yet in the OJT |
-| No open tags | Not met: [VERIFY] on Fannie Mae, regulator, law-firm and bankruptcy points. Stays v0 |
+| O3 practiced; O6 in OJT | Partly met: P6 practices a modification. REO is not yet in the OJT |
+| No open tags | Partly met: regulator, statute and bankruptcy tags checked 22 Nov 2026. Still open: the Fannie Mae, law-firm and SLT-IN-02 rate-cap tags. Now v0.2 |
 
 **Self-check.**
 
@@ -294,6 +324,7 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 3. Title shows an unreleased junior lien. Can you take a deed in lieu? **Answer:** no; foreclose unless the lien is released (CORE-DEF-04).
 4. Non-recourse loan, no carve-out triggered. Can you chase the guarantor for the shortfall? **Answer:** no (CORE-DOC-02).
 5. Loan $3,520,000; fair value $3,400,000; cost to sell $102,000. What is the charge-off at title? **Answer:** $3,520,000 − ($3,400,000 − $102,000) = $222,000.00 (F-CORE-42; CORE-DEF-06).
+6. A non-recourse loan in payment default: balance plus accrued $2,000,000; as-is value less cost to sell $1,900,000. Rating and split? **Answer:** cover $1,900,000 ÷ $2,000,000 = 0.9500, under 1.00 with no guarantor, so 5. Loss $2,000,000 − $1,900,000 = $100,000 (F-CORE-42); Substandard $1,900,000 (CORE-SVC-08).
 
 **What to look up yourself.**
 

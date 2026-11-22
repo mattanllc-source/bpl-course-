@@ -11,7 +11,7 @@
 | Glossary | Item 12 (bridge loan); Main Sections 2 and 3 |
 | Running deals | All three, introduced (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft. Market data checked 20 Nov 2026 |
+| Change log | v0, 20 Nov 2026: first draft. Market data checked 20 Nov 2026 v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -117,6 +117,18 @@ Market conditions change the risk inside the same credit box.
 2. We hold it, or sell it into an RTL pool.
 3. In month 14 the borrower asks to refinance into a DSCR loan.
 4. That DSCR loan may end up in a non-QM securitization.
+
+```mermaid
+flowchart LR
+  A["We fund $340,000 bridge<br/>RD-RES-01"] --> B{"Hold or sell?"}
+  B -->|Hold| C["On our books"]
+  B -->|Sell| D["RTL pool"]
+  C --> E["Month 14: refinance<br/>into a DSCR loan"]
+  D --> E
+  E --> F["DSCR loan may go into<br/>a non-QM securitization"]
+```
+
+The diagram shows Maple Run's loan moving from our funding, through hold or sale, to a DSCR refinance and a possible securitization.
 
 ### T4. How this course works (Objective 4, 5 minutes)
 

@@ -9,10 +9,10 @@
 | Prerequisite | C2 |
 | Bloom's levels | 2, 3 and 4 (LD-02) |
 | Formulas | F-CORE-21, F-CORE-24, F-CORE-25, F-CORE-26, F-CORE-27, F-CORE-29 |
-| Rules | CORE-BOR-01 to -18; CORE-CONC-01, -02; CORE-AUTH-01; MF-GEN-07, COM-GEN-15 (family experience gates) |
+| Rules | CORE-BOR-01 to -18; CORE-CONC-01, -02; CORE-AUTH-01; MF-GEN-07, COM-GEN-15 (family experience gates); RES-GU-01 (ground-up authority, D-CORE-26) |
 | Running deals | Worked examples: RD-RES-01 Maple Run and RD-MF-01 Cedar Court. Practice: RD-COM-01 Birchwood Plaza (LD-08) |
-| Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft; all numbers computed in code; legal and market facts researched 20 Nov 2026 |
+| Status | v0.2. Self-review against Bible Section 7 is at the end of this tab |
+| Change log | v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check. v0, 20 Nov 2026: first draft; all numbers computed in code; legal and market facts researched 20 Nov 2026 |
 
 ## Timing plan
 
@@ -57,7 +57,7 @@ The borrower is an entity, not a person (CORE-BOR-01). The people behind it carr
 
 **Indirect ownership multiplies through.** Say a person owns 70% of a holding LLC, and the LLC owns 30% of the borrower. They own 0.70 × 30% = 21% of the borrower, so they sign.
 
-**Why the spouse rule is legal, not just policy.** Under Regulation B, a lender generally may not require a spouse's signature when the applicant qualifies alone. It also may not insist that the spouse be the extra guarantor, though a spouse may volunteer. On secured credit, a spouse may still have to sign what state law needs to reach the collateral [VERIFY: 12 CFR 1002.7(d)(1), (4) and (5), Cornell LII, checked 20 Nov 2026].
+**Why the spouse rule is legal, not just policy.** Under Regulation B, a lender generally may not require a spouse's signature when the applicant qualifies alone. It also may not insist that the spouse be the extra guarantor, though a spouse may volunteer. On secured credit, a spouse may still have to sign what state law needs to reach the collateral [VERIFY: 12 CFR 1002.7(d)(1), (4) and (5), eCFR (current to 19 Nov 2026); checked 22 Nov 2026].
 
 **Worked example 1: Maple Run guarantors (RD-RES-01)**
 
@@ -125,7 +125,7 @@ CORE-BOR-14 sets the floor: at least 25% of the commitment for Residential, and 
 
 ### T5. Experience, tier and exposure (Objective 5, 15 minutes)
 
-**Experience** (F-CORE-27) counts projects completed in the last 36 months where the guarantor owned at least 20% (CORE-BOR-15). There are three ways a project completes. It is sold; it is renovated and refinanced into a term rental loan; or it is held and operated 12+ months (CORE-BOR-18). Proof is a settlement statement, deed or public record. A held property also needs a rent roll or operating statement. It counts as rental experience, not rehab experience (CORE-BOR-17). Exactly 36 months counts (D-CONV-03), and so does a hold of exactly 12 months (CORE-BOR-18). Tiers: 0 projects is Tier 0, 1-4 is Tier 1, 5-9 is Tier 2, and 10 or more is Tier 3 (CORE-BOR-16).
+**Experience** (F-CORE-27) counts projects completed in the last 36 months where the guarantor owned at least 20% (CORE-BOR-15). There are three ways a project completes. It is sold; it is renovated and refinanced into a term rental loan; or it is held and operated 12+ months (CORE-BOR-18, D-CORE-18). Proof is a settlement statement, deed or public record. A held property also needs a rent roll or operating statement. It counts as rental experience, not rehab experience (CORE-BOR-17). Exactly 36 months counts (D-CONV-03), and so does a hold of exactly 12 months (CORE-BOR-18). Tiers: 0 projects is Tier 0, 1-4 is Tier 1, 5-9 is Tier 2, and 10 or more is Tier 3 (CORE-BOR-16).
 
 **Family gates come on top.** Multifamily needs 2 apartment properties owned or managed in 5 years. One must be at least half the subject's size (MF-GEN-07). Commercial bridge needs 2 or more of the same type in 5 years (COM-GEN-15). A gate can be met by managing, but the tier counts only ownership.
 
@@ -148,7 +148,7 @@ Above either the dollar cap or the loan cap, only committee can approve (CORE-CO
 | Credit officer | $2,000,000 | $5,000,000 | One |
 | Credit committee | Above $2,000,000 | Above $5,000,000 | Up to two |
 
-Committee also approves, at any size, related-party or employee loans, Tier 0 ground-up and any CONC breach (CORE-AUTH-01).
+Committee also approves, at any size, related-party or employee loans, ground-up with one completed build (the RES-GU-01 exception) and any CONC breach (CORE-AUTH-01). Ground-up with no completed build is declined, and no one has authority to approve it (RES-GU-01, D-CORE-26).
 
 **Worked example 5: Dana Reyes's tier and exposure (RD-RES-01)**
 
@@ -238,7 +238,7 @@ Guarantor Lee Park: cash $150,000; listed securities $100,000; vested 401(k) $80
 8. (O1) A guarantor's spouse owns 25% of the borrower. Must the spouse sign? A) No, never B) Yes, as a 20%+ owner C) Only in community property states D) Only if the guarantor fails a test
 9. (O4) Multifamily commitment $5,000,000. Assets $9,000,000; liabilities $4,500,000; no subject equity. Result? A) $4,500,000; fails the 100% test B) $4,500,000; passes C) $9,000,000; passes D) $4,500,000; passes the 25% test
 10. (O5) 3 flips sold in the last 36 months at 50%; 2 sold at 37 and 40 months; 1 refinanced into a rental 10 months ago at 25%. Count and tier? A) 6; Tier 2 B) 3; Tier 1 C) 4; Tier 1 D) 5; Tier 2
-11. (O5) A Tier 1 sponsor: new $900,000 plus 2 open loans totalling $1,000,000. Result? A) $1,900,000 on 3 loans: within the Tier 1 cap B) Over the dollar cap C) Over the loan-count cap D) $900,000: within cap
+11. (O5) A Tier 1 sponsor: new $900,000 plus 2 open loans totaling $1,000,000. Result? A) $1,900,000 on 3 loans: within the Tier 1 cap B) Over the dollar cap C) Over the loan-count cap D) $900,000: within cap
 12. (O2) A guarantor was convicted of mortgage fraud 15 years ago. Result? A) Eligible: outside 10 years B) Credit officer review C) Ineligible at any time D) Eligible with full recourse
 
 **Answer key, Set B**
@@ -307,7 +307,7 @@ Guarantor Lee Park: cash $150,000; listed securities $100,000; vested 401(k) $80
 
 **Exposure (F-CORE-29)**: new + open commitments, affiliates included. Caps by tier: $1M and 2 loans / $3M and 5 / $7.5M and 10 / $15M and 20 (CORE-CONC-01). No sponsor over 5% of the portfolio (CORE-CONC-02). Over a cap: committee only.
 
-Approver (CORE-AUTH-01): senior underwriter to a $500,000 loan and $1M exposure, Residential only, no exceptions. Credit officer to $2M and $5M. Committee above that, and for any CONC breach.
+Approver (CORE-AUTH-01): senior underwriter to a $500,000 loan and $1M exposure, Residential only, no exceptions. Credit officer to $2M and $5M. Committee above that, and for any CONC breach, related-party loan or one-build ground-up loan. Ground-up with no completed build: decline (RES-GU-01, D-CORE-26).
 
 **Mini-example**: cash $50,000, securities $20,000, cash to close $30,000 → $34,000. Commitment $250,000 at 11% → required $25,000. Passes by $9,000.
 
@@ -334,13 +334,13 @@ Approver (CORE-AUTH-01): senior underwriter to a $500,000 loan and $1M exposure,
 | Quiz: 10-20 items, one per objective, critical flagged, two sets, pass mark | Met (12 items, 3 critical, sets A and B) |
 | OJT: output, source, time, rubric, sign-off, data note | Met |
 | Job aid fits one page | Met on screen; confirm when printed |
-| Accessibility (LD-09) | Tables have headers; no colour-only meaning |
+| Accessibility (LD-09) | Tables have headers; no color-only meaning |
 
 **Real-world check (researched 20 Nov 2026): how the market and the law treat sponsors.**
 
 - **Published liquidity rules are rare.** A 12 Nov 2026 review of seven fix-and-flip lenders found none that prints a liquidity or reserve minimum ([CrowdfundedWealth](https://www.crowdfundedwealth.com/articles/hard-money-loan-requirements-2026)). Where lenders do say something, it is about holding costs. RCN asks novices for verified liquidity covering 6+ months of holding costs ([RCN Capital, 20 Feb 2026](https://rcncapital.com/blog/fix-flip-lending-for-repeat-investors-how-experience-shapes-loan-terms)). LendSure cites a 660 minimum score with six months' reserves ([LendSure, Dec 2025](https://lendsure.com/?p=8272)). Our F-CORE-25 sits at the conservative end.
 - **Experience tiers are standard.** OfferMarket treats 0-2 flips in the last 36 months as a new investor and 10+ as a seasoned one ([OfferMarket](https://www.offermarket.us/blog/flip-loans)). That matches our 36-month lookback and the 10+ top tier.
-- **Beneficial ownership: the rules moved in 2026.** A FinCEN final rule took effect on 14 Aug 2026. It permanently exempts US companies from Corporate Transparency Act ownership reports [VERIFY: FinCEN BOI page, fincen.gov/boi (final rule issued 11 Aug 2026, effective 14 Aug 2026); checked 22 Nov 2026]. It leaves the separate Customer Due Diligence rule for banks and other covered institutions in place ([Morrison Foerster, 20 Aug 2026](https://www.mofo.com/resources/insights/260820-fincen-ends-beneficial-ownership-reporting)). On 13 Feb 2026, FinCEN also let covered institutions skip re-verifying owners at each new account in some cases ([Mayer Brown, 26 Feb 2026](https://www.mayerbrown.com/en/insights/publications/2026/02/more-is-not-always-better-fincen-grants-risk-based-relief-from-repeat-beneficial-ownership-verification-requirements)). FinCEN proposed CDD rule changes on 12 Nov 2026 ([Treasury NPRM](https://home.treasury.gov/system/files/136/CDD_NPRM_11_12_2026_508FINAL.pdf)) [VERIFY: 31 CFR 1010.230; whether it binds a non-bank lender, as CORE-KYC-02 already notes].
+- **Beneficial ownership: the rules moved in 2026.** A FinCEN final rule took effect on 14 Aug 2026. It permanently exempts US companies from Corporate Transparency Act ownership reports [VERIFY: FinCEN BOI page, fincen.gov/boi (final rule issued 11 Aug 2026, effective 14 Aug 2026); checked 22 Nov 2026]. It leaves the separate Customer Due Diligence rule for banks and other covered institutions in place ([Morrison Foerster, 20 Aug 2026](https://www.mofo.com/resources/insights/260820-fincen-ends-beneficial-ownership-reporting)). On 13 Feb 2026, FinCEN also let covered institutions skip re-verifying owners at each new account in some cases ([Mayer Brown, 26 Feb 2026](https://www.mayerbrown.com/en/insights/publications/2026/02/more-is-not-always-better-fincen-grants-risk-based-relief-from-repeat-beneficial-ownership-verification-requirements)). FinCEN proposed CDD rule changes on 12 Nov 2026 ([Treasury NPRM](https://home.treasury.gov/system/files/136/CDD_NPRM_11_12_2026_508FINAL.pdf)) [VERIFY: 31 CFR 1010.230(f) and 1010.605(e)(1), eCFR: the CDD rule binds banks, broker-dealers, futures commission merchants and mutual funds, not a non-bank lender, as CORE-KYC-02 notes; checked 22 Nov 2026].
 - **What that means for us.** No government ownership filing now exists for a US LLC borrower. Our own ownership chart, with signed certifications (CORE-KYC-02, CORE-BOR-03), is the only record. C7 covers this in depth.
 
 **Self-check.**
@@ -348,8 +348,9 @@ Approver (CORE-AUTH-01): senior underwriter to a $500,000 loan and $1M exposure,
 1. Owners are 60% and 40%. The 60% owner's spouse owns nothing, and she qualifies alone. Who signs the guaranty? **Answer:** Both owners. The spouse is not asked to sign (CORE-BOR-03, CORE-BOR-05).
 2. A guarantor has cash $100,000, listed securities $50,000 and cash to close $40,000. What is adjusted liquidity? **Answer:** $100,000 + 0.70 × $50,000 − $40,000 = $95,000.00 (F-CORE-24).
 3. A guarantor has owned 30% of a rental and operated it for exactly 12 months in the lookback. Does it count? **Answer:** Yes, as rental experience (CORE-BOR-18, F-CORE-27).
-4. A Tier 1 sponsor asks for $600,000 and has 5 open loans totalling $1,500,000. Is it within the cap? **Answer:** No. $2,100,000 is under $3,000,000, but 6 loans is over the 5-loan cap: committee only (F-CORE-29, CORE-CONC-01).
+4. A Tier 1 sponsor asks for $600,000 and has 5 open loans totaling $1,500,000. Is it within the cap? **Answer:** No. $2,100,000 is under $3,000,000, but 6 loans is over the 5-loan cap: committee only (F-CORE-29, CORE-CONC-01).
 5. A Tier 2 sponsor's $450,000 Residential loan brings exposure to $1,200,000. Can a senior underwriter approve it? **Answer:** No. Exposure is over $1,000,000, so a credit officer approves (CORE-AUTH-01).
+6. A Tier 0 sponsor with no completed ground-up build asks for a ground-up loan. Can committee approve it? **Answer:** No. With no completed build the loan is declined, and no one has authority. One completed build goes to committee as an exception (RES-GU-01, CORE-AUTH-01, D-CORE-26).
 
 **What to look up yourself.** Nothing for this module. Every market and legal point above was found and cited.
 

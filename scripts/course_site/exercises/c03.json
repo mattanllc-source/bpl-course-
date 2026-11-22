@@ -1,0 +1,66 @@
+{
+  "module": "c03",
+  "exercises": [
+    {
+      "id": "c03-1",
+      "type": "calculator",
+      "title": "Actual/360 interest calculator",
+      "intro": "Work out a month's interest on an interest-only balance, then check it here. Change the inputs afterwards to try your own what-ifs.",
+      "sources": ["F-CORE-01", "F-CORE-05", "D-CONV-02"],
+      "deal": "RD-COM-01",
+      "calculator": {
+        "function": "interestOnly",
+        "args": [
+          { "name": "balance", "label": "Funded balance", "kind": "money", "value": 3460000 },
+          { "name": "annualRate", "label": "Note rate", "kind": "rate", "value": 0.0875 },
+          { "name": "days", "label": "Actual days in the period", "kind": "days", "value": 31 }
+        ],
+        "output": { "label": "Interest for the period", "format": "money" },
+        "task": "Birchwood Plaza, month 18: SOFR is 4.75%, so the note rate is 4.75% + 4.00% = 8.75%. The funded balance is $3,460,000. What is the interest for a 31-day month (F-CORE-01)?",
+        "answer": "$26,070.14"
+      }
+    },
+    {
+      "id": "c03-2",
+      "type": "buildup",
+      "title": "Maple Run billing statement",
+      "intro": "Build Maple Run's interest bills for January to June 2027, one period at a time. Each line opens when the one before it is right.",
+      "sources": ["F-CORE-01", "F-CORE-05", "D-CONV-02", "CORE-CLS-04", "F-CORE-33"],
+      "deal": "RD-RES-01",
+      "buildup": {
+        "context": "Maple Run (RD-RES-01) closes on 15 Jan 2027 with a $240,000 initial advance at 10.250%, interest only, Actual/360. Draws of $30,000 fund on 15 Mar and $25,000 on 15 May. The funding day counts; the payoff day does not (D-CONV-02). Split a period at each draw, and round each period to the cent once.",
+        "lines": [
+          { "label": "Per diem on $240,000 (F-CORE-05)", "hint": "$240,000 × 10.25% ÷ 360. Keep it unrounded when you multiply.", "expected": 68.33333333333333, "format": "money", "tolerance": 0.005 },
+          { "label": "15-31 Jan, prepaid at closing (CORE-CLS-04, F-CORE-33)", "hint": "15 to 31 January is 17 days, because the funding day counts. $240,000 × 10.25% ÷ 360 × 17.", "expected": 1161.6666666666667, "format": "money", "tolerance": 0.005 },
+          { "label": "1-28 Feb", "hint": "28 days on $240,000.", "expected": 1913.3333333333333, "format": "money", "tolerance": 0.005 },
+          { "label": "1-31 Mar (the $30,000 draw funds on 15 Mar)", "hint": "14 days on $240,000, then 17 days on $270,000. Add them, then round once.", "expected": 2263.5416666666665, "format": "money", "tolerance": 0.005 },
+          { "label": "1-30 Apr", "hint": "30 days on $270,000.", "expected": 2306.25, "format": "money", "tolerance": 0.005 },
+          { "label": "1-31 May (the $25,000 draw funds on 15 May)", "hint": "14 days on $270,000, then 17 days on $295,000.", "expected": 2504.131944444444, "format": "money", "tolerance": 0.005 },
+          { "label": "1-30 Jun", "hint": "30 days on $295,000.", "expected": 2519.7916666666665, "format": "money", "tolerance": 0.005 },
+          { "label": "Six-month total of the rounded rows", "hint": "Add the six rounded amounts, January included. Those are the amounts charged.", "expected": 12668.71, "format": "money", "tolerance": 0.005 },
+          { "label": "February to June bills only", "hint": "January's $1,161.67 is collected at closing, so take it off the total.", "expected": 11507.04, "format": "money", "tolerance": 0.005 }
+        ]
+      }
+    },
+    {
+      "id": "c03-3",
+      "type": "buildup",
+      "title": "Test versus bill",
+      "intro": "Compare the debt service a coverage test uses with the interest actually billed, month by month and for the year.",
+      "sources": ["F-CORE-01", "F-CORE-03", "D-CONV-01"],
+      "deal": "RD-MF-01",
+      "buildup": {
+        "context": "Cedar Court (RD-MF-01) funds $4,340,000 on day one. The test rate is 8.25%, the higher of the 7.65% note rate and the 4.25% cap strike + 4.00% spread. Tests use the nominal rate; bills use Actual/360 (D-CONV-01). Use 8.25% for both here, so only the day count differs.",
+        "lines": [
+          { "label": "Test ADS for the coverage test (F-CORE-03, interest only)", "hint": "$4,340,000 × 8.25%.", "expected": 358050, "format": "money", "tolerance": 0.005 },
+          { "label": "One month's share of the test ADS", "hint": "Test ADS ÷ 12.", "expected": 29837.5, "format": "money", "tolerance": 0.005 },
+          { "label": "Interest billed for a 30-day month (F-CORE-01)", "hint": "$4,340,000 × 8.25% ÷ 360 × 30. Notice that 30 ÷ 360 is exactly 1 ÷ 12.", "expected": 29837.5, "format": "money", "tolerance": 0.005 },
+          { "label": "Interest billed for a 31-day month (F-CORE-01)", "hint": "$4,340,000 × 8.25% ÷ 360 × 31.", "expected": 30832.083333333336, "format": "money", "tolerance": 0.005 },
+          { "label": "Gap in the 31-day month: billed minus the test share", "hint": "$30,832.08 − $29,837.50.", "expected": 994.58, "format": "money", "tolerance": 0.005 },
+          { "label": "Interest billed over a 365-day year (F-CORE-01)", "hint": "$4,340,000 × 8.25% ÷ 360 × 365.", "expected": 363022.9166666667, "format": "money", "tolerance": 0.005 },
+          { "label": "Yearly gap: billed minus test ADS", "hint": "$363,022.92 − $358,050.00. It is 5 ÷ 360 of a year's test interest.", "expected": 4972.92, "format": "money", "tolerance": 0.005 }
+        ]
+      }
+    }
+  ]
+}

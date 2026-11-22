@@ -1,0 +1,147 @@
+{
+  "module": "c01",
+  "exercises": [
+    {
+      "id": "c01-1",
+      "type": "decision",
+      "title": "Run the purpose test",
+      "intro": "Run six borrowers through our purpose screen and see where each file lands. Pick a case, then answer each question in turn.",
+      "sources": ["CORE-BOR-01", "CORE-BP-01", "CORE-BP-02", "CORE-BP-04", "CORE-EXC-03", "SLT-OH-01"],
+      "deal": null,
+      "decision": {
+        "nodes": {
+          "start": {
+            "q": "Is the borrower an entity: an LLC, LP or corporation?",
+            "options": [
+              { "label": "Yes, an entity", "next": "occupancy" },
+              { "label": "No, an individual or a trust", "next": "decline_entity" }
+            ]
+          },
+          "occupancy": {
+            "q": "Will an owner, guarantor or relative live in the property for more than 14 days in the coming year?",
+            "options": [
+              { "label": "Yes", "next": "stop_occupancy" },
+              { "label": "No", "next": "cashout" }
+            ]
+          },
+          "cashout": {
+            "q": "Is this a refinance with cash out?",
+            "options": [
+              { "label": "Yes", "next": "personal" },
+              { "label": "No, a purchase or a refinance with no cash out", "next": "business" }
+            ]
+          },
+          "personal": {
+            "q": "Will more than half of the cash out go to personal, family or household use?",
+            "options": [
+              { "label": "Yes, more than half", "next": "decline_cashout" },
+              { "label": "No, half or less", "next": "business" }
+            ]
+          },
+          "decline_entity": {
+            "result": "Decline: the borrower is not an entity",
+            "explain": "Only LLCs, LPs and corporations may borrow (CORE-BOR-01). Reg Z may still deem some owner-occupied loans to individuals business purpose, but our policy declines them first [VERIFY: Reg Z comment 3(a)-5; checked 20 Nov 2026]."
+          },
+          "stop_occupancy": {
+            "result": "Stop the file: occupancy red flag",
+            "explain": "More than 14 days makes the property owner-occupied [VERIFY: Reg Z comment 3(a)-4; checked 20 Nov 2026]. No guarantor or relative may live in a 1-4 unit property (CORE-BP-02). No exception is allowed (CORE-EXC-03). In Ohio, family occupancy can also bring the loan under consumer licensing (SLT-OH-01)."
+          },
+          "decline_cashout": {
+            "result": "Decline: consumer purpose by use of proceeds",
+            "explain": "More than half of the cash out is for personal use, so the loan is treated as consumer purpose (CORE-BP-04). No exception is allowed (CORE-EXC-03)."
+          },
+          "business": {
+            "result": "Business purpose: proceed",
+            "explain": "The borrower is an entity, no owner or relative lives there, and any cash out is half or less personal. Credit to a non-natural person is exempt from TILA [VERIFY: 12 CFR 1026.3(a); checked 22 Nov 2026]. Credit for rental property the owner does not occupy is deemed business purpose [VERIFY: Reg Z comment 3(a)-4; checked 20 Nov 2026]. Every borrower and guarantor signs the purpose certificate (CORE-BP-01)."
+          }
+        },
+        "cases": [
+          { "text": "Cedar Court Partners LLC buys a 50-unit apartment building in Charlotte to renovate and rent (RD-MF-01).", "expect": "business" },
+          { "text": "Birchwood Plaza LLC buys a 70%-leased strip center in Indianapolis (RD-COM-01).", "expect": "business" },
+          { "text": "An individual buys a duplex and will live in one unit.", "expect": "decline_entity" },
+          { "text": "An LLC buys a single-family rental. Its managing member plans to stay there 3 weeks each summer.", "expect": "stop_occupancy" },
+          { "text": "Harborline Holdings LLC buys Maple Run, but Dana Reyes's sister will live there for the winter.", "expect": "stop_occupancy" },
+          { "text": "An LLC refinances a rental with $90,000 cash out. $46,000 is for personal use.", "expect": "decline_cashout" }
+        ]
+      }
+    },
+    {
+      "id": "c01-2",
+      "type": "sort",
+      "title": "Build Cedar Court's purpose file",
+      "intro": "A purpose file must hang together. Decide which documents belong in Cedar Court's purpose file, and which are not purpose documents for this deal.",
+      "sources": ["CORE-BP-01", "CORE-BP-02", "CORE-BP-03", "CORE-BP-04", "CORE-BOR-01", "CORE-KYC-02", "CORE-VAL-01", "SLT-NC-02"],
+      "deal": "RD-MF-01",
+      "sort": {
+        "buckets": ["In the purpose file", "Not a purpose document here"],
+        "items": [
+          { "text": "Business-purpose and non-occupancy certificate signed by Cedar Court Partners LLC, Marcus Hale and Priya Nand", "bucket": "In the purpose file", "why": "The borrower and every guarantor sign it (CORE-BP-01). Both owners hold 20% or more, so both guarantee." },
+          { "text": "Cedar Court Partners LLC formation documents and a North Carolina good-standing certificate", "bucket": "In the purpose file", "why": "They show the borrower is an entity, so only an entity borrows (CORE-BOR-01)." },
+          { "text": "The State Law Table check for North Carolina (SLT-NC-02), done before the term sheet", "bucket": "In the purpose file", "why": "The property state's row is checked before any term sheet (CORE-BP-03)." },
+          { "text": "ID for Marcus Hale and Priya Nand, with proof of home addresses other than the property", "bucket": "In the purpose file", "why": "ID is a KYC check (CORE-KYC-02). A separate home address supports non-occupancy (CORE-BP-02)." },
+          { "text": "The lender-ordered MAI appraisal, showing 44 of 50 units leased", "bucket": "In the purpose file", "why": "The appraisal shows occupancy and condition, so it can confirm or contradict purpose (CORE-VAL-01)." },
+          { "text": "A written use-of-proceeds statement for cash out", "bucket": "Not a purpose document here", "why": "CORE-BP-04 applies only to a refinance with cash out. Cedar Court is a purchase." },
+          { "text": "The Phase I environmental report", "bucket": "Not a purpose document here", "why": "It is a required property report (MF-GEN-08), but it says nothing about loan purpose." },
+          { "text": "The rate cap confirmation, strike 4.25% for 24 months", "bucket": "Not a purpose document here", "why": "The cap manages floating-rate risk (MF-BR-09). It is a closing condition, not purpose evidence." }
+        ]
+      }
+    },
+    {
+      "id": "c01-3",
+      "type": "decision",
+      "title": "Cash-out boundary",
+      "intro": "CORE-BP-04 declines a cash-out refinance when more than half goes to personal use. Test cases at 50%, 51.11%, 58.33% and 62.5%, plus one with no statement and one with no cash out.",
+      "sources": ["CORE-BP-04", "CORE-EXC-03"],
+      "deal": null,
+      "decision": {
+        "nodes": {
+          "start": {
+            "q": "Is the loan a refinance with cash out?",
+            "options": [
+              { "label": "Yes", "next": "statement" },
+              { "label": "No", "next": "not_applicable" }
+            ]
+          },
+          "statement": {
+            "q": "Has the borrower stated the use of proceeds in writing?",
+            "options": [
+              { "label": "Yes", "next": "share" },
+              { "label": "No", "next": "get_statement" }
+            ]
+          },
+          "share": {
+            "q": "Personal use ÷ total cash out. Is the result more than 50.00%?",
+            "options": [
+              { "label": "Yes, more than half", "next": "decline" },
+              { "label": "No, exactly half or less", "next": "proceed" }
+            ]
+          },
+          "not_applicable": {
+            "result": "CORE-BP-04 does not apply",
+            "explain": "The use-of-proceeds test covers only refinances with cash out (CORE-BP-04). Run the rest of the purpose screen as usual."
+          },
+          "get_statement": {
+            "result": "Stop: get the written statement first",
+            "explain": "On any refinance with cash out, the borrower states the use of proceeds in writing (CORE-BP-04). You cannot run the test without it."
+          },
+          "decline": {
+            "result": "Decline: consumer purpose",
+            "explain": "More than half of the cash out goes to personal, family or household use. The loan is treated as consumer purpose and declined (CORE-BP-04). No exception is allowed (CORE-EXC-03)."
+          },
+          "proceed": {
+            "result": "Passes CORE-BP-04: proceed and document",
+            "explain": "Exactly half is not more than half, so the test does not decline it (CORE-BP-04). Keep the statement and evidence for the business use in the file."
+          }
+        },
+        "cases": [
+          { "text": "An LLC refinances a rental with $90,000 cash out, and $46,000 is for personal use. A signed statement is on file.", "expect": "decline" },
+          { "text": "An LLC refinances with $100,000 cash out: $50,000 to pay off a member's car loan and $50,000 for roof repairs. A signed statement is on file.", "expect": "proceed" },
+          { "text": "An LLC refinances with $120,000 cash out: $70,000 for a member's home renovation and $50,000 for the next flip. A signed statement is on file.", "expect": "decline" },
+          { "text": "An LLC refinances with $80,000 cash out, of which $50,000 is personal. A signed statement is on file.", "expect": "decline" },
+          { "text": "An LLC refinances with $90,000 cash out. The borrower has not yet said how it will use the money.", "expect": "get_statement" },
+          { "text": "Harborline Holdings LLC buys Maple Run for $300,000. There is no refinance.", "expect": "not_applicable" }
+        ]
+      }
+    }
+  ]
+}

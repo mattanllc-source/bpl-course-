@@ -8,12 +8,15 @@ Run: python scripts/course_site/build.py
 Model policy for training - not for live lending decisions.
 """
 import json
+import os
 import pathlib
 import re
+import shutil
+import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 TEMPLATE = pathlib.Path(__file__).with_name("template.html")
-OUT = ROOT / "exports" / "core-course.html"
+OUT = pathlib.Path(os.environ["BPL_OUT"]) if os.environ.get("BPL_OUT") else ROOT / "exports" / "core-course.html"
 
 # docs/SNAPSHOT.md: c00-c02 are current; c03-c14 are working drafts to check against the doc.
 DRAFT = {f"c{n:02d}" for n in range(3, 15)}
@@ -70,6 +73,9 @@ def clean_line(line: str) -> str:
     m = re.match(r"^(\s*\d+\.\s+)(.*?)\s*(\*\*Answer:\*\*.*?)\s*\(C\)\s*$", line)
     if m:
         line = f"{m.group(1)}{m.group(2)} *(critical)* {m.group(3)}"
+    else:
+        # A question whose answer sits in a separate key (C10, C11) ends with a bare "(C)".
+        line = re.sub(r"^(\s*\d+\.\s+.*?\S)\s*\(C\)\s*$", r"\1 *(critical)*", line)
     line = line.replace("Items marked (C) are critical", "Items marked (critical) are critical")
     line = re.sub(r"\b1 hours\b", "1 hour", line)
     return line
@@ -180,23 +186,59 @@ def snapshot_note(rel: str) -> str:
     return "Snapshot of the live Course Bible"
 
 
+EX_DIR = pathlib.Path(os.environ["BPL_EX_DIR"]) if os.environ.get("BPL_EX_DIR") else pathlib.Path(__file__).with_name("exercises")
+
+
+def run_node(*args: str) -> str:
+    node = shutil.which("node")
+    if not node:
+        raise SystemExit("node is required to bundle the core formulas")
+    r = subprocess.run([node, *args], capture_output=True, text=True, encoding="utf-8", cwd=ROOT)
+    if r.returncode:
+        raise SystemExit((r.stderr or r.stdout).strip() or "node failed")
+    return r.stdout
+
+
+def bundle_and_exercises() -> tuple[str, dict]:
+    """Browser bundle of the core formulas, plus every exercise spec, validated against it."""
+    here = pathlib.Path(__file__).parent
+    bundle = run_node(str(here / "bundle_formulas.mjs"))
+    tmp = ROOT / "exports" / ".bplf.js"
+    tmp.parent.mkdir(exist_ok=True)
+    tmp.write_text(bundle, encoding="utf-8")
+    try:
+        run_node(str(here / "check_exercises.mjs"), str(tmp), str(EX_DIR))   # fails loudly on any bad spec
+    finally:
+        tmp.unlink(missing_ok=True)
+    ex = {}
+    if EX_DIR.exists():
+        for f in sorted(EX_DIR.glob("c[0-9][0-9].json")):
+            ex[f.stem] = json.loads(f.read_text(encoding="utf-8"))["exercises"]
+    return bundle.replace("</script", "<" + chr(92) + "/script"), ex
+
+
 def main() -> None:
     table = core_table()
+    bplf, exercises = bundle_and_exercises()
     modules = []
     for n in range(15):
         key, code = f"c{n:02d}", f"C{n}"
         if code not in table:
             raise SystemExit(f"{code} missing from the Course Bible Core table")
         md = learner_view(read(f"modules/core/{key}/lesson.md"))
-        modules.append({"key": key, "code": code, **table[code], "draft": key in DRAFT, "md": md})
+        modules.append({"key": key, "code": code, **table[code], "draft": key in DRAFT, "md": md,
+                        "exercises": exercises.get(key, [])})
     refs = [{"key": k, "title": t, "note": snapshot_note(p), "md": read(p)} for k, t, p in REFS]
     data = json.dumps({"modules": modules, "refs": refs}, ensure_ascii=False)
     data = data.replace("</", "<\\/")  # never close the JSON <script> early
-    html = TEMPLATE.read_text(encoding="utf-8").replace("/*__DATA__*/", data)
+    html = (TEMPLATE.read_text(encoding="utf-8").replace("/*__BPLF__*/", bplf)
+            .replace("/*__DATA__*/", data))
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(html, encoding="utf-8")
     hours = sum(m["hours"] for m in modules)
-    print(f"{len(modules)} modules ({hours} hours), {len(refs)} references -> {OUT.relative_to(ROOT)} "
+    nex = sum(len(v) for v in exercises.values())
+    print(f"{nex} exercises in {len(exercises)} modules")
+    print(f"{len(modules)} modules ({hours} hours), {len(refs)} references -> {OUT} "
           f"({OUT.stat().st_size / 1024:.0f} KB)")
 
 

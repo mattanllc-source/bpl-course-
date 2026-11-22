@@ -10,7 +10,7 @@ def fac(r, n): i = r/12; return i/(1-(1+i)**-n)
 def K(r, n=300): return fac(r, n)*12
 def ads(L, r, n=300): return float(c(L*fac(r, n)))*12
 def p3(x): return pct(x, 3)
-def dn(x, step=10000): return int(x//step*step)
+def dn(x, step=1000): return int(x//step*step)  # CORE-PRC-05: round loans down to the nearest $1,000
 
 # ---------- REQUIRED 01-07 (Course Bible glossary) ----------
 def walt(ts): return sum(y*r for y, r in ts)/sum(r for y, r in ts)
@@ -96,7 +96,7 @@ add(id="F-COM-06", name="Loan per square foot",
  edges="Land loans: per acre or per lot instead.",
  rounding="Round to the cent.",
  modules="CM4",
- tests=[("$5,000,000; 50,000 sf", m(100)), ("$3,900,000; 40,000 sf", m(97.5)), ("$5,960,000; 60,000 sf", m(5960000/60000))])
+ tests=[("$5,000,000; 50,000 sf", m(100)), ("$3,900,000; 40,000 sf", m(97.5)), ("$5,969,000; 60,000 sf", m(5969000/60000))])
 
 add(id="F-COM-07", name="Occupancy cost ratio",
  purpose="A retail tenant's rent and charges as a share of its sales.",
@@ -120,7 +120,7 @@ b2 = f08(4e6, 240000, .70, 1.20, None, .065)
 b3 = f08(10e6, 800000, .60, 1.40, .10, .0813)
 add(id="F-COM-08", name="Three-test loan sizing",
  purpose="Largest commercial loan that passes LTV, DSCR and debt yield.",
- plain="Loan = min(LTV_max × value, NCF ÷ DSCR_min ÷ constant, NCF ÷ DY_min), rounded down to $10,000",
+ plain="Loan = min(LTV_max × value, NCF ÷ DSCR_min ÷ constant, NCF ÷ DY_min), rounded down to $1,000 (CORE-PRC-05)",
  latex=r"L = \min\left(LTV_{max} V,\ \frac{NCF}{DSCR_{min} K},\ \frac{NCF}{DY_{min}}\right)",
  vars="V (USD); NCF (USD per year; NOI for NNN); K = annual constant at the note rate, 25-year amortization (F-CORE-04); limits by property type (COM-TRM table)",
  example=["Birchwood term loan: value $6,000,000; NCF $434,000; 65% / 1.30x / 9.0%; 7.000%, K = $330,772.68 ÷ $3,900,000 (shown 0.084814).", f"LTV: {m(b1[0])}. DSCR: $434,000 ÷ 1.30 ÷ K = {m(b1[1])}.", f"Debt yield: $434,000 ÷ 9.0% = {m(b1[2])}.", f"Lowest: {m(b1[3])} (LTV binds). ADS {m(ads(3.9e6,.07))}; DSCR {xx(434000/ads(3.9e6,.07))}; debt yield {pct(434000/3.9e6,2)}."],
@@ -128,7 +128,7 @@ add(id="F-COM-08", name="Three-test loan sizing",
  rules="COM-GEN-11; COM-TRM table; COM-TRM-04 (rate floor, F-COM-18); COM-NNN-02, -03",
  mistakes=["Using the rate before the Treasury + 300 bp floor (F-COM-18).", "Using NCF on an NNN loan, which tests on NOI.", "Rounding the result up."],
  edges="NCF zero or negative → no loan. NNN Tier 1 has no debt-yield test. The 7.000% example assumes a 4.00% Treasury (RD-COM-01); at 5.13% the floor is 8.130%.",
- rounding="Constant at full precision; payment to the cent; loan rounded down to $10,000.",
+ rounding="Constant at full precision; payment to the cent; loan rounded down to $1,000 (CORE-PRC-05).",
  modules="CM4",
  tests=[("V $6.0M; NCF $434,000; 65% / 1.30x / 9.0%; 7.000%", f"{m(dn(b1[3]))} (LTV binds)"),
         ("NNN Tier 1: V $4.0M; NOI $240,000; 70% / 1.20x; 6.500%", f"{m(dn(b2[3]))} (DSCR binds; {m(b2[1])} before rounding)"),
@@ -151,7 +151,7 @@ add(id="F-COM-09", name="Rollover-stressed NCF",
         ("NCF $815,000; $300,000 of $1,000,000 expiring; office", m(815000-60000)),
         ("NCF $434,000; $60,000 of $600,000 expiring (10.0%)", m(434000)+": no stress")])
 
-A10 = ads(4e6, .0775); mx10 = 430000/1.25/K(.0775)
+A10 = ads(4e6, .0775); mx10 = 430000/1.25/(ads(3.52e6, .0775)/3.52e6)  # K = $319,050.84 ÷ $3,520,000, as the Library shows
 add(id="F-COM-10", name="Bridge exit test (take-out DSCR)",
  purpose="Checks that a permanent loan at the course take-out rate could repay the bridge.",
  plain="Exit DSCR = stabilized NCF ÷ ADS at 7.75%, 25-year amortization; max loan = NCF ÷ DSCR_exit ÷ constant",
@@ -162,11 +162,11 @@ add(id="F-COM-10", name="Bridge exit test (take-out DSCR)",
  rules="Bridge table (1.25-1.35x by type); COM-CON-07; D-COM-08",
  mistakes=["Using today's bridge rate instead of the take-out rate.", "Testing the funded amount instead of the fully funded amount."],
  edges="The take-out rate resets when the 10-year Treasury moves 25 bp [VERIFY: Treasury yield and date].",
- rounding="Payment to the cent; max loan rounded down to $10,000.",
+ rounding="Payment to the cent; max loan rounded down to $1,000 (CORE-PRC-05).",
  modules="CM4",
  tests=[("$4,000,000; NCF $430,000; 1.25x", f"{xx(430000/A10)}: fails; max {m(dn(mx10))}"),
-        ("$3,790,000; NCF $430,000; 1.25x", f"{xx(430000/ads(3.79e6,.0775))}: passes"),
-        ("$5,960,000; NCF $720,000; 1.25x", f"{xx(720000/ads(5.96e6,.0775))}: passes")])
+        ("$3,795,000; NCF $430,000; 1.25x", f"{xx(430000/ads(3.795e6,.0775))}: passes"),
+        ("$5,969,000; NCF $720,000; 1.25x", f"{xx(720000/ads(5.969e6,.0775))}: passes")])
 
 A11 = ads(8e5, .0875, 360)
 add(id="F-COM-11", name="Small-balance commercial DSCR",
@@ -195,7 +195,7 @@ add(id="F-COM-12", name="Dark-value coverage (NNN Tier 2)",
  rules="COM-NNN-03",
  mistakes=["Using the leased value as the dark value.", "Skipping the DSCR test after the dark-value cap."],
  edges="Special-use building with no other user → dark value near 0: decline.",
- rounding="Round to the cent; loan rounded down to $10,000.",
+ rounding="Round to the cent; loan rounded down to $1,000 (CORE-PRC-05).",
  modules="CM5",
  tests=[("$3,500,000; dark $2,400,000", m(1920000)+" (dark binds)"), ("$3,000,000; dark $2,500,000", m(1800000)+" (LTV binds)"), ("$3,500,000; dark $0", m(0)+": decline")])
 
@@ -226,7 +226,7 @@ add(id="F-COM-14", name="Construction sizing with interest reserve",
  rules="COM-CON-01, -02, -03 (80% supervisory ceiling [VERIFY]), -06, -07",
  mistakes=["Adding the reserve on top of an already-maximum loan.", "Using 100% average balance or the 50% rule of thumb."],
  edges="Front-loaded draws (land funded at closing) → average above 60% [CONFIRM]. Then run the exit test (F-COM-10).",
- rounding="Full precision; loan rounded down to $10,000.",
+ rounding="Full precision; loan rounded down to $1,000 (CORE-PRC-05).",
  modules="CM4, CM6",
  tests=[("Base $8.7M; 9.00%; 18 months; as-complete $9.8M", f"{m(r14[4])} (LTC binds)"),
         ("Base $5.0M; 8.50%; 15 months; as-complete $7.0M", f"{m(r14b[4])} (LTC binds; {m(r14b[1])} before rounding)"),

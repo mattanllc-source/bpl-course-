@@ -409,6 +409,17 @@ export function bucketHeadroom(cap: number, totalCommitments: number, bucketComm
   return (cap * totalCommitments - bucketCommitments) / (1 - cap);
 }
 
+/**
+ * F-CORE-44: Cash-on-cash return. (NOI − annual debt service) ÷ total cash invested.
+ * Negative cash flow gives a negative return; zero or negative cash invested is undefined, so it throws.
+ */
+export function cashOnCash(noi: number, annualDebtService: number, cashInvested: number): number {
+  assertFinite({ noi });
+  assertNonNegative({ annualDebtService });
+  assertPositive({ cashInvested });
+  return (noi - annualDebtService) / cashInvested;
+}
+
 /** Parse an ISO "YYYY-MM-DD" date as UTC midnight, in milliseconds. */
 function isoDay(s: string): number {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);

@@ -7,9 +7,10 @@
 | Prerequisites | C6, C8 |
 | Bloom's levels | 4 to 6 (LD-02) |
 | Formulas | F-CORE-25, -29, -30, -43 (SUGGESTED) |
-| Rules | CORE-AUTH-01 to -04; CORE-EXC-01 to -05; CORE-CONC-01 to -07; CORE-SVC-07 |
+| Rules | CORE-AUTH-01 to -04; CORE-EXC-01 to -05; CORE-CONC-01 to -07; CORE-SVC-07; RES-GU-01; COM-TRM-09; decision D-CORE-26 |
 | Running deals | Worked examples: RD-RES-01 Maple Run (memo, exception) and RD-COM-01 Birchwood Plaza (portfolio). Practice: RD-MF-01 Cedar Court (LD-08). The portfolio book is a C14 training figure |
-| Status | v0. Self-review against Bible Section 7 is at the end of this tab |
+| Status | v0.2. Self-review against Bible Section 7 is at the end of this tab |
+| Change log | v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -39,7 +40,7 @@ By the end of C14, you will be able to:
 3. **Evaluate** an exception request against compensating factors (CORE-EXC-01 to -05; F-CORE-25).
 4. **Test** a new loan against portfolio limits (CORE-CONC-02 to -07; F-CORE-30, -43).
 5. **Run** or take part in a committee decision (CORE-AUTH-03).
-6. **Recognise** critical credit errors and the role of independent review (CORE-AUTH-04; Main Section 3).
+6. **Recognize** critical credit errors and the role of independent review (CORE-AUTH-04; Main Section 3).
 
 ## 3. Teach
 
@@ -87,9 +88,26 @@ The approver is never the underwriter of record (CORE-AUTH-01). The lowest level
 | Loan size | Up to $500,000, Residential only | Up to $2,000,000 | Above $2,000,000 |
 | Sponsor exposure (F-CORE-29) | Up to $1,000,000 | Up to $5,000,000 | Above $5,000,000 |
 | Exceptions | None | One: leverage +2.5 points; DSCR −0.05x; FICO −20; liquidity −10% of requirement | Up to two: leverage +5.0 points; DSCR −0.10x; FICO −40; liquidity −25% of requirement |
-| Always committee |  |  | Related-party or employee loans; Tier 0 ground-up; first loan in a new state; any CONC breach |
+| Always committee |  |  | Related-party or employee loans; ground-up with one completed build (the RES-GU-01 exception; ground-up with no completed build is declined, D-CORE-26); first loan in a new state; any CONC breach |
 
 Beyond the committee limits the loan is declined; no one has authority (CORE-AUTH-01).
+
+```mermaid
+flowchart TD
+  A[New loan] --> G{Ground-up with no completed build?}
+  G -->|Yes| X[Declined: no authority]
+  G -->|No| B{"Related party, one-build ground-up, new state or CONC breach?"}
+  B -->|Yes| C[Committee]
+  B -->|No| D{"Residential up to $500,000, sponsor up to $1,000,000, no exceptions?"}
+  D -->|Yes| SU[Senior underwriter]
+  D -->|No| E{"Loan up to $2,000,000, sponsor up to $5,000,000, at most one exception?"}
+  E -->|Yes| CO[Credit officer]
+  E -->|No| F{Within committee limits?}
+  F -->|Yes| C
+  F -->|No| X
+```
+
+The flow shows how a loan finds its lowest approver under CORE-AUTH-01, and when it is declined.
 
 **Worked example 2: the three running deals.**
 
@@ -114,7 +132,7 @@ An exception is any approval outside a policy rule. It is approved before closin
 | 5 | Extra collateral |
 | 6 | At least 3 repaid loans with us and no late payments |
 
-Regulators expect deviations from loan policy to be neither recurring nor excessive, and to be reported to the board [VERIFY: Federal Reserve, credit risk guidance for new banks; checked 20 Nov 2026]. That is why CORE-EXC-05 triggers a policy review when exceptions pass 10% of new loans.
+Regulators let lenders make prudent exceptions to loan policy, loan by loan. Exceptions of significant size are reported to the board one by one. An excessive volume may signal weaker underwriting or a need to revise the policy [VERIFY: 12 CFR Part 208, Appendix C, Interagency Guidelines for Real Estate Lending Policies, eCFR; checked 22 Nov 2026]. That is why CORE-EXC-05 triggers a policy review when exceptions pass 10% of new loans.
 
 **Worked example 3: Dana Reyes asks for 87.5% LTC.** Total project cost is $400,000. Policy LTC is 85%, $340,000. She wants $350,000.
 
@@ -125,7 +143,7 @@ Regulators expect deviations from loan policy to be neither recurring nor excess
 
 ### T4. Portfolio limits (Objective 4, 20 minutes)
 
-US bank regulators warn that concentrations add risk on top of the risk in each loan. They expect lenders to set internal limits and report concentrations to management and the board [VERIFY: Interagency CRE concentration guidance, Dec 2006; checked 20 Nov 2026]. Our CORE-CONC rules do that.
+US bank regulators warn that concentrations add risk on top of the risk in each loan. They set no fixed caps. Instead they expect board and management oversight of concentrations, backed by reporting systems [VERIFY: OCC Bulletin 2006-46, Interagency Guidance on CRE Concentration Risk Management, 6 Dec 2006; checked 22 Nov 2026]. Our CORE-CONC rules do that.
 
 **C14 training book.** Total commitments $120,000,000. Indiana $28,500,000. North Carolina $26,000,000. Columbus, Ohio MSA $17,500,000.
 
@@ -148,7 +166,7 @@ Decision: a CONC breach needs committee approval (CORE-AUTH-01, CORE-CONC-07). C
 **Worked example 5: Maple Run, Columbus MSA (15% cap).**
 
 1. Formula: share after = (bucket + loan) ÷ (total + loan) (F-CORE-30). Headroom = (cap × total − bucket) ÷ (1 − cap) (F-CORE-43).
-2. Inputs: Columbus $17,500,000; Maple Run $340,000; book $120,000,000; cap 15%.
+2. Inputs: Columbus $17,500,000; Maple Run $340,000; book $120,000,000; MSA cap 15% (CORE-CONC-06).
 3. Substitution: $17,840,000 ÷ $120,340,000. Headroom after the loan: (15% × $120,340,000 − $17,840,000) ÷ 85% = $211,000 ÷ 0.85.
 4. Result: 14.8%, so it passes. Headroom left is $248,235.29. A second $340,000 loan would take Columbus to $18,180,000 ÷ $120,680,000 = 15.06%. That breaches the cap and needs committee (CORE-AUTH-01).
 
@@ -158,7 +176,7 @@ Decision: a CONC breach needs committee approval (CORE-AUTH-01, CORE-CONC-07). C
 
 **How to present.** Two minutes on the recommendation. Then the three biggest risks and their mitigants. Then the questions. Never argue a number you cannot show in the memo.
 
-**Worked example 6: Birchwood at committee.** Questions likely: can a 32,000 sf operator lease 12,000 sf in 18 months? What is the exit cushion if NCF lands 10% short? How does Indiana's 25.9% fit CORE-CONC-06? Answer to the second question: NCF 10% short is $434,000 × 90% = $390,600. Exit DSCR = $390,600 ÷ $319,050.84 = 1.22x, below the 1.30x exit test (F-COM-10). The memo must name a mitigant for that. Smallest participation that works: Indiana headroom is $2,000,000 (F-CORE-43), so sell at least $3,520,000 − $2,000,000 = $1,520,000. Then ($28,500,000 + $2,000,000) ÷ ($120,000,000 + $2,000,000) = 25.0%, at the cap. Possible decision: approve, conditional on selling a $1,800,000 participation, for a margin below the cap. Check: ($28,500,000 + $1,720,000) ÷ ($120,000,000 + $1,720,000) = 24.8%.
+**Worked example 6: Birchwood at committee.** Questions likely: can a 32,000 sf operator lease 12,000 sf in 18 months? What is the exit cushion if NCF lands 10% short? How does Indiana's 25.9% fit CORE-CONC-06? Answer to the second question: NCF 10% short is $434,000 × 90% = $390,600. Exit DSCR = $390,600 ÷ $319,050.84 = 1.22x, below the 1.30x exit test (F-COM-10; COM-TRM-09 unanchored retail: 65% LTV, 1.30x, 9.0%). The memo must name a mitigant for that. Smallest participation that works: Indiana headroom is $2,000,000 (F-CORE-43), so sell at least $3,520,000 − $2,000,000 = $1,520,000. Then ($28,500,000 + $2,000,000) ÷ ($120,000,000 + $2,000,000) = 25.0%, at the cap. Possible decision: approve, conditional on selling a $1,800,000 participation, for a margin below the cap. Check: ($28,500,000 + $1,720,000) ÷ ($120,000,000 + $1,720,000) = 24.8%.
 
 ### T6. Critical errors and independent review (Objective 6, 5 minutes)
 
@@ -170,7 +188,7 @@ Decision: a CONC breach needs committee approval (CORE-AUTH-01, CORE-CONC-07). C
 - an approval outside authority; or
 - a missed KYC or OFAC hit.
 
-**New rule CORE-AUTH-04.** A reviewer independent of underwriting re-tests a sample of new loans each year, including every committee loan. They check sizing, rule citations and the risk rating. Findings go to the Chief Credit Officer. A critical credit error is reported to committee within one month. Regulators expect an independent source, usually loan review, to validate ratings periodically [VERIFY: Federal Reserve, credit risk guidance; checked 20 Nov 2026].
+**New rule CORE-AUTH-04.** A reviewer independent of underwriting re-tests a sample of new loans each year, including every committee loan. They check sizing, rule citations and the risk rating. Findings go to the Chief Credit Officer. A critical credit error is reported to committee within one month. Regulators expect an independent source, usually loan review, to validate ratings periodically [VERIFY: Interagency Guidance on Credit Risk Review Systems, May 2020, Fed SR 20-13 attachment; checked 22 Nov 2026].
 
 ## 5. Practice (40 minutes)
 
@@ -292,8 +310,8 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 | Formulas worked in four lines | Met; computed in code |
 | Deal numbers match the running deals file | Met. The $120,000,000 book, state and MSA balances and the participation are C14 training figures |
 | Quiz sets; critical items | Met: 12 items each; 3 critical in A, 4 in B |
-| O5 and O6 practised | Partly met: P6-P8 practise O6; O5 is covered in the OJT and quiz |
-| No open tags | Not met: [VERIFY] on NCUA, Federal Reserve and interagency sources. Stays v0 |
+| O5 and O6 practiced | Partly met: P6-P8 practice O6; O5 is covered in the OJT and quiz |
+| No open tags | Partly met: Federal Reserve, eCFR and interagency tags checked 22 Nov 2026. Still open: the NCUA tag, as the site was unreachable. Now v0.2 |
 
 **Self-check.**
 
@@ -302,6 +320,7 @@ Pass mark 80%, and every critical item correct. Items marked (C) are critical: a
 3. An exception has one compensating factor. Can committee approve it? **Answer:** no; every exception needs at least two (CORE-EXC-02).
 4. Can an exception be made to a CORE-BP business-purpose rule? **Answer:** never (CORE-EXC-03).
 5. At committee, who may veto, and what? **Answer:** the Chief Credit Officer, and only an approval, never a decline (CORE-AUTH-03).
+6. A $400,000 ground-up loan to a builder with no completed build. Who can approve it? **Answer:** no one. It is declined (RES-GU-01; D-CORE-26). With one completed build it would go to committee.
 
 **What to look up yourself.**
 

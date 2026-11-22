@@ -1,4 +1,4 @@
-**Model policy for training - not for live lending decisions. Not legal advice.** Fictional data only. Every legal statement comes from the State Law Table tab, checked 20 Nov 2026, and is [VERIFY] until state counsel confirms it.
+**Model policy for training - not for live lending decisions. Not legal advice.** Fictional data only. Every legal statement comes from the State Law Table tab, checked 20 Nov 2026. Statutes cited here were reopened on 22 Nov 2026. Each stays [VERIFY] until state counsel confirms it.
 
 | Item | Detail |
 | --- | --- |
@@ -11,7 +11,7 @@
 | State law | SLT-OH-01 to -03, SLT-NC-01 to -03, SLT-IN-01 to -03, SLT-CA-01 to -03 |
 | Running deals | Worked examples: RD-RES-01 Maple Run (Ohio) and RD-COM-01 Birchwood Plaza (Indiana). Practice: RD-MF-01 Cedar Court (North Carolina) (LD-08). California is a what-if only |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026. v0.1, 22 Nov 2026 |
+| Change log | v0, 20 Nov 2026. v0.1, 22 Nov 2026. v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -30,7 +30,7 @@
 
 Picture Maple Run twice. Same LLC, same $340,000 loan, same 10.25% rate. One house sits in Columbus, Ohio. The other sits in California.
 
-In Ohio the loan is usury-exempt, needs no lender licence, and the guaranty can chase a shortfall. In California, an unlicensed lender charging 10.25% breaks a 10% cap. After a trustee's sale, it cannot sue the borrower for any shortfall.
+In Ohio the loan is usury-exempt, needs no lender license, and the guaranty can chase a shortfall. In California, an unlicensed lender charging 10.25% breaks a 10% cap. After a trustee's sale, it cannot sue the borrower for any shortfall.
 
 Credit numbers do not change at the state line. Remedies do. This module teaches you to read the State Law Table before the term sheet goes out.
 
@@ -38,7 +38,7 @@ Credit numbers do not change at the state line. Remedies do. This module teaches
 
 By the end of C10, you will be able to:
 
-1. **Determine** whether a loan needs a state lender or broker licence (CORE-BP-02, -03; SLT licence columns).
+1. **Determine** whether a loan needs a state lender or broker license (CORE-BP-02, -03; SLT license columns).
 2. **Test** a rate, points and fees package against state usury rules (CORE-PRC-03; F-CORE-40; SLT usury column).
 3. **Check** default interest, late fee and prepayment terms against state limits (CORE-SVC-03; RES-DSCR-11; F-CORE-31; F-COM-24).
 4. **Estimate** how the foreclosure method and timeline change the loss (F-CORE-05, -23; SLT foreclosure column).
@@ -48,15 +48,15 @@ By the end of C10, you will be able to:
 
 ### T1. Licensing (Objective 1, 10 minutes)
 
-Licensing turns on two facts: the loan's purpose and the property's state. Most state mortgage licence laws cover consumer loans only. A consumer loan is one primarily for personal, family or household use.
+Licensing turns on two facts: the loan's purpose and the property's state. Most state mortgage license laws cover consumer loans only. A consumer loan is one primarily for personal, family or household use.
 
-So a business-purpose loan usually needs no residential mortgage licence. Three traps remain:
+So a business-purpose loan usually needs no residential mortgage license. Three traps remain:
 
 - **Occupancy.** If a guarantor or relative will live in a 1-4 unit property, the loan can become consumer. Ohio's rule says so expressly (SLT-OH-01). CORE-BP-02 stops the file.
 - **Commercial lender laws.** California licenses commercial lenders too, under the California Financing Law (SLT-CA-01).
-- **Broker laws.** Indiana's Loan Broker Act defines a residential loan by its collateral, not its purpose (SLT-IN-01) [VERIFY].
+- **Broker laws.** The State Law Table says Indiana's Loan Broker Act turns on collateral, not purpose (SLT-IN-01). The statute says otherwise. A "residential mortgage loan" must be primarily for personal, family or household use and secured by a dwelling or residential real estate (IC 23-2.5-1-34). So a business-purpose loan appears to fall outside the Act; counsel confirms [VERIFY: IC 23-2.5-1-14, -34, via codes.findlaw.com; checked 22 Nov 2026].
 
-**Rule CORE-BP-03.** Before the term sheet, check the property state's SLT row. Proceed only if we hold every licence the row lists or meet a listed exemption. A state with no SLT row gets no term sheet until one is added.
+**Rule CORE-BP-03.** Before the term sheet, check the property state's SLT row. Proceed only if we hold every license the row lists or meet a listed exemption. A state with no SLT row gets no term sheet until one is added.
 
 **Worked example 1: Maple Run, Ohio (SLT-OH-01).**
 
@@ -64,17 +64,17 @@ So a business-purpose loan usually needs no residential mortgage licence. Three 
 | --- | --- |
 | Purpose | Buy, renovate and lease a house. Business purpose (CORE-BP-01) |
 | Occupancy | Vacant; to be leased to an unrelated tenant; Dana Reyes lives elsewhere. No red flag (CORE-BP-02) |
-| Ohio lender licence | OAC 1301:8-7-02(G): a loan to buy a dwelling to lease is business purpose and outside ORC 1322. None needed |
+| Ohio lender license | OAC 1301:8-7-02(G): a loan to buy a dwelling to lease is business purpose and outside ORC 1322. None needed |
 | Ohio broker | Same carve-out. None needed |
 | Decision | CORE-BP-03 met. Proceed |
 
-> **What-if: the same loan on a California house (SLT-CA-01).** A California Financing Law licence is needed to make the loan. The exception is a loan made or arranged by a licensed real estate broker. Without one of these, CORE-BP-03 stops the deal.
+> **What-if: the same loan on a California house (SLT-CA-01).** A California Financing Law license is needed to make the loan. The exception is a loan made or arranged by a licensed real estate broker. Without one of these, CORE-BP-03 stops the deal.
 
-> **What-if: Dana Reyes's sister will rent the Ohio house.** A relative in occupancy is a red flag under CORE-BP-02. The file stops until a credit officer clears it. Occupancy signs also go to the BSA officer the same business day (CORE-KYC-05, -07). Ohio's licence carve-out may fall away (SLT-OH-01).
+> **What-if: Dana Reyes's sister will rent the Ohio house.** A relative in occupancy is a red flag under CORE-BP-02, so the file stops. A credit officer may clear a flag only with written evidence that no guarantor or relative lives there. Here a relative will live there, so the flag goes to the BSA officer, who alone clears it (CORE-BP-02, CORE-KYC-07; D-CORE-24). It reaches the BSA officer the same business day (CORE-KYC-05). Contrast: the guarantor's old address, now leased to an unrelated tenant, with the lease and proof of a new home. A credit officer may clear that one. Ohio's license carve-out may fall away (SLT-OH-01).
 
 ### T2. Usury (Objective 2, 10 minutes)
 
-Usury is a state cap on interest. Most states exempt business loans in one of three ways: by borrower type, by loan size or by lender licence. Check the exemption first; it usually ends the test.
+Usury is a state cap on interest. Most states exempt business loans in one of three ways: by borrower type, by loan size or by lender license. Check the exemption first; it usually ends the test.
 
 To screen the price, use a simple all-in annual cost. It spreads the points over the term. It is a screen, not an APR, and it never replaces counsel's reading of the cap.
 
@@ -106,7 +106,7 @@ Usury sets the ceiling on the note rate. Three other terms have their own state 
 
 **Late fees.** CORE-SVC-04 sets 5% of the late installment, after 10 days, charged once. It is never charged on the full balance. A lower state cap wins:
 
-- North Carolina caps late fees at 4% of the late payment, after 15 days, for loans under G.S. 24-1.1. It appears not to bind G.S. 24-9 exempt loans, whose parties may agree charges in any amount [VERIFY] (SLT-NC-01).
+- North Carolina caps late fees at 4% of the late payment, after 15 days, for loans under G.S. 24-1.1. It appears not to bind G.S. 24-9 exempt loans, whose parties may agree charges in any amount [VERIFY: N.C. Gen. Stat. 24-9, 24-10.1, via codes.findlaw.com; checked 22 Nov 2026] (SLT-NC-01).
 - California caps them on owner-occupied single-family homes only (SLT-CA-01).
 
 **Prepayment.** RES-FF-12 bridges have none. DSCR and term loans carry a 5/4/3/2/1 step-down "where allowed" (RES-DSCR-11, MF-TRM-06).
@@ -127,7 +127,7 @@ Ohio check: the loan is usury-exempt, so 15.25% is allowed (SLT-OH-01). No Ohio 
 3. Substitution: $338,000 × 5%.
 4. Result: $16,900.00.
 
-Ohio check: ORC 1343.011 limits prepayment on residential loans on 2 or fewer units to 1% in the first 5 years. That would be $338,000 × 1% = $3,380.00. The statute defines a residential mortgage by unit count, not purpose or occupancy (1343.011(A)(2)). So it appears to cover this loan [VERIFY] (SLT-OH-01). Cap the premium at $3,380.00, or offer the no-penalty option (RES-DSCR-11, +0.75%).
+Ohio check: ORC 1343.011 limits prepayment on residential loans on 2 or fewer units to 1% in the first 5 years. That would be $338,000 × 1% = $3,380.00. The statute defines a residential mortgage by unit count, not purpose or occupancy (1343.011(A)(2)). So it appears to cover this loan [VERIFY: ORC 1343.011(A)(2), (C)(1), via codes.findlaw.com; checked 22 Nov 2026] (SLT-OH-01). Cap the premium at $3,380.00, or offer the no-penalty option (RES-DSCR-11, +0.75%).
 
 ### T4. Foreclosure method and timeline (Objective 4, 12 minutes)
 
@@ -140,7 +140,7 @@ There are two methods. Judicial foreclosure runs through a court. Non-judicial f
 | North Carolina | Power of sale before the clerk | Typically 60 to 90 days (secondary) | Allowed; barred on seller purchase-money notes | 10-day upset bids can reopen the sale; the borrower may prove fair value (G.S. 45-21.36) | SLT-NC-01, -02 |
 | California | Mostly non-judicial trustee's sale | Notice of sale at least 90 days after the notice of default; sale at least 20 days after that | None against the borrower after a trustee's sale (CCP 580d) | One-action rule (CCP 726); a guarantor is liable only with Civ. Code 2856 waivers (CORE-DOC-05) | SLT-CA-01, -02 |
 
-[VERIFY: State Law Table, foreclosure and deficiency columns; checked 20 Nov 2026]
+[VERIFY: ORC 2329.08; N.C. Gen. Stat. 45-21.27, 45-21.36; IC 32-29-7-3, -5; Cal. Code Civ. Proc. 580d, 726; Civ. Code 2856; via codes.findlaw.com; checked 22 Nov 2026. Timelines, ORC 2329.20 and the NC purchase-money bar still rest on the State Law Table, checked 20 Nov 2026]
 
 Time is money. Every day in foreclosure adds lost interest, taxes and insurance. Count them as costs in F-CORE-23.
 
@@ -188,13 +188,13 @@ CORE-DOC-04 requires this check before the term sheet. A non-recourse loan (CORE
 | Recourse | Full guarantee from Dana Whitlow and Leo Marsh, burning off at stabilization (COM-BR-07; CORE-BOR-03). Dana Whitlow's $5,200,000 net worth alone covers $680,000. Confirm the guarantee has not burned off |
 | Decision | Recourse has real value. CORE-DOC-04 met |
 
-> **What-if: Birchwood in California, sold by trustee's sale.** No deficiency against the borrower (CCP 580d). The guaranty from Dana Whitlow and Leo Marsh still pays if it carries Civ. Code 2856 waivers. CCP 580d(b) says the borrower's protection does not affect guarantor liability (CORE-DOC-05) [VERIFY: SLT-CA-01; checked 20 Nov 2026]. Without the waivers, foreclose judicially to keep a deficiency, at the cost of time.
+> **What-if: Birchwood in California, sold by trustee's sale.** No deficiency against the borrower (CCP 580d). The guaranty from Dana Whitlow and Leo Marsh still pays if it carries Civ. Code 2856 waivers. CCP 580d(b) says the borrower's protection does not affect guarantor liability (CORE-DOC-05) [VERIFY: Cal. Code Civ. Proc. 580d(a)-(b); Civ. Code 2856, via codes.findlaw.com; checked 22 Nov 2026]. Without the waivers, foreclose judicially to keep a deficiency, at the cost of time.
 
 ## 5. Practice (25 minutes)
 
 Use RD-MF-01 Cedar Court, North Carolina. Facts: commitment $5,140,000; $4,340,000 funded at closing; borrower an LLC; 1-month Term SOFR + 4.00% = 7.65%; origination 1.00%; 24-month term. Non-recourse with carve-outs (CORE-DOC-02). Do all five before opening the key.
 
-1. Does the lender need a North Carolina licence? Cite the SLT row.
+1. Does the lender need a North Carolina license? Cite the SLT row.
 2. Work F-CORE-40 and run the usury test.
 3. Month 1 what-if: the first payment is 30 days late. Capex draws start in month 2 (RD-MF-01), so the balance is $4,340,000. Work default interest with F-CORE-31. What does a 4% late fee come to, and does the cap bind?
 4. Work 90 days of lost interest during a North Carolina foreclosure (F-CORE-05).
@@ -202,9 +202,9 @@ Use RD-MF-01 Cedar Court, North Carolina. Facts: commitment $5,140,000; $4,340,0
 
 **Answer key.**
 
-1. No licence found. NC licences cover consumer-purpose residential loans only (SLT-NC-02) [VERIFY: no other NC commercial licence]. CORE-BP-03 met.
+1. No license found. NC licenses cover consumer-purpose residential loans only (SLT-NC-02) [VERIFY: no other NC commercial license]. CORE-BP-03 met.
 2. AIC = 7.65% + 1.00% ÷ 2.0 = 8.15%. Exempt anyway (G.S. 24-9). A loan is exempt if it is $300,000 or more, or if the borrower is not a natural person. Cedar Court meets both tests. Any agreed rate and fees.
-3. $4,340,000 × 12.65% ÷ 360 × 30 = $45,750.83, which is $18,083.33 over normal interest of $27,667.50. A 4% late fee on the $27,667.50 payment is $1,106.70. The cap covers loans governed by 24-1.1. This is a 24-9 exempt loan, where the parties may agree any charges [VERIFY]. So the CORE-SVC-04 fee applies: $27,667.50 × 5% = $1,383.38. That is $276.68 more than the 4% figure.
+3. $4,340,000 × 12.65% ÷ 360 × 30 = $45,750.83, which is $18,083.33 over normal interest of $27,667.50. A 4% late fee on the $27,667.50 payment is $1,106.70. The cap covers loans governed by 24-1.1. This is a 24-9 exempt loan, where the parties may agree charges in any amount [VERIFY: N.C. Gen. Stat. 24-9, 24-10.1, via codes.findlaw.com; checked 22 Nov 2026]. So the CORE-SVC-04 fee applies: $27,667.50 × 5% = $1,383.38. That is $276.68 more than the 4% figure.
 4. $4,340,000 × 7.65% ÷ 360 × 90 = $83,002.50.
 5. Not for an ordinary shortfall. The loan is non-recourse, so the guarantors pay only if a carve-out is triggered (CORE-DOC-02). If one is, NC allows a deficiency, subject to the fair-value defense (SLT-NC-02).
 
@@ -217,7 +217,7 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 ### Set A
 
 1. (O1) A borrower's daughter will live in a 2-unit Ohio rental the LLC is buying. What is your first action? (C)
-2. (O1) Which of the four states requires a lender licence for a business-purpose loan?
+2. (O1) Which of the four states requires a lender license for a business-purpose loan?
 3. (O1) A Texas deal arrives. There is no SLT row. What happens? (C)
 4. (O2) Work F-CORE-40: 11.00%, 2.00 points, 12 months.
 5. (O2) Is a $90,000 Ohio loan to an LLC for a rental usury-exempt?
@@ -229,7 +229,7 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 
 **Answer key, Set A**
 
-1. Stop the file. A credit officer clears it (CORE-BP-02), and the BSA officer gets it the same business day (CORE-KYC-05, -07). The Ohio licence carve-out may fall away (SLT-OH-01).
+1. Stop the file. A credit officer cannot clear it, because a relative will live there. It goes to the BSA officer the same business day, who alone clears it (CORE-BP-02; CORE-KYC-05, -07; D-CORE-24). The Ohio license carve-out may fall away (SLT-OH-01).
 2. California, unless a licensed real estate broker makes or arranges it (SLT-CA-01).
 3. No term sheet until a row is added (CORE-BP-03).
 4. 11.00% + 2.00% ÷ 1.0 = 13.00%.
@@ -242,9 +242,9 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 
 ### Set B
 
-1. (O1) Which single fact usually decides whether a residential mortgage licence applies?
-2. (O1) An Indiana broker arranges a business-purpose 1-4 unit loan. Is a licence needed? (C)
-3. (O1) Name the rule that requires the state licence check before the term sheet.
+1. (O1) Which single fact usually decides whether a residential mortgage license applies?
+2. (O1) An Indiana broker arranges a business-purpose 1-4 unit loan. Is a license needed? (C)
+3. (O1) Name the rule that requires the state license check before the term sheet.
 4. (O2) Work F-CORE-40: 12.00%, 2.00 points, 6 months.
 5. (O2) A North Carolina loan of $250,000 goes to an LLC. Is it a G.S. 24-9 exempt loan? (C)
 6. (O3) A DSCR loan has $400,000 prepaid in year 2 under RES-DSCR-11. What is the premium?
@@ -256,7 +256,7 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 **Answer key, Set B**
 
 1. Consumer purpose: personal, family or household use.
-2. Possibly. The Act turns on collateral, not purpose, so ask counsel (SLT-IN-01) [VERIFY].
+2. Probably not. The Act's "residential mortgage loan" must be primarily for personal, family or household use (IC 23-2.5-1-34). SLT-IN-01 reads it more broadly, so confirm with counsel [VERIFY: IC 23-2.5-1-34, via codes.findlaw.com; checked 22 Nov 2026].
 3. CORE-BP-03.
 4. 12.00% + 2.00% ÷ 0.5 = 16.00%.
 5. Yes. The borrower is not a natural person, which is enough on its own (G.S. 24-9).
@@ -286,9 +286,9 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 | Criterion | Pass |
 | --- | --- |
 | Coverage | Every column filled or "Not found" |
-| Sources | A primary source for licence, usury and foreclosure |
+| Sources | A primary source for license, usury and foreclosure |
 | Honesty | No gap filled from memory; secondary sources labelled |
-| Application | The deal line names the licence, usury and deficiency outcome |
+| Application | The deal line names the license, usury and deficiency outcome |
 
 **Sign-off.** Self-review against this rubric, dated (solo mode, Bible Section 7).
 
@@ -298,13 +298,13 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 
 1. **Find the SLT row** for the property state. No row → stop (CORE-BP-03).
 2. **Purpose and occupancy.** Business purpose certified; no guarantor or relative in occupancy (CORE-BP-01, -02).
-3. **Licence.** Lender and broker licences held, or an exemption met (SLT licence columns).
+3. **License.** Lender and broker licenses held, or an exemption met (SLT license columns).
 4. **Usury.** Exemption first. If none, compare F-CORE-40 with the cap (CORE-PRC-03).
 5. **Default, late fee, prepayment.** Default = note + 5.00% within the cap (CORE-SVC-03). Late fee 5% of the installment after 10 days, or the state cap if lower (CORE-SVC-04). Check the prepayment column.
 6. **Foreclosure time.** Add lost interest and carry for the state's timeline to F-CORE-23.
 7. **Deficiency.** Can we collect a shortfall? Match the guaranty to the answer (CORE-DOC-04).
 
-**Mini-example.** Maple Run, Ohio: business purpose, no licence, usury-exempt twice, AIC 11.75%. A 24-month judicial foreclosure turns a gain into a 15.9% loss.
+**Mini-example.** Maple Run, Ohio: business purpose, no license, usury-exempt twice, AIC 11.75%. A 24-month judicial foreclosure turns a gain into a 15.9% loss.
 
 **F-CORE-40:** AIC = rate + (points + fees) ÷ term in years.
 
@@ -327,12 +327,12 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 | Formulas worked in four lines with real numbers | Met; all numbers computed in code |
 | Deal numbers match the running deals file | Met. Maple Run: $340,000, 10.25%, 1.50 points, $315,000 what-if balance, $338,000 DSCR loan, $680 taxes and insurance. Cedar: $5,140,000 / $4,340,000, 7.65%, 1.00%. Birchwood: library test figures. Hook and WE4 sale facts are labelled C10 what-ifs |
 | Two quiz sets, at least one item per objective, critical items flagged | Met: 10 items each, 3 critical in each set |
-| No open tags | Not met: [VERIFY] on all state law; the Indiana broker question. Stays v0 |
+| No open tags | Partly met. Statutes reopened and tagged on 22 Nov 2026. Open: SLT-IN-01 conflicts with IC 23-2.5-1-34, and the NC license point is unchecked |
 | Sentences under 25 words | Met outside table cells |
 
 **Self-check.**
 
-1. A loan funds a 3-unit Ohio rental with no owner or family occupant. Is a residential lender licence needed? **Answer:** No. OAC 1301:8-7-02(G) puts it outside ORC 1322, so CORE-BP-03 is met (SLT-OH-01).
+1. A loan funds a 3-unit Ohio rental with no owner or family occupant. Is a residential lender license needed? **Answer:** No. OAC 1301:8-7-02(G) puts it outside ORC 1322, so CORE-BP-03 is met (SLT-OH-01).
 2. Work F-CORE-40 for 9.50%, 1.00 point and 24 months. **Answer:** 9.50% + 1.00% ÷ 2.0 = 10.00%.
 3. A $4,000 installment on an Indiana commercial loan is 12 days late. What late fee applies? **Answer:** $4,000 × 5% = $200.00, charged once (CORE-SVC-04). No Indiana cap was found (SLT-IN-02).
 4. A $1,000,000 loan at 8.00% spends 90 days in foreclosure. What is the lost interest? **Answer:** $1,000,000 × 8.00% ÷ 360 × 90 = $20,000.00 (F-CORE-05).
@@ -340,8 +340,8 @@ Pass mark 80%. Items marked (C) are critical: a wrong answer fails the quiz what
 
 **What to look up yourself.**
 
-1. Indiana: does a broker of business-purpose 1-4 unit loans need a Loan Broker Act licence? The Act covers anyone paid to procure a "residential mortgage loan" (IC 23-2.5-1-14). A search on 22 Nov 2026 found no business-purpose exclusion, unlike the lender law (IC 24-4.4-1-202). Ask the Indiana Secretary of State's securities division or counsel [VERIFY: SLT-IN-01; checked 20 Nov 2026].
-2. North Carolina: does the 4% late-fee cap (G.S. 24-10.1) bind a G.S. 24-9 exempt loan? The State Law Table reads it as not binding. Counsel to confirm [VERIFY: SLT-NC-01].
+1. Indiana: SLT-IN-01 says the Loan Broker Act reaches business-purpose 1-4 unit loans. The Act covers anyone paid to procure a "residential mortgage loan" (IC 23-2.5-1-14). Section 34 defines that as a loan primarily for personal, family or household use, secured by a dwelling or residential real estate. Ask the course owner to correct SLT-IN-01. Confirm with the Indiana Secretary of State's securities division or counsel [VERIFY: IC 23-2.5-1-14, -34, via codes.findlaw.com, current to 1 Jan 2026; checked 22 Nov 2026].
+2. North Carolina: does the 4% late-fee cap (G.S. 24-10.1) bind a G.S. 24-9 exempt loan? The State Law Table reads it as not binding. Counsel to confirm [VERIFY: N.C. Gen. Stat. 24-9, 24-10.1, via codes.findlaw.com; checked 22 Nov 2026].
 3. Ohio, Indiana and North Carolina commercial loans: no statute on late fees or default interest was found. The common-law penalty rule governs, so ask counsel how local courts test a 5% fee (SLT-OH-02, SLT-IN-02, SLT-NC-02).
 
 **How to check it.** Re-run WE4: $340,000 × 10.25% ÷ 360 × 720 = $69,700.00. Add $16,320.00 and $28,000.00 to get $114,020.00. Then ($340,000 + $114,020 − $400,000) ÷ $340,000 = 15.9%.

@@ -60,6 +60,7 @@
 | F-CORE-41 | Net funding wire | SUGGESTED | CORE-CLS-03, -04 |
 | F-CORE-42 | REO carrying value and charge-off | SUGGESTED | CORE-DEF-06 |
 | F-CORE-43 | Bucket headroom | SUGGESTED | CORE-CONC-02 to -07 |
+| F-CORE-44 | Cash-on-cash return | SUGGESTED | No policy limit; C5 |
 
 ### F-CORE-01: Interest-only payment (Actual/360)
 
@@ -1590,7 +1591,48 @@ H = \frac{c \cdot T - B}{1 - c}
 | 2 | 25%; $120,000,000; $26,000,000 | $5,333,333.33 |
 | 3 | 15%; $120,000,000; $17,500,000 | $588,235.29 |
 
-**Core library complete: 30 REQUIRED and 11 SUGGESTED formulas, 123 test cases.**
+### F-CORE-44: Cash-on-cash return (SUGGESTED)
+
+**Purpose.** The owner's annual pre-tax cash return on the cash put into the deal.
+
+**Formula.** Cash-on-cash = (NOI − annual debt service) ÷ total cash invested
+
+```latex
+CoC = \frac{NOI - ADS}{E}
+```
+
+**Variables and units.** NOI (USD per year) from F-CORE-10; ADS (USD per year) from F-CORE-03; E = total cash invested by the owner (USD); C5 takes E = value − loan
+
+**Worked example.**
+
+1. Birchwood term loan (C5 worked example 5): NOI $480,000; value $6,000,000; loan $3,900,000; ADS $330,772.68.
+2. Cash flow after debt service = $480,000 − $330,772.68 = $149,227.32.
+3. Cash invested = $6,000,000 − $3,900,000 = $2,100,000.
+4. Cash-on-cash = $149,227.32 ÷ $2,100,000 = 0.071061 = 7.11%.
+
+**Interpretation.** A borrower's measure, not a credit test; the policy sets no minimum. Below the cap rate (F-CORE-13) means negative leverage: the loan constant (F-CORE-04) is above the cap rate.
+
+**Related rules.** No policy limit. F-CORE-03, F-CORE-04, F-CORE-10, F-CORE-13
+
+**Common mistakes.**
+
+- Leaving debt service out of the numerator; that gives the unlevered cap rate.
+- Dividing by the value or the price instead of the cash invested.
+- Using one month's payment instead of annual debt service.
+
+**Edge cases.** Cash flow below debt service → a negative return, shown with a minus sign. Cash invested zero or negative → undefined; do not report it.
+
+**Rounding and day count.** Full precision; display two decimals.
+
+**Modules.** C5
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | NOI $480,000; ADS $330,772.68; cash $2,100,000 | 7.11% |
+| 2 | NOI $480,000; ADS $330,772.68; cash $1,918,181.82 (value at 8.25% cap) | 7.78% |
+| 3 | NOI $300,000 (in place); ADS $330,772.68; cash $2,100,000 | −1.47% |
+
+**Core library complete: 30 REQUIRED and 12 SUGGESTED formulas, 126 test cases.**
 
 ## Residential formulas (F-RES)
 
@@ -3077,7 +3119,7 @@ L_{total} = \min(0.75\,C,\ 0.70\,V_{stab},\ 0.70\,\min(P, V_{asis}) + Capex)
 
 **Edge cases.** Refinance (no purchase) → use the as-is appraisal (value definition: 12 CFR 365 App. A). Capex 0 → a stabilized bridge (MF-SB). Capex over 50% of price → ineligible (MF-BR-01).
 
-**Rounding and day count.** Full precision; round the final commitment down to the nearest $10,000 if the term sheet needs a round figure.
+**Rounding and day count.** Full precision; round the final commitment down to the nearest $1,000 (CORE-PRC-05).
 
 **Modules.** M4
 
@@ -3922,7 +3964,7 @@ L_{sf} = \frac{L}{sf}
 | --- | --- | --- |
 | 1 | $5,000,000; 50,000 sf | $100.00 |
 | 2 | $3,900,000; 40,000 sf | $97.50 |
-| 3 | $5,960,000; 60,000 sf | $99.33 |
+| 3 | $5,969,000; 60,000 sf | $99.48 |
 
 ### F-COM-07: Occupancy cost ratio
 
@@ -3965,7 +4007,7 @@ OCR = \frac{Rent + Charges}{Sales}
 
 **Purpose.** Largest commercial loan that passes LTV, DSCR and debt yield.
 
-**Formula.** Loan = min(LTV\_max × value, NCF ÷ DSCR\_min ÷ constant, NCF ÷ DY\_min), rounded down to $10,000
+**Formula.** Loan = min(LTV\_max × value, NCF ÷ DSCR\_min ÷ constant, NCF ÷ DY\_min), rounded down to $1,000 (CORE-PRC-05)
 
 ```latex
 L = \min\left(LTV_{max} V,\ \frac{NCF}{DSCR_{min} K},\ \frac{NCF}{DY_{min}}\right)
@@ -3992,14 +4034,14 @@ L = \min\left(LTV_{max} V,\ \frac{NCF}{DSCR_{min} K},\ \frac{NCF}{DY_{min}}\righ
 
 **Edge cases.** NCF zero or negative → no loan. NNN Tier 1 has no debt-yield test. The 7.000% example assumes a 4.00% Treasury (RD-COM-01); at 5.13% the floor is 8.130%.
 
-**Rounding and day count.** Constant at full precision; payment to the cent; loan rounded down to $10,000.
+**Rounding and day count.** Constant at full precision; payment to the cent; loan rounded down to $1,000 (CORE-PRC-05).
 
 **Modules.** CM4
 
 | Test | Inputs | Expected |
 | --- | --- | --- |
 | 1 | V $6.0M; NCF $434,000; 65% / 1.30x / 9.0%; 7.000% | $3,900,000.00 (LTV binds) |
-| 2 | NNN Tier 1: V $4.0M; NOI $240,000; 70% / 1.20x; 6.500% | $2,460,000.00 (DSCR binds; $2,468,378.24 before rounding) |
+| 2 | NNN Tier 1: V $4.0M; NOI $240,000; 70% / 1.20x; 6.500% | $2,468,000.00 (DSCR binds; $2,468,378.24 before rounding) |
 | 3 | Office: V $10.0M; NCF $800,000; 60% / 1.40x / 10.0%; 8.130% | $6,000,000.00 (LTV binds; DSCR leg $6,101,503.27) |
 
 ### F-COM-09: Rollover-stressed NCF
@@ -4057,8 +4099,8 @@ DSCR_{exit} = \frac{NCF_{stab}}{12 \cdot PMT(L, 7.75\%, 300)}
 
 1. Industrial flex bridge: $4,000,000 requested; stabilized NCF $430,000; K = $319,050.84 ÷ $3,520,000 (shown 0.090639).
 2. ADS = $362,557.80. Exit DSCR = $430,000 ÷ $362,557.80 = 1.19x: fails 1.25x.
-3. Max loan = $430,000 ÷ 1.25 ÷ K = $3,795,257.21, rounded down to $3,790,000.00.
-4. Debt yield: $430,000 ÷ $3,790,000.00 = 11.35%: passes 9.0%.
+3. Max loan = $430,000 ÷ 1.25 ÷ K = $3,795,257.21, rounded down to $3,795,000.00.
+4. Debt yield: $430,000 ÷ $3,795,000.00 = 11.33%: passes 9.0%.
 
 **Interpretation.** The bridge is sized to its exit, not to today's income.
 
@@ -4071,15 +4113,15 @@ DSCR_{exit} = \frac{NCF_{stab}}{12 \cdot PMT(L, 7.75\%, 300)}
 
 **Edge cases.** The take-out rate resets when the 10-year Treasury moves 25 bp \[VERIFY: Treasury yield and date\].
 
-**Rounding and day count.** Payment to the cent; max loan rounded down to $10,000.
+**Rounding and day count.** Payment to the cent; max loan rounded down to $1,000 (CORE-PRC-05).
 
 **Modules.** CM4
 
 | Test | Inputs | Expected |
 | --- | --- | --- |
-| 1 | $4,000,000; NCF $430,000; 1.25x | 1.19x: fails; max $3,790,000.00 |
-| 2 | $3,790,000; NCF $430,000; 1.25x | 1.25x: passes |
-| 3 | $5,960,000; NCF $720,000; 1.25x | 1.33x: passes |
+| 1 | $4,000,000; NCF $430,000; 1.25x | 1.19x: fails; max $3,795,000.00 |
+| 2 | $3,795,000; NCF $430,000; 1.25x | 1.25x: passes |
+| 3 | $5,969,000; NCF $720,000; 1.25x | 1.33x: passes |
 
 ### F-COM-11: Small-balance commercial DSCR
 
@@ -4149,7 +4191,7 @@ L_{max} = \min(0.60\,V,\ 0.80\,V_{dark})
 
 **Edge cases.** Special-use building with no other user → dark value near 0: decline.
 
-**Rounding and day count.** Round to the cent; loan rounded down to $10,000.
+**Rounding and day count.** Round to the cent; loan rounded down to $1,000 (CORE-PRC-05).
 
 **Modules.** CM5
 
@@ -4214,7 +4256,7 @@ L = \min\left(\frac{LTC \cdot C_{base}}{1 - LTC \cdot r \cdot \frac{m}{12} \cdot
 1. Ridgeline Flex: base cost $8,700,000; 9.00%; 18 months.
 2. Reserve factor: 9.00% × 18 ÷ 12 × 60% = 8.10% of the loan.
 3. LTC loan: 65% × $8,700,000 ÷ (1 − 65% × 8.10%) = $5,655,000 ÷ 0.94735 = $5,969,282.74. Reserve $483,511.90.
-4. LTV: 65% × $9,800,000 = $6,370,000.00. LTC binds: $5,960,000.00 rounded down.
+4. LTV: 65% × $9,800,000 = $6,370,000.00. LTC binds: $5,969,000.00 rounded down.
 
 **Interpretation.** Putting the reserve inside cost stops the loan from funding its own interest above the LTC limit.
 
@@ -4227,13 +4269,13 @@ L = \min\left(\frac{LTC \cdot C_{base}}{1 - LTC \cdot r \cdot \frac{m}{12} \cdot
 
 **Edge cases.** Front-loaded draws (land funded at closing) → use the higher of 60% and the schedule's average (decided 19 Nov 2026). Then run the exit test (F-COM-10).
 
-**Rounding and day count.** Full precision; loan rounded down to $10,000.
+**Rounding and day count.** Full precision; loan rounded down to $1,000 (CORE-PRC-05).
 
 **Modules.** CM4, CM6
 
 | Test | Inputs | Expected |
 | --- | --- | --- |
-| 1 | Base $8.7M; 9.00%; 18 months; as-complete $9.8M | $5,960,000.00 (LTC binds) |
+| 1 | Base $8.7M; 9.00%; 18 months; as-complete $9.8M | $5,969,000.00 (LTC binds) |
 | 2 | Base $5.0M; 8.50%; 15 months; as-complete $7.0M | $3,390,000.00 (LTC binds; $3,390,493.58 before rounding) |
 | 3 | Base $8.7M; 9.00%; 18 months; as-complete $8.8M | $5,720,000.00 (LTV binds) |
 

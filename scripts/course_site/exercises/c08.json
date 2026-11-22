@@ -1,0 +1,66 @@
+{
+  "module": "c08",
+  "exercises": [
+    {
+      "id": "c08-1",
+      "type": "buildup",
+      "title": "Which test binds on Birchwood?",
+      "intro": "Run every sizing test, keep each at full precision, then take the lowest and round down to the nearest $1,000 (F-CORE-19, CORE-PRC-05).",
+      "sources": ["F-CORE-04", "F-CORE-14", "F-CORE-15", "F-CORE-17", "F-CORE-18", "F-CORE-19", "F-COM-08", "CORE-PRC-05", "RD-COM-01"],
+      "deal": "RD-COM-01",
+      "buildup": {
+        "context": "Birchwood Plaza, RD-COM-01. At closing, the bridge commitment is $3,520,000 on a total cost of $5,180,000; the COM-BR LTC limit is 70%. At month 24, the term loan (F-COM-08) uses an as-stabilized value of $6,000,000 and NCF of $434,000. Its limits are 65% LTV, 1.30x DSCR and 9.0% debt yield. Annual debt service on $3,900,000 at 7.00% over 25 years is $330,772.68 (C3).",
+        "lines": [
+          { "label": "Bridge LTC cap: 70% × total cost (F-CORE-15). Does the $3,520,000 commitment pass?", "hint": "70% × $5,180,000. The commitment is below it, so LTC passes.", "expected": 3626000, "format": "money", "tolerance": 0.005 },
+          { "label": "Term loan by LTV: 65% × as-stabilized value (F-CORE-14)", "hint": "65% × $6,000,000.", "expected": 3900000, "format": "money", "tolerance": 0.005 },
+          { "label": "Loan constant K = ADS ÷ loan, to six decimals (F-CORE-04)", "hint": "$330,772.68 ÷ $3,900,000. Keep the full value for the next line.", "expected": 0.0848135076923077, "format": "fixed6", "tolerance": 0.0000005 },
+          { "label": "Term loan by DSCR: NCF ÷ 1.30 ÷ K, using the unrounded K (F-CORE-17)", "hint": "$434,000 ÷ 1.30 ÷ ($330,772.68 ÷ $3,900,000). A rounded K moves the cents.", "expected": 3936238.0230434993, "format": "money", "tolerance": 0.005 },
+          { "label": "Term loan by debt yield: NCF ÷ 9.0% (F-CORE-18)", "hint": "$434,000 ÷ 0.09.", "expected": 4822222.222222222, "format": "money", "tolerance": 0.005 },
+          { "label": "Final term loan: the lowest test, rounded down to the nearest $1,000 (F-CORE-19)", "hint": "The lowest of the three is the LTV test, already a $1,000 multiple. LTV binds.", "expected": 3900000, "format": "money", "tolerance": 0.005 }
+        ]
+      }
+    },
+    {
+      "id": "c08-2",
+      "type": "calculator",
+      "title": "Build the note rate",
+      "intro": "The RTL note rate is the tier base rate plus every adjuster that applies, kept within 8.50%-12.75% (F-CORE-28, CORE-PRC-02).",
+      "sources": ["F-CORE-28", "CORE-PRC-02", "F-CORE-06", "RD-RES-01"],
+      "deal": "RD-RES-01",
+      "calculator": {
+        "function": "noteRate",
+        "argStyle": "object",
+        "args": [
+          { "name": "tier", "label": "Experience tier", "kind": "tier", "value": 2 },
+          { "name": "fico", "label": "Qualifying mid-score", "kind": "count", "value": 712 },
+          { "name": "nearMaxLeverage", "label": "Leverage within 2.5 points of the product maximum", "kind": "bool", "value": true },
+          { "name": "groundUp", "label": "Ground-up construction", "kind": "bool", "value": false }
+        ],
+        "output": { "label": "Note rate", "format": "pct2" },
+        "task": "Price Maple Run. Dana Reyes is Tier 2 with a 712 mid-score. LTC is 85.0%, at the 85% maximum, and the project is a rehab. What is the note rate? Then try quiz A's flip: Tier 1, mid-score 690, LTC at the maximum.",
+        "answer": "10.25%"
+      }
+    },
+    {
+      "id": "c08-3",
+      "type": "scenario",
+      "title": "Resize Maple Run's refinance",
+      "intro": "Size Maple Run's month-14 refinance into a DSCR rental loan, name the binding test, and set reserves.",
+      "sources": ["F-RES-07", "F-RES-17", "F-CORE-19", "RES-DSCR-01", "RES-DSCR-02", "RES-DSCR-03", "RES-DSCR-08", "RES-DSCR-12", "CORE-PRC-05", "RD-RES-01"],
+      "deal": "RD-RES-01",
+      "scenario": {
+        "case": "Month 14 (RD-RES-01). The appraised value is $520,000. The lease is $3,200 a month; the 1007 market rent is $3,100. Dana Reyes's mid-score is 712, and this is a rate-term refinance. Payoff is $340,000 plus about $7,000 of costs, so she asks for $347,000. Taxes are $520 and insurance $160 a month. The DSCR grid prices 7.75% above 65% LTV and 7.50% at 65% or less (RES-DSCR-12). Monthly P&I constants: 0.0071641225 at 7.75% and 0.0069921451 at 7.50%, both 30-year.",
+        "prompt": "Does $347,000 pass? If not, what is the largest loan, which test binds, and how much cash must Dana bring, including reserves?",
+        "model_answer": "Qualifying rent is the lesser of $3,200 and $3,100: $3,100 (RES-DSCR-01). Max LTV is 70% × $520,000 = $364,000 (RES-DSCR-03), so LTV does not bind. At $347,000 (66.7% LTV, 7.75%), PITIA = $347,000 × 0.0071641225 + $680 = $3,165.95. DSCR = $3,100 ÷ $3,165.95 = 0.98x, below 1.00x (RES-DSCR-02): fails. DSCR binds. Max by DSCR at 7.75% (F-RES-17) = ($3,100 − $680) ÷ 0.0071641225 = $337,794, or 64.96% LTV. At 65% LTV or less the rate falls to 7.50%. So the loan can rise to the 65% band edge: $338,000, a $1,000 multiple (CORE-PRC-05). Check: $338,000 × 0.0069921451 + $680 = $3,043.35; $3,100 ÷ $3,043.35 = 1.02x: passes. Dana brings $347,000 − $338,000 = $9,000 to close. Reserves are 3 × $3,043.35 = $9,130.05, shown as $9,130 (RES-DSCR-08). Her $90,900 liquidity covers both.",
+        "rubric": [
+          "Uses the lesser of lease and market rent: $3,100 (RES-DSCR-01)",
+          "Tests LTV at 70% of $520,000 = $364,000 (RES-DSCR-03)",
+          "Uses PITIA, not P&I alone, and the unrounded constant: $3,165.95 and 0.98x at $347,000",
+          "Names DSCR as the binding test and finds $337,794 at 7.75% (F-RES-17)",
+          "Sees the 7.50% rate at 65% LTV or less and lands on $338,000, checked at 1.02x",
+          "States $9,000 cash to close plus $9,130 of reserves (RES-DSCR-08)"
+        ]
+      }
+    }
+  ]
+}

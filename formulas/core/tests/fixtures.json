@@ -736,5 +736,23 @@
         "expected": "$588,235.29"
       }
     ]
+  },
+  {
+    "id": "F-CORE-44",
+    "name": "Cash-on-cash return (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "NOI $480,000; ADS $330,772.68; cash $2,100,000",
+        "expected": "7.11%"
+      },
+      {
+        "inputs": "NOI $480,000; ADS $330,772.68; cash $1,918,181.82 (value at 8.25% cap)",
+        "expected": "7.78%"
+      },
+      {
+        "inputs": "NOI $300,000 (in place); ADS $330,772.68; cash $2,100,000",
+        "expected": "−1.47%"
+      }
+    ]
   }
 ]

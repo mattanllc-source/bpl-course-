@@ -1,0 +1,156 @@
+{
+  "module": "c09",
+  "exercises": [
+    {
+      "id": "c09-1",
+      "type": "sort",
+      "title": "Title triage",
+      "intro": "Practice data for Maple Run's title commitment, not part of RD-RES-01. Decide each item: accept it, cure it at closing, or hold closing until it is cleared (CORE-CLS-01, -06).",
+      "sources": ["CORE-CLS-01", "CORE-CLS-06", "RD-RES-01"],
+      "deal": "RD-RES-01",
+      "sort": {
+        "buckets": ["Accept", "Cure at closing", "Blocks closing until cleared"],
+        "items": [
+          { "text": "Schedule B-II: 2026 second-half taxes, not yet due", "bucket": "Accept", "why": "A standard exception. The borrower pays the taxes when due (worked example 3)." },
+          { "text": "Schedule B-II: rear-lot 10-foot utility easement; the survey shows no building on it", "bucket": "Accept", "why": "The survey confirms the easement is clear, so it can stay as an exception." },
+          { "text": "Schedule B-II: mechanic's lien by the prior owner's roofer, $6,200", "bucket": "Blocks closing until cleared", "why": "It could prime our lien. It must be released or bonded before closing (CORE-CLS-01)." },
+          { "text": "Schedule B-II: a recorded $12,400 mechanic's lien", "bucket": "Blocks closing until cleared", "why": "Any lien that could prime ours must go before closing (CORE-CLS-01; quiz A4)." },
+          { "text": "Seller's deed of trust, $180,000", "bucket": "Cure at closing", "why": "Move it to Schedule B-I: pay it off from sale proceeds and record a release. It stays ahead of our mortgage until released." },
+          { "text": "Schedule A shows the lender's policy amount as $240,000, the day-one advance", "bucket": "Cure at closing", "why": "The policy must insure the full $340,000 commitment, including the rehab holdback (CORE-CLS-06). Amend Schedule A." },
+          { "text": "The commitment has no ALTA 32-series endorsement, though this is a rehab loan with draws", "bucket": "Cure at closing", "why": "Rehab loans add an ALTA 32-series endorsement, with an ALTA 33 date-down at each draw (CORE-CLS-06; T2)." }
+        ]
+      }
+    },
+    {
+      "id": "c09-2",
+      "type": "calculator",
+      "title": "The coinsurance trap",
+      "intro": "Coinsurance pays (carried ÷ required) × loss − deductible, where required = clause % × replacement cost (F-CORE-37). Insurance-to-value is cover ÷ replacement cost and must be at least 100% (F-CORE-34, CORE-INS-01).",
+      "sources": ["F-CORE-37", "F-CORE-34", "CORE-INS-01", "RD-COM-01"],
+      "deal": "RD-COM-01",
+      "calculator": {
+        "function": "coinsuranceRecovery",
+        "args": [
+          { "name": "limitCarried", "label": "Limit carried", "kind": "money", "value": 4400000 },
+          { "name": "replacementCost", "label": "Replacement cost", "kind": "money", "value": 5200000 },
+          { "name": "coinsurance", "label": "Coinsurance clause", "kind": "rate", "value": 0.9 },
+          { "name": "loss", "label": "Loss", "kind": "money", "value": 500000 },
+          { "name": "deductible", "label": "Deductible", "kind": "money", "value": 25000 }
+        ],
+        "output": { "label": "Insurer pays", "format": "money" },
+        "task": "What-if values for Birchwood (worked example 4). What does the insurer pay? How much is the coinsurance penalty against $475,000? ITV is $4,400,000 ÷ $5,200,000 = 84.6%. Then raise the limit to $5,200,000: what changes?",
+        "answer": "$445,085.47"
+      }
+    },
+    {
+      "id": "c09-3",
+      "type": "decision",
+      "title": "Which guaranties?",
+      "intro": "Recourse depends on family, size and LTV. Future funding adds a completion guaranty, and MF and COM add an environmental indemnity (CORE-DOC-01 to -03).",
+      "sources": ["CORE-DOC-01", "CORE-DOC-02", "CORE-DOC-03", "RES-GEN-07", "MF-BR-12", "COM-BR-07", "F-CORE-14", "RD-RES-01", "RD-MF-01", "RD-COM-01"],
+      "deal": null,
+      "decision": {
+        "nodes": {
+          "start": {
+            "q": "Which family is the loan?",
+            "options": [
+              { "label": "Residential (RTL or DSCR)", "next": "res_ff" },
+              { "label": "Multifamily bridge", "next": "mf_size" },
+              { "label": "Commercial bridge", "next": "com_ltv" }
+            ]
+          },
+          "res_ff": {
+            "q": "Is there future funding, such as a rehab holdback?",
+            "options": [
+              { "label": "Yes", "next": "end_res_cg" },
+              { "label": "No", "next": "end_res" }
+            ]
+          },
+          "mf_size": {
+            "q": "Is the bridge commitment $2,000,000 or more?",
+            "options": [
+              { "label": "Yes, $2,000,000 or more", "next": "mf_big_ff" },
+              { "label": "No, under $2,000,000", "next": "mf_small_ff" }
+            ]
+          },
+          "mf_big_ff": {
+            "q": "Is there future funding, such as capex?",
+            "options": [
+              { "label": "Yes", "next": "end_nr_cg" },
+              { "label": "No", "next": "end_nr" }
+            ]
+          },
+          "mf_small_ff": {
+            "q": "Is there future funding, such as capex?",
+            "options": [
+              { "label": "Yes", "next": "end_full_cg" },
+              { "label": "No", "next": "end_full" }
+            ]
+          },
+          "com_ltv": {
+            "q": "Is the day-one LTV, on the lower of price and appraisal, 60% or below?",
+            "options": [
+              { "label": "Yes, 60% or below", "next": "com_low_ff" },
+              { "label": "No, above 60%", "next": "com_high_ff" }
+            ]
+          },
+          "com_low_ff": {
+            "q": "Is there future funding, such as capex or TI/LC?",
+            "options": [
+              { "label": "Yes", "next": "end_nr_cg" },
+              { "label": "No", "next": "end_nr" }
+            ]
+          },
+          "com_high_ff": {
+            "q": "Is there future funding, such as capex or TI/LC?",
+            "options": [
+              { "label": "Yes", "next": "end_burn_cg" },
+              { "label": "No", "next": "end_burn" }
+            ]
+          },
+          "end_res_cg": {
+            "result": "Full-recourse guaranty, plus a completion guaranty.",
+            "explain": "Every residential loan is full recourse (CORE-DOC-01, RES-GEN-07). Future funding adds a completion guaranty (CORE-DOC-03). No environmental indemnity for residential."
+          },
+          "end_res": {
+            "result": "Full-recourse guaranty.",
+            "explain": "Every residential loan is full recourse, at any size or LTV (CORE-DOC-01, RES-GEN-07)."
+          },
+          "end_full_cg": {
+            "result": "Full-recourse guaranty, completion guaranty and environmental indemnity.",
+            "explain": "A multifamily bridge under $2,000,000 is full recourse (MF-BR-12). Future funding adds a completion guaranty; MF adds an environmental indemnity (CORE-DOC-03)."
+          },
+          "end_full": {
+            "result": "Full-recourse guaranty and environmental indemnity.",
+            "explain": "A multifamily bridge under $2,000,000 is full recourse (MF-BR-12). Every MF loan adds an environmental indemnity (CORE-DOC-03)."
+          },
+          "end_nr_cg": {
+            "result": "Non-recourse carve-out guaranty, completion guaranty and environmental indemnity.",
+            "explain": "This size or LTV qualifies for non-recourse with carve-outs (MF-BR-12 or COM-BR-07; CORE-DOC-02). Future funding adds a completion guaranty, plus the environmental indemnity (CORE-DOC-03)."
+          },
+          "end_nr": {
+            "result": "Non-recourse carve-out guaranty and environmental indemnity.",
+            "explain": "This size or LTV qualifies for non-recourse with carve-outs (MF-BR-12 or COM-BR-07; CORE-DOC-02). MF and COM add an environmental indemnity (CORE-DOC-03)."
+          },
+          "end_burn_cg": {
+            "result": "Full guarantee that burns off at stabilization, completion guaranty and environmental indemnity.",
+            "explain": "Above 60% LTV, a commercial bridge needs a full guarantee that burns off (COM-BR-07). Future funding adds a completion guaranty, plus the environmental indemnity (CORE-DOC-03)."
+          },
+          "end_burn": {
+            "result": "Full guarantee that burns off at stabilization, and environmental indemnity.",
+            "explain": "Above 60% LTV, a commercial bridge needs a full guarantee that burns off (COM-BR-07). COM adds an environmental indemnity (CORE-DOC-03)."
+          }
+        },
+        "cases": [
+          { "text": "Maple Run: $340,000 fix-and-flip with a $100,000 rehab holdback (RD-RES-01)", "expect": "end_res_cg" },
+          { "text": "Cedar Court: $5,140,000 multifamily bridge with $800,000 of capex future funding (RD-MF-01)", "expect": "end_nr_cg" },
+          { "text": "Birchwood Plaza: $2,860,000 day-one advance on a $4,400,000 price and $4,500,000 appraisal, plus $660,000 future funding (RD-COM-01)", "expect": "end_burn_cg" },
+          { "text": "What-if: Birchwood with a $2,640,000 day-one advance, still with $660,000 future funding (worked example 1)", "expect": "end_nr_cg" },
+          { "text": "A $1,800,000 multifamily bridge with no future funding (quiz A2)", "expect": "end_full" },
+          { "text": "A commercial bridge: day-one $3,000,000; price $5,200,000; appraisal $5,000,000; no future funding (quiz A3)", "expect": "end_nr" },
+          { "text": "A commercial bridge: day-one $3,120,000; price $5,000,000; appraisal $5,400,000; no future funding (quiz B3)", "expect": "end_burn" }
+        ]
+      }
+    }
+  ]
+}

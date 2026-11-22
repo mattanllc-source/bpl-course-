@@ -1,0 +1,142 @@
+{
+  "module": "c02",
+  "exercises": [
+    {
+      "id": "c02-1",
+      "type": "sort",
+      "title": "Maple Run's five Cs",
+      "intro": "Each fact about Maple Run answers one of the five Cs. Match each fact to the C it speaks to.",
+      "sources": ["RD-RES-01", "CORE-BOR-15", "CORE-BOR-16", "F-CORE-24", "CORE-DOC-01", "SLT-OH-01"],
+      "deal": "RD-RES-01",
+      "sort": {
+        "buckets": ["Character", "Capacity", "Capital", "Collateral", "Conditions"],
+        "items": [
+          { "text": "Dana Reyes has 6 counted flips in the last 36 months, so she is Tier 2", "bucket": "Character", "why": "Track record answers 'will they repay?' (T1). The 15% deal is excluded under CORE-BOR-15." },
+          { "text": "One $8,000 state tax lien, filed 2019, paid and released 2020", "bucket": "Character", "why": "Credit history and background are Character. The lien is explained and released (C6)." },
+          { "text": "Exit: lease at about $3,100 a month, then a DSCR refinance", "bucket": "Capacity", "why": "There is no income during rehab, so capacity is the exit (T1)." },
+          { "text": "Back-up exit: a sale with a projected flip profit of $57,275", "bucket": "Capacity", "why": "A sale exit is a way to repay, so it is Capacity (T1; RD-RES-01 Role 2)." },
+          { "text": "Cash to close: $300,000 + $9,000 + $5,100 − $240,000 = $74,100", "bucket": "Capital", "why": "Cash in the deal is what the borrower loses if it fails (T1)." },
+          { "text": "Full-recourse guaranty from Dana Reyes and Sam Okafor", "bucket": "Capital", "why": "A guarantor's own assets are a second source of repayment. We count them under Capital, not Capacity (T1; CORE-DOC-01)." },
+          { "text": "As-is appraisal $310,000, and we hold a first lien", "bucket": "Collateral", "why": "Value now and our lien position answer 'what do we recover?' (T1)." },
+          { "text": "After-repair value (ARV) of $520,000", "bucket": "Collateral", "why": "Value after the plan is part of Collateral; LTARV tests it (F-RES-02)." },
+          { "text": "The Columbus rental market and Ohio law (SLT-OH-01)", "bucket": "Conditions", "why": "Market and rules around the deal are Conditions (T1; C10)." },
+          { "text": "A 12-month term with two 3-month extensions", "bucket": "Conditions", "why": "The loan's own terms are part of Conditions (T1)." }
+        ]
+      }
+    },
+    {
+      "id": "c02-2",
+      "type": "order",
+      "title": "The loan life cycle",
+      "intro": "Put the eight life-cycle stages in order. Each one carries the rules that govern it.",
+      "sources": ["CORE-BP-01", "CORE-KYC-01", "CORE-PRC-01", "CORE-VAL-01", "CORE-AUTH-01", "CORE-CLS-06", "CORE-SVC-07", "CORE-DEF-01"],
+      "deal": "RD-RES-01",
+      "order": {
+        "steps": [
+          "Screen: purpose, borrower, property, state and OFAC (CORE-BP-01 to -04; CORE-BOR-01; CORE-KYC-01)",
+          "Term sheet: proposed amount, rate, points, term and conditions, not binding (CORE-PRC-01 to -03)",
+          "Underwrite: cash flow, value, sponsor, KYC and sizing, written up in the credit memo (CORE-VAL-01; CORE-KYC-01 to -07)",
+          "Approve: recommendation and a separate approval with conditions (CORE-AUTH-01 to -04; CORE-EXC)",
+          "Document and close: title for the full commitment, insurance, funding (CORE-DOC; CORE-CLS-06; CORE-INS-01, -04)",
+          "Service: payments, draws, reporting and monthly ratings (CORE-SVC-01 to -07)",
+          "Exit: payoff, extension or refinance, then lien release (CORE-SVC-01, -02)",
+          "Default, if needed: workout, foreclosure, REO (CORE-DEF-01 to -06)"
+        ],
+        "why": "For Maple Run: stages 1 to 4 come before closing on 15 Jan 2027. Draws in months 2, 4, 6 and 8 are servicing. Maturity on 15 Jan 2028 and the month-14 DSCR refinance are the exit. Default comes only if the exit fails (T3)."
+      }
+    },
+    {
+      "id": "c02-3",
+      "type": "decision",
+      "title": "Route it to the right approver",
+      "intro": "Check loan size, sponsor exposure, exceptions and triggers. The highest approver any of them needs makes the decision (CORE-AUTH-01).",
+      "sources": ["CORE-AUTH-01", "CORE-CONC-01", "CORE-EXC-01", "RES-FF-03", "F-CORE-29"],
+      "deal": null,
+      "decision": {
+        "nodes": {
+          "start": {
+            "q": "Is it a related-party or employee loan, a Tier 0 ground-up loan, or a concentration breach (exposure above the sponsor's tier cap, CORE-CONC-01)?",
+            "options": [
+              { "label": "Yes, at least one", "next": "committee" },
+              { "label": "No", "next": "size" }
+            ]
+          },
+          "size": {
+            "q": "Is the commitment above $2,000,000, or sponsor exposure above $5,000,000 (F-CORE-29)?",
+            "options": [
+              { "label": "Yes", "next": "committee" },
+              { "label": "No", "next": "exceptions" }
+            ]
+          },
+          "exceptions": {
+            "q": "How many policy exceptions does the loan need?",
+            "options": [
+              { "label": "None", "next": "senior_box" },
+              { "label": "One", "next": "co_limit" },
+              { "label": "Two", "next": "committee_limit" },
+              { "label": "More than two", "next": "decline" }
+            ]
+          },
+          "senior_box": {
+            "q": "Is it Residential, with a commitment up to $500,000 and sponsor exposure up to $1,000,000?",
+            "options": [
+              { "label": "Yes", "next": "new_state_res" },
+              { "label": "No: Multifamily, Commercial or larger", "next": "new_state" }
+            ]
+          },
+          "co_limit": {
+            "q": "Is the exception within credit officer limits: leverage +2.5 points, DSCR −0.05x, FICO −20 or liquidity −10% of requirement?",
+            "options": [
+              { "label": "Yes", "next": "new_state" },
+              { "label": "No", "next": "committee_limit" }
+            ]
+          },
+          "committee_limit": {
+            "q": "Is each exception within committee limits: leverage +5.0 points, DSCR −0.10x, FICO −40 or liquidity −25% of requirement?",
+            "options": [
+              { "label": "Yes", "next": "committee" },
+              { "label": "No", "next": "decline" }
+            ]
+          },
+          "new_state_res": {
+            "q": "Is this our first loan in a new state?",
+            "options": [
+              { "label": "Yes", "next": "committee" },
+              { "label": "No", "next": "senior" }
+            ]
+          },
+          "new_state": {
+            "q": "Is this our first loan in a new state?",
+            "options": [
+              { "label": "Yes", "next": "committee" },
+              { "label": "No", "next": "credit_officer" }
+            ]
+          },
+          "senior": {
+            "result": "Senior underwriter",
+            "explain": "Residential, up to $500,000 and $1,000,000 of exposure, with no exceptions (CORE-AUTH-01). The approver cannot be the underwriter of record."
+          },
+          "credit_officer": {
+            "result": "Credit officer",
+            "explain": "Up to $2,000,000 and $5,000,000 of exposure, with at most one exception inside credit officer limits (CORE-AUTH-01). Exceptions are approved before closing (CORE-EXC-01)."
+          },
+          "committee": {
+            "result": "Credit committee",
+            "explain": "Committee takes loans above $2,000,000, exposure above $5,000,000, up to two exceptions inside its limits, and any concentration breach or other trigger (CORE-AUTH-01; CORE-CONC-01)."
+          },
+          "decline": {
+            "result": "Decline",
+            "explain": "Beyond committee limits no one has authority, so the loan is declined (CORE-AUTH-01)."
+          }
+        },
+        "cases": [
+          { "text": "Maple Run: $340,000 Residential loan, no exceptions. Harborline has no other loans with us. Dana Reyes is Tier 2 (cap $7,500,000). We already lend in Ohio.", "expect": "senior" },
+          { "text": "Cedar Court: $5,140,000 commitment. Marcus Hale is Tier 1, capped at $3,000,000 of exposure.", "expect": "committee" },
+          { "text": "A $1,800,000 multifamily loan to a Tier 2 sponsor with no other loans with us. No exceptions, in a state where we already lend.", "expect": "credit_officer" },
+          { "text": "A $450,000 Residential loan that needs one LTV exception of 2 points. Exposure is $450,000, in a state where we already lend.", "expect": "credit_officer" },
+          { "text": "Maple Run at 90% LTC ($360,000) for Tier 2, whose LTC cap is 85% (RES-FF-03). That is one leverage exception of 5 points. We already lend in Ohio.", "expect": "committee" }
+        ]
+      }
+    }
+  ]
+}

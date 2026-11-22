@@ -1,0 +1,67 @@
+{
+  "module": "c07",
+  "exercises": [
+    {
+      "id": "c07-1",
+      "type": "sort",
+      "title": "Build Cedar Court's chart",
+      "intro": "The ownership chart names every 20% owner and one control person, down to people (CORE-KYC-02). Multiply percentages through each layer. Sort each party.",
+      "sources": ["CORE-KYC-01", "CORE-KYC-02", "CORE-KYC-07", "CORE-KYC-08", "CORE-BOR-03", "RD-MF-01"],
+      "deal": "RD-MF-01",
+      "sort": {
+        "buckets": ["Control person (and 20% owner)", "20% owner or trust party: chart, ID and screen", "Screen as a source of funds", "Not on the chart"],
+        "items": [
+          { "text": "Marcus Hale: 60% of Cedar Court Partners LLC, managing member", "bucket": "Control person (and 20% owner)", "why": "He owns 60%, so he is charted and screened. As managing member he is also the control person (CORE-KYC-02)." },
+          { "text": "Priya Nand: 40% of Cedar Court Partners LLC", "bucket": "20% owner or trust party: chart, ID and screen", "why": "40% is at least 20%, so she is charted, gives ID and is screened (CORE-KYC-01, -02)." },
+          { "text": "The separate holding LLC whose passive investors supply part of the equity", "bucket": "Screen as a source of funds", "why": "It is a source of funds, not an owner of the borrower. Ask who owns it and screen its 20% owners (CORE-KYC-07; worked example 3)." },
+          { "text": "What-if: person D owns 40% of a holding LLC that owns 50% of the borrower", "bucket": "20% owner or trust party: chart, ID and screen", "why": "40% × 50% = 20%, which meets the 20% test (CORE-KYC-02; self-check 3)." },
+          { "text": "What-if: person E owns 40% of a holding LLC that owns 40% of the borrower", "bucket": "Not on the chart", "why": "40% × 40% = 16%, under 20% (quiz B5). E is not a 20% owner." },
+          { "text": "What-if: trustee T of an irrevocable trust that owns 20% of the borrower", "bucket": "20% owner or trust party: chart, ID and screen", "why": "A trust holding 20% or more puts every trustee on the chart (CORE-KYC-08; quiz A5)." },
+          { "text": "What-if: beneficiary C, sole beneficiary of that same 20% irrevocable trust", "bucket": "20% owner or trust party: chart, ID and screen", "why": "C's look-through share is 100% × 20% = 20%, so C is charted (CORE-KYC-08)." },
+          { "text": "What-if: the grantor of that irrevocable trust, with no look-through share", "bucket": "Not on the chart", "why": "A grantor is charted only for a revocable trust (CORE-KYC-08; quiz A5 key)." }
+        ]
+      }
+    },
+    {
+      "id": "c07-2",
+      "type": "sort",
+      "title": "Spot the red flags",
+      "intro": "CORE-KYC-07 red flags stop the file until the BSA officer clears them. Read each fact and decide whether it stops the loan.",
+      "sources": ["CORE-KYC-01", "CORE-KYC-05", "CORE-KYC-07", "CORE-BP-02", "CORE-EXC-03", "RD-RES-01", "RD-COM-01"],
+      "deal": null,
+      "sort": {
+        "buckets": ["Stop and escalate", "No flag"],
+        "items": [
+          { "text": "Maple Run: the house is vacant and will be leased to an unrelated tenant. Dana Reyes lives at a separate Columbus address she owns", "bucket": "No flag", "why": "No sign the guarantor will live there (CORE-BP-02; worked example 4)." },
+          { "text": "Maple Run: the $74,100 cash to close comes from Dana Reyes's own accounts, proved by two statements", "bucket": "No flag", "why": "The funds are the guarantor's own, shown by statements (CORE-BOR-13). No third-party money." },
+          { "text": "What-if: title shows the Maple Run seller bought the house 7 months ago for $210,000. Our price is $300,000", "bucket": "Stop and escalate", "why": "1 − $210,000 ÷ $300,000 = 30.0%, at least 20% within 12 months (CORE-KYC-07). The BSA officer may clear it on evidence." },
+          { "text": "What-if: title shows the seller bought the subject 8 months ago for $180,000. Our price is $240,000", "bucket": "Stop and escalate", "why": "1 − $180,000 ÷ $240,000 = 25.0%, at least 20% within 12 months (CORE-KYC-07; quiz A7)." },
+          { "text": "What-if: the day before funding, an email from the title company's address gives a new account number", "bucket": "Stop and escalate", "why": "Any change to wire instructions is a flag. Call the number already in our file, then escalate (CORE-KYC-07, -05)." },
+          { "text": "What-if: $400,000 of Birchwood's equity arrives by wire from Lakeshore Capital Partners, not named in the file", "bucket": "Stop and escalate", "why": "Cash to close from an unrelated third party (CORE-KYC-07). Identify and screen the source and its 20% owners." },
+          { "text": "What-if: a guarantor's mail goes to the subject house, and its utilities are in her name", "bucket": "Stop and escalate", "why": "An occupancy sign: she appears to live at the subject (CORE-BP-02; quiz B7)." },
+          { "text": "What-if: Leo Marsh's 25% is held through an LLC that is 60% owned by a person on the SDN List", "bucket": "Stop and escalate", "why": "That LLC is blocked under the 50 Percent Rule [VERIFY: OFAC FAQs 398-401; checked 20 Nov 2026]. It holds an interest in our borrower. Treat it as an unresolved match: stop and escalate (CORE-KYC-01). No exception (CORE-EXC-03)." }
+        ]
+      }
+    },
+    {
+      "id": "c07-3",
+      "type": "order",
+      "title": "SAR timeline: days 0, 30 and 60",
+      "intro": "What-if (RD-RES-01): on Friday 20 Nov 2026, an email asks us to send Maple Run's $240,000 advance to a new account. The sender is unknown. Put the steps in date order.",
+      "sources": ["CORE-KYC-05", "CORE-KYC-07", "RD-RES-01"],
+      "deal": "RD-RES-01",
+      "order": {
+        "steps": [
+          "Day 0, Fri 20 Nov 2026: call the title company on the number in our file. It confirms it sent no such email. This is first detection",
+          "Same business day: report the flag to the BSA officer (CORE-KYC-05)",
+          "The BSA officer decides whether to file. The attempt involved $240,000, over the $5,000 threshold, so a SAR is likely",
+          "Fri 18 Dec 2026: planned filing date, the last business day before the deadline",
+          "Day 30, Sun 20 Dec 2026: normal SAR deadline, 30 calendar days after first detection",
+          "Day 60, Tue 19 Jan 2027: outer limit if no suspect is identified",
+          "For 5 years from filing: keep the SAR and its support"
+        ],
+        "why": "Escalate the same day; only the BSA officer decides on a SAR (CORE-KYC-05). The deadline is 30 calendar days after first detection. With no suspect, up to 30 more days are allowed, never more than 60 in all [VERIFY: 31 CFR 1029.320; checked 20 Nov 2026]. Day 30 is a Sunday, so plan to file by Friday 18 Dec. Records are kept 5 years from filing."
+      }
+    }
+  ]
+}

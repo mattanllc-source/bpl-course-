@@ -12,7 +12,7 @@
 | Rules | MF-GEN-05, MF-GEN-06, COM-GEN-05, COM-GEN-06 (used as examples of how families set the inputs) |
 | Running deals | Worked examples: RD-MF-01 Cedar Court. Practice: RD-COM-01 Birchwood Plaza (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 19 Nov 2026: first draft; all numbers computed in code |
+| Change log | v0, 19 Nov 2026: first draft; all numbers computed in code v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -154,7 +154,7 @@ Work alone, then check the model answer. The case is RD-COM-01 Birchwood Plaza a
 1. GPR (F-CORE-07) = $600,000 + $120,000 = $720,000.00. Vacancy (F-CORE-08) = 5% × $720,000 = $36,000.00. EGI (F-CORE-09) = $684,000.00 (no other income).
 2. Greater of $196,000 and $204,000 = $204,000 (COM-GEN-06). Management 4% of $684,000 = $27,360, above the 3% floor of $20,520.
 3. NOI (F-CORE-10) = $684,000 − $204,000 = $480,000.00.
-4. On NOI: $480,000 ÷ $330,772.68 = 1.45x. On NCF: $434,000 ÷ $330,772.68 = 1.31x. The policy tests NCF (COM-GEN-11, F-COM-08), against a 1.30x minimum for unanchored retail: passes.
+4. On NOI: $480,000 ÷ $330,772.68 = 1.45x. On NCF: $434,000 ÷ $330,772.68 = 1.31x. The policy tests NCF (COM-GEN-11, F-COM-08), against the 1.30x minimum for unanchored retail (COM-TRM-09 unanchored retail: 65% LTV, 1.30x, 9.0%): passes.
 5. Break-even (F-CORE-12) = ($204,000 + $330,772.68) ÷ $720,000 = 74.3%. Cushion against the 93% occupancy Birchwood reaches (RD-COM-01, month 16): 93.0% − 74.3% = 18.7 points. The 5% vacancy in item 1 is an underwriting floor, not observed occupancy.
 
 **Self-score.** One point per correct figure (10 figures). Eight or more: move on. Fewer: redo the matching worked example.
@@ -311,7 +311,7 @@ Reconciliation to the broker's $575,000: the broker uses stabilized NOI after th
 | Quiz: 10-20 items, one per objective, critical flagged, two sets, pass mark | Met (12 items, 3 critical, sets A and B) |
 | OJT: output, source, time, rubric, sign-off, data note | Met |
 | Job aid fits one page | Met on screen; confirm when printed |
-| Accessibility (LD-09) | Tables have headers; no colour-only meaning |
+| Accessibility (LD-09) | Tables have headers; no color-only meaning |
 
 **Self-check.**
 

@@ -10,7 +10,7 @@
 | Rules | CORE-BP-01 to -04; CORE-BOR-01; CORE-KYC-02, -04, -05, -07; CORE-VAL-01; CORE-EXC-03; RES-GEN-09, -11 |
 | Running deals | Worked examples: RD-RES-01 Maple Run. Practice: RD-MF-01 Cedar Court and RD-COM-01 Birchwood Plaza, plus five short cases (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft. New rule CORE-BP-04 (use of proceeds). Regulation sources re-checked 20 Nov 2026 |
+| Change log | v0, 20 Nov 2026: first draft. New rule CORE-BP-04 (use of proceeds). Regulation sources re-checked 20 Nov 2026 v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -59,7 +59,7 @@ The entity rule is not a full shield. State laws, such as Ohio's, look at the pu
 
 ### T2. The Regulation Z test (Objective 2, 20 minutes)
 
-The creditor must decide in each case whether a loan is primarily for an exempt purpose. Rental property has special rules [VERIFY: Reg Z Official Interpretation 3(a)-1, -4, -5; eCFR; checked 20 Nov 2026].
+The creditor must decide in each case whether a loan is primarily for an exempt purpose. Rental property has special rules [VERIFY: Reg Z Official Interpretation 3(a)-1, -4, -5; eCFR API, Supplement I to Part 1026; checked 22 Nov 2026].
 
 **Step 1: Is it rental property that the owner will not occupy?** Credit to acquire, improve or maintain rental property that is not owner-occupied is deemed business purpose (comment 3(a)-4). "Owner-occupied" means the owner expects to live there more than 14 days in the coming year.
 
@@ -80,6 +80,22 @@ Below those counts, the loan is neither automatically business nor consumer. Use
 - the size of the loan; and
 - the stated purpose.
 
+```mermaid
+flowchart TD
+  S{"Rental property?"} -->|"No, e.g. a flip"| F["Step 3: weigh the five factors<br/>3(a)-3"]
+  S -->|Yes| A{"Step 1: owner occupies<br/>more than 14 days?"}
+  A -->|No| B["Deemed business<br/>3(a)-4"]
+  A -->|Yes| C{"Step 2: what is the credit for?"}
+  C -->|Acquire| D{"More than 2 units?"}
+  C -->|"Improve or maintain"| E{"More than 4 units?"}
+  D -->|Yes| G["Deemed business<br/>3(a)-5"]
+  E -->|Yes| G
+  D -->|No| F
+  E -->|No| F
+```
+
+The tree shows the three-step Reg Z test: occupancy first, then unit count, then the factors.
+
 **Note on flips.** A fix-and-flip house is bought to resell, not to rent, so the rental rule in step 1 does not apply. It is judged on the step 3 factors. Our entity-only rule keeps it outside TILA anyway.
 
 **Worked example 1: Maple Run (RD-RES-01).**
@@ -89,10 +105,10 @@ Below those counts, the loan is neither automatically business nor consumer. Use
 | Borrower | Harborline Holdings LLC | Non-natural person: TILA exempt (1026.3(a)) |
 | Purpose | Buy, renovate, lease to an unrelated tenant | Business: rental, not owner-occupied (3(a)-4) |
 | Occupancy | Vacant; Dana Reyes lives at her own Columbus home | No red flag (CORE-BP-02) |
-| State | Ohio business-purpose test met (OAC 1301:8-7-02(G)) | No residential license needed (SLT-OH-01) |
+| State | Ohio business-purpose test met (OAC 1301:8-7-02(G)) [VERIFY: OAC 1301:8-7-02(G), via LII; checked 22 Nov 2026] | No residential license needed (SLT-OH-01) |
 | Decision | Business purpose | Proceed; certificate signed (CORE-BP-01) |
 
-**What-if: Dana's sister will live there for the winter.** That is more than 14 days, so the property is owner-occupied by a relative. CORE-BP-02 stops the file. Under Ohio's rule, family occupancy can bring the loan back under the consumer licensing law (SLT-OH-01).
+**What-if: Dana's sister will live there for the winter.** That is more than 14 days, so the property is owner-occupied by a relative. CORE-BP-02 stops the file. Under Ohio's rule, family occupancy can bring the loan back under the consumer licensing law (SLT-OH-01). Ohio's "immediate family" includes a sister [VERIFY: OAC 1301:8-7-02(G) via LII; R.C. 1322.01(R) via FindLaw; checked 22 Nov 2026].
 
 ### T3. What still applies to a business loan (Objective 3, 15 minutes)
 
@@ -104,14 +120,14 @@ Business purpose does not mean compliance-exempt (Main Section 1).
 | RESPA / Reg X | No: business-purpose loans are exempt, defined as in Reg Z | No Reg X settlement rules | [VERIFY: 12 CFR 1024.5(b)(2); checked 22 Nov 2026] | C1, T3 |
 | ECOA / Reg B | Yes, including business credit | Fair lending; adverse action notices; the spousal signature rule | [VERIFY: 12 CFR 1002.9(a)(3); checked 22 Nov 2026] | C1, T3 |
 | HMDA (Home Mortgage Disclosure Act) / Reg C | Sometimes | A business-purpose loan is reportable only if it is a home purchase, home improvement or refinancing of a dwelling. Bridge and construction loans are excluded as temporary financing. Institution thresholds apply | [VERIFY: 12 CFR 1003.3(c)(3), (10); checked 22 Nov 2026] | C1, T3 and worked example 2 |
-| Section 1071 / Reg B subpart B | Not yet | Compliance starts 1 Jan 2028, only for lenders with 1,000+ covered small-business originations in each of 2026 and 2027 | [VERIFY: CFPB final rule, 1 May 2026; start date checked 22 Nov 2026; 1,000-loan threshold not re-checked] | C1, T3 |
-| BSA/AML and OFAC | Yes | AML program and SAR (suspicious activity report) duties | [VERIFY: 31 CFR 1010.100(lll) and 1029.210; checked 20 Nov 2026] (CORE-KYC-04) | C7 |
+| Section 1071 / Reg B subpart B | Not yet | Compliance starts 1 Jan 2028, only for lenders with 1,000+ covered small-business originations in each of 2026 and 2027 (a lender may choose 2025 and 2026 instead) | [VERIFY: CFPB final rule, FR Doc. 2026-08494 (1 May 2026), govinfo.gov; checked 22 Nov 2026] | C1, T3 |
+| BSA/AML and OFAC | Yes | AML program and SAR (suspicious activity report) duties | [VERIFY: 31 CFR 1010.100(lll), 1029.210 and 1029.320; eCFR API; checked 22 Nov 2026] (CORE-KYC-04) | C7 |
 | FCRA (Fair Credit Reporting Act) | Yes, for guarantors' credit reports | Permissible purpose and notices for individuals | [VERIFY: 15 U.S.C. 1681b(a)(3)(A); checked 22 Nov 2026] | C6, C7 |
 | State licensing, usury, foreclosure | Yes, state by state | Check the property state's State Law Table row before any term sheet (CORE-BP-03) | State Law Table | C10 |
 
 **Adverse action under Reg B.** For a business with revenue of $1 million or less, notify within 30 days of a complete application. The notice may be oral or written. For larger businesses, notify within a reasonable time, and give written reasons if asked within 60 days [VERIFY: 12 CFR 1002.9(a)(3); checked 22 Nov 2026].
 
-**Worked example 2: Maple Run's later DSCR refinance.** A DSCR (debt service coverage ratio) loan is repaid from rent. This one refinances a 1-4 unit dwelling, so it is a HMDA "refinancing" even though it is for business. If our institution meets the HMDA coverage tests, we report it. The original bridge loan was temporary financing and is excluded [VERIFY: Reg C comments 3(c)(3)-1 and 3(c)(10); checked 20 Nov 2026].
+**Worked example 2: Maple Run's later DSCR refinance.** A DSCR (debt service coverage ratio) loan is repaid from rent. This one refinances a 1-4 unit dwelling, so it is a HMDA "refinancing" even though it is for business. If our institution meets the HMDA coverage tests, we report it. The original bridge loan was temporary financing and is excluded [VERIFY: Reg C comments 3(c)(3)-1 and 3(c)(10)-1, -3; eCFR API; checked 22 Nov 2026].
 
 ### T4. Red flags and the purpose file (Objective 4, 10 minutes)
 
@@ -125,6 +141,11 @@ A certificate supports business purpose but does not prove it (Main glossary 5).
 - the appraisal shows owner's furniture and no lease;
 - cash-out proceeds will pay personal debts.
 
+**Who clears an occupancy flag (CORE-BP-02; D-CORE-24).** Every occupancy red flag stops the file. It then takes one of two paths:
+
+- **Credit officer.** The flag is a documented fact that written evidence explains. A credit officer may clear it only with written evidence that no guarantor or relative lives there. Example: the guarantor's license shows her old address, the collateral. The file holds a lease to an unrelated tenant and proof of her new home. The credit officer clears the flag.
+- **BSA officer.** The evidence contradicts the certification (CORE-BP-01), or the explanation fails. The flag goes to the BSA officer the same business day (CORE-KYC-05), who alone clears it (CORE-KYC-07). Example: the guarantor files a homestead exemption on the collateral, or a second application calls it her primary residence.
+
 **Purpose file checklist.** Keep these in every file. Each one should agree with the others.
 
 1. A signed business-purpose and non-occupancy certificate from the borrower and every guarantor (CORE-BP-01).
@@ -137,7 +158,7 @@ A certificate supports business purpose but does not prove it (Main glossary 5).
 
 Documents that can contradict purpose: a guarantor's driver's license, mail or insurance at the collateral address; an appraisal showing the owner's furniture; a lease to a relative; a sale of their current home (CORE-KYC-07).
 
-**Cash-out refinances (CORE-BP-04).** On any refinance with cash out, the borrower states the use of proceeds in writing. If more than half will go to personal, family or household use, the loan is treated as consumer purpose and declined. Ohio uses the same "more than half" test for consumer purpose [VERIFY: OAC 1301:8-7-02(F); checked 20 Nov 2026]. No exception is allowed (CORE-EXC-03).
+**Cash-out refinances (CORE-BP-04).** On any refinance with cash out, the borrower states the use of proceeds in writing. If more than half will go to personal, family or household use, the loan is treated as consumer purpose and declined. Ohio uses the same "more than half" test for consumer purpose [VERIFY: OAC 1301:8-7-02(F), via LII; checked 22 Nov 2026]. No exception is allowed (CORE-EXC-03).
 
 **Worked example 3: cash-out request.** An LLC refinances a rental with $120,000 cash out. It plans $70,000 for a member's home renovation and $50,000 for the next flip. Personal use is $70,000 ÷ $120,000 = 0.58333, or 58.33%. That is more than half. Decline under CORE-BP-04.
 
@@ -179,7 +200,7 @@ Pass mark 80%. Items marked (C) are critical. C1 cannot be tested out of (Main S
 6. (O3) Does ECOA apply to business credit? **Answer:** yes (Reg B). (C)
 7. (O3) Is a business-purpose bridge loan reportable under HMDA? **Answer:** no; it is temporary financing (1003.3(c)(3)).
 8. (O3) When does Section 1071 data collection start? **Answer:** 1 Jan 2028, for lenders above the threshold.
-9. (O4) The guarantor's license shows the collateral address. Action? **Answer:** stop the file. Send the red flag to the BSA officer the same business day (CORE-KYC-05, CORE-KYC-07). A credit officer must also clear the occupancy flag (CORE-BP-02). (C)
+9. (O4) The guarantor's license shows the collateral address. Action? **Answer:** stop the file (CORE-BP-02). A credit officer may clear it only with written evidence that no guarantor or relative lives there, such as a lease to an unrelated tenant and proof of another home. If the evidence contradicts the certification or the explanation fails, send it to the BSA officer the same business day, who alone clears it (CORE-KYC-05, CORE-KYC-07). (C)
 10. (O4) Cash out $80,000; $50,000 personal. Decision? **Answer:** decline; 62.5% is more than half (CORE-BP-04).
 
 ### Set B
@@ -193,7 +214,7 @@ Pass mark 80%. Items marked (C) are critical. C1 cannot be tested out of (Main S
 7. (O3) Does RESPA apply to our loans? **Answer:** no; business-purpose loans are exempt (1024.5(b)(2)).
 8. (O3) A DSCR refinance of a single-family rental by an LLC: HMDA? **Answer:** reportable if our institution is covered; it refinances a dwelling. (C)
 9. (O4) Does a signed certificate prove business purpose? **Answer:** no; it supports it; the file must agree.
-10. (O4) Can a credit officer approve an exception to CORE-BP-04? **Answer:** no; business-purpose rules have no exceptions (CORE-EXC-03).
+10. (O4) Can a credit officer approve an exception to CORE-BP-04? **Answer:** no; business-purpose rules have no exceptions (CORE-EXC-03). (C)
 
 ## 7. OJT task: C1-ojt-v0 (solo mode)
 
@@ -229,7 +250,7 @@ Pass mark 80%. Items marked (C) are critical. C1 cannot be tested out of (Main S
 2. **Rental, owner not occupying** (14 days or less)? Business (3(a)-4).
 3. **Owner occupying?** Acquire: more than 2 units is business. Improve: more than 4 units (3(a)-5).
 4. **Otherwise**, weigh the factors (3(a)-3).
-5. **Occupancy red flags?** Stop the file (CORE-BP-02).
+5. **Occupancy red flags?** Stop the file. A credit officer clears documented facts; the BSA officer clears anything that contradicts the certification (CORE-BP-02; CORE-KYC-07).
 6. **Cash out?** More than half personal: decline (CORE-BP-04).
 7. **Still applies:** ECOA, BSA/AML, OFAC, FCRA, state law; HMDA for dwelling refinances.
 
@@ -252,8 +273,8 @@ Pass mark 80%. Items marked (C) are critical. C1 cannot be tested out of (Main S
 | Every threshold cites a rule | Met. New rule CORE-BP-04 added |
 | Formulas | None needed; the percentage tests are simple shares |
 | Deal numbers match the running deals file | Met |
-| Quiz sets; critical items | Met: 10 items each; 3 critical in Set A, 2 in Set B |
-| No open tags | Not met: [VERIFY] on Reg Z, Reg B, Reg C, Section 1071 and Ohio points. Stays v0 |
+| Quiz sets; critical items | Met: 10 items each; 3 critical in Set A, 3 in Set B |
+| No open tags | In part: every [VERIFY] tag (Reg Z, Reg B, Reg C, Section 1071, BSA and Ohio) rechecked 22 Nov 2026; compliance counsel has not yet confirmed them |
 
 **Self-check.**
 

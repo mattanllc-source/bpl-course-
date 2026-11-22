@@ -12,7 +12,7 @@
 | Conventions | D-CONV-01 (tests use the nominal rate), D-CONV-02 (funding day counts, payoff day does not) |
 | Running deals | Worked examples: RD-RES-01 Maple Run and RD-COM-01 Birchwood Plaza. Practice: RD-MF-01 Cedar Court (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is recorded at the end of this tab |
-| Change log | v0, 19 Nov 2026: first draft; all numbers computed in code |
+| Change log | v0, 19 Nov 2026: first draft; all numbers computed in code v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check |
 
 ## Timing plan
 
@@ -90,7 +90,7 @@ The **loan constant** is ADS ÷ loan (F-CORE-04). It tells you the yearly cost o
 1. **Formula.** F-CORE-03: ADS = payment × 12. F-CORE-04: constant = ADS ÷ loan.
 2. **Inputs.** Payment $27,564.39 (worked example 2); loan $3,900,000.
 3. **Substitution.** ADS = $27,564.39 × 12 = $330,772.68. Constant = $330,772.68 ÷ $3,900,000 = 0.0848135.
-4. **Result.** ADS $330,772.68; constant 0.084814 (8.481%). Preview: in C8, NCF $434,000 ÷ $330,772.68 = 1.31x DSCR (F-CORE-11), which passes the 1.30x unanchored-retail minimum (COM-TRM limits table).
+4. **Result.** ADS $330,772.68; constant 0.084814 (8.481%). Preview: in C8, NCF $434,000 ÷ $330,772.68 = 1.31x DSCR (F-CORE-11), which passes the 1.30x unanchored-retail minimum (COM-TRM-09 unanchored retail: 65% LTV, 1.30x, 9.0%).
 
 **Why the constant, not the rate.** At 7.000% the constant is 8.481%, because it includes principal. A loan sized with the rate would carry about 21% more debt than the cash flow supports.
 
@@ -281,7 +281,7 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 | O4 Tests vs bills | T4 | 4 | 5 | 9-10 / 9-10 | 4 |
 | O5 Schedule rows | T5 | 5 | 4 | 11-12 / 11-12 | n/a (C12 OJT) |
 
-The OJT covers O1 and O4. O2, O3 and O5 are practised on the job in the C8 and C12 OJT tasks, which reuse these formulas.
+The OJT covers O1 and O4. O2, O3 and O5 are practiced on the job in the C8 and C12 OJT tasks, which reuse these formulas.
 
 ## Self-review against Bible Section 7 (19 Nov 2026)
 
@@ -296,7 +296,7 @@ The OJT covers O1 and O4. O2, O3 and O5 are practised on the job in the C8 and C
 | Quiz: 10-20 items, one per objective, critical flagged, two sets, pass mark | Met (12 items, 3 critical, sets A and B) |
 | OJT: output, source, time, rubric, sign-off, data note | Met |
 | Job aid fits one page | Met on screen; confirm when printed |
-| Accessibility (LD-09) | Tables have headers; no colour-only meaning |
+| Accessibility (LD-09) | Tables have headers; no color-only meaning |
 
 **Self-check.**
 

@@ -6,6 +6,8 @@ Each deal is worked in role order: originator, then underwriter, then closing an
 
 **Reconciled with the Formula Library tab, 19 Nov 2026.** Interest is billed Actual/360: balance × rate ÷ 360 × actual days (F-CORE-01). Sizing and coverage tests use the nominal annual rate (D-CONV-01). Interest counts the funding day, not the payoff day (D-CONV-02). Amortizing debt service is the monthly payment rounded to the cent × 12 (F-CORE-03). Results are compared with limits at full precision.
 
+**SOFR path for course what-ifs (D-CORE-27, 22 Nov 2026).** Floating loans start at 1-month Term SOFR 3.65%. A rate stated at a month in a deal timeline holds from that month until a later rate is stated. Cedar Court uses 5.00% from month 10; Birchwood Plaza uses 4.75% from month 18. A what-if for any later month uses the latest stated rate, labelled "course assumption, not a forecast". With both 4.00% margins, that gives 9.00% for Cedar Court and 8.75% for Birchwood Plaza. Maple Run is priced on the RTL grid (F-CORE-28), so SOFR does not apply. Each deal's rate cap still applies.
+
 ## RD-RES-01: Maple Run flip-to-rent (Residential)
 
 Harborline Holdings LLC asks for a $340,000 fix-and-flip loan on a single-family home it plans to renovate, lease and refinance into a DSCR loan. Used in R1-R6; numbers match the Course Bible glossary flip except where this file says otherwise.

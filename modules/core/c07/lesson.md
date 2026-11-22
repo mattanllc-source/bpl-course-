@@ -11,8 +11,8 @@
 | Formulas | None in the library. Two calculations are taught: aggregate blocked ownership (OFAC 50 Percent Rule) and calendar deadlines |
 | Rules | CORE-KYC-01 to -09; CORE-BP-02; CORE-BOR-03, -09, -19; CORE-EXC-03 (no exceptions to KYC or OFAC rules) |
 | Running deals | Worked examples: RD-RES-01 Maple Run and RD-MF-01 Cedar Court. Practice: RD-COM-01 Birchwood Plaza (LD-08). Red-flag scenarios are marked "what-if" and are not part of the deals |
-| Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft. CORE-KYC-04 to -07 added to the Model Credit Policy the same day, on the learner's decision |
+| Status | v0.2. Self-review against Bible Section 7 is at the end of this tab |
+| Change log | v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check. v0, 20 Nov 2026: first draft. CORE-KYC-04 to -07 added to the Model Credit Policy the same day, on the learner's decision |
 
 ## Timing plan
 
@@ -49,7 +49,7 @@ By the end of C7, you will be able to:
 
 We are a non-bank lender. Many people assume the Bank Secrecy Act therefore skips us. For part of our book, that is wrong.
 
-FinCEN treats non-bank residential mortgage lenders as "loan or finance companies." Its definition of a residential mortgage loan depends on the collateral: a 1-4 unit residential structure, or land for one. It has no personal-use limit [VERIFY: 31 CFR 1010.100(lll), Cornell LII, checked 20 Nov 2026]. So a business-purpose loan on a house can still be covered. Covered lenders need a written AML program with a compliance officer, training and independent testing (31 CFR 1029.210). They must also file SARs (31 CFR 1029.320).
+FinCEN treats non-bank residential mortgage lenders as "loan or finance companies." Its definition of a residential mortgage loan depends on the collateral: a 1-4 unit residential structure, or land for one. It has no personal-use limit [VERIFY: 31 CFR 1010.100(lll), eCFR (current to 19 Nov 2026); checked 22 Nov 2026]. So a business-purpose loan on a house can still be covered. Covered lenders need a written AML program with a compliance officer, training and independent testing (31 CFR 1029.210). They must also file SARs (31 CFR 1029.320) [VERIFY: 31 CFR 1029.210(b) and 1029.320(a), eCFR; checked 22 Nov 2026].
 
 | Rule set | Applies to us? | Course rule |
 | --- | --- | --- |
@@ -70,9 +70,9 @@ FinCEN treats non-bank residential mortgage lenders as "loan or finance companie
 
 CORE-KYC-01 screens the borrower, every guarantor and every 20% owner. Screening happens before the term sheet and again before funding. An unresolved match is a decline, and no exception is allowed (CORE-EXC-03).
 
-**The 50 Percent Rule.** An entity owned 50% or more, directly or indirectly, in aggregate by blocked persons is itself blocked. That is true even if it is not on the list. Stakes held by different blocked persons are added together. Control without ownership does not trigger the rule [VERIFY: OFAC FAQs 398-401, ofac.treasury.gov, checked 20 Nov 2026].
+**The 50 Percent Rule.** An entity owned 50% or more, directly or indirectly, in aggregate by blocked persons is itself blocked. That is true even if it is not on the list. Stakes held by different blocked persons are added together. Control without ownership does not trigger the rule [VERIFY: OFAC FAQs 398-401, ofac.treasury.gov/faqs/398, /399 and /401; checked 22 Nov 2026].
 
-**Records and reports (CORE-KYC-06).** Keep screening records for 10 years, the period OFAC set in March 2025. Report a rejected transaction within 10 business days [VERIFY: 31 CFR 501.601 and 501.604, checked 20 Nov 2026]. Report blocked property within 10 business days of blocking it. Then report all blocked property held on 30 June by 30 September each year [VERIFY: 31 CFR 501.603(b), Cornell LII; checked 22 Nov 2026].
+**Records and reports (CORE-KYC-06).** Keep screening records for 10 years, the period OFAC set in March 2025. Report a rejected transaction within 10 business days [VERIFY: 31 CFR 501.601 and 501.604(c), eCFR; OFAC final rule FR 2025-04864, effective 21 Mar 2025; checked 22 Nov 2026]. Report blocked property within 10 business days of blocking it. Then report all blocked property held on 30 June by 30 September each year [VERIFY: 31 CFR 501.603(b), Cornell LII; checked 22 Nov 2026].
 
 **Worked example 2: aggregate ownership (what-if)**
 
@@ -104,18 +104,37 @@ For a 20% trust owner, collect a certification of trust signed by every trustee.
 3. **Apply.** 20% owners: Marcus and Priya. Control person: Marcus. Screen the borrower LLC, Marcus and Priya. The holding LLC is a source of funds, so ask who owns it and screen its 20% owners too (CORE-KYC-07: money from an unrelated third party).
 4. **Result.** Three screens are required by rule. The holding LLC's owners are screened as a source-of-funds check, and the file says so.
 
+```mermaid
+flowchart TD
+  M["Marcus Hale 60%<br/>managing member, control person"] --> B["Cedar Court Partners LLC<br/>borrower"]
+  P["Priya Nand 40%"] --> B
+  H["Passive-investor holding LLC<br/>source of funds"] -. equity .-> B
+  O["Holding LLC's 20% owners"] --> H
+```
+
+The chart shows the three required screens (the LLC, Marcus and Priya) and the holding LLC, whose owners are screened as a source-of-funds check.
+
 ### T4. Fraud red flags (Objective 4, 10 minutes)
 
 CORE-KYC-07 lists red flags that stop the file until the BSA officer clears them. They follow FinCEN's mortgage fraud advisory and Fannie Mae's red-flag list.
 
 | Red flag | What it can mean | First check |
 | --- | --- | --- |
-| Occupancy signs (CORE-BP-02) | A consumer loan dressed as business purpose | Where do the guarantors live? Utility and mail at the subject? |
+| Occupancy signs that contradict the certification or that evidence does not explain (CORE-BP-02) | A consumer loan dressed as business purpose | Where do the guarantors live? Utility and mail at the subject? |
 | Straw or nominee owner | Someone hides behind another name | Who really controls the money and decisions? |
 | Sale in the last 12 months at 20%+ below today's price or value | Illegal flipping or an inflated value | Chain of title; what work was done; arm's length? |
 | Cash to close from an unrelated third party | Undisclosed lender or laundered money | Gift or investor documents; screen the source |
 | Conflicting documents | Altered statements or IDs | Verify direct with the bank or issuer |
 | Any change to wire instructions | Business email compromise | Call a number already in our file, never one in the request |
+
+**Who clears an occupancy flag (CORE-BP-02, D-CORE-24).** There are two paths. A credit officer may clear a flag only with written evidence that no guarantor or relative lives there. Anything that contradicts the occupancy certification (CORE-BP-01) goes to the BSA officer, who alone clears it (CORE-KYC-07). So does an explanation that fails.
+
+- **Credit officer path.** The subject is the guarantor's old address. It is now leased to an unrelated tenant. The file holds the lease and proof of her new home.
+- **BSA officer path.** A homestead exemption, or a second loan application, claims the subject as a primary residence. That contradicts the CORE-BP-01 certification.
+
+The split fits FinCEN's view that a red flag calls for due diligence, not a verdict. Its advisory says "No single red flag will be definitive proof" of fraud [VERIFY: FinCEN Advisory FIN-2012-A009, fincen.gov/system/files/advisory/FIN-2012-A009.pdf; checked 22 Nov 2026].
+
+**Stop-and-verify flags (CORE-KYC-07, D-CORE-25).** Two more signs hold the wire, not the file, until a callback is done. One is a rush request to fund early or skip a step. The other is a new or changed email address, domain or phone number for any party. Call back on the number already in our file. A failed or refused callback is a red flag for the BSA officer. Any change to wire instructions is still a full red flag that only the BSA officer clears.
 
 **Worked example 4: Maple Run red-flag check (RD-RES-01)**
 
@@ -126,7 +145,7 @@ CORE-KYC-07 lists red flags that stop the file until the BSA officer clears them
 
 ### T5. Escalation and SARs (Objective 5, 10 minutes)
 
-CORE-KYC-05 sends every red flag to the BSA officer the same business day. Only the BSA officer decides whether to file a SAR. A SAR is required when $5,000 or more is involved and the activity looks suspicious [VERIFY: 31 CFR 1029.320, Cornell LII, checked 20 Nov 2026]. Attempted transactions count, so a failed wire fraud can still need one.
+CORE-KYC-05 sends every red flag to the BSA officer the same business day. Only the BSA officer decides whether to file a SAR. A SAR is required when $5,000 or more is involved and the activity looks suspicious [VERIFY: 31 CFR 1029.320(a)(2) and (b)(3), eCFR; checked 22 Nov 2026]. Attempted transactions count, so a failed wire fraud can still need one.
 
 | Timing | Rule |
 | --- | --- |
@@ -141,6 +160,15 @@ CORE-KYC-05 sends every red flag to the BSA officer the same business day. Only 
 2. **Inputs.** On Friday 20 Nov 2026, an email asks us to send the $240,000 advance to a new account. A call to the title company's number in our file confirms it sent no such email. The sender is unknown.
 3. **Calculation.** First detection 20 Nov 2026. 30 calendar days = Sunday 20 Dec 2026, the deadline (CORE-KYC-05). It falls on a weekend, so plan to file by Friday 18 Dec. No suspect is known, so the outer limit is 20 Nov + 60 days = 19 Jan 2027.
 4. **Result.** Do not wire to the new account. Fund only to the verified account. Report to the BSA officer that day. The attempt involved $240,000, over $5,000, so a SAR is likely. Tell Dana Reyes only that closing proceeds on verified instructions.
+
+```mermaid
+flowchart LR
+  A["Fri 20 Nov 2026<br/>first detection,<br/>BSA officer told same day"] --> B["Fri 18 Dec 2026<br/>plan to file"]
+  B --> C["Sun 20 Dec 2026<br/>30-day deadline"]
+  C --> D["Tue 19 Jan 2027<br/>60-day outer limit,<br/>no suspect identified"]
+```
+
+The timeline shows the SAR dates from worked example 5: the 30-day deadline, the earlier planned filing date and the 60-day outer limit.
 
 ## 5. Practice (25 minutes)
 
@@ -227,13 +255,13 @@ Pass mark: 80% (8 of 10) and every item marked **critical** correct. Two retakes
 | Source | RD-MF-01 borrower and guarantor table; Model Credit Policy CORE-KYC-01 to -07 |
 | Time allowed | 30 minutes |
 | Sign-off | Self-review against the rubric and model answer (solo mode). Record your score and gaps with the date |
-| Data | All fictional. The escalation note must not be shared outside the file: practise SAR confidentiality |
+| Data | All fictional. The escalation note must not be shared outside the file: practice SAR confidentiality |
 
 **Rubric (meets standard = all four)**
 
 1. Lists every party to screen, with the rule and the two screening points.
 2. Shows an ownership chart down to people, with the control person.
-3. Checks all six CORE-KYC-07 flags and records the evidence for each.
+3. Checks all six CORE-KYC-07 flags and the two stop-and-verify flags and records the evidence for each.
 4. The escalation note gives facts, the date of first detection and both SAR deadlines, and never addresses the borrower.
 
 **Model answer**
@@ -263,7 +291,7 @@ Escalation note (what-if): "On 20 Nov 2026 the underwriter found that $400,000 o
 
 **Chart (CORE-KYC-02)**: down to people; multiply through layers; 20% owners plus one control person, with ID. A 20% trust: every trustee, a revocable trust's grantor and 20% look-through beneficiaries, plus a certification of trust (CORE-KYC-08, -09).
 
-**Red flags (CORE-KYC-07)**: occupancy; straw owner; 12-month prior sale 20%+ below; third-party funds; conflicting documents; any wire change (call back on our number).
+**Red flags (CORE-KYC-07)**: occupancy; straw owner; 12-month prior sale 20%+ below; third-party funds; conflicting documents; any wire change (call back on our number). Stop-and-verify, holding the wire until the callback: rush request; new or changed email, domain or phone (D-CORE-25). Occupancy: a credit officer clears documented facts; the BSA officer clears anything that contradicts the certification (D-CORE-24).
 
 **SAR (CORE-KYC-05)**: same-day escalation; BSA officer decides; $5,000+; 30 days, 60 at most with no suspect; keep 5 years; never tip off.
 
@@ -287,16 +315,16 @@ Escalation note (what-if): "On 20 Nov 2026 the underwriter found that $400,000 o
 | No open [POLICY], [CONFIRM] or [DATA] tags | Met. The policy gap was closed with CORE-KYC-04 to -07. [VERIFY] tags on legal statements carry source and date |
 | Every calculation cites a formula ID; thresholds cite rules | Met for rules. The two calculations (aggregate blocked ownership and deadline dates) have no library formula yet |
 | Four-line worked examples; re-checked by a second person | Four lines met; second-person check pending (solo: re-run the dates in a spreadsheet) |
-| Deal numbers match the running deals | Met: RD-RES-01, RD-MF-01, RD-COM-01. All red-flag scenarios are labelled what-if |
+| Deal numbers match the running deals | Met: RD-RES-01, RD-MF-01, RD-COM-01. All red-flag scenarios are labeled what-if |
 | Lesson follows LD-04 order; alignment matrix; fits 2 hours | Met (120 minutes) |
 | Quiz: 10-20 items, one per objective, critical flagged, two sets, pass mark | Met (10 items, 3 critical, sets A and B) |
 | OJT: output, source, time, rubric, sign-off, data note | Met |
 | Job aid fits one page | Met on screen; confirm when printed |
-| Accessibility (LD-09) | Tables have headers; no colour-only meaning |
+| Accessibility (LD-09) | Tables have headers; no color-only meaning |
 
 **Real-world check (researched 20 Nov 2026).**
 
-- **Coverage.** FinCEN's 2012 rule brought non-bank residential mortgage lenders under AML program and SAR duties from August 2012 ([Federal Register, 14 Feb 2012](https://www.federalregister.gov/documents/2012/02/14/2012-3074/anti-money-laundering-program-and-suspicious-activity-report-filing-requirements-for-residential)). The definition of a residential mortgage loan rests on 1-4 unit collateral ([31 CFR 1010.100, Cornell LII](https://www.law.cornell.edu/cfr/text/31/1010.100)). Whether a given business-purpose lender is covered is a question for counsel [VERIFY].
+- **Coverage.** FinCEN's 2012 rule brought non-bank residential mortgage lenders under AML program and SAR duties from August 2012 ([Federal Register, 14 Feb 2012](https://www.federalregister.gov/documents/2012/02/14/2012-3074/anti-money-laundering-program-and-suspicious-activity-report-filing-requirements-for-residential)). The definition of a residential mortgage loan rests on 1-4 unit collateral ([31 CFR 1010.100, Cornell LII](https://www.law.cornell.edu/cfr/text/31/1010.100)). Whether a given business-purpose lender is covered is a question for counsel [VERIFY: 31 CFR 1010.100(lll) and 1029.210, eCFR; counsel; checked 22 Nov 2026].
 - **SAR rule.** $5,000 threshold; 30 days, extendable to 60 with no suspect; 5-year records; confidentiality ([31 CFR 1029.320](https://www.law.cornell.edu/cfr/text/31/1029.320)).
 - **OFAC.** Records went from 5 to 10 years with a rule effective 21 Mar 2025 ([Federal Register, 21 Mar 2025](https://www.govinfo.gov/content/pkg/FR-2025-03-21/html/2025-04864.htm)). Ownership stakes of blocked persons are aggregated, and control alone does not block an entity ([OFAC FAQs](https://ofac.treasury.gov/faqs/topic/1521)).
 - **Residential real estate reporting.** The FinCEN rule took effect on 1 Mar 2026. A federal court in Texas vacated it on 19 Mar 2026 ([Gibson Dunn, 1 Apr 2026](https://www.gibsondunn.com/fincen-residential-real-estate-reporting-rule-vacated-nationwide/)). It covered non-financed transfers, so our financed deals were never in scope.
@@ -309,6 +337,7 @@ Escalation note (what-if): "On 20 Nov 2026 the underwriter found that $400,000 o
 3. A holding LLC owns 50% of the borrower. Person D owns 40% of the holding LLC. Does D go on the chart? **Answer:** Yes. 40% × 50% = 20%, which meets the 20% test (CORE-KYC-02).
 4. Cash to close arrives from an LLC not named in the file. What do you do? **Answer:** Stop the file, tell the BSA officer the same business day, and identify and screen the source (CORE-KYC-07, CORE-KYC-05).
 5. First detection is Monday 2 Nov 2026 and the suspect is known. When is the SAR due? **Answer:** 2 Nov + 30 calendar days = Wednesday 2 Dec 2026 (CORE-KYC-05).
+6. The subject is a guarantor's old address. It is now leased to an unrelated tenant, and she shows proof of her new home. Who may clear the occupancy flag? **Answer:** A credit officer, on that written evidence. A homestead exemption claiming the subject would go to the BSA officer instead (CORE-BP-02, D-CORE-24).
 
 **What to look up yourself.** One item: ask counsel whether your lending entity is a "loan or finance company" under 31 CFR 1029. That depends on your structure and is not something public sources can settle.
 

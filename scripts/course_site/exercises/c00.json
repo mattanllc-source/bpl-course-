@@ -1,0 +1,59 @@
+{
+  "module": "c00",
+  "exercises": [
+    {
+      "id": "c00-1",
+      "type": "sort",
+      "title": "Which family is it?",
+      "intro": "We lend in three product families. Drop each loan into Residential 1-4, Multifamily 5+ or Commercial.",
+      "sources": ["CORE-BOR-01", "RD-RES-01", "RD-MF-01", "RD-COM-01"],
+      "deal": null,
+      "sort": {
+        "buckets": ["Residential 1-4", "Multifamily 5+", "Commercial"],
+        "items": [
+          { "text": "Maple Run: a $340,000 fix-and-flip loan on a single-family home in Columbus, Ohio", "bucket": "Residential 1-4", "why": "A single-family home is 1-4 units. Maple Run is our Residential running deal (RD-RES-01)." },
+          { "text": "Cedar Court: a $5,140,000 value-add bridge on a 50-unit apartment property in North Carolina", "bucket": "Multifamily 5+", "why": "50 units is 5 or more, so it is Multifamily. Cedar Court is our Multifamily running deal (RD-MF-01)." },
+          { "text": "Birchwood Plaza: a $3,520,000 bridge on a 70%-leased strip center in Indiana", "bucket": "Commercial", "why": "Retail is Commercial. Birchwood Plaza is our Commercial running deal (RD-COM-01)." },
+          { "text": "A DSCR rental loan on a duplex", "bucket": "Residential 1-4", "why": "A duplex has 2 units. DSCR rental loans are a Residential product, repaid by rent (T1)." },
+          { "text": "A DSCR rental loan on a fourplex", "bucket": "Residential 1-4", "why": "Four units is still inside Residential 1-4. Multifamily starts at 5 units (T1)." },
+          { "text": "A bridge loan on a 12-unit apartment building", "bucket": "Multifamily 5+", "why": "12 units is 5 or more. A value-add bridge is a Multifamily product (T1)." },
+          { "text": "A construction and lease-up loan on a new 60-unit apartment building", "bucket": "Multifamily 5+", "why": "Construction and lease-up of 5+ units is a Multifamily product (T1)." },
+          { "text": "A bridge loan on a 40,000 sf warehouse", "bucket": "Commercial", "why": "Industrial property is Commercial (T1; practice 1)." }
+        ]
+      }
+    },
+    {
+      "id": "c00-2",
+      "type": "buildup",
+      "title": "Headline check",
+      "intro": "Recompute three market figures from their own inputs. Then compare each with the headline the source reports.",
+      "sources": ["T2 market snapshot (KBRA, 30 Jul 2026; Bank of America via HousingWire, 2026)"],
+      "deal": null,
+      "buildup": {
+        "context": "KBRA reports $5.5 billion of RTL securitization in 2025 and about $4.8 billion projected for 2026. About $3.5 billion of 2026 issuance is expected to be rated. KBRA says about 73% is rated and issuance falls 12%. Non-QM originations are projected at $175 billion in 2026, up from $108 billion in 2025. Market data checked 20 Nov 2026; recheck before use. Enter percentages to one decimal.",
+        "lines": [
+          { "label": "Rated share of 2026 RTL issuance (rated ÷ total)", "hint": "$3.5 billion ÷ $4.8 billion. KBRA's 'about 73%' is the same figure, rounded.", "expected": 0.7291666666666666, "format": "pct1", "tolerance": 0.005 },
+          { "label": "Change in RTL issuance, 2025 to 2026 ((new − old) ÷ old)", "hint": "($4.8 billion − $5.5 billion) ÷ $5.5 billion. It is a fall, so the answer is negative. KBRA's 12% likely comes from unrounded figures.", "expected": -0.12727272727272726, "format": "pct1", "tolerance": 0.005 },
+          { "label": "Non-QM growth, 2025 to 2026 (new ÷ old − 1)", "hint": "$175 billion ÷ $108 billion − 1.", "expected": 0.6203703703703705, "format": "pct1", "tolerance": 0.005 }
+        ]
+      }
+    },
+    {
+      "id": "c00-3",
+      "type": "order",
+      "title": "Maple Run's funding chain",
+      "intro": "Each step in a loan's funding chain has its own buyer, standards and risks. Put Maple Run's chain in order, from our loan to a non-QM securitization.",
+      "sources": ["RD-RES-01", "T2", "T3 worked example 3"],
+      "deal": "RD-RES-01",
+      "order": {
+        "steps": [
+          "We fund the $340,000 bridge loan to Harborline Holdings LLC",
+          "We hold the loan, or sell it into an RTL pool",
+          "In month 14 the borrower asks to refinance into a DSCR loan",
+          "The DSCR loan may end up in a non-QM securitization"
+        ],
+        "why": "The bridge loan comes first. It is held or sold while the house is renovated and leased. The DSCR refinance repays it in month 14. That new loan can then be pooled into a non-QM securitization. Each buyer along the way applies its own criteria (T3, buyer standards)."
+      }
+    }
+  ]
+}
