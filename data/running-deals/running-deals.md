@@ -44,7 +44,7 @@ Harborline Holdings LLC asks for a $340,000 fix-and-flip loan on a single-family
 | 2, 4, 6, 8 | Draw requests |
 | 7 | Roof subcontractor quits; replacement costs $8,000 more than the roof line in the budget |
 | 10 | Rehab complete |
-| 11 | Lease signed at $3,200 a month with an unrelated tenant |
+| 11 | Lease signed at $3,200 a month with an unrelated tenant, for a 12-month initial term (RES-GEN-11) |
 | 12 | Loan matures 15 Jan 2028; extension requested |
 | 14 | DSCR refinance request |
 

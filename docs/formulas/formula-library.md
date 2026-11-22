@@ -687,7 +687,7 @@ L_{DSCR} = \frac{NOI}{DSCR_{min} \times K}
 
 **Edge cases.** NOI ≤ 0 → $0 loan. K must be > 0.
 
-**Rounding and day count.** Full precision; round the loan down to policy increments (examples use $10,000).
+**Rounding and day count.** Full precision; round the final loan down to the nearest $1,000 (CORE-PRC-05).
 
 **Modules.** C8
 
@@ -724,7 +724,7 @@ L_{DY} = \frac{NOI}{DY_{min}}
 
 **Edge cases.** NOI ≤ 0 → $0.
 
-**Rounding and day count.** Full precision; round down to policy increments.
+**Rounding and day count.** Full precision; round the final loan down to the nearest $1,000 (CORE-PRC-05).
 
 **Modules.** C8
 
@@ -761,7 +761,7 @@ L = \min(L_{LTV}, L_{LTC}, L_{DSCR}, L_{DY})
 
 **Edge cases.** If any test gives $0 or less, no loan.
 
-**Rounding and day count.** Round down to policy increments after taking the minimum.
+**Rounding and day count.** Take the minimum at full precision, then round down to the nearest $1,000 (CORE-PRC-05).
 
 **Modules.** C8, C14
 
@@ -769,7 +769,7 @@ L = \min(L_{LTV}, L_{LTC}, L_{DSCR}, L_{DY})
 | --- | --- | --- |
 | 1 | $1,125,000; $1,050,000; $1,000,000 | $1,000,000.00 |
 | 2 | $3,900,000; $3,936,238; $4,822,222 | $3,900,000.00 |
-| 3 | $2,800,000; $2,468,378 (NNN) | $2,468,378.00 |
+| 3 | $2,800,000; $2,468,378 (NNN) | $2,468,000.00 |
 
 ### F-CORE-20: Interest reserve (straight-line)
 
@@ -1055,7 +1055,7 @@ N = \sum_{p} \mathbf{1}[t_p \le 36\ \text{mo} \wedge own_p \ge 20\%]
 - Counting projects under 20% ownership.
 - Counting projects outside the lookback.
 
-**Edge cases.** Exactly 36 months → counts (inclusive; decided 19 Nov 2026). Exactly 20% → counts.
+**Edge cases.** Exactly 36 months → counts (inclusive; decided 19 Nov 2026). Exactly 20% → counts. A project counts once completed: sold, refinanced into a rental, or held and operated 12+ months (CORE-BOR-18). Exactly 12 months counts.
 
 **Rounding and day count.** Integer count.
 
@@ -1314,7 +1314,7 @@ ITV = \frac{Coverage}{RC}
 - Comparing coverage to market value or loan amount instead of replacement cost.
 - Ignoring a coinsurance clause that cuts the payout when cover is under a set percent.
 
-**Edge cases.** RC = 0 → undefined. Builder's risk on construction is tested against hard cost.
+**Edge cases.** RC = 0 → undefined. Builder's risk on rehab or construction is tested against completed value, including soft costs, not hard cost (CORE-INS-04).
 
 **Rounding and day count.** Full precision; display one decimal.
 

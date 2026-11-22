@@ -1,4 +1,4 @@
-**Model policy for training - not for live lending decisions.** Fictional deal data only. Market figures are real, sourced and dated. They change fast, so recheck them before each cohort.
+**Model policy for training - not for live lending decisions.** Fictional deal data only. Market figures are real, sourced and dated.
 
 | Item | Detail |
 | --- | --- |
@@ -7,7 +7,7 @@
 | Prerequisite | None |
 | Bloom's levels | 1 to 3 (LD-02) |
 | Formulas | None. Simple shares and growth rates only |
-| Rules | CORE-BOR-01; CORE-BP-01; CORE-AUTH-01; CORE-SVC-07 (preview only) |
+| Rules | CORE-BOR-01; CORE-BP-01; CORE-EXC-01; RES-FF-03; CORE-AUTH-01; CORE-SVC-07 and CORE-KYC-08 (preview only) |
 | Glossary | Item 12 (bridge loan); Main Sections 2 and 3 |
 | Running deals | All three, introduced (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
@@ -93,10 +93,12 @@ Buyers set eligibility criteria. Those criteria shape many lenders' credit boxes
 
 **Worked example 2: reading the numbers.**
 
-1. Rated share of 2026 RTL issuance = $3.5 billion ÷ $4.8 billion = 72.9%. KBRA reports about 73%.
-2. Change in RTL issuance = ($4.8 billion − $5.5 billion) ÷ $5.5 billion = −12.7%. KBRA reports a 12% fall, likely from unrounded figures.
-3. Non-QM growth = $175 billion ÷ $108 billion − 1 = 62.0%.
-4. Debt-fund share of CRE loans: 15% ÷ 5% = 3 times its 2019 share.
+| Measure | Formula | Working | Result | Check against the source |
+| --- | --- | --- | --- | --- |
+| Rated share of 2026 RTL issuance | Rated ÷ total | $3.5 billion ÷ $4.8 billion | 72.9% | KBRA reports about 73%: a rounding gap |
+| Change in RTL issuance, 2025 to 2026 | (New − old) ÷ old | ($4.8 billion − $5.5 billion) ÷ $5.5 billion | −12.7% | KBRA reports a 12% fall, likely from unrounded figures |
+| Non-QM growth, 2025 to 2026 | New ÷ old − 1 | $175 billion ÷ $108 billion − 1 | 62.0% | No headline figure to compare |
+| Debt-fund share of CRE loans, 2025 vs 2019 | 2025 share ÷ 2019 share | 15% ÷ 5% | 3 times | No headline figure to compare |
 
 The lesson: always check a headline percentage against its own inputs. Small gaps usually come from rounding. Big gaps mean you have the wrong inputs.
 
@@ -109,36 +111,43 @@ Market conditions change the risk inside the same credit box.
 3. **Buyer standards.** If we sell or securitize loans, the buyer's criteria and data checks apply. A loan that breaks them may be hard to sell.
 4. **Fraud follows volume.** Fast-growing products such as DSCR loans attract fraud (C7).
 
-**Worked example 3: Maple Run's funding chain.** We fund the $340,000 bridge loan. We may hold it, or sell it into an RTL pool. In month 14 the borrower refinances into a DSCR loan. That loan may end up in a non-QM securitization. Each step has its own buyer, standards and risks.
+**Worked example 3: Maple Run's funding chain.** Each step has its own buyer, standards and risks.
+
+1. We fund the $340,000 bridge loan (RD-RES-01).
+2. We hold it, or sell it into an RTL pool.
+3. In month 14 the borrower asks to refinance into a DSCR loan.
+4. That DSCR loan may end up in a non-QM securitization.
 
 ### T4. How this course works (Objective 4, 5 minutes)
 
-| Item | What it means | Where |
+| Item | What it means | Where to find it |
 | --- | --- | --- |
-| Path | C0 to C2 first, in order. Then core modules by prerequisite. Then a family track | Main Sections 2 and 3 |
-| Pass mark | 80% on each quiz, and every critical item correct. Capstone 85% with no critical credit error | Main Section 3 |
-| Test-out | Allowed by quiz and OJT, except C1, C7 and capstones | Main Section 2, rule 5 |
-| Solo mode | You play originator, underwriter, and closer/servicer on every deal | Main Section 2 |
-| Rule IDs | FAMILY-TOPIC-NN, such as CORE-AUTH-01 | Main 5.7; Policy tab |
-| Formula IDs | F-FAMILY-NN, such as F-CORE-14 | Main 5.8; Library tab |
-| [VERIFY] | A legal point to confirm with compliance; it shows source and date | Main 5.6 |
+| Path | C0 to C2 first, in order. Then core modules by prerequisite. Then a family track | Course Bible sections 2 and 3: the learning paths and the module order |
+| Pass mark | 80% on each quiz, and every critical item correct. Capstone 85% with no critical credit error | Course Bible section 3: the assessment rules |
+| Test-out | Allowed by quiz and OJT, except C1, C7 and capstones | Course Bible section 2, rule 5: when you may skip a module |
+| Solo mode | You play originator, underwriter, and closer/servicer on every deal | Course Bible section 2: how a solo learner works each role |
+| Rule IDs | FAMILY-TOPIC-NN, such as CORE-AUTH-01 | Model Credit Policy tab: every rule, its basis and its source |
+| Formula IDs | F-FAMILY-NN, such as F-CORE-14 | Formula Library tab: every formula with worked tests |
+| [VERIFY] | A legal point to confirm with compliance; it shows source and date | Course Bible 5.6: how the tag is written |
 | Model policy | Every limit is for training only, never live lending | Every tab |
 
 ## 5. Practice (10 minutes)
 
-1. Assign each loan to a family. (a) a 12-unit apartment bridge; (b) a DSCR loan on a duplex; (c) a bridge on a 40,000 sf warehouse.
+1. Assign each loan to a family: (a) a 12-unit apartment bridge; (b) a DSCR loan on a duplex; (c) a bridge on a 40,000 sf warehouse.
+
+   **Model answer:** (a) Multifamily; (b) Residential; (c) Commercial.
 2. A headline says "RTL securitization fell 12% in 2026". What does that tell you about total RTL lending?
+
+   **Model answer:** Not much on its own. Securitization is only part of RTL funding (KBRA, 2026).
 3. Name the three funding routes for a private lender.
+
+   **Model answer:** Warehouse lines; whole-loan sales; securitization.
 4. A broker says a competitor offers 90% LTC on Maple Run. What does our policy do?
+
+   **Model answer:** Nothing changes. The Tier 2 LTC cap is 85% (RES-FF-03). 90% is 5 points over it, so it needs an approved exception (CORE-EXC-01). Only credit committee may approve a leverage exception that large (CORE-AUTH-01). Otherwise we decline.
 5. Where do you look up CORE-AUTH-01?
 
-**Answer key.**
-
-1. (a) Multifamily; (b) Residential; (c) Commercial.
-2. Not much on its own. Securitization is only part of RTL funding (KBRA, 2026).
-3. Warehouse lines; whole-loan sales; securitization.
-4. Nothing changes. The Tier 2 LTC cap is 85% (RES-FF-03). More needs an approved exception, or we decline (CORE-EXC-01).
-5. The Policy tab.
+   **Model answer:** The Model Credit Policy tab. Rule IDs live there; formula IDs live in the Formula Library tab.
 
 ## 6. Quiz: C0-quiz-v0
 
@@ -149,7 +158,7 @@ Pass mark 80%. Items marked (C) are critical. Each set has 8 items and covers al
 1. (O1) Can an individual borrow under our program? **Answer:** no; entities only (CORE-BOR-01). (C)
 2. (O1) What does a bridge loan bridge? **Answer:** the gap to a sale, refinance or stabilization (glossary 12).
 3. (O2) Name one funding route other than holding the loan. **Answer:** any of: warehouse line, whole-loan sale, securitization.
-4. (O2) Projected 2026 RTL securitization issuance? **Answer:** about $4.8 billion (KBRA, 30 Jul 2026).
+4. (O2) About $3.5 billion of 2026 RTL securitization is expected to be rated. Why does a rated pool matter to a credit officer? **Answer:** rated pools apply rating-agency criteria and data checks. A loan we may sell must meet them, or it may be hard to sell (T3, buyer standards).
 5. (O3) Why does a large maturity year raise risk on a bridge book? **Answer:** many borrowers need refinancing at once; exits may fail.
 6. (O3) A competitor raises leverage. Do our limits move? **Answer:** no (CORE-EXC-01).
 7. (O4) What is the quiz pass mark? **Answer:** 80%, with every critical item correct.
@@ -157,10 +166,10 @@ Pass mark 80%. Items marked (C) are critical. Each set has 8 items and covers al
 
 ### Set B
 
-1. (O1) Can a family trust borrow under our program? **Answer:** no; entities such as LLCs, LPs and corporations only (CORE-BOR-01). (C)
+1. (O1) Can a family trust borrow under our program? **Answer:** no; only LLCs, LPs and corporations borrow (CORE-BOR-01). A trust may own part of a borrower, but never be the borrower (CORE-KYC-08). (C)
 2. (O1) What repays a DSCR rental loan? **Answer:** the property's rent.
-3. (O2) Share of non-QM production that was DSCR and investor loans in August 2026? **Answer:** 35.1% (Optimal Blue).
-4. (O2) Debt funds' share of CRE loans in 2025? **Answer:** about 15% (Multi-Housing News, 2026).
+3. (O2) DSCR and investor loans were 35.1% of non-QM production in August 2026 (Optimal Blue). What risk grows with that volume? **Answer:** fraud. Fast-growing products attract it, so DSCR files need close document checks (T3; C7).
+4. (O2) Debt funds made about 15% of CRE loans in 2025, up from 5% in 2019. A broker says a fund will lend past our limits. What do you do? **Answer:** keep our limits. Competition does not move them; anything outside needs an approved exception or a decline (CORE-EXC-01).
 5. (O3) Name two market forces that change risk. **Answer:** any two of: refinance risk, competition, buyer standards, fraud.
 6. (O3) Why check a headline percentage against its inputs? **Answer:** to catch wrong inputs; small gaps are usually rounding.
 7. (O4) Which modules cannot be tested out of? **Answer:** C1, C7 and the capstones. (C)
@@ -199,7 +208,7 @@ Pass mark 80%. Items marked (C) are critical. Each set has 8 items and covers al
 3. **Most loans are bridges:** the exit repays them.
 4. **Funding:** warehouse lines, whole-loan sales, securitization.
 5. **Market risks:** refinance, competition, buyer standards, fraud.
-6. **Course:** C0-C2 first; 80% pass with critical items; IDs in Policy and Library; [VERIFY] means confirm with compliance.
+6. **Course:** take C0 to C2 first. Pass each quiz with 80% and every critical item right. Find rule IDs in the Model Credit Policy tab and formula IDs in the Formula Library tab. A [VERIFY] tag marks a legal point that compliance has not yet confirmed.
 
 ## Alignment matrix (LD-07)
 
@@ -222,6 +231,14 @@ Pass mark 80%. Items marked (C) are critical. Each set has 8 items and covers al
 | Sources dated | Met: all market data from 2026, checked 20 Nov 2026 |
 | No open tags | Met: no legal points in C0 |
 
-**What to look up yourself.** Nothing open. Before each new cohort, refresh the market snapshot table. KBRA, Optimal Blue and the MBA publish updates.
+**Self-check.**
+
+1. A borrower wants a bridge loan to buy, renovate and resell a duplex. Which family is it, and what repays it? **Answer:** Residential 1-4; the sale repays it. Only an entity may borrow (CORE-BOR-01).
+2. Name the three ways a private lender funds loans besides holding them. **Answer:** warehouse lines, whole-loan sales and securitization (T2).
+3. Non-QM originations are projected at $175 billion in 2026, up from $108 billion. What is the growth? **Answer:** $175 billion ÷ $108 billion − 1 = 62.0% (worked example 2).
+4. Maple Run is 60 days from maturity with no confirmed exit. What is the minimum rating? **Answer:** 2, Pass/Watch, because it is within 90 days with no confirmed exit (CORE-SVC-07).
+5. Can a limit from this course be used on a live loan? **Answer:** no. It is model policy for training only.
+
+**What to look up yourself.** Find KBRA's latest 2026 RTL securitization figures and Optimal Blue's latest non-QM report. Recompute the rated share and compare it with the 72.9% in worked example 2. A big gap means the market has moved since 20 Nov 2026.
 
 **How to check it.** Divide $3.5 billion by $4.8 billion. You should get 72.9%, close to KBRA's "about 73%".

@@ -32,6 +32,12 @@ export const RTL_GRID = {
   band: { min: 0.085, max: 0.1275 },
 } as const;
 
+/**
+ * CORE-PRC-05: after all sizing tests, round the loan down to the nearest $1,000 (F-CORE-19).
+ * Never round up past any test. Decided 22 Nov 2026 (D-CORE-17); newer than the 21 Nov policy snapshot.
+ */
+export const LOAN_ROUNDING_INCREMENT = 1_000;
+
 /** CORE-SVC-03: default interest = note rate + 5.00%, capped by state usury (F-CORE-31). */
 export const DEFAULT_RATE_ADD = 0.05;
 

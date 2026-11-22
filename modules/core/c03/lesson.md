@@ -59,7 +59,7 @@ One day's interest is the **per diem** (F-CORE-05). Keep it unrounded while you 
 
 1. **Formula.** F-CORE-01: Interest = balance × rate ÷ 360 × actual days.
 2. **Inputs.** Initial advance $240,000; note rate 10.250% (term sheet); closing 15 Jan 2027; $30,000 draw on 15 Mar 2027 (timeline).
-3. **Substitution.** Per diem: $240,000 × 10.25% ÷ 360 = $68.33 (unrounded 68.3333…). January, 17 days: $68.3333 × 17 = $1,161.67. February, 28 days: × 28 = $1,913.33.
+3. **Substitution.** Per diem: $240,000 × 10.25% ÷ 360 = $68.33 (unrounded 68.3333…). January, 17 days: $68.3333 × 17 = $1,161.67. February, 28 days: × 28 = $1,913.33. January's $1,161.67 is never billed. It is collected at closing as prepaid interest (CORE-CLS-04, F-CORE-33).
 4. **Result.** March splits at the draw. 1-14 March: $240,000 × 10.25% ÷ 360 × 14 = $956.67. 15-31 March: $270,000 × 10.25% ÷ 360 × 17 = $1,306.88 (unrounded 1,306.875). March total, rounded once: $2,263.54. This is the billed amount; it feeds the servicing statement (C12), not a credit test.
 
 **Common slip.** Using balance × rate ÷ 12 gives $2,050.00 for every month on $240,000. That is right only for a 30-day month.
@@ -72,12 +72,12 @@ The payment formula (F-CORE-02) uses a monthly rate i = annual rate ÷ 12 and n 
 
 **Worked example 2: Birchwood Plaza term loan (RD-COM-01, month 24)**
 
-1. **Formula.** F-CORE-02: Payment = L × i ÷ (1 − (1 + i)^−n).
+1. **Formula.** F-CORE-02: Payment = L × i ÷ (1 − (1 + i)⁻ⁿ).
 2. **Inputs.** Loan $3,900,000; rate 7.000% (Role 3 answer key, COM-TRM-04 floor); 25-year amortization, so n = 300 (COM-TRM-02).
-3. **Substitution.** i = 7.000% ÷ 12 = 0.0058333…; (1 + i)^−300 = 0.17466; payment = $3,900,000 × 0.0058333 ÷ 0.82534 = $27,564.39.
+3. **Substitution.** i = 7.000% ÷ 12 = 0.0058333…; (1 + i)⁻³⁰⁰ = 0.17466; payment = $3,900,000 × 0.0058333 ÷ 0.82534 = $27,564.39.
 4. **Result.** Monthly payment $27,564.39. It is the base for annual debt service in T3.
 
-**Common slip.** Using the 7-year term instead of the 25-year amortization for n. That payment is far too high and the loan looks unaffordable.
+**Common slip.** Using the loan's term (say 7 years, an example only) instead of the 25-year amortization for n. That payment is far too high and the loan looks unaffordable.
 
 ### T3. Annual debt service and the loan constant (Objective 3, 15 minutes)
 
@@ -90,7 +90,7 @@ The **loan constant** is ADS ÷ loan (F-CORE-04). It tells you the yearly cost o
 1. **Formula.** F-CORE-03: ADS = payment × 12. F-CORE-04: constant = ADS ÷ loan.
 2. **Inputs.** Payment $27,564.39 (worked example 2); loan $3,900,000.
 3. **Substitution.** ADS = $27,564.39 × 12 = $330,772.68. Constant = $330,772.68 ÷ $3,900,000 = 0.0848135.
-4. **Result.** ADS $330,772.68; constant 0.084814 (8.481%). Preview: in C8, NCF $434,000 ÷ $330,772.68 = 1.31x DSCR (F-COM-08), which passes the 1.30x unanchored-retail minimum.
+4. **Result.** ADS $330,772.68; constant 0.084814 (8.481%). Preview: in C8, NCF $434,000 ÷ $330,772.68 = 1.31x DSCR (F-CORE-11), which passes the 1.30x unanchored-retail minimum (COM-TRM limits table).
 
 **Why the constant, not the rate.** At 7.000% the constant is 8.481%, because it includes principal. A loan sized with the rate would carry about 21% more debt than the cash flow supports.
 
@@ -106,6 +106,16 @@ Credit tests use the **nominal** annual rate (D-CONV-01). Billing uses Actual/36
 4. **Result.** Use $235,950.00 in the coverage test: $254,000 ÷ $235,950 = 1.08x (COM-BR-04). The borrower actually pays $3,277.08 more over the year. Liquidity reviews should remember the gap.
 
 **Why it matters.** Mixing the two bases inside one test makes ratios inconsistent between loans. Pick the nominal basis for every test, and the billed basis for every bill.
+
+**Test versus bill.** The same Birchwood balance, measured two ways for one 365-day year:
+
+| Item | Test basis (D-CONV-01) | Billed basis (F-CORE-01) |
+| --- | --- | --- |
+| Calculation | Balance × nominal rate | Balance × rate ÷ 360 × 365 days |
+| Birchwood day one | $2,860,000 × 8.25% = $235,950.00 | $2,860,000 × 8.25% ÷ 360 × 365 = $239,227.08 |
+| Used for | DSCR, coverage, sizing and liquidity tests | Monthly bills, payoffs and prepaid interest |
+
+The billed figure is 365/360 of the test figure, about 1.4% higher.
 
 ### T5. Reading an amortization schedule (Objective 5, 15 minutes)
 
@@ -128,19 +138,19 @@ Each scheduled payment covers that month's interest first. The rest repays princ
 
 Work alone, then check the model answer. The case is RD-MF-01 Cedar Court. It differs from the worked examples in loan size, rate, amortization and day counts (LD-05).
 
-1. Month 10: the funded balance is $4,810,000 and the rate is 9.00%. Find the per diem and the interest for a 31-day month.
-2. In a 30-day month, the balance is $4,710,000 until a $100,000 capex draw funds on the 12th. Find that month's interest.
+1. Month 10: the funded balance is $4,740,000 and the rate is 9.00%. Find the per diem and the interest for a 31-day month.
+2. In a 30-day month, the balance is $4,640,000 until a $100,000 capex draw funds on the 12th. Find that month's interest.
 3. The month-27 term loan is $5,472,000 at 7.250% on 30-year amortization. Find the payment, ADS and constant.
 4. Find month 1 interest, principal and closing balance on that term loan.
-5. On day one, the bridge was $4,410,000 with a test rate of 8.25%. Find the test ADS, the interest billed over 365 days, and the gap.
+5. On day one, the bridge was $4,340,000 with a test rate of 8.25%. Find the test ADS, the interest billed over 365 days, and the gap.
 
 **Model answer**
 
-1. Per diem (F-CORE-05): $4,810,000 × 9.00% ÷ 360 = $1,202.50. 31 days (F-CORE-01): $1,202.50 × 31 = $37,277.50.
-2. Days 1-11 at $4,710,000 and days 12-30 at $4,810,000 (the funding day counts, D-CONV-02). Interest = $4,710,000 × 9% ÷ 360 × 11 + $4,810,000 × 9% ÷ 360 × 19 = $12,952.50 + $22,847.50 = $35,800.00.
+1. Per diem (F-CORE-05): $4,740,000 × 9.00% ÷ 360 = $1,185.00. 31 days (F-CORE-01): $1,185.00 × 31 = $36,735.00.
+2. Days 1-11 at $4,640,000 and days 12-30 at $4,740,000 (the funding day counts, D-CONV-02). Interest = $4,640,000 × 9% ÷ 360 × 11 + $4,740,000 × 9% ÷ 360 × 19 = $12,760.00 + $22,515.00 = $35,275.00.
 3. Payment (F-CORE-02, n = 360): $37,328.69. ADS (F-CORE-03): $37,328.69 × 12 = $447,944.28. Constant (F-CORE-04): 0.081861. This ADS gives 1.25x on $560,000 NCF (F-MF-10).
 4. Interest: $5,472,000 × 7.25% ÷ 12 = $33,060.00. Principal: $37,328.69 − $33,060.00 = $4,268.69. Closing balance: $5,467,731.31.
-5. Test ADS: $4,410,000 × 8.25% = $363,825.00. Billed over 365 days: $368,878.13. Gap: $5,053.13 (D-CONV-01).
+5. Test ADS: $4,340,000 × 8.25% = $358,050.00. Billed over 365 days: $363,022.92. Gap: $4,972.92 (D-CONV-01).
 
 **Self-score.** One point per correct figure (12 figures). Ten or more: move on. Fewer: redo the matching worked example.
 
@@ -153,7 +163,7 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 1. **(Critical, O1)** A $600,000 interest-only loan at 9.500% Actual/360. Interest for a 31-day month? A) $4,750.00 B) $4,841.10 C) $4,908.33 D) $4,987.50
 2. (O1) Per diem on $1,200,000 at 8.750%? A) $287.67 B) $291.67 C) $8,750.00 D) $29.17
 3. (O1) A loan funds on 20 April and April has 30 days. How many interest days in April? A) 10 B) 11 C) 30 D) 20
-4. **(Critical, O2)** Monthly payment on $750,000 at 7.500%, 30-year amortization? A) $4,687.50 B) $5,244.11 C) $8,902.63 D) $5,542.97
+4. **(Critical, O2)** Monthly payment on $750,000 at 7.500%, 10-year term, 30-year amortization? A) $4,687.50 B) $5,244.11 C) $8,902.63 D) $5,542.97
 5. (O2) A 10-year term loan amortizes over 25 years. What is n in F-CORE-02? A) 120 B) 240 C) 300 D) 360
 6. (O3) The monthly payment is $5,244.11. ADS? A) $62,929.32 B) $62,929.44 C) $5,244.11 D) $63,804.01
 7. (O3) Loan constant at 8.000% on 25-year amortization, to six decimals? A) 0.080000 B) 0.092618 C) 0.088052 D) 0.092600
@@ -171,7 +181,7 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 4. B. F-CORE-02 with i = 0.625%, n = 360. C uses n = 120 (the term). A is interest only.
 5. C. n = amortization months: 25 × 12 = 300.
 6. A. $5,244.11 × 12 = $62,929.32 (F-CORE-03). B multiplies a different payment.
-7. B. 12 × i ÷ (1 − (1 + i)^−300) = 0.092618 (F-CORE-04). A is the rate.
+7. B. 12 × i ÷ (1 − (1 + i)⁻³⁰⁰) = 0.092618 (F-CORE-04). A is the rate.
 8. B. ADS includes principal, so the constant exceeds the rate on an amortizing loan.
 9. A. Tests use L × r = $180,000.00 (F-CORE-03, D-CONV-01). B is the 365-day billed amount.
 10. B. D-CONV-01.
@@ -180,10 +190,10 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 
 ### Set B
 
-1. **(Critical, O1)** An $850,000 interest-only loan at 10.750% Actual/360. Interest for a 30-day month? A) $7,614.58 B) $7,868.40 C) $7,506.85 D) $9,137.50
+1. **(Critical, O1)** An $850,000 interest-only loan at 10.750% Actual/360. Interest for a 30-day month? A) $7,614.58 B) $7,868.40 C) $7,510.27 D) $9,137.50
 2. (O1) Per diem on $2,500,000 at 8.250%? A) $565.07 B) $572.92 C) $20,625.00 D) $687.50
 3. (O1) A loan funds on 3 March and is paid off on 31 March. How many interest days? A) 29 B) 28 C) 31 D) 27
-4. **(Critical, O2)** Monthly payment on $1,250,000 at 6.750%, 25-year amortization? A) $7,031.25 B) $8,107.48 C) $8,636.39 D) $14,353.01
+4. **(Critical, O2)** Monthly payment on $1,250,000 at 6.750%, 10-year term, 25-year amortization? A) $7,031.25 B) $8,107.48 C) $8,636.39 D) $14,353.01
 5. (O2) A 5-year loan amortizes over 30 years. What is n in F-CORE-02? A) 60 B) 300 C) 360 D) 30
 6. (O3) The monthly payment is $31,877.45. ADS? A) $382,529.40 B) $31,877.45 C) $388,000.00 D) $382,529.00
 7. (O3) Loan constant at 8.250% on 25-year amortization, to six decimals? A) 0.082500 B) 0.094614 C) 0.090150 D) 0.094600
@@ -213,7 +223,7 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 | Item | Detail |
 | --- | --- |
 | Role | Closing, servicing and asset management |
-| Output | Interest billing statement for Maple Run, January to June 2027: one row per billing period with dates, days, balance segments and interest |
+| Output | Interest billing statement for Maple Run, January to June 2027: one row per billing period with dates, days, balance segments and interest; mark January as prepaid at closing (CORE-CLS-04) |
 | Source | RD-RES-01: initial advance $240,000 on 15 Jan 2027; draws of $30,000 on 15 Mar and $25,000 on 15 May; 10.250% Actual/360 (draws 1 and 2 of the Role 3 draw table, dated on the 15th) |
 | Time allowed | 45 minutes |
 | Sign-off | Self-review against the rubric and model answer (solo mode). Record your score and gaps with the date |
@@ -230,13 +240,15 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 
 | Period | Days | Balance | Interest (F-CORE-01) |
 | --- | --- | --- | --- |
-| 15-31 Jan 2027 | 17 | $240,000 | $1,161.67 |
+| 15-31 Jan 2027 (prepaid at closing, CORE-CLS-04) | 17 | $240,000 | $1,161.67 |
 | 1-28 Feb 2027 | 28 | $240,000 | $1,913.33 |
 | 1-31 Mar 2027 | 31 | $240,000 (14 days), $270,000 (17 days) | $2,263.54 |
 | 1-30 Apr 2027 | 30 | $270,000 | $2,306.25 |
 | 1-31 May 2027 | 31 | $270,000 (14 days), $295,000 (17 days) | $2,504.13 |
 | 1-30 Jun 2027 | 30 | $295,000 | $2,519.79 |
-| Total | 167 | | $12,668.72 |
+| Total | 167 |  | $12,668.71 |
+
+**Rounding rule.** Round each period to the cent once (F-CORE-01). The total adds the rounded rows, because those are the amounts charged: $12,668.71. Adding the unrounded rows gives $12,668.72, which nobody is charged. January's $1,161.67 is collected at closing (CORE-CLS-04, F-CORE-33), so the February to June bills total $11,507.04.
 
 ## 8. Job aid: C3-jobaid-v0 (one page)
 
@@ -286,6 +298,19 @@ The OJT covers O1 and O4. O2, O3 and O5 are practised on the job in the C8 and C
 | Job aid fits one page | Met on screen; confirm when printed |
 | Accessibility (LD-09) | Tables have headers; no colour-only meaning |
 
-**What to look up yourself:** the interest and day-count clause in any public bridge-loan note or term sheet, to see Actual/360 in real wording.
+**Self-check.**
 
-**How to check it:** in a spreadsheet, =ROUND(240000*10.25%/360*14+270000*10.25%/360*17,2) should give $2,263.54, the March bill in the hook.
+1. A $240,000 loan at 10.25% funds on 15 January. How many interest days fall in January, and what is the interest? **Answer:** 17 days, because the funding day counts (D-CONV-02). $240,000 × 10.25% ÷ 360 × 17 = $1,161.67 (F-CORE-01), collected at closing (CORE-CLS-04, F-CORE-33).
+2. A 10-year loan amortizes over 25 years. What is n in the payment formula? **Answer:** n = 25 × 12 = 300 months, not the 120-month term (F-CORE-02).
+3. A $1,500,000 interest-only bridge is at 8.00%. What ADS goes in the coverage test, and what is billed over 365 days? **Answer:** Test ADS = $1,500,000 × 8.00% = $120,000.00 (F-CORE-03, D-CONV-01). Billed = $1,500,000 × 8.00% ÷ 360 × 365 = $121,666.67 (F-CORE-01).
+4. Why is the loan constant at 7.000% on 25-year amortization above 7.000%? **Answer:** It includes principal repayment: 0.084814, or 8.481% (F-CORE-04).
+
+**Real-world check (researched 19 Nov 2026).** These real documents use the same conventions taught in T1 and T4.
+
+- **Note wording.** A typical US promissory note clause says interest is "computed on a 365/360 basis". It then describes the rate over a 360-day year, times the balance, times the actual days outstanding. That is F-CORE-01 ([Law Insider, interest rate computation clause](https://lawinsider.com/clause/interest-rate-computation/_1)).
+- **The cost of the convention.** A law-firm example: $10,000,000 at 8% costs $800,000 a year on a 365-day basis, but $811,111 on the bank (Actual/360) method. That is 1.39% more, the same 365/360 gap taught in T4 ([Reinhart Boerner Van Deuren](https://www.reinhartlaw.com/knowledge/calculating-interest-the-stated-rate-method-and-the-bank-method/)).
+- **Rate caps.** A bank's standard rate cap confirmation sets the floating rate day count fraction at Actual/360 ([Wells Fargo cap confirmation template](https://wellsfargo.com/assets/pdf/commercial/swap-disclosures/templates/rates-cap-floor-straddle-corridor.pdf)). The ARRC recommends Actual/360 for SOFR loans as the US money-market standard ([ARRC syndicated loan conventions](https://www.newyorkfed.org/medialibrary/Microsites/arrc/files/2020/ARRC_SOFR_Synd_Loan_Conventions.pdf)). So cap payouts and loan interest use the same basis, as the running deals assume.
+
+**What to look up yourself.** Open the ARRC's recommended conventions for SOFR business loans on the [New York Fed ARRC business loans page](https://www.newyorkfed.org/arrc/publications/business-loans). Find the day count it recommends and compare it with F-CORE-01. Then find the day-count clause in a promissory note you can see at work, and check that it matches D-CONV-02.
+
+**How to check it:** in a spreadsheet, `=ROUND(240000*10.25%/360*14+270000*10.25%/360*17,2)` should give $2,263.54, the March bill in the hook.

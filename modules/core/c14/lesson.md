@@ -6,11 +6,10 @@
 | Hours | 3 (180 minutes) plus a 45-minute OJT task |
 | Prerequisites | C6, C8 |
 | Bloom's levels | 4 to 6 (LD-02) |
-| Formulas | F-CORE-25, -29, -30, -43 (new, SUGGESTED) |
-| Rules | CORE-AUTH-01 to -04 (-02 to -04 new); CORE-EXC-01 to -05; CORE-CONC-01 to -07; CORE-SVC-07 |
+| Formulas | F-CORE-25, -29, -30, -43 (SUGGESTED) |
+| Rules | CORE-AUTH-01 to -04; CORE-EXC-01 to -05; CORE-CONC-01 to -07; CORE-SVC-07 |
 | Running deals | Worked examples: RD-RES-01 Maple Run (memo, exception) and RD-COM-01 Birchwood Plaza (portfolio). Practice: RD-MF-01 Cedar Court (LD-08). The portfolio book is a C14 training figure |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft; all numbers computed in code. New rules CORE-AUTH-02 (memo standard), -03 (committee), -04 (independent review). New formula F-CORE-43 (bucket headroom). Critical-credit-error definition confirmed in Main Section 3 |
 
 ## Timing plan
 
@@ -52,17 +51,19 @@ Write it so the approver can decide from the memo alone. Put the answer first. T
 
 **New rule CORE-AUTH-02.** Every credit memo has these sections, in order:
 
-1. Request and recommendation: amount, product, approver, any exceptions.
-2. Borrower and guarantors: entity, ownership, experience tier, credit, liquidity, net worth.
-3. Property and valuation.
-4. Cash flow or project budget.
-5. Sizing table: every test against its limit, with rule and formula IDs.
-6. Exit analysis, with the cushion.
-7. State law check (CORE-BP-03, CORE-PRC-03, CORE-DOC-04).
-8. Portfolio impact (CORE-CONC).
-9. Risks and mitigants, in pairs.
-10. Risk rating at approval (CORE-SVC-07).
-11. Conditions to close.
+| # | Section | What to write | Your entry |
+| --- | --- | --- | --- |
+| 1 | Request and recommendation | Amount, product, approver, any exceptions |  |
+| 2 | Borrower and guarantors | Entity, ownership, experience tier, credit, liquidity, net worth |  |
+| 3 | Property and valuation | The property and the value used |  |
+| 4 | Cash flow or project budget | Income and expenses, or the budget |  |
+| 5 | Sizing table | Every test against its limit, with rule and formula IDs |  |
+| 6 | Exit analysis | The exit, with the cushion |  |
+| 7 | State law check | CORE-BP-03, CORE-PRC-03, CORE-DOC-04 |  |
+| 8 | Portfolio impact | CORE-CONC tests |  |
+| 9 | Risks and mitigants | In pairs |  |
+| 10 | Risk rating at approval | CORE-SVC-07 |  |
+| 11 | Conditions to close | Each condition |  |
 
 Each risk has a matching mitigant, or the memo says there is none.
 
@@ -74,7 +75,7 @@ Each risk has a matching mitigant, or the memo says there is none.
 | --- | --- |
 | ARV reliance: LTARV 65.4% | Sale exit margin 14.3%; LTC 85.0% within cap |
 | Roof and HVAC execution | 10% contingency ($9,000); completion guaranty; draws only after inspection |
-| Thin rental exit: DSCR 0.98x | Sale exit; Dana's liquidity $90,900 covers about $9,000 at refinance |
+| Thin rental exit: DSCR 0.98x | Sale exit; Dana Reyes's liquidity $90,900 covers about $9,000 at refinance |
 | Ohio judicial foreclosure is slow | Usury-exempt; full recourse; deficiency allowed (SLT-OH-01) |
 
 ### T2. Who approves (Objective 2, 15 minutes)
@@ -85,8 +86,10 @@ The approver is never the underwriter of record (CORE-AUTH-01). The lowest level
 | --- | --- | --- | --- |
 | Loan size | Up to $500,000, Residential only | Up to $2,000,000 | Above $2,000,000 |
 | Sponsor exposure (F-CORE-29) | Up to $1,000,000 | Up to $5,000,000 | Above $5,000,000 |
-| Exceptions | None | One, within limits | Up to two, within limits |
-| Always committee | | | Tier 0 ground-up; related-party; any CONC breach |
+| Exceptions | None | One: leverage +2.5 points; DSCR −0.05x; FICO −20; liquidity −10% of requirement | Up to two: leverage +5.0 points; DSCR −0.10x; FICO −40; liquidity −25% of requirement |
+| Always committee |  |  | Related-party or employee loans; Tier 0 ground-up; first loan in a new state; any CONC breach |
+
+Beyond the committee limits the loan is declined; no one has authority (CORE-AUTH-01).
 
 **Worked example 2: the three running deals.**
 
@@ -94,18 +97,29 @@ The approver is never the underwriter of record (CORE-AUTH-01). The lowest level
 | --- | --- | --- | --- | --- |
 | Maple Run | $340,000 | $340,000, under Tier 2 cap $7,500,000 | Senior underwriter | Residential, under $500,000, no exceptions |
 | Cedar Court | $5,140,000 | Over Marcus's Tier 1 cap of $3,000,000 | Committee | Over $2,000,000 and over the CONC-01 cap |
-| Birchwood | $3,520,000 | Over Dana's Tier 1 cap | Committee | Over $2,000,000 and over the CONC-01 cap |
+| Birchwood | $3,520,000 | Over Dana Whitlow's Tier 1 cap | Committee | Over $2,000,000 and over the CONC-01 cap |
 
 ### T3. Exceptions (Objective 3, 15 minutes)
 
-An exception is any approval outside a policy rule. It is approved before closing, never after (CORE-EXC-01). It needs at least two compensating factors (CORE-EXC-02). Legal, KYC, OFAC and business-purpose rules have no exceptions (CORE-EXC-03).
+An exception is any approval outside a policy rule. It is approved before closing, never after (CORE-EXC-01). It needs at least two compensating factors (CORE-EXC-02). Legal, KYC and OFAC rules, the CORE-BP business-purpose rules and the CORE-BOR-09 fraud bar have no exceptions (CORE-EXC-03).
+
+**Accepted compensating factors (CORE-EXC-02).** An exception needs at least two.
+
+| # | Factor |
+| --- | --- |
+| 1 | Leverage at least 10 points under the maximum |
+| 2 | Liquidity at least 2x F-CORE-25 |
+| 3 | Qualifying FICO 760 or more |
+| 4 | Tier 3 experience |
+| 5 | Extra collateral |
+| 6 | At least 3 repaid loans with us and no late payments |
 
 Regulators expect deviations from loan policy to be neither recurring nor excessive, and to be reported to the board [VERIFY: Federal Reserve, credit risk guidance for new banks; checked 20 Nov 2026]. That is why CORE-EXC-05 triggers a policy review when exceptions pass 10% of new loans.
 
-**Worked example 3: Dana asks for 87.5% LTC.** Total project cost is $400,000. Policy LTC is 85%, $340,000. She wants $350,000.
+**Worked example 3: Dana Reyes asks for 87.5% LTC.** Total project cost is $400,000. Policy LTC is 85%, $340,000. She wants $350,000.
 
 1. Size of the exception: 87.5% − 85.0% = +2.5 points. A credit officer can approve one leverage exception of up to +2.5 points (CORE-AUTH-01).
-2. Factor 1: liquidity at least 2x the requirement. Required (F-CORE-25) = max(10% × $350,000, 6 months' interest $17,937.50) = $35,000. Dana's $90,900 is 2.6x. Met.
+2. Factor 1: liquidity at least 2x the requirement. Required (F-CORE-25) = max(10% × $350,000, 6 months' interest $17,937.50) = $35,000. Dana Reyes's $90,900 is 2.6x. Met.
 3. Factor 2: none. Her FICO is 712 (760 needed), she is Tier 2 (Tier 3 needed), with no extra collateral and no repaid loans with us.
 4. Decision: one factor, two needed (CORE-EXC-02). Decline the exception; the $340,000 approval stands.
 
@@ -115,18 +129,28 @@ US bank regulators warn that concentrations add risk on top of the risk in each 
 
 **C14 training book.** Total commitments $120,000,000. Indiana $28,500,000. North Carolina $26,000,000. Columbus, Ohio MSA $17,500,000.
 
-**F-CORE-43: Bucket headroom (SUGGESTED, new).** The largest new loan a bucket can take, since the loan adds to both the bucket and the book.
+**F-CORE-43: Bucket headroom (SUGGESTED).** The largest new loan a bucket can take, since the loan adds to both the bucket and the book.
 
 1. Formula: headroom = (cap × total − bucket) ÷ (1 − cap).
 2. Inputs (Indiana, 25% state cap, CORE-CONC-06): 25%; $120,000,000; $28,500,000.
 3. Substitution: (25% × $120,000,000 − $28,500,000) ÷ 75% = $1,500,000 ÷ 0.75.
 4. Result: $2,000,000.00. Birchwood's $3,520,000 does not fit.
 
-**Worked example 4: Birchwood's portfolio test (F-CORE-30).** Indiana after Birchwood: ($28,500,000 + $3,520,000) ÷ ($120,000,000 + $3,520,000) = 25.9%, above 25%. Sponsor share: $3,520,000 ÷ $123,520,000 = 2.8%, under 5% (CORE-CONC-02).
+**Worked example 4: Birchwood's portfolio test (F-CORE-30).**
+
+1. Formula: bucket share = (bucket + new loan) ÷ (total + new loan).
+2. Inputs: Indiana $28,500,000; Birchwood $3,520,000; book $120,000,000; state cap 25% (CORE-CONC-06).
+3. Substitution: ($28,500,000 + $3,520,000) ÷ ($120,000,000 + $3,520,000) = $32,020,000 ÷ $123,520,000.
+4. Result: 25.9%, above 25%. Sponsor share: $3,520,000 ÷ $123,520,000 = 2.8%, under 5% (CORE-CONC-02).
 
 Decision: a CONC breach needs committee approval (CORE-AUTH-01, CORE-CONC-07). Committee has three options. It can approve with part of the loan sold as a participation, wait for other Indiana loans to pay off, or decline for now.
 
-**Worked example 5: Maple Run, Columbus MSA (15% cap).** After the loan: ($17,500,000 + $340,000) ÷ $120,340,000 = 14.8%. Passes. Headroom before it: (15% × $120,000,000 − $17,500,000) ÷ 85% = $588,235.29. One more Maple Run-size loan would leave little room.
+**Worked example 5: Maple Run, Columbus MSA (15% cap).**
+
+1. Formula: share after = (bucket + loan) ÷ (total + loan) (F-CORE-30). Headroom = (cap × total − bucket) ÷ (1 − cap) (F-CORE-43).
+2. Inputs: Columbus $17,500,000; Maple Run $340,000; book $120,000,000; cap 15%.
+3. Substitution: $17,840,000 ÷ $120,340,000. Headroom after the loan: (15% × $120,340,000 − $17,840,000) ÷ 85% = $211,000 ÷ 0.85.
+4. Result: 14.8%, so it passes. Headroom left is $248,235.29. A second $340,000 loan would take Columbus to $18,180,000 ÷ $120,680,000 = 15.06%. That breaches the cap and needs committee (CORE-AUTH-01).
 
 ### T5. The committee (Objective 5, 15 minutes)
 
@@ -134,11 +158,11 @@ Decision: a CONC breach needs committee approval (CORE-AUTH-01, CORE-CONC-07). C
 
 **How to present.** Two minutes on the recommendation. Then the three biggest risks and their mitigants. Then the questions. Never argue a number you cannot show in the memo.
 
-**Worked example 6: Birchwood at committee.** Questions likely: can a 32,000 sf operator lease 12,000 sf in 18 months? What is the exit cushion if NCF lands 10% short? How does Indiana's 25.9% fit CORE-CONC-06? Possible decision: approve, conditional on selling a $1,800,000 participation so Indiana stays at 25% or below. Check: ($28,500,000 + $1,720,000) ÷ ($120,000,000 + $1,720,000) = 24.8%.
+**Worked example 6: Birchwood at committee.** Questions likely: can a 32,000 sf operator lease 12,000 sf in 18 months? What is the exit cushion if NCF lands 10% short? How does Indiana's 25.9% fit CORE-CONC-06? Answer to the second question: NCF 10% short is $434,000 × 90% = $390,600. Exit DSCR = $390,600 ÷ $319,050.84 = 1.22x, below the 1.30x exit test (F-COM-10). The memo must name a mitigant for that. Smallest participation that works: Indiana headroom is $2,000,000 (F-CORE-43), so sell at least $3,520,000 − $2,000,000 = $1,520,000. Then ($28,500,000 + $2,000,000) ÷ ($120,000,000 + $2,000,000) = 25.0%, at the cap. Possible decision: approve, conditional on selling a $1,800,000 participation, for a margin below the cap. Check: ($28,500,000 + $1,720,000) ÷ ($120,000,000 + $1,720,000) = 24.8%.
 
 ### T6. Critical errors and independent review (Objective 6, 5 minutes)
 
-**Critical credit error (confirmed, Main Section 3).** Any of these, whatever the final outcome:
+**Critical credit error (Main Section 3).** Any of these, whatever the final outcome:
 
 - a wrong sizing result that changes the loan amount or approver;
 - a missed business-purpose or occupancy red flag;
@@ -156,7 +180,10 @@ Use RD-MF-01 Cedar Court. Facts: $5,140,000 commitment; Marcus is Tier 1 (cap $3
 2. Who approves, and why?
 3. Test North Carolina's state cap and the sponsor cap.
 4. What is North Carolina's headroom before Cedar (F-CORE-43)?
-5. Marcus asks to waive the 1.00x interest-coverage floor to 0.95x. Is that within committee's exception limits, and what would you need?
+5. Marcus's in-place interest coverage comes in at 0.95x. Does that need an exception? Then test him against all six compensating factors.
+6. Critical error or not? A credit officer approves a $2,400,000 commercial loan.
+7. Critical error or not? The memo shows exit DSCR as 1.37x instead of 1.36x. The loan amount and approver do not change.
+8. Critical error or not? An OFAC hit on a 10% owner is missed, and the loan performs.
 
 **Answer key.**
 
@@ -164,13 +191,15 @@ Use RD-MF-01 Cedar Court. Facts: $5,140,000 commitment; Marcus is Tier 1 (cap $3
 2. Committee: over $2,000,000 and over the CONC-01 cap (CORE-AUTH-01).
 3. North Carolina: $31,140,000 ÷ $125,140,000 = 24.9%, passes. Sponsor: $5,140,000 ÷ $125,140,000 = 4.1%, passes CORE-CONC-02.
 4. (25% × $120,000,000 − $26,000,000) ÷ 75% = $5,333,333.33. Cedar fits, with $193,333.33 to spare.
-5. −0.05x is within committee's −0.10x DSCR limit (CORE-AUTH-01). It needs two compensating factors (CORE-EXC-02). Marcus's liquidity is $930,000, 1.8x the requirement: not 2x, so it does not count. Without two factors, decline.
-
-**Common wrong answers.** Sending Cedar to a credit officer. Testing the bucket against the old total. Counting a near-miss as a compensating factor.
+5. No exception. MF-BR-07 sets no floor to waive: below 1.00x, the loan funds an interest reserve for the shortfall for 12 months. Factors (CORE-EXC-02): leverage, no (initial funding is 70%, at the MF-BR-02 limit); liquidity, no ($930,000 is 1.8x, not 2x); FICO, no (728, not 760); experience, no (Tier 1, not Tier 3); extra collateral, no; repaid loans with us, no (none). Zero of six, so any real exception for Marcus would be declined.
+6. Yes: an approval outside authority. A credit officer's limit is $2,000,000 (CORE-AUTH-01; Main Section 3).
+7. No: a wrong figure that changes neither the amount nor the approver is not critical (Main Section 3). Correct the memo.
+8. Yes: a missed OFAC hit is critical, whatever the outcome (Main Section 3; CORE-EXC-03).
+9. Common wrong answers: sending Cedar to a credit officer; testing the bucket against the old total; counting a near-miss as a compensating factor.
 
 ## 6. Quiz: C14-quiz-v0
 
-Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers all six objectives.
+Pass mark 80%, and every critical item correct. Items marked (C) are critical: a wrong answer on one fails the quiz whatever the score. Each set has 12 items and covers all six objectives.
 
 ### Set A
 
@@ -210,6 +239,14 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 
 **Time.** 45 minutes.
 
+**Steps.**
+
+1. Write section 1 first: request, recommendation and approver (CORE-AUTH-01, -02).
+2. Fill sections 2-6 from the Running Deals Role 1 and Role 2 answer keys, with rule and formula IDs.
+3. Section 7: the Indiana check (SLT-IN-02). Section 8: the Indiana test and headroom (F-CORE-30, -43).
+4. Sections 9-11: risks paired with mitigants, the rating (CORE-SVC-07) and conditions to close.
+5. Write the minutes: each voter's vote with a reason, one reasoned dissent, and every condition (CORE-AUTH-03).
+
 **Rubric.**
 
 | Criterion | Pass |
@@ -227,8 +264,8 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 
 1. **Memo.** Eleven sections; answer first; risks paired with mitigants (CORE-AUTH-02).
 2. **Exposure.** Add every open commitment to the sponsor (F-CORE-29; CORE-CONC-01).
-3. **Approver.** Lowest level with authority for size, exposure and exceptions (CORE-AUTH-01).
-4. **Exceptions.** Within limits, two compensating factors, never on legal or KYC rules (CORE-EXC).
+3. **Approver.** Lowest level with authority for size, exposure and exceptions; committee for every always-committee item (CORE-AUTH-01).
+4. **Exceptions.** Within limits, two compensating factors, never on legal, KYC, OFAC or CORE-BP rules or the CORE-BOR-09 fraud bar (CORE-EXC-02, -03).
 5. **Portfolio.** Bucket share after the loan; headroom = (cap × total − bucket) ÷ (1 − cap) (F-CORE-30, -43).
 6. **Committee.** Three voters; two votes; CCO veto on approvals; minutes (CORE-AUTH-03).
 7. **Review.** Independent re-test; critical errors to committee within a month (CORE-AUTH-04).
@@ -244,7 +281,7 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 | O3 Exceptions | T3 | WE3 | P5 | 5-6 | 5-6 | None | Step 4 |
 | O4 Portfolio | T4 | WE4, WE5 | P3, P4 | 7-8 | 7-8 | Portfolio test | Step 5 |
 | O5 Committee | T5 | WE6 | None | 9-10 | 9-10 | Minutes | Step 6 |
-| O6 Errors and review | T6 | Definition list | None | 11-12 | 11-12 | None | Step 7 |
+| O6 Errors and review | T6 | Definition list | P6-P8 | 11-12 | 11-12 | None | Step 7 |
 
 ## Self-review against Bible Section 7 (20 Nov 2026)
 
@@ -255,8 +292,16 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 | Formulas worked in four lines | Met; computed in code |
 | Deal numbers match the running deals file | Met. The $120,000,000 book, state and MSA balances and the participation are C14 training figures |
 | Quiz sets; critical items | Met: 12 items each; 3 critical in A, 4 in B |
-| O5 and O6 practised | Not met in practice; covered in OJT (O5) and quiz (O6). Add in v1 |
+| O5 and O6 practised | Partly met: P6-P8 practise O6; O5 is covered in the OJT and quiz |
 | No open tags | Not met: [VERIFY] on NCUA, Federal Reserve and interagency sources. Stays v0 |
+
+**Self-check.**
+
+1. A $1,500,000 commercial loan; sponsor exposure $1,200,000; no exceptions. Who approves? **Answer:** a credit officer: up to $2,000,000 and $5,000,000 of exposure, and senior underwriters approve Residential only (CORE-AUTH-01).
+2. After Maple Run, Columbus is $17,840,000 of a $120,340,000 book, with a 15% cap. What is the headroom? **Answer:** (15% × $120,340,000 − $17,840,000) ÷ 85% = $248,235.29 (F-CORE-43).
+3. An exception has one compensating factor. Can committee approve it? **Answer:** no; every exception needs at least two (CORE-EXC-02).
+4. Can an exception be made to a CORE-BP business-purpose rule? **Answer:** never (CORE-EXC-03).
+5. At committee, who may veto, and what? **Answer:** the Chief Credit Officer, and only an approval, never a decline (CORE-AUTH-03).
 
 **What to look up yourself.**
 

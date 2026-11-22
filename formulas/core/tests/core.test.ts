@@ -208,7 +208,11 @@ describe("F-CORE-19 maximum loan (lowest test)", () => {
   it("Maple-style tests", () => expect(money(core.maxLoan([1_125_000, 1_050_000, 1_000_000]))).toBe(exp[0]));
   it("Cedar Court", () => expect(money(core.maxLoan([3_900_000, 3_936_238, 4_822_222]))).toBe(exp[1]));
   it("NNN", () => expect(money(core.maxLoan([2_800_000, 2_468_378]))).toBe(exp[2]));
+  it("rounds down to $1,000 (CORE-PRC-05): 2,468,378 → 2,468,000", () =>
+    expect(core.maxLoan([2_800_000, 2_468_378])).toBe(2_468_000));
+  it("never rounds up past the binding test", () => expect(core.maxLoan([5_472_681.99])).toBe(5_472_000));
   it("any test ≤ $0 → no loan", () => expect(core.maxLoan([1_000_000, -1])).toBe(0));
+  it("a $0 test → no loan", () => expect(core.maxLoan([1_000_000, 0])).toBe(0));
   it("rejects an empty list", () => expect(() => core.maxLoan([])).toThrow(RangeError));
 });
 

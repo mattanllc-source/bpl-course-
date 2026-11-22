@@ -9,7 +9,7 @@
 | Prerequisite | C4 |
 | Bloom's levels | 2, 3 and 4 (LD-02) |
 | Formulas | F-CORE-13, F-CORE-14, F-CORE-36; F-RES-02, F-RES-03 (as family examples) |
-| Rules | CORE-VAL-01, CORE-VAL-02, CORE-VAL-03; D-CONV-06 |
+| Rules | CORE-VAL-01, CORE-VAL-02, CORE-VAL-03; MF-BR-02, MF-BR-04; CORE-PRC-05 |
 | Running deals | Worked examples: RD-COM-01 Birchwood Plaza and RD-RES-01 Maple Run. Practice: RD-MF-01 Cedar Court (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
 | Change log | v0, 20 Nov 2026: first draft; all numbers computed in code; market and legal facts researched 19-20 Nov 2026 |
@@ -39,7 +39,7 @@ By the end of C5, you will be able to:
 
 1. **Distinguish** as-is, as-completed (ARV) and as-stabilized values, and name which loan test uses each.
 2. **Calculate** value from NOI and a cap rate, and the implied cap rate from a price (F-CORE-13), including a ±25 basis point sensitivity.
-3. **Calculate** LTV on the lower of cost and appraisal on a purchase (F-CORE-14, D-CONV-06).
+3. **Calculate** LTV on the lower of cost and appraisal on a purchase (F-CORE-14).
 4. **Apply** the appraisal rules: who orders it, how old it may be, and how it is reviewed (CORE-VAL-01 to -03, F-CORE-36).
 5. **Analyze** negative leverage by comparing the cap rate with the loan constant.
 
@@ -68,20 +68,20 @@ A lower cap rate means a higher value for the same NOI. Small rate moves create 
 **Worked example 1: Birchwood as-stabilized value and sensitivity (RD-COM-01)**
 
 1. **Formula.** F-CORE-13: V = NOI ÷ CR. F-CORE-14: LTV = L ÷ V.
-2. **Inputs.** Stabilized NOI $480,000 (C4 practice); appraiser's cap rate 8.00%; term loan $3,900,000; COM-TRM limit 65% LTV.
+2. **Inputs.** Stabilized NOI $480,000 (C4 practice); appraiser's cap rate 8.00%; term loan $3,900,000; 65% LTV limit for unanchored retail (COM-TRM limits table).
 3. **Substitution.** At 8.00%: $480,000 ÷ 0.0800 = $6,000,000.00; LTV $3,900,000 ÷ $6,000,000 = 65.00%. At 8.25%: $480,000 ÷ 0.0825 = $5,818,181.82; LTV 67.03%. At 7.75%: $480,000 ÷ 0.0775 = $6,193,548.39; LTV 62.97%.
-4. **Result.** The base case passes at exactly 65.00%. At 8.25%, the 65% loan is $3,781,818.18, which is $118,181.82 less. A 25-basis-point move is worth about $182,000 to $194,000 of value.
+4. **Result.** The base case passes at exactly 65.00%. At 8.25%, the 65% test allows $3,781,818.18. Rounded down to the nearest $1,000 (CORE-PRC-05), the loan is $3,781,000, which is $119,000 less. A 25-basis-point move is worth about $182,000 to $194,000 of value.
 
 **Common slip.** Capping a pro forma NOI and calling it as-is value. The as-is value caps in-place income; the as-stabilized value caps the stabilized income.
 
 ### T3. Lower of cost or value (Objective 3, 15 minutes)
 
-On a purchase, value for LTV is the lower of the price and the appraisal (F-CORE-14; D-CONV-06). That is also the federal value definition for purchase loans [VERIFY: 12 CFR 365 Appendix A, eCFR, checked 19 Nov 2026]. A high appraisal cannot create equity the buyer has not paid for.
+On a purchase, value for LTV is the lower of the price and the appraisal (F-CORE-14). That is also the federal value definition for purchase loans [VERIFY: 12 CFR 365 Appendix A, eCFR, checked 19 Nov 2026]. A high appraisal cannot create equity the buyer has not paid for.
 
 **Worked example 2: Birchwood bridge LTV (RD-COM-01)**
 
 1. **Formula.** F-CORE-14: LTV = L ÷ min(price, appraisal).
-2. **Inputs.** Price $4,400,000; as-is appraisal $4,500,000; bridge loan $2,860,000; limit 65% as-is (COM-BR table).
+2. **Inputs.** Price $4,400,000; as-is appraisal $4,500,000; bridge loan $2,860,000; limit 65% as-is for unanchored retail (COM-BR limits table).
 3. **Substitution.** min($4,400,000, $4,500,000) = $4,400,000. LTV = $2,860,000 ÷ $4,400,000 = 65.00%.
 4. **Result.** Passes at exactly 65.00%. Dividing by the appraisal would show 63.56% and invite a $2,925,000 loan, $65,000 too much.
 
@@ -91,8 +91,6 @@ On a purchase, value for LTV is the lower of the price and the appraisal (F-CORE
 2. **Inputs.** Price $300,000; as-is appraisal $310,000; ARV $520,000; initial advance $240,000; total loan $340,000.
 3. **Substitution.** As-is value = min($300,000, $310,000) = $300,000. LTAIV = $240,000 ÷ $300,000 = 80.00%. LTARV (F-RES-02) = $340,000 ÷ $520,000 = 65.38%.
 4. **Result.** Both pass the Tier 2 caps in RD-RES-01. Note that ARV is a different value for a different test. It never replaces as-is.
-
-The Maple Run running deal and the F-RES-03 example were corrected to 80.0% on 20 Nov 2026. They had used the $310,000 appraisal (77.4%). The loan size does not change.
 
 ### T4. The appraisal process (Objective 4, 15 minutes)
 
@@ -134,23 +132,25 @@ They must still get an evaluation. Maple Run's $340,000 loan falls under the res
 
 ## 5. Practice (45 minutes)
 
-Work alone, then check the model answer. The case is RD-MF-01 Cedar Court. It differs from the worked examples in property type, cap rate level and the direction of the lower-of-cost test (LD-05).
+Work alone, then check the model answer. The case is RD-MF-01 Cedar Court. It differs from the worked examples in property type and cap rate level (LD-05). Item 6 shows what happens when the appraisal comes in below the price.
 
 1. The as-stabilized value is $8,600,000 on a stabilized NOI of $575,000 (C4). Find the implied cap rate.
-2. A reviewer thinks 7.00% is the right cap rate. Find the value, and the stabilized LTV of the $5,140,000 total commitment. Does it pass the 70% limit (MF-BR)?
+2. A reviewer thinks 7.00% is the right cap rate. Find the value, and the stabilized LTV of the $5,140,000 total commitment. Does it pass the 70% limit (MF-BR-04)?
 3. Find the going-in cap rate on in-place NOI of $410,000: first on the $6,200,000 price, then on the $6,300,000 appraisal. Which one is the as-is value for sizing, and why?
 4. Suppose the appraisal's effective date is 19 Jul 2026 and closing is 20 Nov 2026. Find the age. What must happen? What if the effective date were 23 Jul?
-5. The exit test uses a 7.05% agency rate over 30 years, a constant of 8.0240% (MF-BR-08). Compare it with the stabilized NCF cap rate ($560,000 ÷ $8,600,000). Is leverage at exit positive or negative?
+5. The exit test uses the 6.55% agency rate plus a 0.50% buffer, 7.05%, over 30 years, a constant of 8.0240% (MF-BR-08). Compare it with the stabilized NCF cap rate ($560,000 ÷ $8,600,000). Is leverage at exit positive or negative?
+6. Suppose Cedar Court's as-is appraisal had come in at $6,000,000, below the $6,200,000 price. Find the as-is value for sizing and the day-one loan at 70% (MF-BR-02). How much smaller is it than $4,340,000?
 
 **Model answer**
 
 1. F-CORE-13: $575,000 ÷ $8,600,000 = 6.69%.
 2. $575,000 ÷ 0.0700 = $8,214,285.71. Stabilized LTV = $5,140,000 ÷ $8,214,285.71 = 62.57% (F-CORE-14). Passes 70%. The cap rate would have to reach 7.83% before the 70% limit binds.
-3. On price: $410,000 ÷ $6,200,000 = 6.61%. On appraisal: 6.51%. The as-is value for sizing is the $6,200,000 price, the lower figure (F-CORE-14, D-CONV-06).
+3. On price: $410,000 ÷ $6,200,000 = 6.61%. On appraisal: 6.51%. The as-is value for sizing is the $6,200,000 price, the lower figure (F-CORE-14).
 4. 20 Nov 2026 − 19 Jul 2026 = 124 days. That fails CORE-VAL-02, so order an update or new appraisal before closing. From 23 Jul it is 120 days, which passes (no more than 120).
 5. Stabilized NCF cap 6.51% is below the 8.0240% constant: negative leverage. That is why the exit test sizes on DSCR, not on value: the take-out is $5,583,273.69 (F-MF-20), well below 80% LTV.
+6. As-is value = min($6,200,000, $6,000,000) = $6,000,000 (F-CORE-14). Day-one loan = 70% × $6,000,000 = $4,200,000.00 (MF-BR-02). That is $140,000 less than $4,340,000, so the buyer brings $140,000 more equity.
 
-**Self-score.** One point per correct figure (8 figures: 6.69%; $8,214,285.71; 62.57%; 6.61%; 6.51%; 124 days; 6.51% vs 8.0240%; the leverage call). Seven or more: move on. Fewer: redo the matching worked example.
+**Self-score.** One point per correct figure (10 figures). Eight or more: move on. Fewer: redo the matching worked example.
 
 ## 6. Quiz: C5-quiz-v0
 
@@ -182,8 +182,8 @@ A small office building has NOI of $252,000. Items 1, 2, 6 and 11 use it.
 5. B. A hypothetical condition: not true today (T1).
 6. A. $252,000 ÷ 0.07 = $3,600,000; ÷ 0.075 = $3,360,000; change −$240,000.
 7. B. 126 days is over 120 (F-CORE-36).
-8. C.
-9. C.
+8. C. Age runs from the effective date of value; the report is often signed later (T4).
+9. C. The lender orders its own appraisal through an AMC; borrower-supplied reports are never accepted (CORE-VAL-01).
 10. B. The constant is above the cap rate (T5).
 11. A. 65% × $3,360,000 = $2,184,000.00.
 12. C. Market value excludes prices distorted by special financing or concessions.
@@ -210,15 +210,15 @@ A retail building has NOI of $315,000. Items 1, 2, 6 and 11 use it.
 1. C. $315,000 ÷ 0.075 = $4,200,000.00 (F-CORE-13).
 2. B. $315,000 ÷ $4,500,000 = 7.00%.
 3. C. $1,008,000 ÷ min($1,500,000, $1,440,000) = 70.0%. A uses the price; here the appraisal is lower.
-4. B.
-5. B.
+4. B. Loan-to-ARV divides the loan by the as-completed value (F-RES-02).
+5. B. A value as of a future date is prospective and rests on extraordinary assumptions (T1).
 6. A. $4,500,000 − $4,200,000 = +$300,000.
 7. C. Exactly 120 days passes (no more than 120).
-8. C.
-9. B.
+8. C. AVMs and BPOs are secondary checks only, so the reviewed appraisal stands (CORE-VAL-03).
+9. B. Every appraisal gets a desk review, however it was prepared (CORE-VAL-03).
 10. B. ($480,000 − $330,772.68) ÷ $2,100,000 = 7.11% (T5).
 11. A. 65% × $4,200,000 = $2,730,000.00.
-12. B.
+12. B. The guidelines ask for the as-is value and, as needed, prospective values on completion and stabilization (T1).
 
 ## 7. OJT task: C5-ojt-v0 (solo mode)
 
@@ -245,9 +245,9 @@ A retail building has NOI of $315,000. Items 1, 2, 6 and 11 use it.
 | --- | --- | --- |
 | Values and uses | As-is $4,500,000 fed the bridge, capped by the $4,400,000 price. As-stabilized $6,000,000 feeds the term loan | F-CORE-14; T1 |
 | Direct cap | $480,000 ÷ 8.00% = $6,000,000.00. At 8.25%: $5,818,181.82 (LTV 67.03%, fails). At 7.75%: $6,193,548.39 (62.97%) | F-CORE-13 |
-| Market evidence | CBRE's H1 2026 survey reports Class A neighborhood retail at 6.75%-7.25% in Albuquerque and 6.00%-6.75% in Houston. A 70%-leased unanchored strip should price wider, so 8.00% looks reasonable to conservative | CORE-VAL-03 |
+| Market evidence | CBRE's H1 2026 survey reports Class A neighborhood retail at 6.75%-7.25% in Albuquerque and 6.00%-6.75% in Houston. A 70%-leased unanchored strip should price wider, so 8.00% looks reasonable to conservative. Neither market is in the Midwest, so treat them as rough context and check an Indianapolis range (see What to look up yourself) | CORE-VAL-03 |
 | Leverage | Constant 8.4814% vs cap 8.00%: negative. Cash-on-cash 7.11% | T5 |
-| Recommendation | Accept the value. Condition the term loan on 65% of the lower of $6,000,000 and any updated value at closing. Note that a 25 bp cap move takes $118,181.82 off the loan | CORE-VAL-02 |
+| Recommendation | Accept the value. Condition the term loan on 65% of the lower of $6,000,000 and any updated value at closing. Note that a 25 bp cap move takes $119,000 off the loan, after rounding down to the nearest $1,000 (CORE-PRC-05) | CORE-VAL-02 |
 
 ## 8. Job aid: C5-jobaid-v0 (one page)
 
@@ -285,20 +285,28 @@ A retail building has NOI of $315,000. Items 1, 2, 6 and 11 use it.
 | No open [POLICY], [CONFIRM] or [DATA] tags | Met. [VERIFY] tags on legal statements carry source and date, as required |
 | Every calculation cites a formula ID; thresholds cite rules | Met |
 | Four-line worked formulas; re-checked by a second person | Four lines met; second-person check pending (solo: re-run in a spreadsheet) |
-| Deal numbers match the running deals | Met: RD-COM-01, RD-RES-01 (LTAIV corrected to 80.0%), RD-MF-01 |
+| Deal numbers match the running deals | Met: RD-COM-01, RD-RES-01, RD-MF-01 |
 | Lesson follows LD-04 order; alignment matrix; fits 3 hours | Met (180 minutes) |
 | Quiz: 10-20 items, one per objective, critical flagged, two sets, pass mark | Met (12 items, 3 critical, sets A and B) |
 | OJT: output, source, time, rubric, sign-off, data note | Met |
 | Job aid fits one page | Met on screen; confirm when printed |
 | Accessibility (LD-09) | Tables have headers; no colour-only meaning |
 
+**Self-check.**
+
+1. Which value sizes the day-one advance on a purchase? **Answer:** The as-is value, capped at the price: the lower of price and appraisal (F-CORE-14).
+2. NOI is $200,000 and the cap rate is 8.00%. What is the value, and what is it at 8.25%? **Answer:** $200,000 ÷ 0.0800 = $2,500,000.00; $200,000 ÷ 0.0825 = $2,424,242.42 (F-CORE-13).
+3. The price is $1,000,000, the appraisal $950,000 and the loan $650,000. What is the LTV? **Answer:** $650,000 ÷ min($1,000,000, $950,000) = $650,000 ÷ $950,000 = 68.4% (F-CORE-14).
+4. An appraisal is effective 1 Aug 2026 and closing is 1 Dec 2026. Does it pass? **Answer:** No. 31 + 30 + 31 + 30 = 122 days, over the 120-day limit (CORE-VAL-02, F-CORE-36).
+5. The cap rate is 7.00% and the loan constant is 7.50%. Is leverage positive or negative? **Answer:** Negative, because the constant is above the cap rate (F-CORE-04, T5).
+
 **Real-world check (researched 19-20 Nov 2026): where cap rates and appraisal rules stand.**
 
 - **Cap rates held flat in H1 2026.** CBRE's survey drew on about 3,600 estimates in over 50 markets, gathered in late June. The 10-year Treasury peaked at 4.67% in mid-May. Neighborhood retail compressed the most; infill multifamily drew the most bearish outlook ([CBRE, 12 Aug 2026](https://www.cbre.com/insights/reports/us-cap-rate-survey-h1-2026); market ranges via [Orion summary](https://www.orionprop.com/?p=32516)).
 - **Negative leverage is common now.** A broker's Q2 2026 report puts multifamily cap rates near 5.2% and retail near 6.7% (secondary source, [Apartment Loan Store, 10 Aug 2026](https://apartmentloanstore.com/index.php/node/12718)). Freddie Mac's 10-year small-balance rate was 6.55% on 16 Nov 2026 (C3 research), a constant above 7.6%. So most stabilized multifamily buys at today's caps sit in negative leverage, like Cedar Court.
-- **Appraisal standards.** The 2024 edition of USPAP took effect 1 Jan 2024 and has no expiration date ([Illinois Admin. Code](https://my.ilga.gov/ftp/JCAR/AdminCode/068/068014520001400R.html); [Bisnow](https://www.bisnow.com/news/national/capital-markets/bible-for-appraisers-cash-cow-taf-124998)). New appraiser qualification criteria took effect 1 Jan 2026 [VERIFY: AQB Criteria, via Iowa rulemaking, 2026].
+- **Appraisal standards.** The 2024 edition of USPAP took effect 1 Jan 2024. It has no set end date; the Appraisal Standards Board updates it as needed [VERIFY: [The Appraisal Foundation, USPAP page](https://www.appraisalfoundation.org/pages/uspap); checked 22 Nov 2026]. New appraiser qualification criteria took effect 1 Jan 2026 [VERIFY: AQB Criteria, via Iowa rulemaking, 2026].
 - **New federal law.** The 21st Century ROAD to Housing Act (P.L. 119-101) became law on 11 Jul 2026. Its appraisal provisions mainly cover federally backed home mortgages, such as reconsideration-of-value procedures and FHA appraiser eligibility. They do not change business-purpose lending thresholds [VERIFY: [govinfo P.L. 119-101](https://www.govinfo.gov/content/pkg/PLAW-119publ101/pdf/PLAW-119publ101.pdf); Appraisal Institute, 21 Jul 2026].
 
-**What to look up yourself.** CBRE's full cap rate tables by market and class sit behind a registration form. If you want the Class B and C neighborhood retail ranges for your market, register on the CBRE page above. Everything else in this tab was found and cited.
+**What to look up yourself.** CBRE's full cap rate tables by market and class sit behind a registration form. Register there to get the Class B and C neighborhood retail range for Indianapolis or the nearest Midwest market. Compare it with Birchwood's 8.00% cap rate. Everything else in this tab was found and cited.
 
 **How to check it:** in a spreadsheet, `=480000/8.25%` should give 5,818,181.82, and `=3900000/(480000/8.25%)` should give 0.6703, the failing LTV in worked example 1.

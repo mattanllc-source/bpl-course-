@@ -6,11 +6,10 @@
 | Hours | 3 (180 minutes) plus a 45-minute OJT task |
 | Prerequisite | C11 |
 | Bloom's levels | 3 and 4 (LD-02) |
-| Formulas | F-CORE-01, -05, -22, -32; F-RES-06, -18, -25 (new, SUGGESTED); F-COM-19 |
-| Rules | CORE-SVC-01 to -07 (-05 to -07 new); RES-FF-08, -09, -11; MF-BR-09 to -11; COM-BR-02, -03, -05; COM-GEN-12; CORE-CLS-04, -05 |
+| Formulas | F-CORE-01, -05, -22, -32; F-RES-06, -18, -25 (SUGGESTED); F-COM-19 |
+| Rules | CORE-SVC-01, -02, -05 to -07; RES-GEN-11; RES-FF-08, -09, -11; MF-BR-09 to -11; COM-BR-02, -03, -05; COM-GEN-12; CORE-CLS-04, -05 |
 | Running deals | Worked examples: RD-RES-01 Maple Run (draws, extension) and RD-COM-01 Birchwood Plaza (sweep). Practice: RD-MF-01 Cedar Court (LD-08) |
 | Status | v0. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0, 20 Nov 2026: first draft; all numbers computed in code. New rules CORE-SVC-05 (draw controls), -06 (reporting) and -07 (risk rating and watch list). New formula F-RES-25 (in-balance shortfall) |
 
 ## Timing plan
 
@@ -27,7 +26,7 @@
 
 ## 1. Hook (5 minutes)
 
-Month 7 at Maple Run. The roofer quits, and the new one costs $8,000 more. Dana asks for her next draw as usual.
+Month 7 at Maple Run. The roofer quits, and the new one costs $8,000 more. Dana Reyes asks for her next draw as usual.
 
 Nothing has defaulted. But if we pay the draw without checking, we may fund a job that can no longer finish. Servicing is where a good loan stays good, or quietly goes bad.
 
@@ -48,7 +47,7 @@ By the end of C12, you will be able to:
 
 A rehab or capex holdback is paid in arrears, after we see the work (RES-FF-09, MF-BR-10, COM-BR-05). Interest runs on drawn funds only (RES-FF-08).
 
-Every draw is a small new loan decision. Lenders check the inspection, the budget, the lien waivers and the title before money moves [VERIFY: Built, construction lending primer, 2025; checked 20 Nov 2026]. Missing lien waivers matter because unpaid trades can lien the property ahead of our later advances.
+Every draw is a small new loan decision. Lenders check the inspection, the budget, the lien waivers and the title before money moves [VERIFY: Built, construction lending primer, 2025; checked 20 Nov 2026]. Missing lien waivers matter because unpaid trades can file mechanics' liens. Depending on state law, those liens can rank ahead of our later advances [VERIFY: ORC 1311.13 and 1311.14 (OH), G.S. 44A-11.1 and -11.2 (NC), IC 32-28-3 (IN); not yet checked].
 
 **New rule CORE-SVC-05.** Before each draw:
 
@@ -58,18 +57,7 @@ Every draw is a small new loan decision. Lenders check the inspection, the budge
 - insurance is in force; and
 - the loan is in balance (F-RES-25). The borrower deposits any shortfall before the draw.
 
-**F-RES-25: In-balance shortfall (SUGGESTED, new).**
-
-1. Formula: shortfall = max(0, cost to complete − undrawn holdback).
-2. Inputs (Maple Run, month 7): unpaid budget cost $25,000 after the overrun is moved to contingency; undrawn holdback $100,000 − $75,000 = $25,000.
-3. Substitution: max(0, $25,000 − $25,000).
-4. Result: $0. The loan is in balance.
-
-**Worked example 1: the roof overrun.** The $8,000 overrun fits inside the $9,000 contingency line. Approve a written reallocation from contingency to roof; $1,000 of contingency remains. The total holdback stays $100,000. Re-inspect before the month-8 draw.
-
-**What-if: the overrun is $12,000.** Contingency covers $9,000. Cost to complete rises to $28,000 against $25,000 undrawn. Shortfall: max(0, $28,000 − $25,000) = $3,000. Dana deposits $3,000 before any further draw.
-
-**Worked example 2: Maple Run draws (F-RES-06, F-RES-18).**
+**Worked example 1: Maple Run draws (F-RES-06, F-RES-18).**
 
 | Month | Work in place | % complete | Draw: min(% × $100,000, $90,000) − prior | Balance after |
 | --- | --- | --- | --- | --- |
@@ -78,6 +66,17 @@ Every draw is a small new loan decision. Lenders check the inspection, the budge
 | 6 | $75,000 | 75% | $75,000 − $55,000 = $20,000 | $315,000 |
 | 8 | $90,000 | 90% | $90,000 − $75,000 = $15,000 | $330,000 |
 | 10 | $100,000 | 100% | Final 10% released: $10,000 | $340,000 |
+
+**F-RES-25: In-balance shortfall (SUGGESTED).**
+
+1. Formula: shortfall = max(0, cost to complete − undrawn holdback).
+2. Inputs (Maple Run, month 7): unpaid budget cost $25,000 after the overrun is moved to contingency; undrawn holdback $100,000 − $75,000 = $25,000.
+3. Substitution: max(0, $25,000 − $25,000).
+4. Result: $0. The loan is in balance.
+
+**Worked example 2: the roof overrun.** The $8,000 overrun fits inside the $9,000 contingency line. Approve a written reallocation from contingency to roof; $1,000 of contingency remains. The total holdback stays $100,000. Re-inspect before the month-8 draw.
+
+**What-if: the overrun is $12,000.** Contingency covers $9,000. Cost to complete rises to $28,000 against $25,000 undrawn. Shortfall: max(0, $28,000 − $25,000) = $3,000. Dana Reyes deposits $3,000 before any further draw.
 
 ### T2. Interest billing and rate caps (Objective 2, 15 minutes)
 
@@ -92,7 +91,12 @@ Interest is billed monthly in arrears on the drawn balance, Actual/360 (F-CORE-0
 
 **Rate caps.** Floating-rate bridges carry a SOFR cap (MF-BR-09, COM-BR-03). When SOFR is above the strike, the cap counterparty pays the difference on the same Actual/360 basis. Servicing checks the cap is in force, assigned to us and extended with any loan extension.
 
-**Worked example 4: Birchwood, month 18 (deal file).** SOFR 4.75%, so the rate is 8.75%. Funded balance $3,460,000. Interest for 30 days: $3,460,000 × 8.75% ÷ 360 × 30 = $25,229.17. The cap pays 0.50% above 4.25%: $3,460,000 × 0.50% ÷ 360 × 30 = $1,441.67. Net cost $23,787.50.
+**Worked example 4: Birchwood, month 18 (deal file).** SOFR is 4.75%, so the rate is 8.75%. The funded balance is $3,460,000.
+
+1. Formula: interest = balance × rate ÷ 360 × days (F-CORE-01). Cap payment = balance × (SOFR − strike) ÷ 360 × days (COM-BR-03). Net cost = interest − cap payment.
+2. Inputs: $3,460,000; rate 8.75%; SOFR 4.75% − strike 4.25% = 0.50%; 30 days.
+3. Substitution: interest $3,460,000 × 8.75% ÷ 360 × 30 = $25,229.17. Cap payment $3,460,000 × 0.50% ÷ 360 × 30 = $1,441.67.
+4. Result: net cost $25,229.17 − $1,441.67 = $23,787.50.
 
 ### T3. Extensions (Objective 3, 15 minutes)
 
@@ -119,7 +123,7 @@ Between draws and maturity, we watch four things: reports, insurance, taxes and 
 
 | Item | Residential | Multifamily and commercial |
 | --- | --- | --- |
-| Rent roll and operating statement | Lease copy at rent-up | Monthly, within 45 days of month-end |
+| Rent roll and operating statement | Executed lease within 10 business days (RES-GEN-11); DSCR: rent roll and new leases annually within 90 days | Monthly, within 45 days of month-end |
 | Borrower and guarantor financial statements | Annually, within 90 days of year-end | Same |
 | Insurance renewal evidence | Before each expiry | Same |
 | Tax payment | Confirmed each tax cycle, unless escrowed | Same |
@@ -129,7 +133,7 @@ A late report counts as a reporting default after written notice. It also goes o
 
 **Cash management.** Commercial loans carry a springing lockbox (COM-GEN-12). A sweep starts if DSCR on debt service actually due falls below 1.10x, or a 20%+ tenant gives notice.
 
-**Worked example 6: Birchwood, month 9.** The largest tenant (21.4% of rent) gives notice. The sweep starts (COM-GEN-12). What-if: trailing NCF is still $254,000 and debt service due is $218,790 (F-COM-19):
+**Worked example 6: Birchwood, month 9.** The largest tenant (21.4% of rent) gives notice. The sweep starts (COM-GEN-12). What-if, to show the math: trailing NCF is still $254,000. Debt service is taken on the $2,860,000 closing balance at 7.65%, or $218,790. The real month-9 balance is higher, because capex draws began in month 1 (F-COM-19):
 
 1. Formula: sweep a month = max(0, (NCF − debt service) ÷ 12).
 2. Inputs: $254,000; $218,790.
@@ -145,12 +149,12 @@ US bank regulators share one scale. Special mention, substandard, doubtful and l
 | Rating | Meaning (plain English) | Examples |
 | --- | --- | --- |
 | 1 Pass | Performing to plan | Draws on schedule; reports on time |
-| 2 Pass/Watch | Performing, but a trigger has fired | Sweep started; overrun covered by contingency; maturity within 90 days with no confirmed exit [CONFIRM] |
+| 2 Pass/Watch | Performing, but a trigger has fired | Sweep started; overrun covered by contingency; maturity within 90 days with no confirmed exit |
 | 3 Special mention | Potential weakness that could worsen if not fixed | Out of balance; extension test failed; payment 30+ days late |
 | 4 Substandard | Well-defined weakness; loss possible if not corrected | In default; exit no longer covers the loan |
 | 5 Doubtful / Loss | Full collection unlikely, or uncollectable | Move to C13 workout |
 
-Rate every loan at each monthly review. Ratings 2 and above go on the watch list, with an action and an owner. Review the watch list monthly.
+Rate every loan at each monthly review. Ratings 2 to 5 go on the watch list, with an action and an owner. Review the watch list monthly.
 
 **Worked example 7: Maple Run ratings.** Month 6: 1 Pass. Month 7, overrun covered by contingency: 2 Pass/Watch. Month 10, rehab complete: back to 1. What-if, 45 days late in month 8: 3 Special mention, and the DSCR exit fails (RES-DSCR-09).
 
@@ -169,27 +173,27 @@ After payoff: release the lien, return any escrow balance and close the trailing
 
 Use RD-MF-01 Cedar Court. Facts from the deal file: commitment $5,140,000; $4,340,000 funded at closing; capex $800,000 drawn in arrears; cap strike 4.25%.
 
-1. Month 9: capex inspected at $400,000 of work in place, nothing drawn yet. Work still to do is $400,000. Lien waivers and title date-down are clean. What do you release, and is the loan in balance?
+1. Month 9: inspection puts total capex work in place at $400,000. Monthly draws since month 2 have paid for part of it. Work still to do is $400,000. Lien waivers and title date-down are clean. How much capex is funded after this draw, and is the loan in balance?
 2. Month 10: SOFR is 5.00%. Work 30 days' interest and the cap payment.
-3. Month 10: the March rent roll arrives 60 days after month-end. What happens?
+3. Month 10: it is day 60 after month-end, and that month's rent roll has still not arrived. What happens?
 4. Month 24: no default; capex 100%; NCF $520,000; cap extended. Decide the extension and the fee.
 5. Rate the loan at month 10 and at month 24.
 6. Month 27: payoff after 9 days, at 9.00%, exit fee 0.50% (F-CORE-32 test 3).
 
 **Answer key.**
 
-1. Release $400,000 (MF-BR-10, CORE-SVC-05). Cost to complete is $400,000 to pay now plus $400,000 still to do. F-RES-25: max(0, $800,000 − $800,000) = $0, in balance. Balance becomes $4,740,000.
+1. Total capex funded becomes $400,000, equal to work in place (MF-BR-10, CORE-SVC-05). This draw pays $400,000 less the earlier monthly draws. Undrawn capex after it is $800,000 − $400,000 = $400,000. F-RES-25: max(0, $400,000 − $400,000) = $0, in balance. Balance becomes $4,340,000 + $400,000 = $4,740,000.
 2. Interest $4,740,000 × 9.00% ÷ 360 × 30 = $35,550.00. Cap $4,740,000 × 0.75% ÷ 360 × 30 = $2,962.50. Net $32,587.50.
-3. It is 15 days past the 45-day deadline (CORE-SVC-06). Send written notice; add the loan to the watch list as 2 Pass/Watch until it arrives (CORE-SVC-07).
+3. It is 15 days past the 45-day deadline (CORE-SVC-06). Send written notice; add the loan to the watch list as 2 Pass/Watch until it arrives (CORE-SVC-07). If it is still missing after the notice, it is a reporting default (CORE-SVC-06).
 4. Debt yield $520,000 ÷ $5,140,000 = 10.12%, above 7.5%. Approve 6 months (MF-BR-11). Fee $5,140,000 × 0.50% = $25,700.00 (F-CORE-22).
-5. Month 10: 2 Pass/Watch while the report is late; otherwise 1. Month 24: 1 Pass; the exit is the refinance into our term loan.
+5. Month 10: 2 Pass/Watch while the report is late; otherwise 1. Month 24: at least 2 Pass/Watch. The loan is at maturity and the term-loan refinance is not yet confirmed (CORE-SVC-07). It can return to 1 once the refinance is committed.
 6. With the fee: $5,140,000 + $5,140,000 × 9.00% ÷ 360 × 9 + $25,700 = $5,177,265.00. Refinanced into our term loan, the fee is waived (deal file): $5,151,565.00.
 
 **Common wrong answers.** Paying a draw without a title date-down. Charging the extension fee on the funded balance instead of the commitment. Leaving a late report off the watch list.
 
 ## 6. Quiz: C12-quiz-v0
 
-Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers all six objectives.
+Pass mark 80%, and every critical item correct. Items marked (C) are critical: a wrong answer on one fails the quiz whatever the score. Each set has 12 items and covers all six objectives.
 
 ### Set A
 
@@ -202,7 +206,7 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 7. (O3) Extension fee on a $3,520,000 commercial commitment at 0.25%? **Answer:** $8,800.00 (F-CORE-22).
 8. (O4) When is a multifamily rent roll due? **Answer:** monthly, within 45 days of month-end (CORE-SVC-06).
 9. (O4) DSCR on debt service due falls to 1.08x on a commercial bridge. Action? **Answer:** start the cash sweep (COM-GEN-12). (C)
-10. (O5) Which ratings go on the watch list? **Answer:** 2 Pass/Watch and worse (CORE-SVC-07).
+10. (O5) Which ratings go on the watch list? **Answer:** ratings 2 to 5 (CORE-SVC-07).
 11. (O5) A payment is 35 days late. Rating? **Answer:** 3 Special mention (CORE-SVC-07).
 12. (O6) Does the payoff day accrue interest? **Answer:** no (D-CONV-02).
 
@@ -223,11 +227,21 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 
 ## 7. OJT task: C12-ojt-v0 (solo mode)
 
-**Output.** A servicing file for RD-RES-01 Maple Run, months 0-14: draw log, interest bills, extension memo, ratings by month and the payoff letter.
+**Output.** A servicing file for RD-RES-01 Maple Run, months 0-14: draw log, interest bills, lease check, extension memo, ratings by month and the payoff letter.
 
 **Source.** Running deals file. No live data.
 
 **Time.** 45 minutes.
+
+**Steps.**
+
+1. Build the draw log for months 2, 4, 6, 8 and 10. Show each draw by F-RES-18 and tick the CORE-SVC-05 checks.
+2. Log the month-7 roof overrun, the written reallocation and the F-RES-25 result.
+3. Bill interest each month on the drawn balance for the actual days (F-CORE-01).
+4. Check the month-11 lease: unrelated tenant, 12-month initial term, copy received within 10 business days (RES-GEN-11; CORE-SVC-06).
+5. Rate the loan each month and give a reason (CORE-SVC-07).
+6. Write the month-12 extension memo: tests and fee (CORE-SVC-01, -02; F-CORE-22).
+7. Write the month-14 payoff letter (F-CORE-32).
 
 **Rubric.**
 
@@ -238,6 +252,7 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 | Extension | Tests and fee cited (CORE-SVC-01, -02; F-CORE-22) |
 | Ratings | A rating each month with a reason (CORE-SVC-07) |
 | Payoff | Within $0.01 of F-CORE-32 |
+| Reporting | The month-11 lease is checked against RES-GEN-11 and logged (CORE-SVC-06) |
 
 **Sign-off.** Self-review against this rubric, dated (solo mode, Bible Section 7).
 
@@ -245,11 +260,11 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 
 **Monthly servicing cycle**
 
-1. **Draw?** Inspection, waivers, title date-down, insurance, in balance. Then pay min(% × holdback, 90%) − prior (CORE-SVC-05; F-RES-18, -25).
+1. **Draw?** Inspection, waivers, title date-down, insurance, in balance. Then pay min(% complete × holdback, 90% × holdback) − prior draws (CORE-SVC-05; F-RES-18, -25).
 2. **Bill.** Balance × rate ÷ 360 × actual days. Check the cap payment (F-CORE-01; MF-BR-09).
-3. **Reports.** Rent roll and statement by day 45; annual statements by day 90 (CORE-SVC-06).
+3. **Reports.** Rent roll and statement by day 45; annual statements by day 90. Residential: executed lease within 10 business days (CORE-SVC-06; RES-GEN-11).
 4. **Cash.** Sweep test on debt service due (COM-GEN-12; F-COM-19).
-5. **Rate.** 1-5; 2 and above go on the watch list (CORE-SVC-07).
+5. **Rate.** 1-5; ratings 2 to 5 go on the watch list (CORE-SVC-07).
 6. **Maturity.** Extension tests and fee on commitment (CORE-SVC-01; F-CORE-22).
 7. **Payoff.** Principal + interest to the day before payoff + fees (F-CORE-32).
 
@@ -262,7 +277,7 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 | O1 Draws | T1 | WE1, WE2 | P1 | 1-3 | 1-3 | Draw log | Step 1 |
 | O2 Interest and caps | T2 | WE3, WE4 | P2 | 4-5 | 4-5 | Interest bills | Step 2 |
 | O3 Extensions | T3 | WE5 | P4 | 6-7 | 6-7 | Extension memo | Step 6 |
-| O4 Monitoring | T4 | WE6 | P3 | 8-9 | 8-9 | None | Steps 3-4 |
+| O4 Monitoring | T4 | WE6 | P3 | 8-9 | 8-9 | Lease check | Steps 3-4 |
 | O5 Risk rating | T5 | WE7 | P5 | 10-11 | 10-11 | Ratings | Step 5 |
 | O6 Payoff | T6 | WE8 | P6 | 12 | 12 | Payoff letter | Step 7 |
 
@@ -275,12 +290,20 @@ Pass mark 80%. Items marked (C) are critical. Each set has 12 items and covers a
 | Formulas worked in four lines | Met; computed in code |
 | Deal numbers match the running deals file | Met. Draws, month-18 Birchwood interest, Cedar month 10 and 24, and the Cedar payoff match the deal file and library tests. The month-9 sweep figure and the $12,000 overrun are labelled what-ifs |
 | Quiz sets; one item per objective; critical items | Met: 12 items each; 3 critical in A, 4 in B |
-| O4 in OJT | Not met: the OJT has no reporting step. Add one in v1 |
-| No open tags | Not met: [VERIFY] on Built and OCC sources; [CONFIRM] on the 90-day maturity trigger. Stays v0 |
+| O4 in OJT | Met: OJT step 4 checks the month-11 lease (CORE-SVC-06; RES-GEN-11) |
+| No open tags | Not met: [VERIFY] on Built and OCC sources. Stays v0. The 90-day maturity trigger was decided as JUDGMENT on 20 Nov 2026 |
+
+**Self-check.**
+
+1. Holdback $100,000; 55% complete; $30,000 drawn; work not finished. What is the draw? **Answer:** min($55,000, $90,000) − $30,000 = $25,000.00 (F-RES-18).
+2. What is interest on $315,000 at 10.25% for a 30-day month? **Answer:** $315,000 × 10.25% ÷ 360 × 30 = $2,690.63 (F-CORE-01).
+3. Maple Run's lease is signed in month 11. What must it look like, and when is the copy due? **Answer:** written, to an unrelated tenant, with a 12-36 month initial term; the full executed copy within 10 business days of signing (RES-GEN-11; CORE-SVC-06).
+4. A bridge loan matures in 60 days and its refinance is not confirmed. What is the lowest rating it can have? **Answer:** 2 Pass/Watch, so it goes on the watch list (CORE-SVC-07).
+5. Payoff on $340,000 at 10.25%, 10 days after the paid-to date, no fees? **Answer:** $340,000 + $340,000 × 10.25% ÷ 360 × 10 = $340,968.06 (F-CORE-32).
 
 **What to look up yourself.**
 
 1. Whether a title date-down endorsement is available, and its cost, in each SLT state.
-2. Your state's lien-waiver forms. Some states prescribe statutory forms.
+2. Lien-waiver rules in the three deal states. Secondary guides found on 22 Nov 2026 say none of Ohio, North Carolina or Indiana prescribes a statutory waiver form. They say Indiana voids a lien waiver given before payment (IC 32-28-3-16). North Carolina has a lien agent system that affects lender priority (G.S. 44A-11.1, -11.2). Ohio gives a qualifying construction mortgage priority over later mechanics' liens (ORC 1311.14). Read each statute on the state's official code site to confirm [VERIFY: IC 32-28-3-16; G.S. 44A-11.1; ORC 1311.14; not yet checked].
 
 **How to check it.** Maple Run draws add to $30,000 + $25,000 + $20,000 + $15,000 + $10,000 = $100,000. The balance ends at $240,000 + $100,000 = $340,000.

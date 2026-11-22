@@ -305,7 +305,7 @@ add(id="F-CORE-17", name="Maximum loan by DSCR",
  rules="COM-GEN-11, F-COM-08, MF-TRM, RES-DSCR",
  mistakes=["Rounding the constant first.", "Dividing by DSCR × rate on an amortizing loan."],
  edges="NOI ≤ 0 → $0 loan. K must be > 0.",
- rounding="Full precision; round the loan down to policy increments (examples use $10,000).",
+ rounding="Full precision; round the final loan down to the nearest $1,000 (CORE-PRC-05).",
  modules="C8",
  tests=[("$105,000; 1.25x; 8.00%", m(105000/1.25/.08)), ("$434,000; 1.30x; K = $330,772.68 ÷ $3,900,000", m(434000/1.3/(330772.68/3900000))),
         ("$430,000; 1.25x; K = $319,050.84 ÷ $3,520,000", m(430000/1.25/(319050.84/3520000)))])
@@ -320,7 +320,7 @@ add(id="F-CORE-18", name="Maximum loan by debt yield",
  rules="COM-GEN-11, MF-GEN-11, COM-BR table",
  mistakes=["Using a stabilized debt yield floor against in-place NOI."],
  edges="NOI ≤ 0 → $0.",
- rounding="Full precision; round down to policy increments.",
+ rounding="Full precision; round the final loan down to the nearest $1,000 (CORE-PRC-05).",
  modules="C8",
  tests=[("$105,000; 10.50%", m(105000/.105)), ("$434,000; 9.00%", m(434000/.09)), ("$720,000; 9.00%", m(720000/.09))])
 
@@ -334,10 +334,10 @@ add(id="F-CORE-19", name="Maximum loan (lowest of all tests)",
  rules="COM-GEN-11 (F-COM-08), MF-GEN-11, family sizing rules",
  mistakes=["Skipping a test because it 'usually doesn't bind'.", "Rounding up to a round number above the binding test."],
  edges="If any test gives $0 or less, no loan.",
- rounding="Round down to policy increments after taking the minimum.",
+ rounding="Take the minimum at full precision, then round down to the nearest $1,000 (CORE-PRC-05).",
  modules="C8, C14",
  tests=[("$1,125,000; $1,050,000; $1,000,000", m(1000000)), ("$3,900,000; $3,936,238; $4,822,222", m(3900000)),
-        ("$2,800,000; $2,468,378 (NNN)", m(2468378))])
+        ("$2,800,000; $2,468,378 (NNN)", m(2468000))])
 
 add(id="F-CORE-20", name="Interest reserve (straight-line)",
  purpose="Loan proceeds held back to pay interest for a set period.",

@@ -53,9 +53,12 @@ Underwriting never uses a vacancy rate below the family floor. Multifamily uses 
 
 **Worked example 1: Cedar Court income (RD-MF-01)**
 
-1. **Formula.** F-CORE-07: GPR = units × monthly rent × 12. F-CORE-08: vacancy = GPR − collections. F-CORE-09: EGI = GPR − vacancy + other income.
+1. **Formula.**
+   - F-CORE-07: GPR = units × monthly rent × 12.
+   - F-CORE-08: vacancy and credit loss = GPR × vacancy rate.
+   - F-CORE-09: EGI = GPR − vacancy + other income.
 2. **Inputs.** 50 units at $1,300 market rent; rent-roll collections annualized $702,000; trailing 3 months annualized $708,000; other income (T-12) $18,000.
-3. **Substitution.** GPR = 50 × $1,300 × 12 = $780,000.00. Underwritten collections = lesser of $702,000 and $708,000 = $702,000 (MF-GEN-05). Vacancy and loss = $780,000 − $702,000 = $78,000.00, which is 10.0% of GPR. EGI = $780,000 − $78,000 + $18,000 = $720,000.00.
+3. **Substitution.** GPR = 50 × $1,300 × 12 = $780,000.00. Underwritten collections = lesser of $702,000 and $708,000 = $702,000 (MF-GEN-05). Vacancy rate = 1 − $702,000 ÷ $780,000 = 10.0%. Vacancy and loss = $780,000 × 10.0% = $78,000.00. EGI = $780,000 − $78,000 + $18,000 = $720,000.00.
 4. **Result.** EGI $720,000.00. The 10.0% vacancy is above the 5% floor, so no top-up is needed (D-CONV-09).
 
 ### T2. What belongs above the NOI line (Objective 2, 15 minutes)
@@ -91,16 +94,22 @@ NOI measures what the property earns from operations. Only recurring operating i
 
 ### T4. DSCR at full precision (Objective 4, 15 minutes)
 
-**DSCR** = income ÷ annual debt service (F-CORE-11). Core teaches it on NOI. Each family then sets its own income base: NCF for multifamily and commercial (F-MF-10, F-COM-08), gross rent for residential rentals (F-RES-07).
+**DSCR** = income ÷ annual debt service (F-CORE-11). Core teaches it on NOI. Each family then sets its own income base: net cash flow for multifamily and commercial, and gross rent for residential rentals. Net cash flow (NCF) is NOI less replacement reserves, and less TI/LC reserves on commercial (F-MF-09, F-COM-03).
+
+| Family | DSCR income base | Formula |
+| --- | --- | --- |
+| Residential rental (1-4 units) | Gross rent ÷ PITIA | F-RES-07 |
+| Multifamily | NCF ÷ ADS | F-MF-10 |
+| Commercial | NCF ÷ ADS | F-CORE-11 on NCF (F-COM-03) |
 
 Compare the unrounded ratio with the minimum. A DSCR of 1.2495 displays as 1.25x but fails a 1.25x test.
 
 **Worked example 3: Cedar Court DSCR on NOI (RD-MF-01)**
 
 1. **Formula.** F-CORE-11: DSCR = NOI ÷ ADS.
-2. **Inputs.** NOI $410,000 (worked example 2); bridge test ADS $363,825.00 = $4,410,000 × 8.25% (F-CORE-03, C3).
-3. **Substitution.** $410,000 ÷ $363,825 = 1.1269.
-4. **Result.** 1.13x on NOI. On NCF, after $15,000 of reserves, it is 1.09x (F-MF-12), the figure the multifamily policy actually tests (MF-BR-07: 1.00x minimum).
+2. **Inputs.** NOI $410,000 (worked example 2); bridge test ADS $358,050.00 = $4,340,000 × 8.25% (F-CORE-03, C3).
+3. **Substitution.** $410,000 ÷ $358,050 = 1.1451.
+4. **Result.** 1.15x on NOI. NCF is $410,000 − $15,000 reserves = $395,000. Interest coverage is NCF ÷ interest-only test debt service (F-MF-12): $395,000 ÷ $358,050 = 1.10x. The multifamily bridge policy tests this figure against 1.00x (MF-BR-07).
 
 ### T5. Break-even occupancy and the cushion (Objective 5, 15 minutes)
 
@@ -109,19 +118,36 @@ Compare the unrounded ratio with the minimum. A DSCR of 1.2495 displays as 1.25x
 **Worked example 4: Cedar Court break-even (RD-MF-01)**
 
 1. **Formula.** F-CORE-12: break-even = (OpEx + ADS) ÷ GPR.
-2. **Inputs.** OpEx $310,000; ADS $363,825.00; GPR $780,000. Economic occupancy 90.0% ($702,000 ÷ $780,000, F-MF-02).
-3. **Substitution.** ($310,000 + $363,825) ÷ $780,000 = $673,825 ÷ $780,000 = 86.4%.
-4. **Result.** Break-even 86.4%; cushion 90.0% − 86.4% = 3.6 points. Losing about 3 of 50 units' rent would leave nothing for debt. That is why the bridge needs a rate cap (MF-BR-09) and a value-add plan.
+2. **Inputs.** OpEx $310,000; ADS $358,050.00; GPR $780,000. Economic occupancy 90.0% ($702,000 ÷ $780,000, F-MF-02).
+3. **Substitution.** ($310,000 + $358,050) ÷ $780,000 = $668,050 ÷ $780,000 = 85.6%.
+4. **Result.** Break-even 85.6%; cushion 90.0% − 85.6% = 4.4 points. Losing about 2 of 50 units' rent would leave nothing for debt. That is why the bridge needs a rate cap (MF-BR-09) and a value-add plan.
+
+**Cedar Court, built up across worked examples 1 to 4 (RD-MF-01)**
+
+| Line | Amount | Worked example and formula |
+| --- | --- | --- |
+| GPR | $780,000.00 | 1, F-CORE-07 |
+| Vacancy and credit loss (10.0%) | −$78,000.00 | 1, F-CORE-08 |
+| Other income | $18,000.00 | 1, MF-GEN-05 |
+| EGI | $720,000.00 | 1, F-CORE-09 |
+| Operating expenses | −$310,000.00 | 2, MF-GEN-06 |
+| NOI | $410,000.00 | 2, F-CORE-10 |
+| Replacement reserves | −$15,000.00 | 3, F-MF-09 |
+| NCF | $395,000.00 | 3, F-MF-09 |
+| Test debt service ($4,340,000 × 8.25%) | $358,050.00 | 3, F-CORE-03 |
+| DSCR on NOI | 1.15x | 3, F-CORE-11 |
+| Interest coverage on NCF | 1.10x | 3, F-MF-12 |
+| Break-even occupancy | 85.6% | 4, F-CORE-12 |
 
 ## 5. Practice (45 minutes)
 
 Work alone, then check the model answer. The case is RD-COM-01 Birchwood Plaza at stabilization. It differs from the worked examples in property type, rent, vacancy rule and debt (LD-05).
 
-1. Stabilized base rent $600,000 and expense recoveries $120,000. Vacancy is 5% (COM-GEN-05). Find GPR, vacancy and EGI.
+1. Stabilized base rent $600,000 and expense recoveries $120,000. For commercial property, GPR here = base rent + expense recoveries. Vacancy is 5% (COM-GEN-05). Find GPR, vacancy and EGI.
 2. Expenses: T-12 $196,000; appraiser $204,000 including 4% management. Which figure do you use, and does management clear the floor?
 3. Find stabilized NOI.
 4. The term loan's ADS is $330,772.68 (C3). Find DSCR on NOI. Then find it on the commercial NCF of $434,000 and say which one the policy tests.
-5. Find break-even occupancy using the stabilized figures.
+5. Find break-even occupancy using the stabilized figures, and the cushion against 93% occupancy.
 
 **Model answer**
 
@@ -129,7 +155,7 @@ Work alone, then check the model answer. The case is RD-COM-01 Birchwood Plaza a
 2. Greater of $196,000 and $204,000 = $204,000 (COM-GEN-06). Management 4% of $684,000 = $27,360, above the 3% floor of $20,520.
 3. NOI (F-CORE-10) = $684,000 − $204,000 = $480,000.00.
 4. On NOI: $480,000 ÷ $330,772.68 = 1.45x. On NCF: $434,000 ÷ $330,772.68 = 1.31x. The policy tests NCF (COM-GEN-11, F-COM-08), against a 1.30x minimum for unanchored retail: passes.
-5. Break-even (F-CORE-12) = ($204,000 + $330,772.68) ÷ $720,000 = 74.3%. Cushion against 95% stabilized occupancy: 20.7 points.
+5. Break-even (F-CORE-12) = ($204,000 + $330,772.68) ÷ $720,000 = 74.3%. Cushion against the 93% occupancy Birchwood reaches (RD-COM-01, month 16): 93.0% − 74.3% = 18.7 points. The 5% vacancy in item 1 is an underwriting floor, not observed occupancy.
 
 **Self-score.** One point per correct figure (10 figures). Eight or more: move on. Fewer: redo the matching worked example.
 
@@ -193,7 +219,7 @@ A 36-unit building has an average market rent of $1,180 a month. Items 1, 2, 3, 
 3. A. $509,760 − $30,585.60 + $12,000 = $491,174.40 (F-CORE-09).
 4. B. Leasing commissions are TI/LC, covered by the reserve below NOI (F-COM-03).
 5. A. $491,174.40 − $205,000 = $286,174.40 (F-CORE-10).
-6. B.
+6. B. Insurance recurs every year. Depreciation is non-cash, principal is debt service and a claim is one-time.
 7. B. $286,174.40 ÷ $212,000 = 1.3499: displays 1.35x but fails a 1.35x minimum (full precision).
 8. C. Greater of actual, market or the 5% floor (COM-GEN-05; office would be 10%).
 9. C. Greater of T-12 and appraiser (COM-GEN-06).
@@ -224,13 +250,13 @@ A 36-unit building has an average market rent of $1,180 a month. Items 1, 2, 3, 
 | Line | Amount | Source and rule |
 | --- | --- | --- |
 | GPR | $780,000.00 | 50 × $1,300 × 12 (F-CORE-07) |
-| Vacancy and credit loss | −$78,000.00 | GPR − lesser of $702,000 and $708,000 (MF-GEN-05; F-CORE-08) |
+| Vacancy and credit loss | −$78,000.00 | GPR × 10.0% vacancy rate, where 10.0% = 1 − lesser of $702,000 and $708,000 ÷ GPR (MF-GEN-05; F-CORE-08) |
 | Other income | $18,000.00 | T-12 (MF-GEN-05) |
 | EGI | $720,000.00 | F-CORE-09 |
 | Operating expenses | −$310,000.00 | Greater of T-12 $298,000 and appraiser $310,000 (MF-GEN-06) |
 | NOI | $410,000.00 | F-CORE-10 |
 
-Reconciliation to the broker's $575,000: the broker uses stabilized NOI after the $800,000 renovation (RD-MF-01 business plan). The $165,000 gap is the value-add plan: higher post-renovation rents and lower vacancy. It is not yet earned, so we lend on $410,000 in place and test $575,000 only in the exit test (MF-BR-08, F-MF-20).
+Reconciliation to the broker's $575,000: the broker uses stabilized NOI after the $800,000 renovation (RD-MF-01 business plan). The $165,000 gap is the value-add plan: higher post-renovation rents and lower vacancy. It is not yet earned, so we lend on $410,000 in place. Only the exit test uses the stabilized figures: $560,000 NCF, which is $575,000 NOI less $15,000 reserves (MF-BR-08, F-MF-20).
 
 ## 8. Job aid: C4-jobaid-v0 (one page)
 
@@ -248,7 +274,19 @@ Reconciliation to the broker's $575,000: the broker uses stabilized NOI after th
 
 **Break-even (F-CORE-12)** = (OpEx + ADS) ÷ GPR. Cushion = occupancy − break-even.
 
-**Mini-example**: 10 units at $1,500: GPR $180,000; 5% vacancy $9,000; other income $6,000; EGI $177,000; OpEx $72,000; NOI $105,000; ADS $84,000; DSCR 1.25x; break-even 86.7%.
+**Mini-example** (10 units at $1,500 a month):
+
+| Line | Amount |
+| --- | --- |
+| GPR | $180,000 |
+| Vacancy (5%) | −$9,000 |
+| Other income | $6,000 |
+| EGI | $177,000 |
+| OpEx | −$72,000 |
+| NOI | $105,000 |
+| ADS | $84,000 |
+| DSCR | 1.25x |
+| Break-even | 86.7% |
 
 ## Alignment matrix (LD-07)
 
@@ -275,6 +313,28 @@ Reconciliation to the broker's $575,000: the broker uses stabilized NOI after th
 | Job aid fits one page | Met on screen; confirm when printed |
 | Accessibility (LD-09) | Tables have headers; no colour-only meaning |
 
-**What to look up yourself:** a public offering memorandum for a small apartment building. Find its "pro forma NOI" and list which lines would change under MF-GEN-05 and MF-GEN-06.
+**Self-check.**
 
-**How to check it:** in a spreadsheet, `=(310000+4410000*8.25%)/780000` should give 0.8639, the 86.4% break-even in worked example 4.
+1. A 20-unit building rents at $1,200 a month, with 5% vacancy and $4,000 of other income. What is EGI? **Answer:** GPR = 20 × $1,200 × 12 = $288,000 (F-CORE-07). Vacancy = $288,000 × 5% = $14,400 (F-CORE-08). EGI = $288,000 − $14,400 + $4,000 = $277,600 (F-CORE-09).
+2. A multifamily T-12 shows $120,000 of expenses; the appraiser estimates $126,000. Which do you underwrite? **Answer:** $126,000, the greater of the two (MF-GEN-06).
+3. NOI is $249,900 and ADS is $200,000. Does it pass a 1.25x minimum? **Answer:** No. $249,900 ÷ $200,000 = 1.2495, below 1.25 at full precision (F-CORE-11).
+4. OpEx is $120,000, ADS $100,000 and GPR $288,000. What is break-even occupancy? **Answer:** ($120,000 + $100,000) ÷ $288,000 = 76.4% (F-CORE-12).
+
+**Real-world check (researched 19 Nov 2026): a live offering memorandum.** Alegre Park is a 24-unit building in Tempe, Arizona, offered at $3,800,000 by Matthews in 2026 ([offering memorandum](https://cms.matthews.com/wp-content/uploads/2026/05/Alegre-Park-1827-E-Lemon-St-Tempe-AZ-OM-PP.pdf)). It is a real, public document, so it is used only for this exercise and never as a running deal (Bible 5.4). Its operating statement shows three NOIs: T-12 $218,554, broker's Year 1 $232,211 and Pro Forma $265,813.
+
+| Line | Broker Year 1 | Our underwriting | Rule |
+| --- | --- | --- | --- |
+| Effective gross income | $310,248 | $301,886 (T-12; no rent roll or T-3 in the OM) | MF-GEN-05 |
+| Operating expenses | $78,037 | $83,332 (the T-12 is higher than the broker's figure) | MF-GEN-06 |
+| Management | 5.00% | 3.87% in the T-12; above the 3% floor | MF-GEN-06 |
+| NOI | $232,211 | $218,554 | F-CORE-10 |
+| Replacement reserves | none in the table | 24 × $300 = $7,200 | F-MF-06 |
+| NCF | n/a | $211,354 | F-MF-09 |
+
+What changed between the T-12 and the broker's Year 1: repairs cut from $17,939 to $9,600; administration cut from $11,694 to $2,400; payroll of $3,380 removed; insurance raised from $5,964 to $9,600. The underwritten NOI is $47,259 (17.8%) below the Pro Forma. At the $3,800,000 price, it is a 5.75% cap rate, not the advertised 7.00%.
+
+**Data flags an underwriter would raise.** The T-12 vacancy, concessions and loss-to-lease lines are all exactly $13,064. T-12 administration equals the management fee to the dollar. The Pro Forma cap rate appears as both 7.00% and 7.30%. Each one means: ask for the rent roll, bank deposits (MF-GEN-04) and the owner's actual T-12 before trusting any figure.
+
+**What to look up yourself.** Open Fannie Mae's [Multifamily Selling and Servicing Guide](https://mfguide.fanniemae.com) and find Section 203.01, Underwritten Net Cash Flow. Note the vacancy and management fee it uses. Compare them with our 5% vacancy floor (MF-GEN-05) and 3% management minimum (MF-GEN-06).
+
+**How to check it:** in a spreadsheet, `=(310000+4340000*8.25%)/780000` should give 0.8565, the 85.6% break-even in worked example 4.

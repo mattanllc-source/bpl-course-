@@ -1,0 +1,903 @@
+<title>BPL Core Course</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a loan-file binder. Fixed index of 15 tabs on the left (modules + references), the open file on the right.
+   Color: cool paper, ink, ledger green accent, amber for "draft" stamps, red for answers hidden. */
+:root {
+  --bg: #f5f7f6;
+  --panel: #ffffff;
+  --ink: #16201c;
+  --muted: #5b6863;
+  --rule: #d9e0dc;
+  --accent: #1d6b57;
+  --accent-soft: #e2efe9;
+  --draft: #9a5b07;
+  --draft-soft: #fbf0dc;
+  --done: #1d6b57;
+  --code-bg: #eef2f0;
+  --shadow: 0 1px 2px rgb(22 32 28 / 6%), 0 4px 16px rgb(22 32 28 / 6%);
+  --font-body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --side: 300px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1513; --panel: #161e1b; --ink: #e3ebe7; --muted: #93a39c; --rule: #2a3632;
+    --accent: #5fc2a4; --accent-soft: #1b2f29; --draft: #f0b45a; --draft-soft: #33270f; --done: #5fc2a4;
+    --code-bg: #1d2723; --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 4px 16px rgb(0 0 0 / 25%);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1513; --panel: #161e1b; --ink: #e3ebe7; --muted: #93a39c; --rule: #2a3632;
+  --accent: #5fc2a4; --accent-soft: #1b2f29; --draft: #f0b45a; --draft-soft: #33270f; --done: #5fc2a4;
+  --code-bg: #1d2723; --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 4px 16px rgb(0 0 0 / 25%);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.6 var(--font-body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--panel); }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+button { font: inherit; color: inherit; }
+
+.shell { display: grid; grid-template-columns: var(--side) minmax(0, 1fr); min-height: 100%; }
+.side {
+  position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; height: 100vh; overflow-y: auto;
+  background: var(--panel); border-right: 1px solid var(--rule);
+  padding-block: 20px 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.brand { display: grid; gap: 2px; }
+.brand b { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; }
+.brand span { font-size: 0.78rem; color: var(--muted); }
+.meter { display: grid; gap: 6px; font-size: 0.8rem; color: var(--muted); }
+.meter .bar { height: 6px; border-radius: 3px; background: var(--rule); overflow: hidden; }
+.meter .bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+.meter .sync { font-size: 0.74rem; }
+.navlabel { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+nav ol, nav ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 1px; }
+nav a {
+  display: grid; grid-template-columns: 2.6em minmax(0, 1fr) auto; gap: 8px; align-items: baseline;
+  padding: 6px 8px; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: 0.88rem; line-height: 1.3;
+}
+nav a:hover { background: var(--accent-soft); }
+nav a[aria-current="page"] { background: var(--accent-soft); font-weight: 600; }
+nav .code { font: 500 0.78rem var(--font-mono); color: var(--muted); }
+nav .st { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--rule); align-self: center; }
+nav .st[data-s="in-progress"] { border-color: var(--draft); background: linear-gradient(90deg, var(--draft) 50%, transparent 50%); }
+nav .st[data-s="done"] { border-color: var(--done); background: var(--done); }
+nav ul a { grid-template-columns: minmax(0, 1fr); }
+
+main {
+  min-width: 0; padding-block: 28px 80px;
+  padding-left: max(16px, 3vw); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.doc { max-width: 52rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.label {
+  font-size: 0.8rem; font-weight: 600; color: var(--muted); border: 1px solid var(--rule); background: var(--panel);
+  padding: 6px 10px; border-radius: 6px; justify-self: start;
+}
+.head { display: grid; gap: 8px; }
+.eyebrow { font: 500 0.8rem var(--font-mono); color: var(--accent); letter-spacing: 0.04em; }
+.head h1 { margin: 0; font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.3rem); line-height: 1.15; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.85rem; color: var(--muted); }
+.stamp {
+  border: 1px solid var(--draft); background: var(--draft-soft); color: var(--ink);
+  padding: 10px 14px; border-radius: 6px; font-size: 0.9rem;
+}
+.stamp b { color: var(--draft); }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn {
+  border: 1px solid var(--rule); background: var(--panel); padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 0.88rem; font-weight: 600;
+}
+.btn:hover { border-color: var(--accent); }
+.btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.toc { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.82rem; }
+.toc a { text-decoration: none; border: 1px solid var(--rule); padding: 3px 9px; border-radius: 999px; color: var(--ink); background: var(--panel); }
+.toc a:hover { border-color: var(--accent); }
+
+.prose { background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: clamp(16px, 3vw, 36px); min-width: 0; }
+.prose > :first-child { margin-top: 0; }
+.prose h1 { display: none; }
+.prose h2 { font-size: 1.35rem; font-weight: 800; margin: 2.2em 0 .6em; padding-top: .8em; border-top: 1px solid var(--rule); letter-spacing: -0.01em; text-wrap: balance; scroll-margin-top: 16px; }
+.prose h3 { font-size: 1.08rem; font-weight: 700; margin: 1.8em 0 .5em; text-wrap: balance; scroll-margin-top: 16px; }
+.prose h4 { font-size: 1rem; margin: 1.4em 0 .4em; }
+.prose p, .prose li { max-width: 68ch; overflow-wrap: anywhere; }
+.prose ol, .prose ul { padding-left: 1.4em; }
+.prose li { margin: .25em 0; }
+.prose code { overflow-wrap: anywhere; word-break: break-word; font: 0.86em var(--font-mono); background: var(--code-bg); padding: .1em .35em; border-radius: 4px; }
+.prose pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px; overflow-x: auto; }
+.prose pre code { background: none; padding: 0; }
+.prose blockquote { margin: 1em 0; padding: .2em 1em; border-left: 3px solid var(--rule); color: var(--muted); }
+.tbl { overflow-x: auto; margin: 1em 0; border: 1px solid var(--rule); border-radius: 6px; }
+.tbl table { border-collapse: collapse; width: 100%; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--rule); }
+.tbl th { background: var(--code-bg); font-weight: 700; white-space: nowrap; }
+.tbl tr:last-child td { border-bottom: 0; }
+
+.ref {
+  font: 500 0.86em var(--font-mono); color: var(--accent); background: var(--accent-soft); border: 0; padding: 0 .3em;
+  border-radius: 4px; cursor: pointer; white-space: nowrap;
+}
+.ref:hover { text-decoration: underline; }
+details.key { border: 1px dashed var(--accent); border-radius: 6px; padding: 8px 14px; margin: 1em 0; background: var(--bg); }
+details.key > summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+details.key[open] > summary { margin-bottom: .4em; }
+.reveal { font-size: 0.8rem; font-weight: 600; border: 1px solid var(--accent); color: var(--accent); background: none; border-radius: 999px; padding: 0 9px; cursor: pointer; margin-left: 4px; }
+
+.notes { display: grid; gap: 8px; }
+.notes label { font-weight: 700; }
+.notes p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.notes textarea {
+  width: 100%; min-height: 9rem; resize: vertical; font: 0.95rem/1.5 var(--font-body); color: var(--ink);
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px;
+}
+.notes .saved { font-size: 0.78rem; color: var(--muted); min-height: 1.2em; }
+
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 100%); background: var(--panel); border-left: 1px solid var(--rule);
+  box-shadow: var(--shadow); z-index: 20; display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px);
+}
+.drawer header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--rule); }
+.drawer header b { font: 600 0.95rem var(--font-mono); color: var(--accent); }
+.drawer .body { overflow-y: auto; padding: 4px 18px 24px; }
+.drawer .body h3 { font-size: 1.05rem; }
+.home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 10px; }
+.card { display: grid; gap: 4px; background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; text-decoration: none; color: var(--ink); }
+.card:hover { border-color: var(--accent); }
+.card .code { font: 500 0.78rem var(--font-mono); color: var(--accent); display: flex; justify-content: space-between; }
+.card b { font-size: 0.95rem; line-height: 1.3; }
+.card span { font-size: 0.8rem; color: var(--muted); }
+.menu { display: none; }
+
+/* ---- step view ---- */
+.pill { display: inline-block; font-size: 0.74rem; font-weight: 600; padding: 1px 9px; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); background: var(--panel); }
+.pill[data-s="in-progress"] { color: var(--draft); border-color: var(--draft); background: var(--draft-soft); }
+.pill[data-s="done"] { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.steps { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.steps button {
+  display: inline-flex; gap: 6px; align-items: baseline; border: 1px solid var(--rule); background: var(--panel); color: var(--ink);
+  padding: 5px 11px; border-radius: 999px; cursor: pointer; font-size: 0.84rem; font-weight: 600;
+}
+.steps button small { font: 500 0.72rem var(--font-mono); color: var(--muted); }
+.steps button:hover { border-color: var(--accent); }
+.steps button[aria-current="step"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.steps button[aria-current="step"] small { color: inherit; opacity: .8; }
+.stepbar { display: grid; gap: 4px; font-size: 0.78rem; color: var(--muted); }
+.stepbar .bar { height: 5px; border-radius: 3px; background: var(--rule); overflow: hidden; }
+.stepbar .bar i { display: block; height: 100%; background: var(--accent); transition: width .25s; }
+.pager { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.btn[disabled] { opacity: .45; cursor: default; }
+.endcap { display: grid; gap: 14px; background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 18px; }
+.endcap .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.modnav { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 10px; }
+.modnav a { display: grid; gap: 2px; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; text-decoration: none; color: var(--ink); background: var(--bg); }
+.modnav a:hover { border-color: var(--accent); }
+.modnav small { color: var(--muted); font-size: 0.78rem; }
+.modnav .dir { font: 500 0.72rem var(--font-mono); color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+.modnav a.next { text-align: right; }
+
+/* ---- block frames ---- */
+.prose .wx { background: var(--accent-soft); border: 1px solid var(--accent); border-left-width: 5px; border-radius: 8px; padding: 6px 16px 10px; margin: 1.4em 0; }
+.prose .wx > :first-child { margin-top: .6em; }
+.prose .wx .tbl { background: var(--panel); }
+.prose p.callout { background: var(--draft-soft); border-left: 4px solid var(--draft); border-radius: 6px; padding: 10px 14px; margin: 1.2em 0; max-width: none; }
+.prose .rubric { border: 2px solid var(--ink); border-radius: 8px; padding: 4px 16px 10px; margin: 1.2em 0; }
+.prose .rubric > :first-child { margin-top: .6em; }
+.prose .jobcard { border: 2px solid var(--ink); border-radius: 10px; padding: 8px 22px 18px; background: var(--bg); }
+.prose .jobcard > h2 { border-top: 0; margin-top: .6em; padding-top: 0; }
+.prose > h2:first-child, .prose .step > h2:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+
+/* ---- quiz and practice cards ---- */
+.qset { display: grid; gap: 12px; margin: 1em 0; }
+.score { position: sticky; top: 0; z-index: 2; background: var(--panel); border: 1px solid var(--rule); border-left: 4px solid var(--muted); border-radius: 6px; padding: 8px 12px; font-size: 0.86rem; }
+.score[data-v="pass"] { border-left-color: var(--accent); }
+.score[data-v="fail"] { border-left-color: #b3261e; }
+.score b { font-weight: 700; }
+.qcard { border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; display: grid; gap: 10px; background: var(--panel); }
+.qcard[data-m="got"] { border-left: 4px solid var(--accent); }
+.qcard[data-m="missed"] { border-left: 4px solid #b3261e; }
+.qhead { display: flex; gap: 8px; align-items: center; }
+.qnum { font: 600 0.8rem var(--font-mono); color: var(--accent); }
+.crit { font-size: 0.7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #b3261e; border: 1px solid #b3261e; border-radius: 999px; padding: 0 8px; }
+.qbody > :first-child { margin-top: 0; } .qbody > :last-child { margin-bottom: 0; }
+.qbody p, .qbody ul { margin: .3em 0; }
+.qbody ul { list-style: none; padding-left: .4em; }
+.qcard textarea { width: 100%; min-height: 4.2rem; resize: vertical; font: 0.92rem/1.5 var(--font-body); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; }
+.qacts { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.qans { border-top: 1px dashed var(--accent); padding-top: 8px; display: grid; gap: 8px; }
+.qans .ans-text { max-width: 68ch; overflow-wrap: anywhere; }
+.btn.sm { padding: 4px 11px; font-size: 0.82rem; }
+.btn.miss[aria-pressed="true"] { background: #b3261e; border-color: #b3261e; }
+.qflag { font-size: 0.8rem; color: #b3261e; font-weight: 600; }
+
+/* ---- chips, tags ---- */
+.nb { white-space: nowrap; }
+.tag { font-size: 0.7rem; font-weight: 600; color: var(--muted); border: 1px solid var(--rule); background: var(--code-bg); border-radius: 4px; padding: 0 5px; white-space: nowrap; cursor: help; vertical-align: 1px; }
+.tbl td.num, .tbl th.num { text-align: right; white-space: nowrap; }
+
+/* ---- home dashboard ---- */
+.cont { display: grid; gap: 6px; border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 10px; padding: 16px 18px; }
+.cont .eyebrow { font: 500 0.78rem var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
+.cont h2 { margin: 0; font-size: 1.3rem; line-height: 1.25; }
+.cont p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+.cont .btn { justify-self: start; margin-top: 6px; text-decoration: none; display: inline-block; }
+.plist { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.plist a { display: grid; grid-template-columns: 2.6em minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--panel); text-decoration: none; color: var(--ink); font-size: 0.92rem; }
+.plist a:hover { border-color: var(--accent); }
+.plist .code { font: 500 0.78rem var(--font-mono); color: var(--accent); }
+.plist small { color: var(--muted); display: block; font-size: 0.76rem; }
+.howto h2 { margin-top: 0 !important; border-top: 0 !important; padding-top: 0 !important; }
+
+@media (max-width: 599px) {
+  .tbl.stack { border: 0; overflow: visible; }
+  .tbl.stack table, .tbl.stack tbody, .tbl.stack tr, .tbl.stack td { display: block; width: 100%; }
+  .tbl.stack thead { display: none; }
+  .tbl.stack tr { border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 8px; background: var(--panel); padding: 4px 0; }
+  .tbl.stack td { border: 0; padding: 3px 12px; text-align: left !important; display: grid; grid-template-columns: minmax(5.5em, 36%) minmax(0, 1fr); gap: 8px; white-space: normal !important; overflow-wrap: anywhere; }
+  .tbl.stack td::before { content: attr(data-label); font-weight: 700; color: var(--muted); font-size: 0.8rem; }
+  .tbl.stack td[data-label=""]::before { content: none; }
+  .tbl.stack td[data-label=""] { display: block; }
+  .prose { padding: 14px; }
+  .steps button { padding: 4px 9px; font-size: 0.8rem; }
+}
+
+@media (max-width: 860px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .side nav { display: none; }
+  .side.open nav { display: block; }
+  .menu { display: inline-block; justify-self: start; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<div class="shell">
+  <aside class="side" id="side">
+    <div class="brand"><b>BPL Core Course</b><span>Business-purpose real estate lending · C0-C14</span></div>
+    <div class="meter" aria-live="polite">
+      <span id="meter-text">0 of 15 modules done</span>
+      <div class="bar"><i id="meter-bar"></i></div>
+      <span class="sync" id="sync">Loading your progress…</span>
+    </div>
+    <button class="btn menu" id="menu" aria-expanded="false" aria-controls="side">Show modules</button>
+    <nav aria-label="Course">
+      <div class="navlabel">Modules</div>
+      <ol id="nav-modules"></ol>
+      <div class="navlabel" style="margin-top:16px">References</div>
+      <ul id="nav-refs"></ul>
+    </nav>
+  </aside>
+  <main id="main"><div class="doc" id="doc"></div></main>
+</div>
+<aside class="drawer" id="drawer" hidden aria-label="Reference">
+  <header><b id="drawer-title"></b><button class="btn" id="drawer-close">Close</button></header>
+  <div class="body prose" id="drawer-body" style="border:0;border-radius:0"></div>
+</aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script id="course-data" type="application/json">/*__DATA__*/</script>
+<script>
+"use strict";
+const DATA = JSON.parse(document.getElementById("course-data").textContent);
+const LABEL = "Model policy for training - not for live lending decisions.";
+const MODS = DATA.modules;               // [{key, code, title, hours, prereq, draft, md}]
+const REFS = DATA.refs;                  // [{key, title, md}]
+const $ = (id) => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const prereqText = (p) => (!p || /^none$/i.test(p.trim())) ? "No prerequisite" : "Prerequisite: " + p;
+const hoursText = (h) => `${h} ${h === 1 ? "hour" : "hours"}`;
+const PASS = 0.8;
+
+/* ---------- markdown ---------- */
+marked.setOptions({ gfm: true, breaks: false });
+function decorateTables(box) {
+  for (const t of box.querySelectorAll("table")) {
+    const w = el("div", "tbl"); t.replaceWith(w); w.appendChild(t);
+    const heads = [...t.querySelectorAll("thead th")].map((h) => h.textContent.trim());
+    const rows = [...t.querySelectorAll("tbody tr")];
+    const ncol = heads.length || (rows[0] ? rows[0].children.length : 0);
+    if (ncol >= 3) w.classList.add("stack");
+    for (const tr of rows) [...tr.children].forEach((td, i) => { td.dataset.label = heads[i] || ""; });
+    for (let c = 0; c < ncol; c++) {
+      const cells = rows.map((r) => r.children[c]).filter(Boolean);
+      const filled = cells.filter((td) => { const x = td.textContent.trim(); return x && !/^[—–-]$/.test(x); });
+      const money = filled.filter((td) => /^[−-]?\$\s?[\d,]/.test(td.textContent.trim()));
+      if (filled.length >= 2 && money.length / filled.length >= 0.6) {
+        for (const td of cells) td.classList.add("num");
+        const th = t.querySelectorAll("thead th")[c]; if (th) th.classList.add("num");
+      }
+    }
+  }
+}
+function render(md) {
+  const html = DOMPurify.sanitize(marked.parse(md));
+  const box = document.createElement("div");
+  box.innerHTML = html;
+  decorateTables(box);
+  const used = new Set();
+  for (const h of box.querySelectorAll("h2, h3")) {
+    let id = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "s";
+    while (used.has(id)) id += "-x";
+    used.add(id); h.id = "sec-" + id;
+  }
+  return box;
+}
+
+/* ---------- reference lookups (formula and rule IDs) ---------- */
+const plainText = (s) => s.replace(/\*\*|`|\*/g, "").replace(/\s+/g, " ").trim();
+function firstSentence(s) {
+  s = plainText(s);
+  const m = /^(.*?[.!?])(\s|$)/.exec(s);
+  let out = m ? m[1] : s;
+  if (out.length > 240) out = out.slice(0, 237).trimEnd() + "…";
+  return out;
+}
+const FORMULAS = new Map(), FNAMES = new Map();
+{
+  const lib = REFS.find((r) => r.key === "formulas").md;
+  const parts = lib.split(/^(?=### F-[A-Z]+-\d+:)/m);
+  for (const p of parts) {
+    const m = /^### (F-[A-Z]+-\d+):\s*(.*)$/m.exec(p);
+    if (m && p.startsWith("### " + m[1])) { FORMULAS.set(m[1], p.split(/^## /m)[0].trim()); FNAMES.set(m[1], plainText(m[2])); }
+  }
+}
+const RULES = new Map(), RSUM = new Map();
+{
+  const lines = REFS.find((r) => r.key === "policy").md.split("\n");
+  let header = null;
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    if (!l.startsWith("|")) { header = null; continue; }
+    if (header === null) { header = l; continue; }
+    if (/^\|\s*-/.test(l)) continue;
+    const m = /^\|\s*((?:CORE|RES|MF|COM)-[A-Z]+-\d+|D-[A-Z]+-\d+)\s*\|/.exec(l);
+    if (m && !RULES.has(m[1])) {
+      RULES.set(m[1], header + "\n" + header.replace(/[^|]+/g, " --- ") + "\n" + l);
+      const cells = l.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+      RSUM.set(m[1], firstSentence(cells[1] || ""));
+    }
+  }
+  // Rules defined as a bold heading line, e.g. "**Approval authority matrix (CORE-AUTH-01)**", then prose and a table.
+  for (let i = 0; i < lines.length; i++) {
+    const hm = /^\*\*([^*]*?)\s*\(((?:CORE|RES|MF|COM)-[A-Z]+-\d+)\)\*\*\s*$/.exec(lines[i]);
+    if (!hm || RULES.has(hm[2])) continue;
+    const block = []; let j = i + 1;
+    while (j < lines.length && !/^(\*\*[^*]+\*\*\s*$|#{1,4}\s)/.test(lines[j])) { block.push(lines[j]); j++; }
+    RULES.set(hm[2], `### ${hm[1]}\n\n` + block.join("\n").trim());
+    const para = block.find((b) => b.trim() && !b.startsWith("|"));
+    RSUM.set(hm[2], hm[1] + (para ? ": " + firstSentence(para) : ""));
+  }
+}
+const ID_RE = /\b(F-(?:CORE|RES|MF|COM)-\d{2}|(?:CORE|RES|MF|COM)-[A-Z]{2,5}-\d{2}|D-[A-Z]{2,5}-\d{2})\b/g;
+const TAG_RE = /\[((?:VERIFY:|POLICY\b|CONFIRM\b)[^\]]*)\]/g;
+function chipTitle(id) {
+  if (FNAMES.has(id)) return `${id}: ${FNAMES.get(id)}`;
+  if (RSUM.has(id)) return `${id}: ${RSUM.get(id)}`;
+  return id;
+}
+function tagBadge(text) {
+  const b = el("span", "tag");
+  const kind = /^VERIFY/.test(text) ? "Source" : /^POLICY/.test(text) ? "Policy note" : "To confirm";
+  let short = kind;
+  if (kind === "Source") { const src = text.replace(/^VERIFY:\s*/, "").split(";")[0].trim(); short = "Source: " + (src.length > 34 ? src.slice(0, 33) + "…" : src); }
+  b.textContent = short; b.title = `[${text}]`;
+  return b;
+}
+function textNodes(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: (n) => n.parentElement.closest("a, button, .ref, .tag, pre, textarea") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT,
+  });
+  const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+  return nodes;
+}
+function linkIds(root) {
+  for (const n of textNodes(root)) {            // source badges first
+    const s = n.nodeValue; TAG_RE.lastIndex = 0;
+    if (!TAG_RE.test(s)) continue;
+    TAG_RE.lastIndex = 0;
+    const frag = document.createDocumentFragment(); let last = 0, m;
+    while ((m = TAG_RE.exec(s))) { frag.append(s.slice(last, m.index), tagBadge(m[1])); last = m.index + m[0].length; }
+    frag.append(s.slice(last)); n.replaceWith(frag);
+  }
+  for (const n of textNodes(root)) {
+    const s = n.nodeValue; ID_RE.lastIndex = 0;
+    if (!ID_RE.test(s)) continue;
+    ID_RE.lastIndex = 0;
+    const frag = document.createDocumentFragment(); let last = 0, m, any = false;
+    while ((m = ID_RE.exec(s))) {
+      const id = m[1];
+      if (!FORMULAS.has(id) && !RULES.has(id)) continue;
+      any = true;
+      // Keep the chip together with punctuation right before and after it.
+      let before = s.slice(last, m.index), lead = "";
+      const lm = /[(\[“"'‘]+$/.exec(before); if (lm) { lead = lm[0]; before = before.slice(0, -lead.length); }
+      let end = m.index + id.length;
+      const tm = /^[)\]”"'’.,;:!?]+/.exec(s.slice(end)); const trail = tm ? tm[0] : ""; end += trail.length;
+      frag.append(before);
+      const wrap = el("span", "nb");
+      const b = el("button", "ref", id); b.type = "button"; b.dataset.ref = id; b.title = chipTitle(id);
+      b.setAttribute("aria-label", `Look up ${id}`);
+      wrap.append(lead, b, trail); frag.append(wrap);
+      last = end; ID_RE.lastIndex = end;
+    }
+    if (!any) continue;
+    frag.append(s.slice(last)); n.replaceWith(frag);
+  }
+}
+function openDrawer(id) {
+  const md = FORMULAS.get(id) || RULES.get(id);
+  if (!md) return;
+  $("drawer-title").textContent = id;
+  const body = $("drawer-body"); body.replaceChildren(render(md));
+  const note = el("p", "label", LABEL); body.prepend(note);
+  linkIds(body);
+  $("drawer").hidden = false; $("drawer-close").focus();
+}
+document.addEventListener("click", (e) => { const b = e.target.closest(".ref"); if (b) openDrawer(b.dataset.ref); });
+$("drawer-close").addEventListener("click", () => { $("drawer").hidden = true; });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("drawer").hidden = true; });
+
+/* ---------- hide answers until asked ---------- */
+const KEY_RE = /^(answer key|model answer)/i;
+const startsBold = (n) => n && n.tagName === "P" && n.firstElementChild && n.firstElementChild.tagName === "STRONG" && n.firstChild === n.firstElementChild;
+const isKeyLabel = (n) => startsBold(n) && KEY_RE.test(n.firstElementChild.textContent.trim());
+function hideAnswers(root) {
+  // Blocks: a paragraph that opens with a bold "Answer key…" or "Model answer…" label, plus what follows it,
+  // up to the next heading, rule or bold-labelled paragraph.
+  for (const p of [...root.querySelectorAll("p")]) {
+    if (!isKeyLabel(p) || !p.parentNode) continue;
+    const first = p.firstElementChild;
+    const d = el("details", "key");
+    const label = first.textContent.replace(/[.:]\s*$/, "");
+    d.append(el("summary", "", "Show " + label.charAt(0).toLowerCase() + label.slice(1))); p.before(d);
+    let n = p;
+    while (n) {
+      const next = n.nextElementSibling;
+      d.append(n);
+      if (!next || /^(H[1-4]|HR|DETAILS)$/.test(next.tagName) || startsBold(next)) break;
+      n = next;
+    }
+  }
+  // Inline: "**Answer:** …" inside a list item or paragraph.
+  for (const s of [...root.querySelectorAll("strong")]) {
+    if (!/^answer:?$/i.test(s.textContent.trim()) || s.closest("details.key, .qans")) continue;
+    const span = el("span", "ans"); span.hidden = true;
+    const b = el("button", "reveal", "Show answer"); b.type = "button";
+    b.addEventListener("click", () => { span.hidden = !span.hidden; b.textContent = span.hidden ? "Show answer" : "Hide answer"; });
+    s.before(b);
+    while (s.nextSibling) span.append(s.nextSibling);
+    span.prepend(s, " ");
+    b.after(" ", span);
+  }
+}
+
+/* ---------- block frames keyed on bold labels ---------- */
+function grab(p, cls) {
+  const d = el("div", cls); p.before(d);
+  let n = p;
+  while (n) {
+    const next = n.nextElementSibling;
+    d.append(n);
+    if (!next || /^(H[1-6]|HR|DETAILS)$/.test(next.tagName) || startsBold(next)) break;
+    n = next;
+  }
+}
+function frameBlocks(root) {
+  for (const p of [...root.querySelectorAll("p")]) {
+    if (!p.parentNode || !startsBold(p) || p.closest(".wx, .rubric")) continue;
+    const t = p.firstElementChild.textContent.trim();
+    if (/^Worked example\s*\d+/i.test(t)) grab(p, "wx");
+    else if (/^Rubric/i.test(t)) grab(p, "rubric");
+    else if (/^(Checkpoint|What-if)/i.test(t)) p.classList.add("callout");
+  }
+}
+
+/* ---------- progress store: db per person, browser fallback ---------- */
+const state = { status: {}, ready: false };
+let view = "home";
+const store = {
+  db: null, uid: null, mode: "local", chain: Promise.resolve(),
+  localGet(k) { try { return JSON.parse(localStorage.getItem("bpl:" + k)); } catch { return null; } },
+  localSet(k, v) { try { localStorage.setItem("bpl:" + k, JSON.stringify(v)); } catch { /* storage blocked */ } },
+  write(path, body) {
+    // One write at a time per document, in order.
+    this.chain = this.chain.then(() => this.db.doc(path).set(body)).catch((e) => setSync(`Couldn't save (${e && e.code || "error"}). Your change shows here but may not be kept.`));
+    return this.chain;
+  },
+  saveStatus() {
+    if (this.mode === "db") return this.write(`data/users/${this.uid}/progress`, { status: state.status, updatedAt: new Date().toISOString() });
+    this.localSet("status", state.status);
+  },
+  async loadNote(key) {
+    if (this.mode === "db") {
+      try { const s = await this.db.doc(`data/users/${this.uid}/note-${key}`).get(); return s.exists ? String(s.data().text || "") : ""; }
+      catch { return ""; }
+    }
+    return this.localGet("note-" + key) || "";
+  },
+  saveNote(key, text) {
+    if (this.mode === "db") return this.write(`data/users/${this.uid}/note-${key}`, { text, updatedAt: new Date().toISOString() });
+    this.localSet("note-" + key, text);
+    return Promise.resolve();
+  },
+  async loadQuiz(key) {
+    let v = null;
+    if (this.mode === "db") {
+      try { const s = await this.db.doc(`data/users/${this.uid}/quiz-${key}`).get(); v = s.exists ? s.data() : null; } catch { v = null; }
+    } else v = this.localGet("quiz-" + key);
+    return { answers: { ...(v && v.answers) }, marks: { ...(v && v.marks) }, practice: { ...(v && v.practice) } };
+  },
+  saveQuiz(key, qs) {
+    const body = { answers: qs.answers, marks: qs.marks, practice: qs.practice };
+    if (this.mode === "db") return this.write(`data/users/${this.uid}/quiz-${key}`, { ...body, updatedAt: new Date().toISOString() });
+    this.localSet("quiz-" + key, body);
+    return Promise.resolve();
+  },
+};
+function setSync(t) { $("sync").textContent = t; }
+async function initStore() {
+  state.status = store.localGet("status") || {};
+  paintProgress();
+  let db = null, user = null;
+  try { [db, user] = await Promise.all([window.claude?.use?.("db") ?? null, window.claude?.use?.("user") ?? null]); } catch { /* not in a viewer */ }
+  const uid = user ? await user.id() : null;
+  if (!db || !uid) { setSync("Progress is saved in this browser only."); state.ready = true; return; }
+  store.db = db; store.uid = uid; store.mode = "db";
+  const timer = setTimeout(() => setSync("Can't reach your saved progress yet. Showing what this browser has."), 10000);
+  db.doc(`data/users/${uid}/progress`).onSnapshot((snap) => {
+    if (!snap.metadata.fromCache) { clearTimeout(timer); setSync("Progress saved to your account."); }
+    if (snap.exists) state.status = { ...(snap.data().status || {}) };
+    state.ready = true; paintProgress();
+    const key = location.hash.slice(1) || "home";
+    if (!MODS.some((x) => x.key === key) && !REFS.some((x) => x.key === key)) showHome();
+    else if (view === "home") showHome();
+  }, (e) => { clearTimeout(timer); setSync(`Progress sync stopped (${e.code}). Reload to try again.`); });
+}
+function setStatus(key, s) { state.status = { ...state.status, [key]: s }; paintProgress(); store.saveStatus(); }
+const STATUS_TEXT = { "not-started": "Not started", "in-progress": "In progress", "done": "Done" };
+
+/* ---------- views ---------- */
+function paintProgress() {
+  let done = 0, hours = 0, total = 0;
+  for (const m of MODS) {
+    total += m.hours;
+    const s = state.status[m.key] || "not-started";
+    if (s === "done") { done++; hours += m.hours; }
+    const dot = document.querySelector(`#nav-modules [data-key="${m.key}"] .st`);
+    if (dot) { dot.dataset.s = s; dot.title = STATUS_TEXT[s] || s; }
+  }
+  $("meter-text").textContent = `${done} of ${MODS.length} modules done · ${hours} of ${total} hours`;
+  $("meter-bar").style.width = `${(hours / total) * 100}%`;
+  const pill = document.getElementById("pill");
+  if (pill) { const s = state.status[pill.dataset.for] || "not-started"; pill.dataset.s = s; pill.textContent = STATUS_TEXT[s]; }
+  const btn = document.getElementById("donebtn");
+  if (btn) { const d = (state.status[btn.dataset.for] || "") === "done"; btn.textContent = d ? "Module done. Undo" : "Mark module done"; btn.setAttribute("aria-pressed", String(d)); btn.classList.toggle("primary", !d); }
+}
+function buildNav() {
+  const ol = $("nav-modules");
+  for (const m of MODS) {
+    const li = document.createElement("li"); const a = document.createElement("a");
+    a.href = "#" + m.key; a.dataset.key = m.key;
+    a.innerHTML = `<span class="code"></span><span class="t"></span><span class="st" data-s="not-started"></span>`;
+    a.querySelector(".code").textContent = m.code; a.querySelector(".t").textContent = m.title;
+    li.append(a); ol.append(li);
+  }
+  const ul = $("nav-refs");
+  for (const r of [{ key: "home", title: "Course home" }, ...REFS]) {
+    const li = document.createElement("li"); const a = document.createElement("a");
+    a.href = "#" + r.key; a.dataset.key = r.key; a.textContent = r.title; li.append(a); ul.append(li);
+  }
+}
+const labelEl = () => el("p", "label", LABEL);
+function headEl(eyebrow, title, facts) {
+  const h = el("div", "head");
+  const e = el("div", "eyebrow", eyebrow);
+  const t = el("h1", "", title);
+  h.append(e, t);
+  if (facts) { const f = el("div", "facts"); for (const x of facts) f.append(el("span", "", x)); h.append(f); }
+  return h;
+}
+let flushers = [];
+let routeTok = 0;
+function chipEl(id) { const b = el("button", "ref", id); b.type = "button"; b.dataset.ref = id; b.title = chipTitle(id); return b; }
+
+function showHome() {
+  view = "home"; routeTok++;
+  const doc = $("doc");
+  const totalH = MODS.reduce((a, m) => a + m.hours, 0);
+  const next = MODS.find((m) => (state.status[m.key] || "") !== "done");
+  const cont = el("section", "cont");
+  if (next) {
+    const s = state.status[next.key] || "not-started";
+    cont.append(el("div", "eyebrow", s === "in-progress" ? "Continue with" : "Start with"), el("h2", "", `${next.code}: ${next.title}`),
+      el("p", "", `${hoursText(next.hours)} · ${prereqText(next.prereq)}${next.draft ? " · working draft" : ""}`));
+    const a = el("a", "btn primary", s === "in-progress" ? "Continue" : "Start module"); a.href = "#" + next.key; cont.append(a);
+  } else cont.append(el("div", "eyebrow", "Course complete"), el("h2", "", "Every module is marked done."), el("p", "", "Review any module from the list below."));
+  const list = el("ol", "plist");
+  for (const m of MODS) {
+    const li = el("li"); const a = el("a"); a.href = "#" + m.key;
+    const s = state.status[m.key] || "not-started";
+    const mid = el("span"); mid.append(el("span", "", m.title), el("small", "", `${hoursText(m.hours)} · ${prereqText(m.prereq)}${m.draft ? " · working draft" : ""}`));
+    const pill = el("span", "pill", STATUS_TEXT[s]); pill.dataset.s = s;
+    a.append(el("span", "code", m.code), mid, pill); li.append(a); list.append(li);
+  }
+  const how = el("section", "prose howto");
+  how.innerHTML = `<h2>How this works</h2><ul>
+<li>Work the modules in order. Each is a short series of steps: Overview, Learn, Practice, Quiz, OJT task, Job aid and Wrap-up.</li>
+<li>Answers stay hidden. Write your own first, then reveal and mark yourself honestly.</li>
+<li>Click any rule or formula ID, such as <span class="x"></span>, to read it without leaving the page.</li>
+<li>Your answers, notes and progress save automatically.</li></ul>`;
+  how.querySelector(".x").replaceWith(chipEl("F-CORE-01"));
+  doc.replaceChildren(labelEl(), headEl("Course home", "BPL Core Course", [`${MODS.length} modules`, `${totalH} hours`, "Running deals: Maple Run (OH), Cedar Court (NC), Birchwood Plaza (IN)"]), cont,
+    Object.assign(el("h2", "", "Your progress"), { style: "margin:0;font-size:1.1rem" }), list, how);
+}
+function showRef(r) {
+  view = "ref"; routeTok++;
+  const doc = $("doc");
+  const prose = el("div", "prose");
+  prose.append(render(r.md)); linkIds(prose);
+  doc.replaceChildren(labelEl(), headEl("Reference", r.title, [r.note]), prose);
+}
+
+/* ---------- quiz and practice cards ---------- */
+function makeSaver(qs, key) {
+  let t = null, dirty = false;
+  const flush = () => { clearTimeout(t); if (!dirty) return; dirty = false; store.saveQuiz(key, qs); };
+  const touch = () => { dirty = true; clearTimeout(t); t = setTimeout(flush, 800); };
+  flushers.push(flush);
+  return { flush, touch };
+}
+function answerBox(label, value, onInput, placeholder) {
+  const ta = el("textarea"); ta.value = value || ""; ta.placeholder = placeholder; ta.setAttribute("aria-label", label);
+  ta.addEventListener("input", () => onInput(ta.value));
+  return ta;
+}
+function takeCritical(body) {
+  let crit = false;
+  for (const e of [...body.querySelectorAll("em, strong")]) {
+    if (!body.contains(e) || !/^\(critical\)$/i.test(e.textContent.trim())) continue;
+    crit = true;
+    let t = e;
+    while (t.parentElement && t.parentElement !== body && t.parentElement.textContent.trim() === e.textContent.trim()) t = t.parentElement;
+    t.remove();
+  }
+  return crit;
+}
+function buildQuiz(sec, qs, saver) {
+  const groups = []; let cur = null;
+  for (const n of [...sec.children]) {
+    if (n.tagName === "H3") { cur = { h: n, nodes: [] }; groups.push(cur); } else if (cur) cur.nodes.push(n);
+  }
+  for (const g of groups) {
+    const setId = ((/Set\s+([A-Za-z0-9]+)/i.exec(g.h.textContent) || [, g.h.textContent.trim()])[1]).toUpperCase();
+    const ki = g.nodes.findIndex(isKeyLabel);
+    let keyOl = null;
+    if (ki >= 0) keyOl = g.nodes.slice(ki + 1).find((n) => n.tagName === "OL") || null;
+    const ol = g.nodes.find((n) => n.tagName === "OL" && n !== keyOl);
+    if (!ol) continue;
+    const items = [...ol.children].filter((x) => x.tagName === "LI");
+    const wrap = el("div", "qset"); wrap.dataset.set = setId;
+    const score = el("div", "score"); score.setAttribute("aria-live", "polite");
+    wrap.append(score);
+    const cards = [];
+    items.forEach((li, i) => {
+      const id = `${setId}${i + 1}`;
+      let ansHtml = "";
+      const st = [...li.querySelectorAll("strong")].find((s) => /^answer:?$/i.test(s.textContent.trim()) && s.parentNode === li);
+      if (st) {
+        const tmp = el("div"); let n = st.nextSibling;
+        while (n) { const nx = n.nextSibling; tmp.append(n); n = nx; }
+        st.remove(); ansHtml = tmp.innerHTML.trim();
+      } else if (keyOl && keyOl.children[i]) ansHtml = keyOl.children[i].innerHTML;
+      const body = el("div", "qbody");
+      while (li.firstChild) body.append(li.firstChild);
+      const crit = takeCritical(body);
+      const card = el("article", "qcard"); card.dataset.id = id; if (crit) card.dataset.critical = "1";
+      const head = el("div", "qhead"); head.append(el("span", "qnum", `Set ${setId} · Q${i + 1}`));
+      if (crit) head.append(el("span", "crit", "Critical"));
+      const ta = answerBox(`Your answer to Set ${setId} question ${i + 1}`, qs.answers[id], (v) => { qs.answers[id] = v; saver.touch(); }, "Your answer and working");
+      const acts = el("div", "qacts");
+      const rev = el("button", "btn sm", "Reveal answer"); rev.type = "button";
+      acts.append(rev);
+      const ans = el("div", "qans"); ans.hidden = true;
+      const at = el("div", "ans-text"); at.innerHTML = ansHtml || "<em>No answer is listed for this item.</em>";
+      const marks = el("div", "qacts");
+      const got = el("button", "btn sm", "Got it"), miss = el("button", "btn sm miss", "Missed it");
+      got.type = miss.type = "button";
+      marks.append(got, miss);
+      if (crit) marks.append(el("span", "qflag", "Critical item: a miss fails the set."));
+      ans.append(at, marks);
+      const paint = () => {
+        const mk = qs.marks[id] || "";
+        got.setAttribute("aria-pressed", String(mk === "got")); miss.setAttribute("aria-pressed", String(mk === "missed"));
+        got.classList.toggle("primary", mk === "got");
+        if (mk) card.dataset.m = mk; else delete card.dataset.m;
+      };
+      rev.addEventListener("click", () => { ans.hidden = !ans.hidden; rev.textContent = ans.hidden ? "Reveal answer" : "Hide answer"; });
+      const setMark = (v) => { qs.marks[id] = qs.marks[id] === v ? "" : v; if (!qs.marks[id]) delete qs.marks[id]; paint(); saver.touch(); updateScore(); };
+      got.addEventListener("click", () => setMark("got")); miss.addEventListener("click", () => setMark("missed"));
+      card.append(head, body, ta, acts, ans);
+      if (qs.marks[id]) { ans.hidden = false; rev.textContent = "Hide answer"; }
+      paint();
+      cards.push({ id, crit, card }); wrap.append(card);
+    });
+    function updateScore() {
+      const total = cards.length, need = Math.ceil(PASS * total - 1e-9);
+      const got = cards.filter((c) => qs.marks[c.id] === "got").length;
+      const marked = cards.filter((c) => qs.marks[c.id]).length;
+      const missedCrit = cards.filter((c) => c.crit && qs.marks[c.id] === "missed").map((c) => c.id.replace(setId, "Q"));
+      const pct = total ? Math.round(got / total * 100) : 0;
+      let v = "", msg = "";
+      if (missedCrit.length) { v = "fail"; msg = ` Critical item missed (${missedCrit.join(", ")}): this set is not passed.`; }
+      else if (marked === total) { v = got >= need ? "pass" : "fail"; msg = got >= need ? " Passed." : " Below the pass mark."; }
+      else if (marked - got > total - need) { v = "fail"; msg = " Below the pass mark."; }
+      score.dataset.v = v;
+      score.innerHTML = "";
+      const b = el("b", "", `Set ${setId}: ${got} of ${total} got it (${pct}%)`);
+      score.append(b, ` · ${marked} marked · pass mark ${Math.round(PASS * 100)}% (${need} of ${total}) with every critical item right.${msg}`);
+    }
+    updateScore();
+    ol.replaceWith(wrap);
+    if (ki >= 0) { g.nodes[ki].remove(); if (keyOl) keyOl.remove(); }
+  }
+}
+function buildPractice(sec, qs, saver) {
+  for (const n of [...sec.children]) {
+    if (isKeyLabel(n)) break;
+    if (n.tagName !== "OL") continue;
+    const wrap = el("div", "qset");
+    [...n.children].filter((x) => x.tagName === "LI").forEach((li, i) => {
+      const id = String(i + 1);
+      const card = el("article", "qcard");
+      const body = el("div", "qbody"); while (li.firstChild) body.append(li.firstChild);
+      const head = el("div", "qhead"); head.append(el("span", "qnum", `Practice ${i + 1}`));
+      card.append(head, body);
+      card.append(answerBox(`Your answer to practice item ${i + 1}`, qs.practice[id], (v) => { qs.practice[id] = v; saver.touch(); }, "Your working and answer"));
+      wrap.append(card);
+    });
+    n.replaceWith(wrap);
+  }
+}
+
+/* ---------- module page: steps ---------- */
+const STEPS = [
+  { id: "overview", label: "Overview", re: /^(hook|objectives?)/i },
+  { id: "learn", label: "Learn", re: /^teach/i },
+  { id: "practice", label: "Practice", re: /^practice/i },
+  { id: "quiz", label: "Quiz", re: /^quiz/i },
+  { id: "ojt", label: "OJT task", re: /^ojt/i },
+  { id: "jobaid", label: "Job aid", re: /^job aid/i },
+  { id: "wrapup", label: "Wrap-up", re: /^wrap/i },
+];
+const stepOf = {};   // page state: last step open per module
+function splitSteps(box) {
+  const by = Object.fromEntries(STEPS.map((s) => [s.id, []]));
+  let target = "overview";
+  for (const n of [...box.children]) {
+    if (n.tagName === "H2") { const s = STEPS.find((x) => x.re.test(n.textContent.trim())); if (s) target = s.id; }
+    by[target].push(n);
+  }
+  return STEPS.filter((s) => by[s.id].length).map((s) => {
+    const sec = el("section", "prose step"); sec.dataset.step = s.id; sec.append(...by[s.id]);
+    return { ...s, sec };
+  });
+}
+async function showModule(m) {
+  view = "module";
+  const tok = ++routeTok;
+  const [qs, noteText] = await Promise.all([store.loadQuiz(m.key), store.loadNote(m.key)]);
+  if (tok !== routeTok) return;
+  const doc = $("doc");
+  const idx = MODS.indexOf(m);
+  // header
+  const head = el("div", "head");
+  const eb = el("div", "eyebrow", m.code + " ");
+  const pill = el("span", "pill"); pill.id = "pill"; pill.dataset.for = m.key; eb.append(pill);
+  head.append(eb, el("h1", "", m.title));
+  const f = el("div", "facts"); f.append(el("span", "", hoursText(m.hours)), el("span", "", prereqText(m.prereq))); head.append(f);
+  const parts = [labelEl(), head];
+  if (m.draft) {
+    const st = el("div", "stamp");
+    st.innerHTML = `<b>Working draft.</b> This lesson is a snapshot that may lag the live Course Bible. Check figures and rules against the doc before you rely on them.`;
+    parts.push(st);
+  }
+  // content
+  const box = render(m.md);
+  const steps = splitSteps(box);
+  const saver = makeSaver(qs, m.key);
+  for (const s of steps) {
+    if (s.id === "quiz") buildQuiz(s.sec, qs, saver);
+    if (s.id === "practice") buildPractice(s.sec, qs, saver);
+    frameBlocks(s.sec); hideAnswers(s.sec);
+    if (s.id === "jobaid") { const card = el("div", "jobcard"); card.append(...s.sec.childNodes); s.sec.append(card); }
+    linkIds(s.sec);
+  }
+  // notes live in the OJT step (or the last step)
+  const notes = el("section", "notes");
+  notes.innerHTML = `<label for="note-${m.key}">Your notes and OJT write-up</label><p>Saved as you type. Use fictional data only.</p><textarea id="note-${m.key}"></textarea><span class="saved" aria-live="polite"></span>`;
+  (steps.find((s) => s.id === "ojt") || steps[steps.length - 1]).sec.append(notes);
+  const ta = notes.querySelector("textarea"), saved = notes.querySelector(".saved");
+  ta.value = noteText; ta.placeholder = "Your answers, calculations and OJT notes for " + m.code;
+  let nt = null, last = ta.value;
+  const flushN = () => { clearTimeout(nt); if (ta.value === last) return; last = ta.value; saved.textContent = "Saving…"; store.saveNote(m.key, ta.value).then(() => { saved.textContent = "Saved"; }); };
+  ta.addEventListener("input", () => { clearTimeout(nt); nt = setTimeout(flushN, 900); });
+  ta.addEventListener("blur", flushN);
+  flushers.push(flushN);
+  // end of the last step: mark done, previous / next module
+  const end = el("div", "endcap");
+  const row = el("div", "row");
+  const done = el("button", "btn", "Mark module done"); done.type = "button"; done.id = "donebtn"; done.dataset.for = m.key;
+  done.addEventListener("click", () => setStatus(m.key, (state.status[m.key] || "") === "done" ? "in-progress" : "done"));
+  row.append(done, el("span", "", "Finished the quiz, the OJT task and the self-check? Mark this module done."));
+  const mn = el("div", "modnav");
+  const pv = MODS[idx - 1], nx = MODS[idx + 1];
+  if (pv) { const a = el("a", "prev"); a.href = "#" + pv.key; a.append(el("span", "dir", "Previous module"), el("b", "", `${pv.code}: ${pv.title}`)); mn.append(a); }
+  if (nx) { const a = el("a", "next"); a.href = "#" + nx.key; a.append(el("span", "dir", "Next module"), el("b", "", `${nx.code}: ${nx.title}`), el("small", "", prereqText(nx.prereq))); mn.append(a); }
+  else mn.append(el("p", "", "This is the last module."));
+  end.append(row, mn);
+  
+  // stepper
+  const tabs = el("ol", "steps"); tabs.setAttribute("aria-label", "Steps in this module");
+  const bar = el("div", "stepbar"); const barLabel = el("span"); const track = el("div", "bar"); const fill = el("i"); track.append(fill); bar.append(barLabel, track);
+  const stage = el("div", "stage");
+  const pager = el("div", "pager");
+  const back = el("button", "btn", "Back"), nextB = el("button", "btn primary", "Next"); back.type = nextB.type = "button";
+  pager.append(back, nextB);
+  let cur = Math.min(stepOf[m.key] ?? 0, steps.length - 1);
+  const tabBtns = steps.map((s, i) => {
+    const li = el("li"); const b = el("button"); b.type = "button"; b.dataset.step = s.id;
+    b.append(el("small", "", String(i + 1)), s.label); b.addEventListener("click", () => go(i, true));
+    li.append(b); tabs.append(li); return b;
+  });
+  function go(i, scroll) {
+    cur = i; stepOf[m.key] = i;
+    stage.replaceChildren(steps[i].sec, ...(i === steps.length - 1 ? [end] : []));
+    tabBtns.forEach((b, j) => { if (j === i) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+    barLabel.textContent = `Step ${i + 1} of ${steps.length}: ${steps[i].label}`;
+    fill.style.width = `${((i + 1) / steps.length) * 100}%`;
+    back.disabled = i === 0;
+    nextB.hidden = i === steps.length - 1;
+    nextB.textContent = `Next: ${steps[Math.min(i + 1, steps.length - 1)].label}`;
+    back.textContent = i ? `Back: ${steps[i - 1].label}` : "Back";
+    if (i > 0 && (state.status[m.key] || "not-started") === "not-started") setStatus(m.key, "in-progress");
+    if (scroll) window.scrollTo(0, 0);
+    paintProgress();
+  }
+  back.addEventListener("click", () => go(cur - 1, true));
+  nextB.addEventListener("click", () => go(cur + 1, true));
+  parts.push(tabs, bar, stage, pager);
+  doc.replaceChildren(...parts);
+  go(cur, false);
+}
+function route() {
+  for (const f of flushers) { try { f(); } catch { /* ignore */ } }
+  flushers = [];
+  const key = location.hash.slice(1) || "home";
+  for (const a of document.querySelectorAll("nav a")) {
+    if (a.dataset.key === key) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  }
+  const m = MODS.find((x) => x.key === key), r = REFS.find((x) => x.key === key);
+  if (m) showModule(m); else if (r) showRef(r); else showHome();
+  $("side").classList.remove("open"); $("menu").setAttribute("aria-expanded", "false"); $("menu").textContent = "Show modules";
+  window.scrollTo(0, 0);
+}
+$("menu").addEventListener("click", () => {
+  const open = $("side").classList.toggle("open");
+  $("menu").setAttribute("aria-expanded", String(open)); $("menu").textContent = open ? "Hide modules" : "Show modules";
+});
+window.addEventListener("hashchange", route);
+window.addEventListener("pagehide", () => { for (const f of flushers) { try { f(); } catch { /* ignore */ } } });
+buildNav();
+route();
+initStore();
+</script>

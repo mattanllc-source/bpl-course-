@@ -15,6 +15,7 @@ import {
   EXPERIENCE,
   EXPERIENCE_TIER_MIN_COUNT,
   LIQUIDITY_HAIRCUTS,
+  LOAN_ROUNDING_INCREMENT,
   POST_CLOSING_LIQUIDITY,
   RTL_GRID,
   type Tier,
@@ -163,11 +164,16 @@ export function maxLoanByDebtYield(noi: number, minDebtYield: number): number {
   return Math.max(0, noi / minDebtYield);
 }
 
-/** F-CORE-19: Maximum loan. Lowest of the sizing tests that apply; any test ≤ $0 → no loan. */
+/**
+ * F-CORE-19: Maximum loan. floor(min(test results) ÷ $1,000) × $1,000: the lowest sizing test,
+ * taken at full precision, then rounded down to the nearest $1,000 (CORE-PRC-05). Any test ≤ $0 → no loan.
+ */
 export function maxLoan(testResults: readonly number[]): number {
   if (testResults.length === 0) throw new RangeError("at least one sizing test is required");
   for (const t of testResults) assertFinite({ test: t });
-  return Math.max(0, Math.min(...testResults));
+  const lowest = Math.min(...testResults);
+  if (lowest <= 0) return 0;
+  return Math.floor(lowest / LOAN_ROUNDING_INCREMENT) * LOAN_ROUNDING_INCREMENT;
 }
 
 /** F-CORE-20: Interest reserve (straight-line). Balance × rate ÷ 360 × actual days. */
