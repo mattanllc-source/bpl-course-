@@ -80,10 +80,18 @@ function flowText(flow) {
   }
   return ol;
 }
+/** Diagram labels get the learner wording too (names, not codes). */
+function mermaidLearner(src) {
+  if (!HAS_ID_RE.test(src)) return src;
+  return src.split("\n").map((line) => line
+    .replace(/"([^"]*)"/g, (m, t) => `"${learnerLabel(t)}"`)
+    .replace(/\[([^\]"]*)\]/g, (m, t) => `[${learnerLabel(t)}]`)
+    .replace(/\|([^|"]*)\|/g, (m, t) => `|${learnerLabel(t)}|`)).join("\n");
+}
 function prepareDiagrams(root, figPrefix) {
   let n = 0;
   for (const code of [...root.querySelectorAll("pre > code.language-mermaid")]) {
-    const pre = code.parentElement, src = code.textContent;
+    const pre = code.parentElement, src = mermaidLearner(code.textContent);
     n++;
     const flow = parseFlow(src);
     const fig = el("figure", "fig");

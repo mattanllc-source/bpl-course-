@@ -274,15 +274,7 @@ function buildQuiz(sec, qs, saver, m) {
   return sets;
 }
 /** Wrap IDs inside an option so they never break; options stay plain (the whole option is one button). */
-function linkIdsPlain(root) {
-  for (const n of textNodes(root)) {
-    const s = n.nodeValue; TOKEN_RE.lastIndex = 0;
-    if (!TOKEN_RE.test(s)) continue;
-    const frag = document.createDocumentFragment(); let last = 0, mm; TOKEN_RE.lastIndex = 0;
-    while ((mm = TOKEN_RE.exec(s))) { frag.append(s.slice(last, mm.index), el("span", "nb", mm[0])); last = mm.index + mm[0].length; }
-    frag.append(s.slice(last)); n.replaceWith(frag);
-  }
-}
+function linkIdsPlain(root) { linkIds(root, "plain"); }
 const RATINGS = [["matched", "Matched"], ["partly", "Partly"], ["missed", "Missed"]];
 function buildPractice(sec, qs, saver) {
   const kids = [...sec.children];

@@ -18,13 +18,14 @@ const DEALS = DATA ? DATA.deals : [];        // [{id, title, family, summary, bo
 
 const prereqText = (p) => (!p || /^none$/i.test(p.trim())) ? "No prerequisite" : "Prerequisite: " + p;
 const num1 = (n) => (Math.round(n * 10) / 10).toString();
-/** "3.4 CPE credits (projected)" where the lesson header gives credits; the Course Bible hours otherwise. */
+/** CPE credits where the lesson states a computed figure; the Course Bible hours otherwise (projections are never shown). */
 function loadText(m) {
-  if (m.credits != null) return `${num1(m.credits)} CPE ${m.credits === 1 ? "credit" : "credits"}${m.projected ? " (projected)" : ""}`;
+  if (m.credits != null) return `${num1(m.credits)} CPE ${m.credits === 1 ? "credit" : "credits"}`;
   return `${m.hours} ${m.hours === 1 ? "hour" : "hours"}`;
 }
 const weight = (m) => (m.credits != null ? m.credits : m.hours);
-const versionText = (m) => [m.version ? "Version " + m.version.replace(/^v/, "") : "", m.reviewed ? "Last reviewed " + m.reviewed : ""].filter(Boolean).join(" · ");
+// Version and draft markers are author material (quality bar 1.2); the learner sees the review date only.
+const versionText = (m) => (m.reviewed ? "Last reviewed " + m.reviewed : "");
 
 /* ---------- icons ---------- */
 const ICONS = {

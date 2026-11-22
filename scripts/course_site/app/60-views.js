@@ -5,7 +5,7 @@ const ART = {
   "RD-COM-01": `<svg viewBox="0 0 240 132" role="img" aria-label="Line drawing of a strip retail center with four storefronts and a birch tree"><path class="thin" d="M12 112h216M12 116h216"/><path class="ln" d="M28 112V62"/><path class="ln" d="M26 96h4M26 84h4M26 72h4"/><path class="soft" d="M28 26c9 0 15 8 15 19s-6 19-15 19-15-8-15-19 6-19 15-19z"/><path class="body" d="M52 112V58h168v54z"/><path class="body" d="M112 58V40h48v18z"/><path class="ln" d="M120 49h32"/><path class="ln" d="M48 58h176"/><path class="acc" d="M56 66h36l-3 10H59zM98 66h36l-3 10h-30zM140 66h36l-3 10h-30z"/><path class="dash" d="M182 66h32v46h-32z"/><path class="soft" d="M59 82h18v30H59zM101 82h18v30h-18zM143 82h18v30h-18z"/><path class="body" d="M80 86h10v26H80zM122 86h10v26h-10zM164 86h10v26h-10z"/><path class="ln" d="M87 100h.5M129 100h.5M171 100h.5"/><path class="thin" d="M70 124l6-8M100 124l6-8M130 124l6-8M160 124l6-8M190 124l6-8"/></svg>`,
 };
 function dealArt(id) { const d = el("div", "art"); d.innerHTML = ART[id] || ""; return d; }
-const dealName = (d) => d.title.split(" ").slice(0, 2).join(" ");
+const dealName = (d) => d.name || d.title.split(" ").slice(0, 2).join(" ");
 
 /* ---------- shared view state ---------- */
 let view = "home";
@@ -53,22 +53,31 @@ const REF_ICON = { policy: "policy", formulas: "fx", deals: "deal", "state-law":
 function buildNav() {
   const home = el("li"); const ha = el("a"); ha.href = "#home"; ha.dataset.key = "home"; ha.append(icon("home"), "Course home"); home.append(ha); $("nav-home").append(home);
   const ol = $("nav-modules");
-  for (const m of MODS) {
-    const li = el("li"); const a = el("a"); a.href = "#" + m.key; a.dataset.key = m.key; a.dataset.s = "not-started";
-    const t = el("span", "t", m.title.split(":")[0]); t.title = m.title;
-    a.append(el("span", "code", m.code), t, glyph("not-started"), el("span", "sr", ", not started"));
-    li.append(a); ol.append(li);
-  }
+  const groups = CATS.length ? CATS : [{ title: "", modules: MODS.map((m) => m.key) }];
+  groups.forEach((c, ci) => {
+    const cli = el("li", "navcat");
+    const lab = el("span", "catlabel", c.title); lab.id = "navcat-" + ci;
+    const col = el("ol"); col.setAttribute("aria-labelledby", lab.id);
+    for (const key of c.modules) {
+      const m = MODS.find((x) => x.key === key); if (!m) continue;
+      const li = el("li"); const a = el("a"); a.href = "#" + m.key; a.dataset.key = m.key; a.dataset.s = "not-started";
+      const t = el("span", "t", m.title.split(":")[0]); t.title = m.title;
+      a.append(el("span", "code", m.code), t, glyph("not-started"), el("span", "sr", ", not started"));
+      li.append(a); col.append(li);
+    }
+    if (c.title) cli.append(lab);
+    cli.append(col); ol.append(cli);
+  });
   const ul = $("nav-refs");
   for (const r of [...REFS, { key: "glossary", title: "Glossary" }]) {
-    const li = el("li"); const a = el("a"); a.href = "#" + r.key; a.dataset.key = r.key; a.append(icon(REF_ICON[r.key] || "book"), r.title); li.append(a); ul.append(li);
+    const li = el("li"); const a = el("a"); a.href = "#" + r.key; a.dataset.key = r.key; a.append(icon(REF_ICON[r.key] || "book"), SHELF_TITLE[r.key] || r.title); li.append(a); ul.append(li);
   }
 }
 function paintNavCurrent(key) {
-  for (const a of document.querySelectorAll("#rail > ul a, #nav-modules > li > a, #nav-refs a")) {
+  for (const a of document.querySelectorAll("#rail > ul a, #nav-modules a[data-key], #nav-refs a")) {
     if (a.dataset.key === key) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
   }
-  for (const s of document.querySelectorAll("#nav-modules > li > .sub")) if (!cur || s.dataset.for !== key) s.remove();
+  for (const s of document.querySelectorAll("#nav-modules .sub[data-for]")) if (!cur || s.dataset.for !== key) s.remove();
 }
 const railSmall = () => matchMedia("(max-width: 1199px)").matches;
 function openRail() {
@@ -95,7 +104,7 @@ function showHome(focus) {
   const p = progress(), any = p.done + p.started > 0 || Object.keys(pos).length > 0;
   const hero = el("header", "hero");
   const h1 = el("h1", "display", any ? "Welcome back" : "Core course: business-purpose real estate lending"); h1.tabIndex = -1;
-  hero.append(el("p", "eyebrow", "BPL Academy · Core course C0-C14"), h1,
+  hero.append(el("p", "eyebrow", "BPL Academy · Core course"), h1,
     el("p", "lede", `${MODS.length} modules take you from the market to the exit. Three running deals carry through every module: ${DEALS.map(dealName).join(", ").replace(/, ([^,]*)$/, " and $1")}.`), el("div", "rule"));
   // resume card + progress
   const dash = el("div", "dash");
@@ -113,68 +122,70 @@ function showHome(focus) {
   const ringBox = el("div", "bigring"); ringBox.innerHTML = big.html + `<b>${p.pct}%</b>`; ringBox.querySelector(".val").style.strokeDashoffset = String(big.c * (1 - p.pct / 100));
   const dl = el("dl");
   const row = (k, v) => { const d = el("div"); d.append(el("dt", "", k), el("dd", "", v)); dl.append(d); };
-  row("Modules done", `${p.done} of ${MODS.length}`); row("In progress", String(p.started)); row("Study load done", `${num1(p.w)} of ${num1(p.total)}`);
-  prog.append(ringBox, dl, el("p", "cap", "The ring counts finished study load: CPE credits where a module projects them, Course Bible hours otherwise."));
+  row("Modules done", `${p.done} of ${MODS.length}`); row("In progress", String(p.started)); row("Hours completed", `${num1(p.w)} of ${num1(p.total)}`);
+  prog.append(ringBox, dl, el("p", "cap", "The ring counts course hours in the modules you have marked done."));
   dash.append(cont, prog);
-  // learning path
-  const path = el("section", "sect"); const ph = el("header"); ph.append(el("h2", "h2", "Learning path"), el("p", "", "Work the modules in order. Each one builds on the last."));
-  const list = el("ol", "plist card");
-  for (const m of MODS) {
-    const li = el("li"); const a = el("a"); a.href = "#" + m.key;
-    const s = state.status[m.key] || "not-started";
-    const mid = el("span", "t"); mid.append(m.title, el("small", "", [loadText(m), prereqText(m.prereq)].join(" · ")));
-    const pill = el("span", "pill", STATUS_TEXT[s]); pill.dataset.s = s;
-    a.append(glyph(s), el("span", "code", m.code), mid, pill); li.append(a); list.append(li);
-  }
-  path.append(ph, list);
+  // outcomes
+  const outs = (DATA && DATA.outcomes) || [];
+  const oc = el("section", "card outcomes");
+  if (outs.length) { oc.append(el("h2", "", "By the end of the core course you will be able to:")); const ul = el("ul"); for (const o of outs) ul.append(el("li", "", o)); oc.append(ul); }
+  // learning path, in five categories of three modules
+  const path = el("section", "sect"); const ph = el("header"); ph.append(el("h2", "h2", "Learning path"), el("p", "", "Five parts, three modules each. Work them in order: each builds on the last."));
+  path.append(ph);
+  const cats = CATS.length ? CATS : [{ title: "", blurb: "", modules: MODS.map((m) => m.key) }];
+  cats.forEach((c, ci) => {
+    const box = el("section", "catblock");
+    const hd = el("header", "cathead");
+    const h3 = el("h3", "", c.title); h3.id = "cat-" + ci;
+    hd.append(el("span", "catno", `Part ${ci + 1}`), h3, el("p", "", c.blurb));
+    const list = el("ol", "plist card"); list.setAttribute("aria-labelledby", h3.id);
+    for (const key of c.modules) {
+      const m = MODS.find((x) => x.key === key); if (!m) continue;
+      const li = el("li"); const a = el("a"); a.href = "#" + m.key;
+      const s = state.status[m.key] || "not-started";
+      const mid = el("span", "t"); mid.append(m.title, el("small", "", [loadText(m), prereqText(m.prereq)].join(" · ")));
+      const pill = el("span", "pill", STATUS_TEXT[s]); pill.dataset.s = s;
+      a.append(glyph(s), el("span", "code", m.code), mid, pill); li.append(a); list.append(li);
+    }
+    box.append(hd, list); path.append(box);
+  });
   // running deals
   const ds = el("section", "sect"); const dh = el("header"); dh.append(el("h2", "h2", "The running deals"), el("p", "", "Fictional borrowers and properties, used in every module."));
   const dg = el("div", "deals");
   for (const d of DEALS) {
-    const a = el("a", "card deal"); a.href = "#deals/" + d.id;
+    const a = el("a", "card deal"); a.href = "#deals/" + d.slug;
     const t = el("div", "tx");
-    t.append(el("span", "id", d.id), el("h3", "", dealName(d)), el("span", "tags", [d.family, d.state, d.title.replace(dealName(d), "").trim()].filter(Boolean).join(" · ")), el("p", "", d.summary));
+    t.append(el("h3", "", dealName(d)), el("span", "tags", [d.family, d.state, d.title.replace(dealName(d), "").trim()].filter(Boolean).join(" · ")), el("p", "", d.summary));
     a.append(dealArt(d.id), t); dg.append(a);
   }
   ds.append(dh, dg);
-  // reference tiles
-  const rs = el("section", "sect"); const rh = el("header"); rh.append(el("h2", "h2", "Reference shelf"));
+  // reference shelf map
+  const rs = el("section", "sect"); const rh = el("header"); rh.append(el("h2", "h2", "Reference shelf"), el("p", "", "Look things up while you work. Nothing here is graded."));
   const tiles = el("div", "tiles");
-  const TILE = { policy: "Every rule, with its basis and source.", formulas: "Every formula, worked with real numbers.", deals: "The full file for each running deal.", "state-law": "State rules for Ohio, North Carolina and Indiana, with sources.", glossary: `${GLOSSARY.length} terms in plain English.` };
+  const TILE = { policy: "Every rule by topic: the limit, why it exists, where it is taught.", formulas: `${LIB.formulas.length} formulas in plain words, each worked with real numbers.`, deals: "The facts, numbers and timeline for each running deal.", "state-law": "Ohio, North Carolina, Indiana and California, topic by topic.", glossary: `${GLOSSARY.length} terms in plain English.` };
   for (const r2 of [...REFS, { key: "glossary", title: "Glossary" }]) {
-    const a = el("a", "card tile"); a.href = "#" + r2.key; a.append(icon(REF_ICON[r2.key] || "book"), el("b", "", r2.title), el("span", "", TILE[r2.key] || "")); tiles.append(a);
+    const a = el("a", "card tile"); a.href = "#" + r2.key; a.append(icon(REF_ICON[r2.key] || "book"), el("b", "", SHELF_TITLE[r2.key] || r2.title), el("span", "", TILE[r2.key] || "")); tiles.append(a);
   }
   rs.append(rh, tiles);
   const how = el("section", "card howto");
   how.innerHTML = `<h2>How this works</h2><ul>
-<li>Each module is a short series of steps: Overview, Learn, Exercises, Practice, Quiz, OJT task, Job aid and Wrap-up.</li>
+<li>Each module is a short series of steps: Overview, Learn, Exercises, Practice, Quiz, Workplace task, Quick reference and Review.</li>
 <li>Learn is split into short parts. Your place in each module is remembered in this browser.</li>
-<li>Small numbers in the text, like this<sup style="font:500 11px var(--font-mono);color:var(--brand)">1</sup>, cite a rule or formula. Tap one to read it. Turn on Audit mode to see every ID in the text.</li>
+<li>Small numbers in the text, like this<sup style="font:500 11px var(--font-mono);color:var(--brand)">1</sup>, cite a policy rule or a formula. Tap one to read it. Formula names link to their page in the Formula Library.</li>
 <li>Answers stay hidden until you ask. Work each item yourself first.</li>
 <li>Your answers, notes and progress save as you go. The line under the course menu says where.</li></ul>`;
-  doc.replaceChildren(hero, dash, path, ds, rs, how);
+  doc.replaceChildren(hero, dash, ...(outs.length ? [oc] : []), path, ds, rs, how);
   setTitle(""); setCrumbs(["Course home"]);
   if (focus) focusHeading(h1);
 }
 
-/* ---------- reference pages ---------- */
-function showRef(r, anchor, focus) {
-  view = "ref"; routeTok++; cur = null;
-  const doc = $("doc"); doc.className = "doc refpage";
-  const head = el("header", "hero"); const h1 = el("h1", "display", r.title);
-  head.append(el("p", "eyebrow", "Reference"), h1, el("p", "lede", r.note), el("div", "rule"));
-  const prose = el("div", "prose");
-  prose.append(...render(r.md).childNodes); linkIds(prose, "quiet");
-  doc.replaceChildren(head, prose);
-  renderMath(prose); markScrollers(prose);
-  setTitle(r.title); setCrumbs(["Reference", r.title]);
-  let target = null;
-  if (anchor) {
-    if (r.key === "policy") target = [...prose.querySelectorAll("tbody tr")].find((tr) => tr.children[0] && tr.children[0].textContent.trim() === anchor && /^rule id$/i.test(tr.closest("table").querySelector("th")?.textContent.trim() || "")) || [...prose.querySelectorAll("tbody tr")].find((tr) => tr.children[0] && tr.children[0].textContent.trim() === anchor) || [...prose.querySelectorAll("p > strong")].find((s) => s.textContent.includes(`(${anchor})`));
-    else target = [...prose.querySelectorAll("h2, h3")].find((h) => h.textContent.trim().startsWith(anchor));
-  }
-  if (target) { target.classList.add("hit"); target.tabIndex = -1; target.scrollIntoView({ block: "center" }); target.focus({ preventScroll: true }); }
-  else if (focus) focusHeading(h1);
+/* ---------- reference pages (built in 55-shelf.js) ---------- */
+const SHELF_TITLE = { policy: "Model Credit Policy", formulas: "Formula Library", deals: "Running deals", "state-law": "State law guide" };
+function showRef(r, a, b, focus) {
+  if (r.key === "formulas") { const f = a && (FSLUG.get(a) || FORMULAS.get(a)); if (f) showFormula(f, focus); else showFormulaCatalog(focus); }
+  else if (r.key === "policy") showPolicy(a, focus);
+  else if (r.key === "state-law") showStateLaw(a, b, focus);
+  else if (r.key === "deals") showDeals(a, focus);
 }
 
 /* ---------- glossary ---------- */
@@ -183,7 +194,8 @@ function showGlossary(anchor, focus) {
   view = "glossary"; routeTok++; cur = null;
   const doc = $("doc"); doc.className = "doc refpage";
   const head = el("header", "hero"); const h1 = el("h1", "display", "Glossary");
-  head.append(el("p", "eyebrow", "Reference"), h1, el("p", "lede", `${GLOSSARY.length} terms from the Course Bible. Worked-example numbers are illustrative and fictional; a limit shown in an example is for arithmetic only, never policy.`));
+  head.append(el("p", "eyebrow", "Reference"), h1, el("p", "lede", `${GLOSSARY.length} terms used across the course. Worked-example numbers are illustrative and fictional; a limit shown in an example is for arithmetic only, never policy.`));
+  if (REVIEWED.glossary) { const meta = el("ul", "meta"); meta.append(el("li", "", `Last reviewed ${REVIEWED.glossary}`), el("li", "", "Model policy for training")); head.append(meta); }
   const tools = el("div", "gtools");
   const q = el("input"); q.type = "search"; q.id = "gq"; q.placeholder = "Filter terms, for example DSCR or draw"; q.autocomplete = "off";
   const ql = el("label", "sr", "Filter glossary terms"); ql.htmlFor = "gq";
@@ -228,13 +240,13 @@ function showGlossary(anchor, focus) {
 
 /* ---------- search (client-side, built on first use; quiz and answer keys are left out) ---------- */
 const STEPS = [
-  { id: "overview", label: "Overview", re: /^(hook|objectives?)/i },
+  { id: "overview", label: "Overview", re: /^(hook|objectives?|why this matters|what you will be able)/i },
   { id: "learn", label: "Learn", re: /^teach/i },
   { id: "practice", label: "Practice", re: /^practice/i },
   { id: "quiz", label: "Quiz", re: /^quiz/i },
-  { id: "ojt", label: "OJT task", re: /^ojt/i },
-  { id: "jobaid", label: "Job aid", re: /^job aid/i },
-  { id: "wrapup", label: "Wrap-up", re: /^wrap/i },
+  { id: "ojt", label: "Workplace task", re: /^(ojt|workplace task)/i },
+  { id: "jobaid", label: "Quick reference", re: /^(job aid|quick reference)/i },
+  { id: "wrapup", label: "Review", re: /^(wrap|review and next)/i },
 ];
 let searchIndex = null;
 function buildSearchIndex() {
@@ -259,7 +271,7 @@ function buildSearchIndex() {
     push();
   }
   for (const g of GLOSSARY) { const t = plainText(g.term), d = plainText(g.def); idx.push({ type: "glossary", n: g.n, title: t, text: d, low: (t + " " + d).toLowerCase() }); }
-  for (const r of [...RULES.values(), ...FORMULAS.values()]) idx.push({ type: "ref", id: r.id, title: r.name, text: r.kind === "formula" ? r.text : plainText(r.rule).slice(0, 400), low: (r.id + " " + r.name + " " + plainText(r.rule || r.text || "")).toLowerCase() });
+  for (const r of [...RULES.values(), ...FORMULAS.values()]) if (r.kind !== "decision") idx.push({ type: "ref", id: r.id, title: r.name, text: r.kind === "formula" ? r.text : plainText(r.rule).slice(0, 400), low: (r.id + " " + r.name + " " + plainText(r.rule || r.purpose || r.text || "")).toLowerCase() });
   return idx;
 }
 const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -271,7 +283,7 @@ function markText(node, text, toks) {
 function runSearch(qv) {
   const res = $("search-res"), foot = $("search-foot"); res.replaceChildren();
   const toks = qv.toLowerCase().split(/\s+/).filter((t) => t.length >= 2);
-  if (!toks.length) { res.append(el("p", "empty", "Type two or more letters. Try “per diem”, “DSCR” or a rule ID such as CORE-CLS-04.")); foot.textContent = ""; return; }
+  if (!toks.length) { res.append(el("p", "empty", "Type two or more letters. Try “per diem”, “DSCR” or “title insurance”.")); foot.textContent = ""; return; }
   if (!searchIndex) searchIndex = buildSearchIndex();
   const hits = [];
   for (const e of searchIndex) {
@@ -290,11 +302,14 @@ function runSearch(qv) {
     const hd = el("h3", "", `${label} (${g.length})`); const ul = el("ul");
     for (const { e } of g.slice(0, max)) {
       const li = el("li"); let row;
-      if (type === "ref") { row = el("button", "hitrow"); row.type = "button"; row.addEventListener("click", () => { closeModal($("search"), false); openDrawer(e.id, $("search-open")); }); }
+      if (type === "ref" && FORMULAS.has(e.id)) { row = el("a"); row.href = formulaHref(e.id); row.addEventListener("click", () => closeModal($("search"), false)); }
+      else if (type === "ref") { row = el("button", "hitrow"); row.type = "button"; row.addEventListener("click", () => { closeModal($("search"), false); openDrawer(e.id, $("search-open")); }); }
       else { row = el("a"); row.href = type === "glossary" ? `#glossary/${e.n}` : `#${e.key}/${e.step}${e.step === "learn" && e.page ? "/" + e.page : ""}`; if (type === "lesson") row.dataset.anchor = e.title; row.addEventListener("click", () => { pendingAnchor = row.dataset.anchor || ""; closeModal($("search"), false); }); }
       const t = el("span", "t"); markText(t, e.title, toks);
-      const x = el("span", "x"); const at = Math.max(0, e.text.toLowerCase().indexOf(toks[0]) - 50); markText(x, (at ? "…" : "") + e.text.slice(at, at + 170), toks);
-      row.append(el("span", "k", type === "lesson" ? e.code : type === "glossary" ? "Term" : e.id.replace(/^(F-)?([A-Z]+)-.*/, "$1$2")), t, x);
+      const audit = document.documentElement.dataset.audit === "1";
+      const txt = audit ? e.text : learnerString(e.text);
+      const x = el("span", "x"); const at = Math.max(0, txt.toLowerCase().indexOf(toks[0]) - 50); markText(x, (at ? "…" : "") + txt.slice(at, at + 170), toks);
+      row.append(el("span", "k", type === "lesson" ? e.code : type === "glossary" ? "Term" : audit ? e.id : FORMULAS.has(e.id) ? "Formula" : "Rule"), t, x);
       li.append(row); ul.append(li); shown++;
     }
     res.append(hd, ul);
@@ -410,17 +425,26 @@ function layoutNotes(reader) {
   const base = col.getBoundingClientRect().top; let floor = 0;
   for (const c of cites) {
     if (c.offsetParent === null) continue;
-    const ids = c.dataset.refs.split(" ");
-    const note = el("div", "mnote" + (ids.length > 1 ? " multi" : "")); note.dataset.n = c.dataset.n; note.dataset.refs = c.dataset.refs;
-    ids.slice(0, 3).forEach((id, i) => {
-      const r = refInfo(id); if (!r) return;
+    // One card per marker; it shows only the rules and formulas cited here for the first time.
+    const nOf = Object.fromEntries((c.dataset.idn || "").split(" ").map((x) => x.split(":")));
+    const ids = (c.dataset.fresh || c.dataset.refs).split(" ").filter((id) => refInfo(id));
+    if (!ids.length) continue;
+    const note = el("div", "mnote"); note.dataset.n = c.dataset.n; note.dataset.refs = c.dataset.refs;
+    for (const id of ids) {
       const row = el("div", "row");
-      const top = el("div"); if (!i) top.append(el("span", "n", c.dataset.n)); top.append(el("span", "id", id));
-      row.append(top, el("div", "nm", r.kind === "formula" ? r.name : r.text));
+      const top = el("div", "hd"); top.append(el("span", "n", nOf[id] || c.dataset.n), el("span", "id", refHead(id)));
+      const body = el("div", "nm", refBody(id));
+      row.append(top, body);
       note.append(row);
-    });
-    if (ids.length > 3) note.append(el("div", "row more", `and ${ids.length - 3} more: ${ids[3]} to ${ids[ids.length - 1]}`));
+    }
     col.append(note);
+    for (const body of note.querySelectorAll(".nm")) {
+      if (body.scrollHeight > body.clientHeight + 2) {
+        const more = el("span", "nmore", "More");
+        more.addEventListener("click", (e) => { e.stopPropagation(); const open = body.classList.toggle("open"); more.textContent = open ? "Less" : "More"; queueRelayout(); });
+        body.after(more);
+      }
+    }
     const top = Math.max(c.getBoundingClientRect().top - base - 6, floor);
     note.style.top = top + "px";
     floor = top + note.offsetHeight + 10;
@@ -443,6 +467,7 @@ async function showModule(m, want, focus) {
   const pill = el("span", "pill"); pill.id = "pill"; pill.dataset.for = m.key; eb.append(pill);
   const h1 = el("h1", "", m.title); h1.tabIndex = -1; h1.title = m.title;
   const meta = el("ul", "meta"); for (const x of [loadText(m), prereqText(m.prereq), versionText(m)]) if (x) meta.append(el("li", "", x));
+  const sctx = Object.fromEntries(STEPS.map((x) => [x.id, newCiteCtx()]));
   head.append(eb, h1, meta);
   // content
   const box = render(m.md);
@@ -464,21 +489,22 @@ async function showModule(m, want, focus) {
     if (s.id === "learn") { s.pages = splitPages(s.sec); s.sec.replaceChildren(); continue; }
     const first = s.sec.firstElementChild;
     if (first && first.tagName === "H2" && s.id !== "overview") { first.classList.add("steptitle"); first.tabIndex = -1; }
+    pageCtx = sctx[s.id] || newCiteCtx();
     if (s.id === "quiz") buildQuiz(s.sec, qs, saver, m);
     if (s.id === "practice") buildPractice(s.sec, qs, saver);
     frameBlocks(s.sec); hideAnswers(s.sec);
     if (s.id === "jobaid") { const card = el("div", "jobcard"); card.append(...s.sec.childNodes); s.sec.append(card); }
-    const cite = s.id === "overview" || s.id === "ojt" || s.id === "wrapup";
-    for (const li of s.sec.querySelectorAll("li")) if (/^F-[A-Z]+-\d+:/.test(li.textContent.trim())) li.classList.add("idlist");
-    linkIds(s.sec, cite ? "cite" : "quiet", newCiteCtx());
-    if (cite) { const rl = refList(s.sec, "h3"); if (rl) s.sec.append(rl); }
+    const listRefs = s.id === "overview" || s.id === "ojt" || s.id === "wrapup";
+    linkIds(s.sec, "cite", pageCtx);
+    if (listRefs) { const rl = refList(s.sec, "h3"); if (rl) s.sec.append(rl); }
+    pageCtx = null;
   }
   // notes live in the OJT step (or the last step)
   const notes = el("section", "notes");
-  notes.innerHTML = `<label for="note-${m.key}">Your notes and OJT write-up</label><p>Saved as you type. Use fictional data only.</p><textarea id="note-${m.key}"></textarea><span class="saved" role="status"></span>`;
+  notes.innerHTML = `<label for="note-${m.key}">Your notes and workplace-task write-up</label><p>Saved as you type. Use fictional data only.</p><textarea id="note-${m.key}"></textarea><span class="saved" role="status"></span>`;
   (steps.find((s) => s.id === "ojt") || steps[steps.length - 1]).sec.append(notes);
   const ta = notes.querySelector("textarea"), saved = notes.querySelector(".saved");
-  ta.value = noteText; ta.placeholder = "Your answers, calculations and OJT notes for " + m.code;
+  ta.value = noteText; ta.placeholder = "Your answers, calculations and workplace-task notes for " + m.code;
   let nt = null, lastNote = ta.value;
   const flushN = () => {
     clearTimeout(nt); if (ta.value === lastNote) return; const v = ta.value; lastNote = v;
@@ -494,7 +520,7 @@ async function showModule(m, want, focus) {
   const row = el("div", "row");
   const done = el("button", "btn", "Mark module done"); done.type = "button"; done.id = "donebtn"; done.dataset.for = m.key;
   done.addEventListener("click", () => setStatus(m.key, (state.status[m.key] || "") === "done" ? "in-progress" : "done"));
-  row.append(done, el("span", "", "Finished the quiz, the OJT task and the self-check? Mark this module done."));
+  row.append(done, el("span", "", "Finished the quiz, the workplace task and the self-check? Mark this module done."));
   const mn = el("nav", "modnav"); mn.setAttribute("aria-label", "Other modules");
   const pv = MODS[idx - 1], nx = MODS[idx + 1];
   if (pv) { const a = el("a", "prev"); a.href = "#" + pv.key; a.append(el("span", "dir", "Previous module"), el("b", "", `${pv.code}: ${pv.title}`)); mn.append(a); }
@@ -520,7 +546,7 @@ async function showModule(m, want, focus) {
   });
   // rail: this module's steps and Learn parts
   const navA = document.querySelector(`#nav-modules a[data-key="${m.key}"]`);
-  for (const s of document.querySelectorAll("#nav-modules > li > .sub")) s.remove();
+  for (const s of document.querySelectorAll("#nav-modules .sub[data-for]")) s.remove();
   const sub = el("ol", "sub"); sub.dataset.for = m.key;
   steps.forEach((s) => {
     const li = el("li"); const a = el("a", "", s.label); a.href = `#${m.key}/${s.id}`; a.dataset.step = s.id; li.append(a);
@@ -635,7 +661,7 @@ function route(initial) {
   }
   pendingAnchor = "";
   paintNavCurrent(r ? key : key === "glossary" ? "glossary" : "home");
-  if (r) showRef(r, a, focus); else if (key === "glossary") showGlossary(a, focus); else showHome(focus);
+  if (r) showRef(r, a, b, focus); else if (key === "glossary") showGlossary(a, focus); else showHome(focus);
   if (!a) scrollTo(0, 0);
 }
 
@@ -654,6 +680,16 @@ function boot() {
   $("rail").addEventListener("click", (e) => { if (e.target.closest("a") && railSmall()) closeRail(false); });
   matchMedia("(min-width: 1200px)").addEventListener?.("change", (e) => { if (e.matches) closeRail(false); });
   buildLookups(); buildNav(); initDrawer(); initLightbox(); initSearch();
+  // Text written after the page is built (exercise feedback, revealed answers) gets the same learner wording.
+  new MutationObserver((recs) => {
+    const seen = new Set();
+    for (const r of recs) {
+      const t = r.type === "characterData" ? r.target.parentElement : r.target;
+      if (!t || seen.has(t) || !t.isConnected || t.closest(".cx, .code-a, pre, textarea, .math, .mermaid-diagram")) continue;
+      seen.add(t);
+      if (HAS_ID_RE.test(t.textContent)) linkIds(t, "cite");
+    }
+  }).observe($("doc"), { childList: true, subtree: true, characterData: true });
   addEventListener("hashchange", () => route(false));
   addEventListener("pagehide", flushAll);
   route(true);

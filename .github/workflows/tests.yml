@@ -7,7 +7,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
@@ -53,6 +53,19 @@ jobs:
 
       - name: Browser tests (Playwright)
         run: npm run test:e2e
+
+      # The course page is git-ignored (exports/), so build it here. The build also validates every exercise spec.
+      - name: Build the course page
+        run: npm run build:course
+
+      - name: Learner-copy check (no codes or author notes on any page)
+        run: npm run check:copy
+
+      - name: Layout check (no overflow, no squeezed table cells, no sideways scroll at 390 px)
+        run: npm run check:layout
+
+      - name: Accessibility check (axe-core)
+        run: npm run check:a11y
 
       - name: Upload Playwright report
         if: failure()

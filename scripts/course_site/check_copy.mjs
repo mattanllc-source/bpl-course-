@@ -22,6 +22,7 @@ const RULES = [
   ["author-note", "Author note", /Your decision|\(N\.D\.\)|Policy note|confirm in [A-Z][a-z]+ research|Added in Phase|Phase \d|\bTODO\b|\bTBD\b|placeholder/gi],
   ["author-verify", "Raw VERIFY tag", /\[?VERIFY\b/g],
   ["author-heading", "Author section name", /\b(?:Hook|OJT|Sources for Teach|Teach chunk|Wrap-up)\b/g],
+  ["author-source", "Author source wording", /Course Bible|\bthis file\b|as in every policy example|\bfamilies set\b/g],
   ["draft-marker", "Draft or projection marker", /\d\.\d-draft|\(projected\)|\bv\d+-draft\b/gi],
 ];
 const LONG = 25; // words per sentence (CLAUDE.md)
@@ -35,7 +36,12 @@ await page.waitForFunction(() => typeof MODS !== "undefined", null, { timeout: 1
 const mods = await page.evaluate(() => MODS.map((m) => m.key));
 const refs = await page.evaluate(() => REFS.map((r) => r.key));
 
-const pages = ["home", ...refs, "glossary"];
+// Reference shelf: every formula page and every state and loan-type view of the state law guide.
+const shelf = await page.evaluate(() => [
+  ...(typeof LIB !== "undefined" ? LIB.formulas.map((f) => "formulas/" + f.slug) : []),
+  ...(typeof STATE_LAW !== "undefined" ? STATE_LAW.states.flatMap((s) => ["res", "com"].map((t) => `state-law/${s.code}/${t}`)) : []),
+]);
+const pages = ["home", ...refs, ...shelf, "glossary"];
 for (const m of mods) {
   await page.goto(url + "#" + m); await page.waitForTimeout(300);
   const nLearn = await page.evaluate(() => document.querySelectorAll("a[href*='/learn/']").length);

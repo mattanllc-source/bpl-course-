@@ -79,7 +79,18 @@ def formula_list(cell: str) -> list:
         if ids[i] != "to" and ids[i] not in out:
             out.append(ids[i])
         i += 1
-    return [f"  - {f}: {FORMULA_NAMES[f]}" if f in FORMULA_NAMES else f"  - {f}" for f in out]
+    # Learners see plain names only; the IDs stay available in Audit mode and the formula lookup.
+    return [f"  - {FORMULA_NAMES[f]}" for f in out if f in FORMULA_NAMES]
+
+
+# Learner-facing names for author section titles (the page's step tabs match these too).
+SECTION_NAMES = {
+    "hook": "Why this matters",
+    "objectives": "What you will be able to do",
+    "ojt task": "Workplace task",
+    "job aid": "Quick reference",
+    "wrap-up": "Review and next steps",
+}
 LABEL = "**Model policy for training - not for live lending decisions.**"
 
 
@@ -95,7 +106,44 @@ def _clean_paren(m: re.Match) -> str:
     return f"{space}({kept})" if kept else ""
 
 
+def author_clean(line: str) -> str:
+    """Research and author notes that never belong in learner copy (quality bar 1.2)."""
+    line = re.sub(r"\s*\((?:N\.D\.|OLD|undated)\)", "", line)
+    line = re.sub(r",\s*(?:N\.D\.|OLD)(?=[;),.])", "", line)
+    line = re.sub(r"\bN\.D\.\s*", "", line)
+    line = re.sub(r"\bSources for Teach\b", "Sources", line)
+    line = re.sub(r"\bthe OJT\b", "the workplace task", line)
+    line = re.sub(r"\bOJT\b", "Workplace task", line)
+    line = re.sub(r"\b(?:Added|Revised) \d{1,2} [A-Z][a-z]{2} \d{4}(?: with C\d+)?(?: after [^.]*)?\.\s*", "", line)
+    line = re.sub(r"\bYour decision,?\s*", "Course decision, ", line)
+    line = re.sub(r"`\\?\[VERIFY: ([^`\]]*?)\\?\]`", r"“Source: \1”", line)
+    line = re.sub(r"\\?\[VERIFY\\?\]\s+tags?\b", lambda m: "source tags" if m.group(0).endswith("s") else "source tag", line)
+    line = re.sub(r"\bVERIFY tag", "source tag", line)
+    line = re.sub(r"\[VERIFY\] source\b", "source", line)
+    return bible_clean(line)
+
+
+def bible_clean(line: str) -> str:
+    """References to the author's Course Bible document read as plain course wording (or go, inside brackets)."""
+    line = re.sub(r"\s*\((?:[^()]*?[;,]\s*)?(?:Course Bible|Main Sections?|Bible)\b[^()]*\)", "", line)
+    line = re.sub(r"\bthe Course Bible's\b", "the course's", line)
+    line = re.sub(r"\bCourse Bible glossary\b", "course glossary", line)
+    line = re.sub(r"\b[Tt]he Course Bible\b", "the course", line)
+    line = re.sub(r"\bCourse Bible(?: section \d+| \d+(?:\.\d+)?)?", "the course", line)
+    line = re.sub(r"\bthis file\b", "this deal file", line)
+    line = re.sub(r"\bfamilies set\b", "other loan types use", line)
+    line = re.sub(r"\bfor the family\b", "for the loan type", line)
+    return line
+
+
+def mermaid_clean(line: str) -> str:
+    """Author wording inside diagram labels (the renderer maps IDs to names)."""
+    line = line.replace("VERIFY tag", "source tag").replace("the SLT row", "the state law entry")
+    return line.replace("Course Bible glossary", "Course glossary").replace("Course Bible", "the course")
+
+
 def clean_line(line: str) -> str:
+    line = author_clean(line)
     # Skip "](...)" link targets: only plain parentheticals are cleaned.
     line = re.sub(r"(?<!\])(\s?)\(([^()]*)\)", _clean_paren, line)
     line = re.sub(r"^(\s*\d+\.\s+)\(O\d+\)\s*", r"\1", line)          # quiz objective tags
@@ -121,10 +169,12 @@ def clean_line(line: str) -> str:
         line = re.sub(r"^(\s*\d+\.\s+.*?\S)\s*\(C\)\s*$", r"\1 *(critical)*", line)
     line = line.replace("Items marked (C) are critical", "Items marked (critical) are critical")
     line = re.sub(r"\b1 hours\b", "1 hour", line)
-    return line
+    return bible_clean(line)
 
 
 def clean_heading(h: str) -> str:
+    h = author_clean(h)
+    h = re.sub(r"\s*\((?:SUGGESTED|REQUIRED)\)", "", h)
     h = re.sub(r"^(#+ )\d+\.\s+", r"\1", h)                             # "## 6. Quiz" -> "## Quiz"
     h = re.sub(r":\s*C\d+-(quiz|ojt|jobaid|lesson)-v[\d.]+(?:-draft)?", "", h)   # asset codes, e.g. C3-jobaid-v1.0-draft
     h = re.sub(r"\(Objective \d+,\s*", "(", h)
@@ -133,6 +183,12 @@ def clean_heading(h: str) -> str:
     h = re.sub(r"\s*\(Objectives? [\d,\- ]+\)\s*$", "", h)                    # trailing "(Objective 2)"
     h = re.sub(r"^(#+ )T\d+\.\s+", r"\1", h)                           # "### T1. Title" -> "### Title"
     h = re.sub(r"\s*\(O\d+(?:\s*(?:,|and|-|to)\s*O?\d+)*\)", "", h)    # objective tags "(O1)", "(O2, O3)"
+    m = re.match(r"^(## )(.+?)\s*$", h)
+    if m:
+        key = m.group(2).strip().lower()
+        for author, learner in SECTION_NAMES.items():
+            if key == author or key.startswith(author + " ") or key.startswith(author + ":"):
+                return m.group(1) + learner
     return h
 
 
@@ -172,7 +228,7 @@ def learner_view(md: str) -> str:
         if line.startswith("```"):
             in_code = not in_code
         if in_code:
-            out.append(line); i += 1; continue
+            out.append(mermaid_clean(line)); i += 1; continue
         if PLACEHOLDER_RE.match(line) or AUTHOR_NOTE_RE.match(line):
             i += 1; continue
         # Module facts table (the one before the first section) -> short "In this module" list.
@@ -205,7 +261,7 @@ def learner_view(md: str) -> str:
                 continue
             if title.startswith("Self-review"):
                 # Drop the author's checklist table; keep the real-world check and the self-check lines.
-                out.append("## Wrap-up")
+                out.append("## Review and next steps")
                 i += 1
                 while i < len(lines) and not lines[i].startswith("|"):
                     if lines[i].strip():
@@ -325,9 +381,9 @@ def module_meta(raw: str) -> dict:
         meta["version"] = max((v.rstrip(".") for v in found), key=num)
     hours = cells.get("hours", "") or cells.get("cpe credits", "") or cells.get("credits", "")
     cm = re.search(r"(\d+(?:\.\d+)?)\s*CPE credits?", hours)
-    if cm:
+    if cm and not re.search(r"project", hours, re.I):
+        # A projected credit is a planning figure, not the computed QAS credit (quality bar 2.2): leave it out.
         meta["credits"] = float(cm.group(1))
-        meta["projected"] = bool(re.search(r"project", hours, re.I))
     # Last reviewed: the newest date in the self-review heading or the change log.
     sr = re.search(r"^## Self-review.*$", raw, re.M)
     dates = (DATE_RE.findall(sr.group(0)) if sr else []) + DATE_RE.findall(cells.get("change log", ""))
@@ -378,6 +434,623 @@ def deals() -> list:
     return out
 
 
+# ---------- reference shelf: the four author exports, parsed into learner data ----------
+# The exports mirror the Course Bible and are never edited. Only presentation is decided here.
+
+CATEGORIES = [
+    ("Foundations", "The market, the business-purpose test and the borrower.", ["C0", "C1", "C2"]),
+    ("Real estate analysis", "Interest, property cash flow and value.", ["C3", "C4", "C5"]),
+    ("Underwriting", "Sponsor strength, fraud screens and loan sizing.", ["C6", "C7", "C8"]),
+    ("Legal and closing", "Documents, title, state law and the funding wire.", ["C9", "C10", "C11"]),
+    ("Managing the loan", "Draws, servicing, defaults and the portfolio.", ["C12", "C13", "C14"]),
+]
+
+FAMILY_NAME = {"CORE": "Core", "RES": "Residential", "MF": "Multifamily", "COM": "Commercial"}
+FAMILY_MODULE = {"R": "Residential", "M": "Multifamily", "CM": "Commercial"}
+
+# Catalog topics for the core formulas (presentation only; the library groups by family).
+CORE_TOPICS = [
+    ("Loan payments and interest", "What the borrower pays, and when", [1, 2, 3, 4, 5, 31, 32, 33, 47, 49]),
+    ("Rates, returns and time value", "Nominal and effective rates, present value and yield", [45, 46, 48, 44]),
+    ("Property income", "From rent roll to net operating income", [7, 8, 9, 10, 12]),
+    ("Value, leverage and coverage", "The ratios every credit memo reports", [11, 13, 14, 15, 16]),
+    ("Loan sizing", "How big the loan can be", [17, 18, 19]),
+    ("Pricing, fees and closing", "Rate, points, reserves and the funding wire", [6, 28, 20, 21, 22, 35, 40, 41]),
+    ("Borrower strength", "Liquidity, net worth and experience", [24, 25, 26, 27]),
+    ("Insurance and valuation", "Coverage and appraisal checks", [34, 36, 37]),
+    ("Portfolio and loss", "Exposure, concentration and recovery", [23, 29, 30, 42, 43]),
+]
+FAMILY_TOPICS = {
+    "RES": ("Residential formulas", "Fix-and-flip, ground-up and DSCR rental loans (1-4 units)"),
+    "MF": ("Multifamily formulas", "Apartment bridge, term and construction loans (5+ units)"),
+    "COM": ("Commercial formulas", "Retail, office and other commercial loans"),
+}
+UNITS = {"USD": "US dollars", "%": "percent", "days": "days", "months": "months", "count": "count",
+         "decimal": "decimal", "x": "multiple, shown as 1.25x", "years": "years", "sf": "square feet",
+         "USD a month": "US dollars a month", "USD a year": "US dollars a year"}
+
+
+def slugify(s: str) -> str:
+    s = re.sub(r"\(([^)]*)\)", r" \1 ", s.lower())
+    return re.sub(r"[^a-z0-9]+", "-", s).strip("-")[:70]
+
+
+def table_rows(lines: list) -> list:
+    """Markdown table lines -> list of cell lists (header first, rule line dropped)."""
+    rows = []
+    for l in lines:
+        if re.match(r"^\|\s*:?-{3}", l):
+            continue
+        rows.append([c.strip() for c in re.split(r"(?<!\\)\|", l.strip())[1:-1]])
+    return rows
+
+
+def md_table(rows: list, drop=("basis", "rationale", "rationale (part 1 source)", "source", "part 1 source")) -> str:
+    """Rows back to a Markdown table, without the author columns (BASIS, research rationale)."""
+    if not rows:
+        return ""
+    keep = [k for k, h in enumerate(rows[0]) if h.strip().lower() not in drop]
+    out = ["| " + " | ".join(rows[0][k] for k in keep) + " |", "| " + " | ".join("---" for _ in keep) + " |"]
+    out += ["| " + " | ".join(author_clean(r[k]) if k < len(r) else "" for k in keep) + " |" for r in rows[1:]]
+    return "\n".join(out)
+
+
+def split_top(s: str, sep: str = ";") -> list:
+    """Split on sep, but not inside parentheses."""
+    out, depth, cur = [], 0, ""
+    for ch in s:
+        depth += ch == "("
+        depth -= ch == ")"
+        if ch == sep and depth == 0:
+            out.append(cur.strip()); cur = ""
+        else:
+            cur += ch
+    if cur.strip():
+        out.append(cur.strip())
+    return out
+
+
+def parse_vars(s: str) -> list:
+    out = []
+    for part in split_top(s):
+        unit, extra = "", ""
+        um = re.search(r"\s*\(([^()]*)\)\s*$", part)
+        if um:
+            bits = [b.strip() for b in um.group(1).split(",")]
+            if bits[0] in UNITS or re.fullmatch(r"[A-Za-z%$/ ]{1,20}", bits[0]):
+                unit = UNITS.get(bits[0], re.sub(r"\bUSD\b", "US dollars", bits[0]))
+                extra = ", ".join(bits[1:])
+                part = part[:um.start()].strip()
+        sym, _, dfn = part.partition(" = ")
+        dfn = dfn.strip()
+        if extra:
+            dfn = (dfn + "; " if dfn else "") + f"from {extra}"
+        out.append({"sym": sym.strip(), "def": dfn, "unit": unit})
+    return out
+
+
+def parse_formulas() -> dict:
+    md = read("docs/formulas/formula-library.md").replace("\r\n", "\n")
+    conv = re.search(r"^## Library conventions.*?\n(.*?)(?=^## )", md, re.M | re.S)
+    conventions = []
+    if conv:
+        for row in table_rows([l for l in conv.group(1).splitlines() if l.startswith("|")])[1:]:
+            if row and row[0] not in ("Status",):
+                conventions.append({"name": row[0], "rule": why_clean(row[1])})
+    fam_intro = {}
+    for m in re.finditer(r"^## \w+ formulas \(F-([A-Z]+)\)\s*\n(.*?)(?=^\| ID )", md, re.M | re.S):
+        fam_intro[m.group(1)] = " ".join(l.strip() for l in m.group(2).splitlines() if l.strip())
+    out, seen = [], set()
+    for m in re.finditer(r"^### (F-([A-Z]+)-(\d+)):\s*(.+?)\s*$", md, re.M):
+        fid, fam, num = m.group(1), m.group(2), int(m.group(3))
+        body = md[m.end():]
+        nxt = re.search(r"^#{2,3} ", body, re.M)
+        body = body[:nxt.start()] if nxt else body
+        name = re.sub(r"\s*\((?:SUGGESTED|REQUIRED)\)\s*$", "", m.group(4)).strip()
+        fields, cur, tex, tests, in_tex = {}, None, "", [], False
+        for line in body.split("\n"):
+            if line.startswith("```"):
+                in_tex = not in_tex
+                continue
+            if in_tex:
+                tex += line + "\n"
+                continue
+            if line.startswith("|"):
+                cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip())[1:-1]]
+                if cells and re.fullmatch(r"\d+", cells[0]) and len(cells) >= 3:
+                    tests.append({"n": int(cells[0]), "inputs": cells[1], "expected": cells[2]})
+                cur = None
+                continue
+            fm = re.match(r"^\*\*([A-Z][^*]+?)\.\*\*\s*(.*)$", line)
+            if fm:
+                cur = fm.group(1).lower()
+                fields[cur] = fm.group(2).strip()
+                continue
+            if line.startswith("**") and line.rstrip().endswith("**"):
+                cur = None                     # "**Core library complete ...**" and other author lines
+                continue
+            if cur is not None:
+                fields[cur] = (fields[cur] + "\n" + line).strip("\n") if fields[cur] else line
+        steps = [re.sub(r"^\d+\.\s+", "", l).strip() for l in fields.get("worked example", "").split("\n") if re.match(r"^\d+\.\s", l)]
+        mistakes = [re.sub(r"^-\s+", "", l).strip() for l in fields.get("common mistakes", "").split("\n") if l.startswith("- ")]
+        mods_cell = fields.get("modules", "")
+        core_mods = sorted({f"C{int(x)}" for x in re.findall(r"\bC(\d{1,2})\b", mods_cell)}, key=lambda c: int(c[1:]))
+        fam_mods = sorted({FAMILY_MODULE[x] for x in re.findall(r"\b(CM|R|M)\d\b", mods_cell)})
+        if fam == "CORE":
+            topic = next((t for t, _, ids in CORE_TOPICS if num in ids), "Other core formulas")
+        else:
+            topic = FAMILY_TOPICS[fam][0]
+        slug = slugify(name)
+        while slug in seen:
+            slug += "-" + fam.lower()
+        seen.add(slug)
+        out.append({
+            "id": fid, "fam": fam, "slug": slug, "name": name, "topic": topic,
+            "purpose": fields.get("purpose", ""), "words": fields.get("formula", ""), "tex": tex.strip(),
+            "vars": parse_vars(fields.get("variables and units", "")), "steps": steps,
+            "read": fields.get("interpretation", ""), "related": fields.get("related rules", ""),
+            "mistakes": mistakes, "edge": fields.get("edge cases", ""), "rounding": fields.get("rounding and day count", ""),
+            "modules": core_mods, "familyModules": fam_mods, "tests": tests,
+        })
+    topics = [{"title": t, "blurb": b} for t, b, _ in CORE_TOPICS]
+    if any(f["topic"] == "Other core formulas" for f in out):
+        topics.append({"title": "Other core formulas", "blurb": ""})
+    topics += [{"title": t, "blurb": b, "intro": fam_intro.get(k, "")} for k, (t, b) in FAMILY_TOPICS.items()]
+    return {"formulas": out, "topics": topics, "conventions": conventions}
+
+
+BASIS_WORDS = {"MARKET": "market practice", "JUDGMENT": "course judgment", "LEGAL": "law and regulation"}
+
+
+def basis_text(cell: str) -> str:
+    words = [BASIS_WORDS[w] for w in re.findall(r"MARKET|JUDGMENT|LEGAL", cell)]
+    return (", ".join(words[:-1]) + " and " + words[-1] if len(words) > 1 else words[0]).capitalize() if words else ""
+
+
+def why_clean(s: str) -> str:
+    """A rationale cell, minus research bookkeeping: dates of decisions, undated flags, change notes."""
+    s = author_clean(s)
+    s = re.sub(r"\s*\((?:[^()]*?\b)?D-[A-Z]+-\d+(?:,? (?:decided )?\d{1,2} [A-Z][a-z]{2} \d{4})?\)", "", s)
+    s = re.sub(r"\s*\((?:decided|set) \d{1,2} [A-Z][a-z]{2} \d{4}\)", "", s)
+    s = re.sub(r",? (?:decided|set) \d{1,2} [A-Z][a-z]{2} \d{4}", "", s)
+    s = re.sub(r"\bis (?:a )?JUDGMENT\b", "is a course judgment", s)
+    s = re.sub(r"\bare JUDGMENT\b", "are course judgments", s)
+    s = re.sub(r"\bJUDGMENT\b", "course judgment", s)
+    s = re.sub(r"\(Part 1[A-H]?\)|\bPart 1[A-H]?\b", "the research notes", s)
+    return re.sub(r"\s{2,}", " ", s).strip()
+
+
+def clean_title(t: str) -> str:
+    t = re.sub(r"^(?:CORE|RES|MF|COM)-[A-Z]+-\d+\s+(\w)", lambda m: m.group(1).upper(), t)   # "RES-DSCR-03 maximum LTV matrix"
+    t = re.sub(r"\s*\((?:added|revised) [^)]*\)", "", t, flags=re.I)
+    t = re.sub(r"\s*\((?:[A-Z]+-[A-Z]+(?:-\d+)?(?:,\s*)?)+(?:, applies to [^)]*)?\)", "", t)
+    t = re.sub(r"\s*\((?:[A-Z]+-[A-Z]+-\d+)[^)]*\)", "", t)
+    return t.strip()
+
+
+def parse_policy() -> dict:
+    md = read("docs/credit-policy/model-credit-policy.md").replace("\r\n", "\n")
+    lines = md.split("\n")
+    fams, rules, decisions, summary = [], [], [], {}
+    fam = sec = sub = None
+    part = None
+    i = 0
+
+    def block_lines(j):
+        out = []
+        while j < len(lines) and lines[j].startswith("|"):
+            out.append(lines[j]); j += 1
+        return out, j
+
+    while i < len(lines):
+        l = lines[i]
+        fm = re.match(r"^# (Core|Residential|Multifamily|Commercial)\b(.*)$", l)
+        if fm:
+            fam = {"name": fm.group(1), "label": (fm.group(1) + fm.group(2)).strip(), "sections": [], "limits": []}
+            fams.append(fam); sec = sub = None; part = None; i += 1; continue
+        hm = re.match(r"^## (?:(Core|Residential|Multifamily|Commercial) )?Part (\d)([A-Z]?):?\s*(.*)$", l)
+        if hm:
+            part = hm.group(2) + hm.group(3)
+            sec = None; sub = None
+            if part.startswith("2"):
+                sec = {"title": clean_title(hm.group(4)), "intro": "", "groups": []}
+                fam["sections"].append(sec)
+            i += 1; continue
+        if l.startswith("## "):
+            part = "x"; sec = sub = None; i += 1; continue
+        # decisions (author view and audit drawer)
+        if l.startswith("|") and part and (part.startswith("3A") or part == "x" or fam is None):
+            tl, j = block_lines(i)
+            rows = table_rows(tl)
+            head = rows[0] if rows else []
+            for r in rows[1:]:
+                if r and re.fullmatch(r"D-[A-Z]+-\d+", r[0]):
+                    f = dict(zip(head, r))
+                    decisions.append({"id": r[0], "question": f.get("Question", ""), "covered": f.get("Rules covered", f.get("Rules and formulas", "")),
+                                      "decision": f.get("Decision", ""), "options": f.get("Options: pros (+) and cons (−)", ""), "recommend": f.get("Recommend", "")})
+            i = j; continue
+        if part and part.startswith("3B") and l.startswith("|"):
+            tl, j = block_lines(i)
+            rows = table_rows(tl)
+            head = [h.lower() for h in rows[0]]
+            keep = [k for k, h in enumerate(head) if h != "basis"]
+            for r in rows[1:]:
+                f = dict(zip(head, r))
+                for k, cell in enumerate(r):
+                    for rid in expand_ids(cell):
+                        if "limit" in f and head[k] == "rule id":
+                            summary.setdefault(rid, f"{f.get('area', r[0])}: {f['limit']}")
+                        elif k:
+                            plain = re.sub(r"\s*\((?:[A-Z]+-[A-Z]+-\d+[^)]*)\)", "", cell).strip()
+                            summary.setdefault(rid, f"{r[0]}, {head[k]}: {plain}")
+            heads = ["Policy section" if rows[0][k].strip().lower() == "rule id" else rows[0][k] for k in keep]
+            md_rows = ["| " + " | ".join(heads) + " |", "| " + " | ".join("---" for _ in keep) + " |"]
+            md_rows += ["| " + " | ".join(r[k] if k < len(r) else "" for k in keep) + " |" for r in rows[1:]]
+            fam["limits"].append("\n".join(md_rows))
+            i = j; continue
+        if part and part.startswith("3B") and l.strip() and not l.startswith(("**", "---")) and fam["limits"]:
+            fam["limits"].append(author_clean(l)); i += 1; continue
+        if not sec:
+            i += 1; continue
+        # inside a Part 2 section
+        if re.match(r"^---\s*$", l) or 'Say "continue"' in l or re.match(r"^\*\*New topic codes\.\*\*", l):
+            i += 1; continue
+        bm = re.match(r"^\*\*(.+?)\*\*\s*$", l)
+        if bm:
+            title = bm.group(1)
+            fid = re.match(r"^(F-[A-Z]+-\d+)\b", title)
+            rid = re.search(r"\(((?:CORE|RES|MF|COM)-[A-Z]+-\d+)(?:,[^)]*)?\)\s*$", title)
+            if fid:
+                # A formula worked in the policy: learners get it on the formula page; keep the policy's example.
+                j = i + 1; body = []
+                while j < len(lines) and not re.match(r"^(\*\*[^*]+\*\*\s*$|#{1,4}\s)", lines[j]):
+                    body.append(lines[j]); j += 1
+                target = sub if sub else {"title": "", "items": []}
+                if not sub:
+                    sec["groups"].append(target); sub = target
+                target["items"].append({"kind": "formula", "id": fid.group(1), "md": "\n".join(body).strip()})
+                i = j; continue
+            sub = {"title": clean_title(title), "items": []}
+            sec["groups"].append(sub)
+            if rid:
+                # The rule's own prose and tables, up to the next heading or the next rule table.
+                j = i + 1; body = []
+                while j < len(lines) and not re.match(r"^(\*\*[^*]+\*\*\s*$|#{1,4}\s|\|\s*Rule ID\s*\|)", lines[j]):
+                    body.append(lines[j]); j += 1
+                parts, k = [], 0
+                while k < len(body):
+                    if body[k].startswith("|"):
+                        tl = []
+                        while k < len(body) and body[k].startswith("|"):
+                            tl.append(body[k]); k += 1
+                        parts.append(md_table(table_rows(tl)))
+                    else:
+                        parts.append(author_clean(body[k])); k += 1
+                text = "\n".join(parts).strip()
+                basis = re.search(r"BASIS:\s*([A-Z +]+)", text)
+                text = re.sub(r"BASIS:\s*([A-Z +]+?),\s*", lambda m: f"This rule is {basis_text(m.group(1)).lower()}, ", text)
+                text = re.sub(r"\s*BASIS:\s*[A-Z +]+\.?\s*", " ", text).strip()
+                rule = {"id": rid.group(1), "name": clean_title(title), "text": text, "basis": basis_text(basis.group(1)) if basis else "",
+                        "why": "", "topic": sub["title"], "section": sec["title"], "family": fam["name"], "block": True}
+                rules.append(rule); sub["items"].append({"kind": "rule", "id": rule["id"]})
+                i = j; continue
+            i += 1; continue
+        if l.startswith("|"):
+            tl, j = block_lines(i)
+            rows = table_rows(tl)
+            hl = [h.lower() for h in rows[0]] if rows else []
+            if "rule id" in hl and hl[0] != "rule id":
+                # A limits matrix (one row per rule, one column per tier or type)
+                if not sub:
+                    sub = {"title": "", "items": []}; sec["groups"].append(sub)
+                ci, bi = hl.index("rule id"), hl.index("basis") if "basis" in hl else -1
+                wi = next((k for k, h in enumerate(hl) if h.startswith("rationale")), -1)
+                for r in rows[1:]:
+                    if len(r) <= ci or not re.fullmatch(r"(?:CORE|RES|MF|COM)-[A-Z]+-\d+", r[ci]):
+                        continue
+                    vals = "; ".join(f"{rows[0][k]} {r[k]}" for k in range(1, len(r)) if k not in (ci, bi, wi) and r[k])
+                    rule = {"id": r[ci], "name": r[0], "text": f"{r[0]}: {vals}.", "basis": basis_text(r[bi]) if bi >= 0 else "",
+                            "why": why_clean(r[wi]) if wi >= 0 else "", "topic": sub["title"] if sub["title"] not in ("", "Rules") else sec["title"], "section": sec["title"], "family": fam["name"]}
+                    rules.append(rule); sub["items"].append({"kind": "rule", "id": rule["id"]})
+                sub["items"].append({"kind": "md", "md": md_table(rows)})
+            elif rows and rows[0] and rows[0][0].lower() == "rule id":
+                if not sub:
+                    sub = {"title": "", "items": []}; sec["groups"].append(sub)
+                for r in rows[1:]:
+                    if len(r) < 4 or not re.fullmatch(r"(?:CORE|RES|MF|COM)-[A-Z]+-\d+", r[0]):
+                        continue
+                    rule = {"id": r[0], "name": "", "text": author_clean(r[1]), "basis": basis_text(r[2]), "why": why_clean(r[3]),
+                            "topic": sub["title"] if sub["title"] not in ("", "Rules") else sec["title"], "section": sec["title"], "family": fam["name"]}
+                    rules.append(rule); sub["items"].append({"kind": "rule", "id": rule["id"]})
+            else:
+                if not sub:
+                    sub = {"title": "", "items": []}; sec["groups"].append(sub)
+                sub["items"].append({"kind": "md", "md": md_table(rows)})
+            i = j; continue
+        if l.startswith("```"):
+            j = i + 1
+            while j < len(lines) and not lines[j].startswith("```"):
+                j += 1
+            if sub:
+                sub["items"].append({"kind": "md", "md": "\n".join(lines[i:j + 1])})
+            i = j + 1; continue
+        if l.strip():
+            # prose: the first paragraph under a section heading is its intro
+            j = i; para = []
+            while j < len(lines) and lines[j].strip() and not lines[j].startswith(("|", "#", "```")) \
+                    and not re.match(r"^\*\*[^*]+\*\*\s*$", lines[j]):
+                para.append(lines[j]); j += 1
+            if not para:
+                i += 1; continue
+            text = author_clean("\n".join(para))
+            if not sec["groups"] and not sec["intro"]:
+                sec["intro"] = text
+            else:
+                if not sub:
+                    sub = {"title": "", "items": []}; sec["groups"].append(sub)
+                sub["items"].append({"kind": "md", "md": text})
+            i = j; continue
+        i += 1
+    for r in rules:
+        r["limit"] = summary.get(r["id"], "")
+    for f in fams:
+        f["sections"] = [s for s in f["sections"] if s["groups"] or s["intro"]]
+    return {"families": fams, "rules": rules, "decisions": decisions}
+
+
+def expand_ids(cell: str) -> list:
+    """"CORE-BOR-01, -02; CORE-CONC-03 to -05" -> every ID."""
+    out, fam, rng = [], None, False
+    for tok in re.findall(r"(?:F-)?(?:CORE|RES|MF|COM)-[A-Z]*-?\d{2}|(?<![\w-])-\d{2}\b|\bto\b", cell):
+        if tok == "to":
+            rng = True; continue
+        rid = tok if not tok.startswith("-") else (fam + tok if fam else None)
+        if not rid:
+            continue
+        fam = rid.rsplit("-", 1)[0]
+        if rng and out and out[-1].rsplit("-", 1)[0] == fam:
+            a, b = int(out[-1][-2:]), int(rid[-2:])
+            out += [f"{fam}-{k:02d}" for k in range(a + 1, b)]
+        rng = False
+        if rid not in out:
+            out.append(rid)
+    return out
+
+
+STATE_CODES = {"OH": "Ohio", "NC": "North Carolina", "IN": "Indiana", "CA": "California"}
+SLT_TOPICS = [("Lender licence", "lender"), ("Broker licence", "broker"), ("Interest rate cap", "usury"),
+              ("Default interest and late fees", "default"), ("Prepayment", "prepay"), ("Foreclosure", "foreclosure"),
+              ("Deficiency", "deficiency")]
+CITE_RE = re.compile(r"\b(?:ORC|OAC|G\.S\.|IC|Civ\. Code|CCP|B&P|Fin\. Code|Cal\. Const\.|Art\.|RMLA|DFPI FAQ|CLTA)\s?[\w.:()\-]*(?:[\w.:()\-]|\s(?:\(\w+\)|\d[\w.()-]*))*")
+
+
+def verdict(topic: str, text: str) -> tuple:
+    """A short badge for a state-law cell, from simple wording rules. Unclear wording gets a neutral badge."""
+    t = text.strip()
+    low = t.lower()
+    if topic in ("lender", "broker"):
+        if re.match(r"^(none (found )?for business purpose|same carve-out|same scope)", low):
+            return ("None for business purpose", "clear")
+        if low.startswith("possibly required"):
+            return ("May be required", "check")
+        if re.match(r"^none found", low):
+            return ("None found", "info")
+        if re.search(r"licen[cs]e (required|for any)|^(real estate broker licence|dre licence|cfl licence required|california financing law licence)", low):
+            return ("Licence required", "check")
+    if topic == "usury":
+        if re.match(r"^10% cap", low):
+            return ("Capped unless exempt", "check")
+        if re.match(r"^(not capped|the uniform consumer credit code caps consumer loans only)", low):
+            return ("Not capped", "clear")
+        if "exempt" in low:
+            return ("Exempt", "clear")
+    if topic == "default":
+        if re.match(r"^(no statutory cap found|not found)", low):
+            return ("None found", "info")
+        if re.search(r"late fee (up to|on a single)|4% late fee", low):
+            return ("Late fees limited", "check")
+        if "penalty" in low:
+            return ("Limits apply", "check")
+    if topic == "prepay":
+        if re.match(r"^(no statutory limit found|not found|no statute found)", low):
+            return ("None found", "info")
+        if "contractual" in low or "may agree any terms" in low:
+            return ("Contractual", "info")
+        if "[verify" in low or "appears to" in low:
+            return ("May apply", "check")
+        if re.search(r"may be prepaid|charges only|^no penalty", low):
+            return ("Limits apply", "check")
+    if topic == "foreclosure":
+        if low.startswith("judicial only"):
+            return ("Judicial only", "info")
+        if low.startswith("judicial"):
+            return ("Judicial", "info")
+        if low.startswith("power of sale"):
+            return ("Power of sale", "info")
+        if "non-judicial" in low[:40]:
+            return ("Mostly non-judicial", "info")
+    if topic == "deficiency":
+        if low.startswith("allowed"):
+            return ("Allowed", "clear")
+        if "otherwise allowed" in low:
+            return ("Allowed, with limits", "check")
+        if re.match(r"^(no deficiency|barred)", low):
+            return ("Limited", "check")
+    return ("See detail", "info")
+
+
+def slt_learner(text: str) -> str:
+    text = re.sub(r"\bSame as SLT-[A-Z]{2}-01\b", "Same as for 1-4 unit loans", text)
+    text = re.sub(r"\b[Aa]s (?:in )?SLT-[A-Z]{2}-01\b", lambda m: ("As" if m.group(0)[0] == "A" else "as") + " for 1-4 unit loans", text)
+    text = re.sub(r"\bSLT-[A-Z]{2}-0[12]\b", "this state's other row", text)
+    return text
+
+
+def parse_state_law() -> dict:
+    md = read("docs/credit-policy/state-law-table.md").replace("\r\n", "\n")
+    states = {k: {"code": k.lower(), "name": v, "rows": {}, "changes": "", "sources": [], "checked": ""} for k, v in STATE_CODES.items()}
+    for grp in re.finditer(r"^\| Row \|(.*)\n\|[- |]+\n((?:\|.*\n?)+)", md, re.M):
+        head = [c.strip() for c in grp.group(1).strip().strip("|").split("|")]
+        for row in table_rows(grp.group(2).strip().splitlines()):
+            m = re.fullmatch(r"SLT-([A-Z]{2})-0(\d)", row[0])
+            if not m or m.group(1) not in states:
+                continue
+            st, n = states[m.group(1)], m.group(2)
+            if n in ("1", "2"):
+                cells = {}
+                for (label, key), cell in zip(SLT_TOPICS, row[1:]):
+                    v, tone = verdict(key, cell)
+                    cites = []
+                    for c in re.findall(r"\(([^()]*(?:\([^()]*\)[^()]*)*)\)", cell):
+                        if re.search(r"\b(ORC|OAC|G\.S\.|IC \d|Civ\. Code|CCP|B&P|Fin\. Code|Cal\. Const|DFPI|Art\. XV|ELFA|secondary|Ohio Legal Help|Garrett|Honchariw|Stewart)", c):
+                            cites.append(c)
+                    detail = slt_learner(cell)
+                    confirm = "[VERIFY" in cell or "\\[VERIFY" in cell
+                    detail = re.sub(r"\s*\\?\[VERIFY[^\]]*\\?\]", "", detail).strip()
+                    st["rows"].setdefault("res" if n == "1" else "com", []).append(
+                        {"topic": label, "key": key, "verdict": v, "tone": tone, "detail": detail,
+                         "cite": "; ".join(dict.fromkeys(cites)), "confirm": confirm})
+            else:
+                f = dict(zip(head, row[1:]))
+                st["changes"] = f.get("Recent or pending changes", "")
+                st["sources"] = [{"label": a, "url": u} for a, u in re.findall(r"\[([^\]]+)\]\((https?://[^)]+)\)", f.get("Primary source URLs", ""))]
+                st["checked"] = f.get("Date checked", "")
+    pats = re.search(r"Three patterns hold in all four states:\s*\n((?:- .*\n?)+)", md)
+    patterns = [author_clean(re.sub(r"\s*\((?:C\d+, )?CORE-[A-Z]+-\d+\)", "", l[2:].strip())) for l in pats.group(1).splitlines()] if pats else []
+    notes = {}
+    for m in re.finditer(r"^- \*\*(.+?)\*\*\s*(.*)$", md, re.M):
+        title = re.sub(r"\s*\(SLT-[^)]*\)", "", m.group(1)).rstrip(".")
+        for k, v in STATE_CODES.items():
+            if v in title or (k == "CA" and "California" in title):
+                notes[k] = {"title": title, "text": m.group(2)}
+    for k, n in notes.items():
+        states[k]["note"] = n
+    deal_of = {"OH": ("Maple Run", "res"), "NC": ("Cedar Court", "com"), "IN": ("Birchwood Plaza", "com"), "CA": ("Teaching example", "")}
+    for k, (d, t) in deal_of.items():
+        states[k]["deal"], states[k]["dealType"] = d, t
+    look = re.search(r"\*\*What to look up yourself\.\*\*[^\n]*\n\s*\n?((?:\d+\. .*\n?)+)", md)
+    open_points = [re.sub(r"^\d+\.\s+", "", l).strip() for l in look.group(1).splitlines()] if look else []
+    for st in states.values():
+        res = {r["key"]: r for r in st["rows"].get("res", [])}
+        for r in st["rows"].get("com", []):
+            # "As SLT-NC-01" / "apply as in SLT-CA-01": the 1-4 unit verdict carries over.
+            if r["verdict"] == "See detail" and re.search(r"\b(?:[Aa]s|[Ss]ame as)(?: in)? for 1-4 unit loans", r["detail"]) and r["key"] in res:
+                r["verdict"], r["tone"] = res[r["key"]]["verdict"], res[r["key"]]["tone"]
+    return {"states": list(states.values()), "patterns": patterns, "checked": "20 Nov 2026", "open": open_points}
+
+
+def parse_deals() -> list:
+    md = read("data/running-deals/running-deals.md").replace("\r\n", "\n")
+    out = []
+    heads = list(re.finditer(r"^## (RD-[A-Z]+-\d+): (.+?) \((\w+)\)\s*$", md, re.M))
+    for k, m in enumerate(heads):
+        body = md[m.end(): heads[k + 1].start() if k + 1 < len(heads) else len(md)]
+        intro = next((l.strip() for l in body.splitlines() if l.strip() and not l.startswith(("|", "#", "*"))), "")
+        # "Used in R1-R6; numbers match ..." names family modules this course does not have.
+        intro = re.sub(r"\s*Used in [A-Z]+\d-[A-Z]+\d[;.]\s*(\w?)", lambda m: " " + m.group(1).upper(), intro).strip()
+        # "Numbers match the ... examples" is a note about the author's files, not about the deal.
+        intro = re.sub(r"\s*Numbers match [^.]*(?:\([^)]*\))?[^.]*\.", "", intro).strip()
+        first = re.match(r"(.*?[.!?])(\s|$)", intro)
+        title = m.group(2)
+        name = " ".join(title.split(" ")[:2])
+        tables, roles, cur_t = {}, [], None
+        lines = body.split("\n")
+        i = 0
+        state_note = ""
+        while i < len(lines):
+            l = lines[i]
+            bm = re.match(r"^\*\*(.+?)\*\*\s*$", l)
+            if bm:
+                cur_t = re.sub(r"\s*\(.*\)\s*$", "", bm.group(1)).strip()
+                i += 1; continue
+            sm = re.match(r"^\*\*State law notes\.\*\*\s*(.*)$", l)
+            if sm:
+                state_note = sm.group(1); i += 1; continue
+            rm = re.match(r"^### (?:RD-[A-Z]+-\d+ )?(Role \d): (.+)$", l)
+            if rm:
+                j = i + 1; tasks = []; key = []; mode = None
+                while j < len(lines) and not lines[j].startswith(("### ", "## ")):
+                    x = lines[j]
+                    if x.startswith("**Your tasks"):
+                        mode = "t"
+                    elif x.startswith("**Answer key") or x.startswith("**Credit memo outline"):
+                        mode = "k"
+                        if x.startswith("**Credit memo"):
+                            key.append(x)
+                    elif mode == "t" and re.match(r"^\d+\.\s", x):
+                        tasks.append(re.sub(r"^\d+\.\s+", "", x))
+                    elif mode == "k" and x.strip() != "---":
+                        key.append(x)
+                    j += 1
+                roles.append({"title": f"{rm.group(1)}: {rm.group(2)}", "tasks": tasks, "key": "\n".join(key).strip()})
+                i = j; continue
+            if l.startswith("|") and cur_t and not roles:
+                tl = []
+                while i < len(lines) and lines[i].startswith("|"):
+                    tl.append(lines[i]); i += 1
+                tables[cur_t] = table_rows(tl)
+                continue
+            i += 1
+        bm = re.search(r"^\|\s*Borrower\s*\|\s*(.+?)\s*\|\s*$", body, re.M)
+        borrower = bm.group(1) if bm else ""
+        state = next((s for s in STATES + ("California",) if s in borrower), "")
+        facts = {}
+        for t, rows in tables.items():
+            if rows and [h.lower() for h in rows[0][:2]] in (["item", "detail"], ["item", "value"]):
+                facts[t] = [{"k": r[0], "v": r[1], **({"src": r[2]} if len(r) > 2 else {})} for r in rows[1:] if len(r) >= 2]
+        timeline = []
+        for t, rows in tables.items():
+            if t.startswith("Timeline") and rows:
+                timeline = [{"when": r[0], "what": r[1]} for r in rows[1:] if len(r) >= 2]
+        out.append({"id": m.group(1), "slug": slugify(name), "name": name, "title": title, "family": m.group(3),
+                    "summary": first.group(1) if first else intro, "intro": intro, "borrower": borrower.split(",")[0], "state": state,
+                    "facts": facts, "timeline": timeline, "stateNote": state_note, "roles": roles})
+    return out
+
+
+def snapshot_dates() -> dict:
+    out = {}
+    for line in read("docs/SNAPSHOT.md").splitlines():
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) >= 2:
+            name = re.sub(r"[`*]", "", cells[0])
+            d = DATE_RE.search(cells[1])
+            if d:
+                out[name] = f"{int(d.group(1))} {d.group(2)} {d.group(3)}"
+    pick = lambda n: out.get(n, "")
+    return {"policy": pick("credit-policy/model-credit-policy.md"), "formulas": pick("formulas/formula-library.md"),
+            "state-law": pick("credit-policy/state-law-table.md"), "deals": pick("../data/running-deals/running-deals.md"),
+            "glossary": pick("course-bible.md")}
+
+
+def course_outcomes() -> list:
+    md = read("docs/course-bible.md")
+    out = []
+    g = re.search(r"A graduate can ([^.]+)\.", md)
+    if g:
+        out.append(g.group(1)[0].upper() + g.group(1)[1:] + ".")
+    goals = re.search(r"\*\*Program goals\*\*\s*\n\n((?:\d+\. .*\n?)+)", md)
+    if goals:
+        for l in goals.group(1).splitlines():
+            t = re.sub(r"^\d+\.\s+", "", l).strip()
+            if re.search(r"rule ID|asset", t):
+                continue
+            t = re.sub(r"^Every learner can ", "", t)
+            out.append(t[0].upper() + t[1:])
+    return out
+
+
+def deep_clean(obj):
+    """bible_clean over every string in parsed shelf data (IDs and slugs are left alone)."""
+    if isinstance(obj, str):
+        return bible_clean(obj)
+    if isinstance(obj, list):
+        return [deep_clean(x) for x in obj]
+    if isinstance(obj, dict):
+        return {k: (v if k in ("id", "slug", "url", "tex") else deep_clean(v)) for k, v in obj.items()}
+    return obj
+
+
 def inline_js(path: pathlib.Path) -> str:
     return path.read_text(encoding="utf-8").replace("</script", "<" + chr(92) + "/script")
 
@@ -397,7 +1070,13 @@ def main() -> None:
                         "exercises": exercises.get(key, [])})
     refs = [{"key": k, "title": t, "note": snapshot_note(p), "md": read(p)} for k, t, p in REFS]
     gloss = glossary()
-    data = json.dumps({"modules": modules, "refs": refs, "glossary": gloss, "deals": deals()}, ensure_ascii=False)
+    lib, pol, slt = parse_formulas(), parse_policy(), parse_state_law()
+    deal_data = parse_deals()
+    lib, pol, slt, deal_data, gloss = (deep_clean(x) for x in (lib, pol, slt, deal_data, gloss))
+    cats = [{"title": t, "blurb": b, "modules": [f"c{int(c[1:]):02d}" for c in cs]} for t, b, cs in CATEGORIES]
+    data = json.dumps({"modules": modules, "refs": refs, "glossary": gloss, "deals": deal_data,
+                       "library": lib, "policy": pol, "stateLaw": slt, "categories": cats,
+                       "reviewed": snapshot_dates(), "outcomes": course_outcomes()}, ensure_ascii=False)
     data = data.replace("</", "<\\/")  # never close the JSON <script> early
     app = "\n".join(inline_js(f) for f in sorted((HERE / "app").glob("*.js")))
     html = TEMPLATE.read_text(encoding="utf-8")
@@ -414,6 +1093,8 @@ def main() -> None:
     nex = sum(len(v) for v in exercises.values())
     print(f"{nex} exercises in {len(exercises)} modules")
     print(f"{len(gloss)} glossary terms")
+    print(f"{len(lib['formulas'])} formulas, {len(pol['rules'])} policy rules, {len(pol['decisions'])} decisions, "
+          f"{sum(len(s['rows'].get('res', [])) + len(s['rows'].get('com', [])) for s in slt['states'])} state-law cells")
     print(f"{len(modules)} modules ({hours} hours), {len(refs)} references -> {OUT} "
           f"({OUT.stat().st_size / 1024:.0f} KB)")
 

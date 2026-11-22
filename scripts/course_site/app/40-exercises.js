@@ -29,7 +29,9 @@ function exFrame(ex, ctl) {
   if (ex.deal) meta.append(el("span", "exdeal", ex.deal));
   head.prepend(meta);
   const based = el("div", "exbased");
-  if ((ex.sources || []).length) { based.append(el("span", "", "Based on")); for (const id of ex.sources) based.append(known(id) ? refBtn(id) : el("span", /^[A-Z]+(-[A-Z0-9]+)+$/.test(id) ? "nb" : "", id)); }
+  // Sources by name: formulas link to their page, rules open the lookup. Deal and decision codes show in Audit mode only.
+  const srcs = (ex.sources || []).filter((id) => known(id) && RULES.get(id)?.kind !== "decision");
+  if (srcs.length) { based.append(el("span", "", "Based on")); for (const id of srcs) based.append(refName(id)); }
   const intro = el("p", "speak", ex.intro);
   const foot = el("div", "exfoot");
   const doneBtn = el("button", "btn sm", "Mark done"); doneBtn.type = "button";
@@ -345,6 +347,7 @@ function buildExercises(m, qs, saver) {
   const sum = el("p", "exsum"); sum.setAttribute("aria-live", "polite");
   const intro = el("p", "speak", "Work each exercise yourself first. Your answers and progress save automatically.");
   const list = el("div", "exlist");
+  const exCtx = newCiteCtx();
   const count = () => { const n = m.exercises.filter((e) => (qs.exercises[e.id] || {}).done).length; sum.textContent = `${n} of ${m.exercises.length} exercises done`; };
   for (const ex of m.exercises) {
     const st = (qs.exercises[ex.id] = qs.exercises[ex.id] || {});
@@ -354,7 +357,7 @@ function buildExercises(m, qs, saver) {
     f.card.append(f.head, f.intro, body, f.foot);
     if (f.based.childNodes.length) f.card.append(f.based);
     sourceTagsInText(f.card);
-    for (const t of f.card.querySelectorAll("p.speak, div.speak, p.exnote")) linkIds(t, "quiet");
+    linkIds(f.card, "quiet", exCtx);
     list.append(f.card);
   }
   count();
