@@ -97,7 +97,7 @@ function render(md, opts) {
 /** Scrollable regions get keyboard focus and a name (WCAG 2.1.1). Call after the content is in the page. */
 function markScrollers(root) {
   const names = new Map();
-  for (const s of root.querySelectorAll(".tbl, .prose pre, .fig-scroll, .fcard .math")) {
+  for (const s of root.querySelectorAll(".tbl, .prose pre, .fig-scroll, .math")) {
     if (s.scrollWidth > s.clientWidth + 1) {
       if (s.hasAttribute("tabindex")) continue;
       s.tabIndex = 0; s.setAttribute("role", "region");
@@ -110,6 +110,14 @@ function markScrollers(root) {
       names.set(base, k);
       s.setAttribute("aria-label", `${base}${k > 1 ? ", " + k : ""} (scrolls sideways)`);
       if (s.classList.contains("tbl")) { s.classList.add("scrolls"); if (!(s.nextElementSibling && s.nextElementSibling.classList.contains("tbl-hint"))) { const h2 = el("span", "tbl-hint", "Scroll sideways for more columns →"); h2.setAttribute("aria-hidden", "true"); s.after(h2); } }
+    } else if (s.classList.contains("math")) {
+      // Formula boxes can scroll on narrower fonts or screens: keep them focusable and named at all times.
+      if (!s.hasAttribute("tabindex")) { s.tabIndex = 0; s.setAttribute("role", "region"); }
+      if (!s.hasAttribute("aria-label")) {
+        let k = 1;
+        while (document.querySelector(`[aria-label="${k > 1 ? "Formula " + k : "Formula"}"]`)) k++;
+        s.setAttribute("aria-label", k > 1 ? `Formula ${k}` : "Formula");
+      }
     } else if (s.getAttribute("role") === "region") {
       s.removeAttribute("tabindex"); s.removeAttribute("role"); s.removeAttribute("aria-label"); s.classList.remove("scrolls");
       if (s.nextElementSibling && s.nextElementSibling.classList.contains("tbl-hint")) s.nextElementSibling.remove();
