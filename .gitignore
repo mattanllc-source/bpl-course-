@@ -17,3 +17,4 @@ assessments/answer-keys/*
 exports/*
 !exports/.gitkeep
 videos/out/
+.claude/worktrees/

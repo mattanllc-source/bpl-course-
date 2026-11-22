@@ -19,6 +19,7 @@ Internal training course on business-purpose real estate lending (BPL). Solo lea
 - Plain English. Sentences under 25 words. US dollars. Fictional borrowers and deals.
 - Running deals: RD-RES-01 Maple Run (Ohio), RD-MF-01 Cedar Court (North Carolina), RD-COM-01 Birchwood Plaza (Indiana). Their numbers must match `data/running-deals/`.
 - End module outputs with: a self-check, "What to look up yourself" and "How to check it". Research open items yourself before listing them.
+- Every learner-facing page must pass `docs/standards/quality-bar.md` before it is called done. Run its review gate and show the owner screenshots; never self-declare done.
 
 ## Number conventions
 

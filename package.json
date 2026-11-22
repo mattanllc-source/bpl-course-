@@ -9,6 +9,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "check:copy": "node scripts/course_site/check_copy.mjs exports/core-course.html",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "fixtures": "python scripts/export_formula_fixtures.py",
