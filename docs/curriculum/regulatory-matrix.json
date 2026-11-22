@@ -1,0 +1,1715 @@
+{
+  "built": "2026-11-22",
+  "label": "Model policy for training - not for live lending decisions. Not legal advice.",
+  "quality_bar_rows": [
+    "11.1",
+    "11.2"
+  ],
+  "review_log": [
+    "REG-01: previews C0; revisits dropped (no outcome) C2; revisits added -",
+    "REG-03: previews -; revisits dropped (no outcome) -; revisits added C9",
+    "REG-04: previews C1, C2; revisits dropped (no outcome) -; revisits added -",
+    "REG-07: previews -; revisits dropped (no outcome) C14; revisits added -",
+    "REG-08: previews C1; revisits dropped (no outcome) -; revisits added -",
+    "REG-09: previews C6; revisits dropped (no outcome) -; revisits added -",
+    "REG-10: previews C6; revisits dropped (no outcome) -; revisits added -",
+    "REG-12: previews -; revisits dropped (no outcome) C10; revisits added -",
+    "REG-18: previews -; revisits dropped (no outcome) -; revisits added C12, C13",
+    "REG-19: previews -; revisits dropped (no outcome) -; revisits added C12",
+    "REG-21: previews -; revisits dropped (no outcome) -; revisits added C13",
+    "REG-22: previews -; revisits dropped (no outcome) -; revisits added C13",
+    "REG-23: previews -; revisits dropped (no outcome) -; revisits added C5",
+    "REG-24: previews -; revisits dropped (no outcome) -; revisits added C8",
+    "FRD-01: previews C6; revisits dropped (no outcome) -; revisits added -",
+    "FRD-02: previews -; revisits dropped (no outcome) -; revisits added C9",
+    "FRD-04: previews C5; revisits dropped (no outcome) -; revisits added -",
+    "FRD-07: previews -; revisits dropped (no outcome) -; revisits added C12",
+    "FRD-08: previews C7; revisits dropped (no outcome) -; revisits added -",
+    "FRD-09: previews -; revisits dropped (no outcome) -; revisits added C11",
+    "FRD-11: previews -; revisits dropped (no outcome) -; revisits added C9, C11",
+    "FRD-12: previews -; revisits dropped (no outcome) -; revisits added C11"
+  ],
+  "rows": [
+    {
+      "id": "REG-01",
+      "topic": "Business-purpose determination: Truth in Lending (Reg Z) exemption",
+      "qb_topic": "business-purpose determination (Reg Z)",
+      "rule": [
+        "Reg Z exempts credit made mainly for a business, commercial or agricultural purpose, and credit to anyone who is not a natural person.",
+        "Credit for a rental the owner does not occupy is business credit, unless the owner expects to live there over 14 days next year."
+      ],
+      "sources": [
+        {
+          "cite": "12 CFR 1026.3(a)(1)-(2)",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1026/3/",
+          "tag": "[VERIFY: 12 CFR 1026.3(a)(1)-(2), consumerfinance.gov eRegulations; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "Supplement I to Part 1026, comments 3(a)-4 and 3(a)-5",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1026/3/",
+          "tag": "[VERIFY: Reg Z comments 3(a)-4 (14-day test) and 3(a)-5 (owner-occupied: more than 2 units to acquire, more than 4 to improve), consumerfinance.gov; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "Comments 3(a)-3 (factors), 3(a)-6 (rewritten business credit), 3(a)-10 (trusts)",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1026/3/",
+          "tag": "[VERIFY: Reg Z comments 3(a)-3, -6, -10; not opened; C1 blueprint lists them as checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled. No pending change found.",
+      "policy": [
+        "CORE-BOR-01",
+        "CORE-BP-01",
+        "CORE-BP-02",
+        "RES-GEN-09"
+      ],
+      "teach": "C1",
+      "revisit": [
+        "C6",
+        "C14"
+      ],
+      "misconception": "\"Lending to an LLC settles it.\" The entity test does take the loan out of Reg Z. But a guarantor or relative living in the house still creates fair-lending, state-law and fraud exposure, and some trusts count as natural persons (comment 3(a)-10).",
+      "mcq": [
+        {
+          "stem": "Exhibit: Maple Run occupancy certificate plus a utility bill in Dana Reyes's name at 1418 Maple Run Drive, dated month 3. Which conclusion is best supported?",
+          "key": "The bill is a red flag that stops the file until the occupancy evidence is explained (CORE-BP-02).",
+          "distractors": [
+            "The LLC borrower keeps the loan outside Reg Z, so no action is needed.",
+            "The signed certification is conclusive, so the bill can be filed.",
+            "The loan converts to consumer credit automatically on that date."
+          ],
+          "exhibit": "certificate and utility bill",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "A fictional owner will live in one unit of a duplex for 30 days next year and borrows to buy it. Under Reg Z comments 3(a)-4 and 3(a)-5, how is the purpose decided?",
+          "key": "It is owner-occupied, has only 2 units, so the comment 3(a)-3 factors decide.",
+          "distractors": [
+            "It is non-owner-occupied rental property, so it is business credit.",
+            "Any rental income makes it business credit.",
+            "Owner occupancy always makes it consumer credit."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O1",
+        "C01-O2",
+        "C01-O4",
+        "C01-O7",
+        "C06-O1",
+        "C14-O3"
+      ],
+      "preview_outcomes": [
+        "C00-O1"
+      ],
+      "previews": [
+        "C0"
+      ]
+    },
+    {
+      "id": "REG-02",
+      "topic": "Business-purpose determination: RESPA (Reg X) exemption",
+      "qb_topic": "business-purpose determination (RESPA)",
+      "rule": [
+        "RESPA and Reg X do not apply to credit made primarily for a business, commercial or agricultural purpose, as Reg Z defines it.",
+        "A lender may rely on the Reg Z purpose test to decide whether the RESPA exemption applies."
+      ],
+      "sources": [
+        {
+          "cite": "12 CFR 1024.5(b)(2)",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1024/5/",
+          "tag": "[VERIFY: 12 CFR 1024.5(b)(2), consumerfinance.gov eRegulations; checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled. No pending change found.",
+      "policy": [
+        "CORE-INS-02 (escrow cushion mirrors 1024.17(c)(5) as a benchmark only)"
+      ],
+      "teach": "C1",
+      "revisit": [
+        "C9",
+        "C11"
+      ],
+      "misconception": "\"RESPA has its own business-purpose test.\" It borrows the Reg Z test. A learner who passes the Reg Z test has also decided RESPA. Our escrow cushion copies a RESPA number by choice, not by law.",
+      "mcq": [
+        {
+          "stem": "A closer asks whether Cedar Court needs a RESPA escrow analysis. What is the best answer?",
+          "key": "No. The loan is business purpose under Reg Z, and Reg X relies on that test (1024.5(b)(2)).",
+          "distractors": [
+            "Yes. RESPA covers every loan secured by real estate.",
+            "Yes, because the property has more than four units.",
+            "No, but only because the borrower is in North Carolina."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Exhibit: Maple Run escrow worksheet showing a two-month cushion. Why does the course collect it?",
+          "key": "Policy choice (CORE-INS-02) that mirrors a consumer cap; RESPA does not require it on this loan.",
+          "distractors": [
+            "RESPA requires a cushion on every 1-4 unit loan.",
+            "Ohio law requires a two-month cushion.",
+            "Reg Z requires it on loans to LLCs."
+          ],
+          "exhibit": "escrow worksheet",
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O1",
+        "C01-O4",
+        "C09-O5",
+        "C11-O2"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-03",
+      "topic": "Occupancy and disguised consumer-loan risk",
+      "qb_topic": "occupancy and disguised-consumer-loan risk",
+      "rule": [
+        "A loan papered as business purpose can be consumer credit if an owner or relative lives there, or cash-out goes mainly to personal use.",
+        "State tests can look past the entity: Ohio's business-purpose carve-out ends if the borrower or immediate family will occupy the dwelling."
+      ],
+      "sources": [
+        {
+          "cite": "Reg Z comments 3(a)-4, 3(a)-6",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1026/3/",
+          "tag": "[VERIFY: Reg Z comment 3(a)-4 (14-day occupancy test), consumerfinance.gov; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "OAC 1301:8-7-02(F), (G)",
+          "url": "https://codes.ohio.gov/ohio-administrative-code/rule-1301:8-7-02",
+          "tag": "[VERIFY: OAC 1301:8-7-02(F)-(G); not opened; codes.ohio.gov refused connection; State Law Table SLT-OH-01 checked 20 Nov 2026]"
+        }
+      ],
+      "state_examples": [
+        "SLT-OH-01 (immediate-family occupancy; 'more than half' consumer use)",
+        "SLT-NC-01 (SAFE Act consumer-purpose test)"
+      ],
+      "status": "Ohio rule rewritten effective 19 Sep 2025 (SLT-OH-03). No pending change found.",
+      "policy": [
+        "CORE-BP-01",
+        "CORE-BP-02",
+        "CORE-BP-04",
+        "CORE-KYC-07",
+        "RES-GEN-09",
+        "RES-GEN-11"
+      ],
+      "teach": "C1",
+      "revisit": [
+        "C6",
+        "C7",
+        "C9",
+        "C10",
+        "C12",
+        "C14"
+      ],
+      "misconception": "\"The signed certification proves purpose.\" It supports purpose but proves nothing. Contrary evidence wins, and a red flag triggers diligence and a SAR decision, not an automatic finding of fraud.",
+      "mcq": [
+        {
+          "stem": "Exhibit: a month-14 Maple Run cash-out refinance request; the use-of-proceeds letter shows 55% for a personal home renovation. What does policy require?",
+          "key": "Treat it as consumer purpose and decline; no exception (CORE-BP-04).",
+          "distractors": [
+            "Approve, because the borrower is an LLC.",
+            "Approve with a credit-officer exception.",
+            "Approve if the guarantor re-signs the certification."
+          ],
+          "exhibit": "use-of-proceeds letter",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Exhibit: a lease to 'J. Reyes' and a driver's licence for Chris Reyes at the subject address. Who may clear the flag?",
+          "key": "The file stops. The ID contradicts the certification, so only the BSA officer may clear it (CORE-BP-02; CORE-KYC-07).",
+          "distractors": [
+            "A credit officer, after a phone call with the borrower.",
+            "The originator, once the tenant signs a new lease.",
+            "The closing agent, at the funding call."
+          ],
+          "exhibit": "lease and ID",
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O2",
+        "C01-O3",
+        "C01-O6",
+        "C06-O2",
+        "C07-O3",
+        "C09-O8",
+        "C10-O2",
+        "C12-O4",
+        "C14-O3"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-04",
+      "topic": "State licensing of business-purpose lenders",
+      "qb_topic": "state licensing of business-purpose lenders",
+      "rule": [
+        "The federal SAFE Act licenses originators of home loans made mainly for personal, family or household use, so true business loans usually fall outside.",
+        "Some states license commercial lenders anyway, and broker laws may turn on the collateral, so the property state's rules are checked before every term sheet."
+      ],
+      "sources": [
+        {
+          "cite": "12 USC 5102(9)",
+          "url": "https://www.law.cornell.edu/uscode/text/12/5102",
+          "tag": "[VERIFY: 12 USC 5102(9); not opened; C1 blueprint lists it as checked 22 Nov 2026 on Cornell LII]"
+        },
+        {
+          "cite": "State Law Table licence columns",
+          "url": "docs/credit-policy/state-law-table.md",
+          "tag": "[VERIFY: State Law Table SLT-OH-01, SLT-NC-01, SLT-IN-01, SLT-CA-01; checked 20 Nov 2026]"
+        }
+      ],
+      "state_examples": [
+        "Ohio: none for business purpose (ORC 1322; OAC 1301:8-7-02(G))",
+        "North Carolina: none (G.S. 53-244.030(30))",
+        "Indiana: lender none (IC 24-4.4-1-202); broker possibly (IC 23-2.5-1-14)",
+        "California: CFL licence for commercial lenders unless DRE-broker exempt (Fin. Code 22057)"
+      ],
+      "status": "North Carolina modernized its SAFE Act from 1 Oct 2025. California AB 2116 licenses commercial financing from 1 Jul 2028 but excludes real-property-secured deals (SLT-CA-03).",
+      "policy": [
+        "CORE-BP-03"
+      ],
+      "teach": "C10",
+      "revisit": [
+        "C14"
+      ],
+      "misconception": "\"Business-purpose lenders never need a licence.\" California licenses commercial lenders, and Indiana's broker law may reach a business-purpose 1-4 unit loan.",
+      "mcq": [
+        {
+          "stem": "Exhibit: State Law Table rows SLT-OH-01 and SLT-CA-01. A fictional lender with no California licence gets a broker-free business loan request on a Los Angeles fourplex. What should the analyst do?",
+          "key": "Issue no term sheet unless the lender holds a CFL licence or meets a listed exemption (CORE-BP-03).",
+          "distractors": [
+            "Proceed, because business-purpose loans are exempt everywhere.",
+            "Proceed, because California regulates only consumer loans.",
+            "Proceed and get the licence after closing."
+          ],
+          "exhibit": "State Law Table rows",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Why does Maple Run need no Ohio RMLA licence?",
+          "key": "The house is for rent or resale and no borrower or immediate family member will occupy it.",
+          "distractors": [
+            "The loan is under $500,000.",
+            "Ohio has no mortgage licence law.",
+            "The guarantor lives in Ohio."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C10-O2",
+        "C14-O3"
+      ],
+      "preview_outcomes": [
+        "C01-O3"
+      ],
+      "previews": [
+        "C1",
+        "C2"
+      ]
+    },
+    {
+      "id": "REG-05",
+      "topic": "ECOA and Reg B for business credit: coverage and adverse action",
+      "qb_topic": "ECOA/Reg B for business credit, including adverse action",
+      "rule": [
+        "ECOA and Reg B cover business credit: no lender may discriminate on a basis such as race, sex, marital status or age.",
+        "Businesses with $1 million or less in revenue get the 30-day notice rules, with changes; larger ones get notice in a reasonable time."
+      ],
+      "sources": [
+        {
+          "cite": "12 CFR 1002.9(a)(3)(i)-(ii)",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1002/9/",
+          "tag": "[VERIFY: 12 CFR 1002.9(a)(3)(i)-(ii), consumerfinance.gov eRegulations; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "12 CFR 1002.2(g), (z)",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1002/2/",
+          "tag": "[VERIFY: 12 CFR 1002.2(g), (z); not opened; C1 blueprint lists it as checked 22 Nov 2026]"
+        },
+        {
+          "cite": "42 USC 3605(a), (b)(1)(B) (Fair Housing Act, loans secured by residential real estate)",
+          "url": "https://www.law.cornell.edu/uscode/text/42/3605",
+          "tag": "[VERIFY: 42 USC 3605; not opened; C1 blueprint lists it as checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled text. HUD proposed on 14 Jan 2026 to remove its disparate-impact rule (C1 blueprint); not re-opened here.",
+      "policy": [
+        "CORE-BOR-03",
+        "CORE-BOR-05"
+      ],
+      "teach": "C1",
+      "revisit": [
+        "C6",
+        "C14"
+      ],
+      "misconception": "\"Fair-lending law is consumer law.\" ECOA covers business credit. The Fair Housing Act covers loans secured by residential real estate, whatever the purpose.",
+      "mcq": [
+        {
+          "stem": "Exhibit: a decline letter to a fictional LLC with $640,000 revenue last year, sent 45 days after a completed application. What is wrong?",
+          "key": "For a business at or under $1 million, the 30-day timing still applies, so the notice is late.",
+          "distractors": [
+            "Nothing; business credit has no notice rule.",
+            "Nothing; reasons are owed only if asked within 60 days.",
+            "The notice had to be in writing and sent within 10 days."
+          ],
+          "exhibit": "decline letter",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Cedar Court Partners LLC had revenue over $1 million last year and is declined. Which notice meets Reg B?",
+          "key": "Notice within a reasonable time, oral or written, with written reasons if asked within 60 days.",
+          "distractors": [
+            "No notice is needed for an LLC.",
+            "Written reasons within 30 days in every case.",
+            "Notice only if the guarantor asks."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O4",
+        "C01-O5",
+        "C06-O2",
+        "C14-O6"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-06",
+      "topic": "Spousal signatures (ECOA/Reg B)",
+      "qb_topic": "spousal signatures",
+      "rule": [
+        "A lender may not require the signature of an applicant's spouse if the applicant qualifies alone under the lender's own credit standards.",
+        "If another party is needed, the lender may ask for a guarantor; the spouse may serve, but the lender may not require it."
+      ],
+      "sources": [
+        {
+          "cite": "12 CFR 1002.7(d)(1), (d)(4), (d)(5)",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1002/7/",
+          "tag": "[VERIFY: 12 CFR 1002.7(d)(1), (d)(4), (d)(5), consumerfinance.gov eRegulations; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "Hawkins v. Community Bank of Raymore, No. 14-520 (2016), affirmed by an equally divided Court",
+          "url": "https://www.law.cornell.edu/supremecourt/text/14-520",
+          "tag": "[VERIFY: Hawkins, No. 14-520; not opened; C1 blueprint lists it as checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Rule text settled. Courts remain split on whether a guarantor is an 'applicant' who can sue (C1 owns this).",
+      "policy": [
+        "CORE-BOR-05",
+        "CORE-BOR-03",
+        "CORE-BOR-04"
+      ],
+      "teach": "C1",
+      "revisit": [
+        "C6",
+        "C9",
+        "C11"
+      ],
+      "running_deal": "Maple Run: Dana Reyes (60%, managing member) and Sam Okafor (40%) guarantee under CORE-BOR-03. Chris Reyes, Dana's spouse, owns nothing. CORE-BOR-05 says he is not asked to sign if Dana qualifies alone. The collateral is owned by the LLC, so the 1002.7(d)(4) exception for documents needed to reach collateral does not reach him.",
+      "misconception": "\"Get the spouse's signature to be safe.\" If the guarantor qualifies alone, requiring it is itself a Reg B violation.",
+      "mcq": [
+        {
+          "stem": "Exhibit: Maple Run ownership chart and Dana Reyes's credit summary. The closer adds Chris Reyes to the guaranty signature page 'as standard'. What is the best response?",
+          "key": "Remove him: Dana qualifies alone, Chris owns nothing, and Reg B bars requiring a spouse's signature (1002.7(d)(1); CORE-BOR-05).",
+          "distractors": [
+            "Keep him: spouses of guarantors must always sign.",
+            "Keep him: Ohio is a community property state.",
+            "Keep him: he can sign as a joint applicant without asking."
+          ],
+          "exhibit": "ownership chart and credit summary",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "A fictional guarantor fails the liquidity test alone. Which request is allowed?",
+          "key": "Ask for an additional guarantor, letting the guarantor choose who, including the spouse if they wish.",
+          "distractors": [
+            "Require the spouse to guarantee.",
+            "Require the spouse to sign the mortgage.",
+            "Decline without saying why."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O5",
+        "C06-O1",
+        "C09-O2",
+        "C11-O1"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-07",
+      "topic": "Small-business lending data collection (ECOA section 1071)",
+      "qb_topic": "small-business data collection (section 1071) status",
+      "rule": [
+        "Covered lenders must collect and report data on credit applications from small businesses, including demographic data the applicant chooses to give.",
+        "Since the 2026 revision, a lender is covered only after 1,000 small-business originations in each of the two prior years."
+      ],
+      "sources": [
+        {
+          "cite": "CFPB, small business lending rule page (final rule 1 May 2026; compliance 1 Jan 2028)",
+          "url": "https://www.consumerfinance.gov/compliance/compliance-resources/small-business-lending-resources/small-business-lending-collection-and-reporting-requirements/",
+          "tag": "[VERIFY: consumerfinance.gov small business lending requirements page; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "12 CFR 1002.104(b)(2), 1002.105(b), 1002.106(b), 1002.114(b) as revised",
+          "url": "https://files.consumerfinance.gov/f/documents/cfpb_1071-redline-final-rule_2026-05.pdf",
+          "tag": "[VERIFY: CFPB unofficial redline of the 2026 final rule, 1002.104-.106 and .114; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "FR Doc. 2026-08494, 91 FR 23530 (1 May 2026)",
+          "url": "https://www.federalregister.gov/d/2026-08494",
+          "tag": "[VERIFY: Federal Register 2026-08494; not opened; page cite and effective date from GAO and law-firm summaries]"
+        }
+      ],
+      "state_examples": [],
+      "status": "MOVING. Final rule published 1 May 2026. One compliance date: 1 Jan 2028. Thresholds: 1,000 originations in each of two prior years; revenue of $1 million or less. HMDA-reportable loans are excluded. The effective date differs by source (30 Jun 2026 per GAO; 21 Jul 2026 per KPMG); open the Federal Register text to settle it.",
+      "policy": [],
+      "policy_gap": "No policy rule. A lender at or above 1,000 small-business originations a year needs a 1071 program; the course lender's volume is not set. Ask the owner.",
+      "teach": "C1",
+      "revisit": [],
+      "misconception": "\"1071 starts in 2024 for everyone.\" The 2023 tiered dates were replaced. Small lenders under 1,000 originations a year are outside it entirely.",
+      "mcq": [
+        {
+          "stem": "Exhibit: a fictional lender's origination log: 640 small-business loans in 2026 and 710 in 2027. Is it covered by section 1071 on 1 Jan 2028?",
+          "key": "No. It did not reach 1,000 covered originations in each of the two preceding years.",
+          "distractors": [
+            "Yes. Any lender with 100 or more originations is covered.",
+            "Yes. All non-bank lenders are covered.",
+            "Only for loans over $1 million."
+          ],
+          "exhibit": "origination log",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Which Maple Run-type loan is excluded from 1071 even at a covered lender?",
+          "key": "One that is reportable under HMDA (Reg C covered loan; see REG-17).",
+          "distractors": [
+            "Any loan secured by real estate.",
+            "Any loan to an LLC.",
+            "Any loan under $1 million."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O4"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-08",
+      "topic": "BSA/AML scope for non-bank lenders",
+      "qb_topic": "BSA/AML scope for non-banks",
+      "rule": [
+        "A non-bank residential mortgage lender or originator is a 'loan or finance company' that must keep a written AML program and file SARs.",
+        "Coverage turns on the collateral: a 'residential mortgage loan' is one secured by a 1-4 unit residential structure or residential land, whatever the loan's purpose."
+      ],
+      "sources": [
+        {
+          "cite": "31 CFR 1010.100(lll)",
+          "url": "https://www.law.cornell.edu/cfr/text/31/1010.100",
+          "tag": "[VERIFY: 31 CFR 1010.100(lll), Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "31 CFR 1029.210(a)",
+          "url": "https://www.law.cornell.edu/cfr/text/31/1029.210",
+          "tag": "[VERIFY: 31 CFR 1029.210(a), Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "31 CFR 1029.320 (SAR: $5,000; 30/60 days)",
+          "url": "https://www.law.cornell.edu/cfr/text/31/1029.320",
+          "tag": "[VERIFY: 31 CFR 1029.320; not opened; CORE-KYC-05 lists it as checked 20 Nov 2026]"
+        },
+        {
+          "cite": "31 USC 5318(h)(1) (program pillars)",
+          "url": "https://www.law.cornell.edu/uscode/text/31/5318",
+          "tag": "[VERIFY: 31 USC 5318(h)(1); not opened; C7 blueprint lists it as checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled for 1-4 unit collateral. Coverage of a lender making only 5+ unit and commercial loans is the open counsel question in CORE-KYC-04.",
+      "policy": [
+        "CORE-KYC-04",
+        "CORE-KYC-05",
+        "CORE-KYC-07"
+      ],
+      "teach": "C7",
+      "revisit": [
+        "C11",
+        "C14"
+      ],
+      "misconception": "\"BSA is for banks.\" A non-bank lender on a 1-4 unit rental is covered by its collateral, even on a business-purpose loan.",
+      "mcq": [
+        {
+          "stem": "A fictional non-bank lender makes only fix-and-flip loans on single-family houses to LLCs. Does it need an AML program?",
+          "key": "Yes. The loans are secured by 1-4 unit residential structures, so it is a residential mortgage lender (1010.100(lll)).",
+          "distractors": [
+            "No. Business-purpose loans are outside the BSA.",
+            "No. Only banks need AML programs.",
+            "Only if a loan exceeds $10,000 in cash."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Exhibit: a red-flag log entry on day 1 naming a suspect, $42,000 involved. When is the SAR due at the latest?",
+          "key": "30 calendar days after first detection.",
+          "distractors": [
+            "60 days, because the amount is over $5,000.",
+            "10 business days.",
+            "No SAR is needed until a loss occurs."
+          ],
+          "exhibit": "red-flag log",
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C07-O1",
+        "C07-O5",
+        "C07-O6",
+        "C11-O4",
+        "C14-O8"
+      ],
+      "preview_outcomes": [
+        "C01-O4"
+      ],
+      "previews": [
+        "C1"
+      ]
+    },
+    {
+      "id": "REG-09",
+      "topic": "OFAC screening of borrowers, owners and guarantors",
+      "qb_topic": "OFAC screening of owners and guarantors",
+      "rule": [
+        "Every US person, lenders included, must block property of sanctioned persons and must report a rejected transaction to OFAC within 10 business days.",
+        "An entity owned 50% or more in total by blocked persons is itself blocked, so screening must reach through the ownership chart."
+      ],
+      "sources": [
+        {
+          "cite": "31 CFR 501.604(a), (c)",
+          "url": "https://www.law.cornell.edu/cfr/text/31/501.604",
+          "tag": "[VERIFY: 31 CFR 501.604, Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "31 CFR 501.601 (10-year records), 501.603; OFAC FAQs 398-401 (50 Percent Rule)",
+          "url": "https://ofac.treasury.gov/faqs",
+          "tag": "[VERIFY: 31 CFR 501.601, 501.603; OFAC FAQs 398-401; not opened; CORE-KYC-06 lists them as checked 20 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Records retention rose from 5 to 10 years effective 21 Mar 2025 (C7 blueprint).",
+      "policy": [
+        "CORE-KYC-01",
+        "CORE-KYC-06",
+        "CORE-KYC-08",
+        "CORE-CLS-03",
+        "CORE-EXC-03"
+      ],
+      "teach": "C7",
+      "revisit": [
+        "C11",
+        "C14"
+      ],
+      "misconception": "\"Screen the borrower entity name.\" OFAC liability is strict. A 50%-owned entity is blocked even if unlisted, so every owner and guarantor is screened twice.",
+      "mcq": [
+        {
+          "stem": "Exhibit: a fictional ownership chart: two listed persons own 30% and 25% of a holding LLC that owns 100% of the borrower. Which is correct?",
+          "key": "The borrower is blocked: listed persons own 55% in aggregate, indirectly.",
+          "distractors": [
+            "Neither owner is over 50%, so the borrower is clear.",
+            "Only the holding LLC is blocked.",
+            "Screening is needed only for the managing member."
+          ],
+          "exhibit": "ownership chart",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Exhibit: a Cedar Court funding checklist with an OFAC run dated 9 days before funding. What does policy require?",
+          "key": "A same-day OFAC re-run before the wire (CORE-CLS-03).",
+          "distractors": [
+            "Nothing; screening lasts 30 days.",
+            "A re-run only for the borrower entity.",
+            "A re-run after funding, within 10 business days."
+          ],
+          "exhibit": "funding checklist",
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C07-O2",
+        "C11-O1",
+        "C14-O8"
+      ],
+      "preview_outcomes": [
+        "C06-O1"
+      ],
+      "previews": [
+        "C6"
+      ]
+    },
+    {
+      "id": "REG-10",
+      "topic": "Beneficial ownership: the CDD rule and Corporate Transparency Act changes",
+      "qb_topic": "beneficial ownership",
+      "rule": [
+        "The CDD rule makes covered financial institutions identify and verify each 25% owner and one control person of a legal entity customer.",
+        "Since March 2025, US companies and US persons no longer file ownership reports with FinCEN; a 2026 final rule made this permanent."
+      ],
+      "sources": [
+        {
+          "cite": "31 CFR 1010.230(a), (d)(1)-(2), (f)",
+          "url": "https://www.law.cornell.edu/cfr/text/31/1010.230",
+          "tag": "[VERIFY: 31 CFR 1010.230, Cornell LII; checked 22 Nov 2026; (f) refers to 1010.605(e)(1) for 'covered financial institution', not opened]"
+        },
+        {
+          "cite": "FinCEN, Beneficial Ownership Information Reporting Requirement Revision, final rule (RIN 1506-AB67), Aug 2026",
+          "url": "https://www.fincen.gov/system/files/2026-08/BOIFinalRuleforFR.pdf",
+          "tag": "[VERIFY: FinCEN BOI final rule, pre-publication PDF, fincen.gov; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "Interim final rule, 26 Mar 2025",
+          "url": "https://www.fincen.gov/boi",
+          "tag": "[VERIFY: FinCEN BOI final rule PDF, Background section C (describes the IFR); checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "MOVING (settled for now). IFR of 26 Mar 2025 exempted all domestic reporting companies. The August 2026 final rule makes that permanent, effective on publication; law-firm summaries date it 11-14 Aug 2026. Foreign reporting companies still report. Summaries say the CDD rule is unchanged; the rule text read here does not discuss it.",
+      "policy": [
+        "CORE-KYC-02",
+        "CORE-KYC-08",
+        "CORE-KYC-09",
+        "CORE-BOR-03"
+      ],
+      "teach": "C7",
+      "revisit": [
+        "C11"
+      ],
+      "misconception": "\"FinCEN's registry will tell us who owns the borrower.\" US companies no longer report. The lender must build the ownership chart itself, from operating agreements and IDs.",
+      "mcq": [
+        {
+          "stem": "A fictional analyst plans to pull Birchwood Plaza LLC's beneficial ownership report from FinCEN. What is the best response?",
+          "key": "Domestic companies are exempt from BOI reporting, so build the chart from the operating agreement and IDs (CORE-KYC-02).",
+          "distractors": [
+            "Request it; lenders have direct access.",
+            "Ask the borrower to file one first.",
+            "Skip ownership review, since FinCEN has cleared it."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Exhibit: a Birchwood ownership chart (75% / 25%). Under policy, whom must the lender identify?",
+          "key": "Both owners, since each holds 20% or more, plus one control person (CORE-KYC-02).",
+          "distractors": [
+            "Only Dana Whitlow, the majority owner.",
+            "Only the managing member.",
+            "Nobody; the CDD rule does not bind non-banks."
+          ],
+          "exhibit": "ownership chart",
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C07-O1",
+        "C07-O2",
+        "C11-O1"
+      ],
+      "preview_outcomes": [
+        "C06-O1"
+      ],
+      "previews": [
+        "C6"
+      ]
+    },
+    {
+      "id": "REG-11",
+      "topic": "FinCEN residential real estate reporting rule",
+      "qb_topic": "FinCEN real estate reporting status",
+      "rule": [
+        "FinCEN's 2024 rule would have made closing or settlement agents report certain non-financed transfers of residential property to entities and trusts.",
+        "A federal court vacated the rule on 19 Mar 2026, so no reports are now required; FinCEN has appealed."
+      ],
+      "sources": [
+        {
+          "cite": "FinCEN, Residential Real Estate Rule page",
+          "url": "https://www.fincen.gov/resources/rre/",
+          "tag": "[VERIFY: fincen.gov/resources/rre; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "31 CFR 1031.320 (scope; financed-transfer exception)",
+          "url": "https://www.law.cornell.edu/cfr/text/31/1031.320",
+          "tag": "[VERIFY: 31 CFR 1031.320; not opened; scope summary from general knowledge; open before teaching]"
+        },
+        {
+          "cite": "Flowers Title Companies v. Bessent (E.D. Tex.); notice of appeal to the Fifth Circuit, 11 May 2026",
+          "url": "https://www.fincen.gov/resources/rre/",
+          "tag": "[VERIFY: FinCEN RRE page (vacatur, appeal); checked 22 Nov 2026; case name and appeal date from law-firm summaries]"
+        }
+      ],
+      "state_examples": [],
+      "status": "MOVING. The start date was moved from 1 Dec 2025 to 1 Mar 2026 [VERIFY: FinCEN postponement notice; not opened]. Vacated nationwide 19 Mar 2026. FinCEN says filers face no liability for not filing. Appeal pending in the Fifth Circuit; outcome not known on 22 Nov 2026.",
+      "policy": [],
+      "policy_gap": "None needed now. If the rule returns, it targets mainly non-financed (cash) transfers, so it would touch our closing agents, not our loans. Re-check at each build.",
+      "teach": "C7",
+      "revisit": [
+        "C11"
+      ],
+      "misconception": "\"Every LLC purchase is reported to FinCEN.\" The start moved to 1 Mar 2026, and a court vacated the rule on 19 Mar 2026.",
+      "mcq": [
+        {
+          "stem": "On 22 Nov 2026, a fictional title agent asks whether it must file a Real Estate Report on an all-cash LLC purchase. Which answer is best?",
+          "key": "No filing is required while the vacatur stands; watch the Fifth Circuit appeal.",
+          "distractors": [
+            "Yes, within 30 days of closing.",
+            "Yes, but only above $300,000.",
+            "No, because the CTA replaced it."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Why would the rule, if revived, matter less to a lender-financed Maple Run purchase?",
+          "key": "It targets mainly non-financed transfers; a loan from an AML-covered lender was carved out [VERIFY before use].",
+          "distractors": [
+            "It covers only commercial property.",
+            "It covers only individuals, not LLCs.",
+            "It covers only transfers over $1 million."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C07-O1",
+        "C11-O1"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-12",
+      "topic": "UDAAP (federal) and state UDAP",
+      "qb_topic": "UDAAP and state UDAP",
+      "rule": [
+        "The CFPB's UDAAP power covers consumer financial products, meaning those used mainly for personal, family or household purposes.",
+        "True business loans usually fall outside it, but state laws vary; North Carolina's reaches unfair acts 'in or affecting commerce'."
+      ],
+      "sources": [
+        {
+          "cite": "12 USC 5531(a), (c)(1), (d)",
+          "url": "https://www.law.cornell.edu/uscode/text/12/5531",
+          "tag": "[VERIFY: 12 USC 5531, Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "12 USC 5481(4)-(6)",
+          "url": "https://www.law.cornell.edu/uscode/text/12/5481",
+          "tag": "[VERIFY: 12 USC 5481(4)-(6), Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "N.C. G.S. 75-1.1(a)",
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_75/GS_75-1.1.html",
+          "tag": "[VERIFY: N.C. G.S. 75-1.1; not opened; ncleg.gov returned 403; wording from search results; Bumpers v. Community Bank of N. Va. (N.C. 2013) reached a lender, opinion not opened]"
+        },
+        {
+          "cite": "Ohio ORC 1345.01(A); Indiana IC 24-5-0.5-2",
+          "url": "https://codes.ohio.gov/ohio-revised-code/section-1345.01",
+          "tag": "[VERIFY: ORC 1345.01; IC 24-5-0.5-2; not opened; both sites refused connection; consumer-purpose scope not confirmed]"
+        }
+      ],
+      "state_examples": [
+        "North Carolina G.S. 75-1.1 (commerce-wide)",
+        "Ohio ORC 1345 and Indiana IC 24-5-0.5 (consumer transactions; scope to confirm)"
+      ],
+      "status": "Settled federal text. State scope not confirmed for Ohio and Indiana.",
+      "policy": [],
+      "policy_gap": "No policy rule on fair dealing or marketing claims. C10 does not teach state UDAP, so C10 is no longer listed; C13 revisits it for default notices. Whether C10 should add it is an owner question.",
+      "teach": "C1",
+      "revisit": [
+        "C13"
+      ],
+      "misconception": "\"No consumer law applies, so any sales claim is fine.\" A disguised consumer loan brings UDAAP back. North Carolina's statute can reach business deals.",
+      "mcq": [
+        {
+          "stem": "Exhibit: a fictional broker flyer promising 'no-doc loans to live in your new home through your LLC'. Which risk is most direct?",
+          "key": "Disguised consumer lending, which brings back consumer law, including UDAAP and state law.",
+          "distractors": [
+            "None; the LLC removes all consumer law.",
+            "Only a usury risk.",
+            "Only an OFAC risk."
+          ],
+          "exhibit": "broker flyer",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Why is a Cedar Court dispute more exposed to a state unfair-practices claim than an Ohio deal might be?",
+          "key": "North Carolina's statute reaches acts 'in or affecting commerce', not only consumer transactions.",
+          "distractors": [
+            "North Carolina caps business loan rates.",
+            "Ohio has no unfair-practices law.",
+            "The CFPB supervises North Carolina loans directly."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O4",
+        "C13-O1"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-13",
+      "topic": "Appraisal independence and USPAP",
+      "qb_topic": "appraisal independence and USPAP",
+      "rule": [
+        "Reg Z's appraisal-independence rule covers consumer loans secured by the consumer's principal dwelling, so it does not bind a business-purpose loan directly.",
+        "Bank rules require USPAP appraisals engaged by the lender; our policy adopts that, and the Fair Housing Act covers residential appraisals."
+      ],
+      "sources": [
+        {
+          "cite": "12 CFR 1026.42(a), (c)(1)",
+          "url": "https://www.law.cornell.edu/cfr/text/12/1026.42",
+          "tag": "[VERIFY: 12 CFR 1026.42, Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "12 CFR 34.44(a), 34.45(b)(1) (OCC; parallel FDIC and Fed rules)",
+          "url": "https://www.law.cornell.edu/cfr/text/12/34.44",
+          "tag": "[VERIFY: 12 CFR 34.44-34.45; not opened; C5 blueprint lists them as checked 22 Nov 2026]"
+        },
+        {
+          "cite": "42 USC 3605(b)(2)",
+          "url": "https://www.law.cornell.edu/uscode/text/42/3605",
+          "tag": "[VERIFY: 42 USC 3605(b)(2); not opened; C5 blueprint lists it as checked 22 Nov 2026]"
+        },
+        {
+          "cite": "USPAP 2024 edition (The Appraisal Foundation)",
+          "url": "https://www.appraisalfoundation.org/",
+          "tag": "[Industry standard: confirm the edition in force on the build date; not opened]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled. Check which USPAP edition is in force at build.",
+      "policy": [
+        "CORE-VAL-01",
+        "CORE-VAL-02",
+        "CORE-VAL-03",
+        "RES-GEN-06"
+      ],
+      "teach": "C5",
+      "revisit": [
+        "C7",
+        "C8",
+        "C14"
+      ],
+      "misconception": "\"The law does not bind us, so a borrower's appraisal is fine.\" Policy bans it. A pressured value is a fraud typology (FRD-03).",
+      "mcq": [
+        {
+          "stem": "Exhibit: Maple Run file with a borrower-supplied appraisal showing ARV $560,000 and the lender's AMC appraisal at $520,000. Which value sizes the loan?",
+          "key": "$520,000 from the lender-ordered AMC appraisal; borrower appraisals are not accepted (CORE-VAL-01).",
+          "distractors": [
+            "$560,000, the higher value.",
+            "The average, $540,000.",
+            "Either, if a BPO supports it."
+          ],
+          "exhibit": "two appraisal summaries",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Which statement about Reg Z's appraisal-independence rule is correct for Maple Run?",
+          "key": "It does not apply directly, because the loan is not consumer credit on a principal dwelling.",
+          "distractors": [
+            "It applies to every 1-4 unit loan.",
+            "It applies because Ohio adopted it for LLCs.",
+            "It applies only above $400,000."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C05-O4",
+        "C05-O7",
+        "C07-O3",
+        "C08-O1",
+        "C14-O8"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-14",
+      "topic": "Environmental due diligence: ASTM E1527-21 and CERCLA lender protections",
+      "qb_topic": "environmental due diligence",
+      "rule": [
+        "EPA's all-appropriate-inquiries rule accepts a Phase I report done under ASTM E1527-21, which supports the landowner defences under CERCLA.",
+        "A lender holding title only to protect its loan is not an owner or operator, unless it takes part in management."
+      ],
+      "sources": [
+        {
+          "cite": "40 CFR 312.11(a)-(b)",
+          "url": "https://www.law.cornell.edu/cfr/text/40/312.11",
+          "tag": "[VERIFY: 40 CFR 312.11, Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "42 USC 9601(20)(F)(i)-(ii), (G)(i)",
+          "url": "https://www.law.cornell.edu/uscode/text/42/9601",
+          "tag": "[VERIFY: 42 USC 9601(20)(F)-(G), Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "40 CFR 312.20(a)-(b) (1-year and 180-day windows)",
+          "url": "https://www.law.cornell.edu/cfr/text/40/312.20",
+          "tag": "[VERIFY: 40 CFR 312.20; not opened; C9 blueprint cites it]"
+        }
+      ],
+      "state_examples": [],
+      "status": "PFOA and PFOS became CERCLA hazardous substances on 8 Jul 2024; the C9 blueprint reports the D.C. Circuit upheld this on 18 Aug 2026 (opinion not opened).",
+      "policy": [
+        "COM-GEN-14",
+        "MF-GEN-08",
+        "CORE-DOC-03",
+        "CORE-DEF-04",
+        "CORE-DEF-06"
+      ],
+      "policy_gap": "No residential environmental screen in policy (C9 blueprint gap). Ask the owner. The no-further-action letter is a what-if: add the basis for Birchwood to the Course Bible (owner).",
+      "teach": "C9",
+      "revisit": [
+        "C13",
+        "C14"
+      ],
+      "misconception": "\"The secured-creditor exemption protects the lender whatever it does.\" Running the site loses it. After foreclosure, the lender must seek to sell at the earliest practicable, commercially reasonable time.",
+      "mcq": [
+        {
+          "stem": "Birchwood what-if: the Phase I reports a former dry cleaner as a historical condition, and a state no-further-action letter is on file. What supports ordering no Phase II?",
+          "key": "The closure letter and the Phase I's historical-condition finding, which together show no current recognized condition (COM-GEN-14).",
+          "distractors": [
+            "The borrower's statement that the site was checked and cleared.",
+            "The building's age and its recent renovation.",
+            "The loan's non-recourse structure with an indemnity."
+          ],
+          "exhibit": "Phase I summary and closure letter",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "After foreclosing a fictional strip center, the lender leases it out long term and makes no sale effort for three years. What is the main environmental risk?",
+          "key": "It may lose the secured-creditor exemption for not divesting at the earliest practicable, commercially reasonable time.",
+          "distractors": [
+            "None; foreclosure always keeps the exemption.",
+            "Only a tax risk.",
+            "Only a flood insurance risk."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C09-O6",
+        "C13-O4",
+        "C13-O7",
+        "C14-O1"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-15",
+      "topic": "Insurance: flood determination and flood cover",
+      "qb_topic": "insurance (flood determination)",
+      "rule": [
+        "Regulated lenders may not lend on a building in a flood zone unless flood cover equals the lesser of the balance and the NFIP maximum.",
+        "This binds regulated lenders, not us, but policy copies it; NFIP caps are $250,000 for 1-4 family and $500,000 for other buildings."
+      ],
+      "sources": [
+        {
+          "cite": "42 USC 4012a(b)(1)(A)",
+          "url": "https://www.law.cornell.edu/uscode/text/42/4012a",
+          "tag": "[VERIFY: 42 USC 4012a(b), Cornell LII; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "44 CFR 61.6 (regular program limits)",
+          "url": "https://www.law.cornell.edu/cfr/text/44/61.6",
+          "tag": "[VERIFY: 44 CFR 61.6, Cornell LII; checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "NFIP authority depends on periodic reauthorization by Congress; check the lapse status at build.",
+      "policy": [
+        "CORE-INS-01",
+        "CORE-INS-03",
+        "MF-GEN-10",
+        "COM-GEN-13",
+        "COM-GEN-16"
+      ],
+      "teach": "C9",
+      "revisit": [
+        "C11",
+        "C12"
+      ],
+      "misconception": "\"NFIP cover is enough.\" On larger buildings, the $500,000 cap sits far below the lesser-of test, so excess cover is needed (CORE-INS-03).",
+      "mcq": [
+        {
+          "stem": "Exhibit: flood determination for a fictional Zone AE apartment building; loan $3,000,000; replacement cost $4,200,000. What flood cover does policy require?",
+          "key": "$3,000,000: NFIP $500,000 plus $2,500,000 private or excess cover (CORE-INS-03).",
+          "distractors": [
+            "$500,000, the NFIP cap.",
+            "$4,200,000, the replacement cost.",
+            "None, because we are not a regulated lender."
+          ],
+          "exhibit": "flood determination",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Why does a private BPL lender order a flood determination on every loan?",
+          "key": "Policy requires it to apply the lender's own flood rule, which mirrors the federal one (CORE-INS-01, -03). Loan buyers and warehouse lenders also expect it (quality bar 10.3).",
+          "distractors": [
+            "Federal law requires every lender to order one.",
+            "Only to set the interest rate.",
+            "Only for properties in Zone X."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C09-O4",
+        "C11-O1",
+        "C12-O6"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-16",
+      "topic": "Insurance: builder's risk, loss of rents, mortgagee clause and certificate types",
+      "qb_topic": "insurance (builder's risk, loss of rents, mortgagee clause, certificate types)",
+      "rule": [
+        "No federal statute sets these covers for a private lender; the loan documents and our policy do.",
+        "A standard mortgagee clause protects the lender despite owner breach; a certificate of insurance is evidence only and changes nothing."
+      ],
+      "sources": [
+        {
+          "cite": "Model Credit Policy CORE-INS-01, -04; RES-GEN-08; MF-GEN-10; COM-GEN-16",
+          "url": "docs/credit-policy/model-credit-policy.md",
+          "tag": "[Policy, not law]"
+        },
+        {
+          "cite": "ACORD 25 (liability certificate), ACORD 27 and 28 (evidence of property insurance)",
+          "url": "https://www.acord.org/",
+          "tag": "[Industry forms: confirm form numbers and the 'evidence only' wording; not opened]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled practice.",
+      "policy": [
+        "CORE-INS-01",
+        "CORE-INS-04",
+        "RES-GEN-08",
+        "MF-GEN-10",
+        "COM-GEN-16",
+        "CORE-SVC-05",
+        "CORE-SVC-06"
+      ],
+      "teach": "C9",
+      "revisit": [
+        "C12",
+        "C13"
+      ],
+      "misconception": "\"A liability certificate proves the lender is covered.\" It shows liability cover only. Property cover must name the lender as mortgagee and loss payee.",
+      "mcq": [
+        {
+          "stem": "Exhibit: Maple Run insurance evidence during rehab: a landlord policy at ARV $520,000 with 6 months' rent loss. What is wrong?",
+          "key": "During rehab, builder's risk (or vacant cover) on completed value is needed, and ARV is not completed value (CORE-INS-04; RES-GEN-08).",
+          "distractors": [
+            "Nothing; ARV is the right limit.",
+            "Rent-loss cover must be 12 months.",
+            "Only the flood cover is missing."
+          ],
+          "exhibit": "insurance evidence",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Exhibit: a Cedar Court certificate listing general liability and 'certificate holder: lender'. What does it fail to show?",
+          "key": "Property cover with the lender as mortgagee and loss payee, and 12 months' loss of rents (CORE-INS-01; MF-GEN-10).",
+          "distractors": [
+            "Nothing; certificate holder status is enough.",
+            "Only the policy number.",
+            "Only the flood zone."
+          ],
+          "exhibit": "certificate of insurance",
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C09-O4",
+        "C12-O6",
+        "C13-O4"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-17",
+      "topic": "HMDA (Regulation C): reporting of business-purpose loans on dwellings",
+      "qb_topic": "added by CCO review 5 (named in C1 O4)",
+      "rule": [
+        "Reg C excludes business-purpose loans, except home purchase loans, home improvement loans and refinancings.",
+        "A dwelling includes an apartment building, so many business-purpose purchase and refinance loans are reportable once a lender is covered."
+      ],
+      "sources": [
+        {
+          "cite": "12 CFR 1003.3(c)(10)",
+          "url": "https://www.law.cornell.edu/cfr/text/12/1003.3",
+          "tag": "[VERIFY: 12 CFR 1003.3(c)(10), Cornell LII; opening words and the purchase, improvement and refinance exceptions confirmed; checked 22 Nov 2026]"
+        },
+        {
+          "cite": "12 CFR 1003.2(g); comment 3(c)(10)-2",
+          "url": "https://www.consumerfinance.gov/rules-policy/regulations/1003/",
+          "tag": "[VERIFY: 12 CFR 1003.2(g) coverage tests and comment 3(c)(10)-2; not opened; cited by the CCO review]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled text. Coverage tests for a non-depository lender not opened; open 1003.2(g) before C1 teaches coverage.",
+      "policy": [],
+      "policy_gap": "No rule says whether the course lender is a Reg C financial institution. Ask the owner.",
+      "teach": "C1",
+      "revisit": [],
+      "misconception": "\"Business-purpose loans are never HMDA-reportable.\" The exclusion does not reach purchase, improvement or refinance loans on dwellings, apartment buildings included.",
+      "mcq": [
+        {
+          "stem": "Exhibit: a fictional Reg C lender's log shows a business-purpose purchase loan to an LLC on a 12-unit apartment building. Is it excluded from HMDA?",
+          "key": "No. It is a home purchase loan on a dwelling, so the business-purpose exclusion does not apply.",
+          "distractors": [
+            "Yes. Every loan to an LLC is excluded.",
+            "Yes. A building over four units is not a dwelling.",
+            "Yes. Every business-purpose loan is excluded."
+          ],
+          "exhibit": "loan log",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "At a Reg C lender, which loan on an apartment building is most likely outside HMDA?",
+          "key": "A business-purpose loan that funds another business and does not buy, improve or refinance the building.",
+          "distractors": [
+            "A loan to buy the building.",
+            "A loan that refinances the building's bridge loan.",
+            "A loan to renovate the building's units."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O4"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-18",
+      "topic": "State usury, default interest and late fees",
+      "qb_topic": "added by CCO review 5 (C10 O3 is critical)",
+      "rule": [
+        "Each state sets its own usury ceiling and exemptions. Business loans, entity borrowers and larger loans are often exempt.",
+        "Default interest and late fees face state limits and the penalty doctrine. Policy tests every rate and fee package before the term sheet (CORE-PRC-03)."
+      ],
+      "sources": [
+        {
+          "cite": "ORC 1343.01(B)",
+          "url": "https://codes.ohio.gov/ohio-revised-code/section-1343.01",
+          "tag": "[VERIFY: ORC 1343.01(B); not opened; State Law Table checked 20 Nov 2026]"
+        },
+        {
+          "cite": "N.C. G.S. 24-1.1, 24-9",
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/ByChapter/Chapter_24.html",
+          "tag": "[VERIFY: N.C. G.S. 24-1.1 and 24-9; not opened; State Law Table checked 20 Nov 2026]"
+        },
+        {
+          "cite": "IC 35-45-7-3",
+          "url": "https://iga.in.gov/laws/2024/ic/titles/35",
+          "tag": "[VERIFY: IC 35-45-7-3 (consumer loans only); not opened; State Law Table checked 20 Nov 2026; secondary source for non-consumer loans]"
+        }
+      ],
+      "state_examples": [
+        "SLT-OH-02 (entity loans and loans over $100,000 exempt, ORC 1343.01(B))",
+        "SLT-NC-02 (loans of $300,000 or more, or to entities, exempt, G.S. 24-9)",
+        "SLT-IN-02 (no cap found for non-consumer loans)"
+      ],
+      "status": "Settled per the State Law Table. Re-check at each build.",
+      "policy": [
+        "CORE-PRC-03",
+        "CORE-SVC-03",
+        "CORE-SVC-04"
+      ],
+      "teach": "C10",
+      "revisit": [
+        "C12",
+        "C13"
+      ],
+      "misconception": "\"An entity borrower makes any rate legal.\" Exemptions differ by state, size and product. Default interest is still capped by state usury (CORE-SVC-03).",
+      "mcq": [
+        {
+          "stem": "Exhibit: Birchwood Plaza note excerpt with default interest at the note rate plus 5.00%. What must be checked before the term sheet?",
+          "key": "The full rate, points and fee package against Indiana's usury and fee rules (CORE-PRC-03; SLT-IN-02).",
+          "distractors": [
+            "Nothing, because commercial loans have no limits in any state.",
+            "Only the federal usury ceiling for business loans.",
+            "Only whether the borrower agreed to the rate in writing."
+          ],
+          "exhibit": "note excerpt",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "North Carolina what-if: a $250,000 business loan to an individual. Why might the usury answer differ from Cedar Court's?",
+          "key": "G.S. 24-9 exempts loans of $300,000 or more, or to entities, and this loan is neither (SLT-NC-02).",
+          "distractors": [
+            "It does not differ; North Carolina has no usury statute.",
+            "It does not differ; business purpose always exempts the loan.",
+            "It differs because the collateral has five or more units."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C10-O3",
+        "C10-O4",
+        "C12-O2",
+        "C13-O1"
+      ],
+      "preview_outcomes": [
+        "C03-O6"
+      ],
+      "previews": [
+        "C3"
+      ]
+    },
+    {
+      "id": "REG-19",
+      "topic": "Mechanics' lien priority and notice of commencement",
+      "qb_topic": "added by CCO review 5 (construction depth, owner decision H.1)",
+      "rule": [
+        "Unpaid contractors and suppliers can lien the property. In some states that lien takes priority from the start of work or a recorded notice.",
+        "Lenders record before work starts and follow the state's notice or lien-agent process. They take lien waivers and a title date-down at each draw."
+      ],
+      "sources": [
+        {
+          "cite": "ORC 1311.04",
+          "url": "https://codes.ohio.gov/ohio-revised-code/section-1311.04",
+          "tag": "[VERIFY: ORC 1311.04 notice of commencement; not opened; cited by the CCO review]"
+        },
+        {
+          "cite": "N.C. G.S. 44A-11.1",
+          "url": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_44A/GS_44A-11.1.html",
+          "tag": "[VERIFY: N.C. G.S. 44A-11.1 lien agent; not opened; cited by the CCO review]"
+        },
+        {
+          "cite": "IC 32-28-3",
+          "url": "https://iga.in.gov/laws/2024/ic/titles/32",
+          "tag": "[VERIFY: IC 32-28-3 mechanics' liens; not opened; cited by the CCO review]"
+        }
+      ],
+      "state_examples": [
+        "Not in the State Law Table yet. Owner to add a mechanics' lien column."
+      ],
+      "status": "Not opened. Open each statute before C9 teaches it.",
+      "policy": [
+        "CORE-SVC-05",
+        "CORE-CLS-06",
+        "COM-CON-10"
+      ],
+      "policy_gap": "No rule requires recording before work starts or a notice of commencement. Ask the owner.",
+      "teach": "C9",
+      "revisit": [
+        "C12"
+      ],
+      "misconception": "\"Our mortgage was recorded first, so it always ranks first.\" In some states a mechanics' lien relates back to the start of work, which can come before the mortgage.",
+      "mcq": [
+        {
+          "stem": "Exhibit: Maple Run title date-down at the month-8 draw shows a recorded claim of lien from the roofer. What may be released?",
+          "key": "Nothing until a date-down shows no new lien (CORE-SVC-05).",
+          "distractors": [
+            "The full draw, since it will pay the roofer.",
+            "The draw less the amount of the lien.",
+            "The draw, once the borrower signs an affidavit."
+          ],
+          "exhibit": "title date-down",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Why does a construction lender check when work started relative to its recording date?",
+          "key": "In some states a mechanics' lien takes priority from the start of work, which could rank it ahead of the mortgage.",
+          "distractors": [
+            "The start date sets the loan's interest rate.",
+            "Recording after work starts voids the note.",
+            "Only the builder's risk insurer needs that date."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C09-O3",
+        "C12-O1"
+      ],
+      "preview_outcomes": [
+        "C08-O4"
+      ],
+      "previews": [
+        "C8"
+      ]
+    },
+    {
+      "id": "REG-20",
+      "topic": "FCRA: permissible purpose and adverse action for guarantor reports",
+      "qb_topic": "added by CCO review 5",
+      "rule": [
+        "A lender may pull a guarantor's consumer report because the guarantor will be personally liable on the credit.",
+        "Where a decline rests on that report, FCRA adverse-action duties may apply. Confirm their reach on business credit with counsel."
+      ],
+      "sources": [
+        {
+          "cite": "15 U.S.C. 1681b(a)(3)(A)",
+          "url": "https://www.law.cornell.edu/uscode/text/15/1681b",
+          "tag": "[VERIFY: 15 U.S.C. 1681b(a)(3)(A); not opened; cited by the CCO review]"
+        },
+        {
+          "cite": "15 U.S.C. 1681m(a)",
+          "url": "https://www.law.cornell.edu/uscode/text/15/1681m",
+          "tag": "[VERIFY: 15 U.S.C. 1681m(a); not opened; cited by the CCO review]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Not opened. Confirm how 1681m applies to a business loan declined on a guarantor's report.",
+      "policy": [
+        "CORE-BOR-07",
+        "CORE-KYC-03"
+      ],
+      "policy_gap": "No rule on guarantor credit authorizations or FCRA notices. Ask the owner.",
+      "teach": "C6",
+      "revisit": [],
+      "misconception": "\"FCRA is consumer law, so it never touches a business loan.\" The guarantor is a person, and the lender pulls that person's consumer report.",
+      "mcq": [
+        {
+          "stem": "Why may the lender pull a guarantor's consumer report on a business-purpose loan?",
+          "key": "The guarantor will be personally liable, which ties the report to a credit transaction involving that person.",
+          "distractors": [
+            "The LLC borrower consents on behalf of its owners.",
+            "FCRA does not apply to business-purpose loans.",
+            "OFAC screening rules require a credit report."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        },
+        {
+          "stem": "A fictional business loan is declined because of a guarantor's recent delinquencies on her credit report. What is the best next step?",
+          "key": "Send the business-credit decline notice and ask counsel whether an FCRA notice to the guarantor is also due.",
+          "distractors": [
+            "Send nothing, because no notice rule reaches business loans.",
+            "Mail the guarantor a full copy of the lender's file.",
+            "Tell the broker, who then tells the guarantor."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C06-O2"
+      ],
+      "preview_outcomes": [
+        "C01-O4"
+      ],
+      "previews": [
+        "C1"
+      ]
+    },
+    {
+      "id": "REG-21",
+      "topic": "Foreclosure overlays: servicemember, tenant and bankruptcy protections",
+      "qb_topic": "added by CCO review 5 (C10 O6, C13 O5)",
+      "rule": [
+        "Federal overlays can pause or change a foreclosure: servicemember protections, the tenant notice law and the bankruptcy stay.",
+        "Each changes the timeline and the recovery, so the lender checks for them before filing and again before sale."
+      ],
+      "sources": [
+        {
+          "cite": "50 U.S.C. 3953",
+          "url": "https://www.law.cornell.edu/uscode/text/50/3953",
+          "tag": "[VERIFY: 50 U.S.C. 3953 (SCRA mortgages); not opened; cited by the CCO review]"
+        },
+        {
+          "cite": "Protecting Tenants at Foreclosure Act, 12 U.S.C. 5220 note",
+          "url": "https://www.law.cornell.edu/uscode/text/12/5220",
+          "tag": "[VERIFY: 12 U.S.C. 5220 note (PTFA); not opened; cited by the CCO review]"
+        },
+        {
+          "cite": "11 U.S.C. 362(a), (d)(3)",
+          "url": "https://www.law.cornell.edu/uscode/text/11/362",
+          "tag": "[VERIFY: 11 U.S.C. 362(d)(3), Cornell LII; single asset real estate relief after 90 days unless a plan or interest payments; 362(a) not opened; checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Only 362(d)(3) opened. Open the others before C10 and C13 teach them.",
+      "policy": [
+        "CORE-DEF-02"
+      ],
+      "policy_gap": "No rule requires a servicemember status check or a tenant-notice step before sale. Ask the owner.",
+      "teach": "C10",
+      "revisit": [
+        "C13"
+      ],
+      "misconception": "\"A filing after the notice of sale is too late to matter.\" A filing any time before the sale stops it until the court grants relief.",
+      "mcq": [
+        {
+          "stem": "Cedar Court what-if: the borrower LLC files for bankruptcy two days before the trustee's sale. What happens to the sale?",
+          "key": "It stops under the automatic stay until the court grants relief.",
+          "distractors": [
+            "It goes ahead, because notice of sale was already given.",
+            "It goes ahead, because the borrower is a single-purpose entity.",
+            "It goes ahead if the guarantor consents in writing."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Maple Run what-if: the lender forecloses while a tenant holds a bona fide lease. Which federal law should the servicer check before any eviction?",
+          "key": "The Protecting Tenants at Foreclosure Act.",
+          "distractors": [
+            "The Real Estate Settlement Procedures Act.",
+            "The Equal Credit Opportunity Act.",
+            "The Flood Disaster Protection Act."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C10-O6",
+        "C13-O5"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-22",
+      "topic": "State foreclosure route, redemption and deficiency",
+      "qb_topic": "added by professor review 11 (points to State Law Table rows)",
+      "rule": [
+        "The property state sets the foreclosure route, judicial or power of sale, with its timeline, redemption rights and deficiency limits.",
+        "Ohio and Indiana foreclose judicially; North Carolina uses power of sale. Deficiency and guaranty rules differ by state."
+      ],
+      "sources": [
+        {
+          "cite": "State Law Table rows SLT-OH-01/-02, SLT-NC-01/-02, SLT-IN-01/-02",
+          "url": "../credit-policy/state-law-table.md",
+          "tag": "[VERIFY: State Law Table foreclosure and deficiency columns; not opened; State Law Table checked 20 Nov 2026; statutes cited there not re-opened]"
+        }
+      ],
+      "state_examples": [
+        "SLT-OH-02 (judicial; deficiency allowed; ORC 2329.08 covers only 1-2 family homes)",
+        "SLT-NC-02 (power of sale; the primary-residence bar does not apply)",
+        "SLT-IN-02 (judicial, with no sale until 3 months after filing; deficiency allowed)"
+      ],
+      "status": "Settled per the State Law Table.",
+      "policy": [
+        "CORE-DOC-04",
+        "CORE-DEF-02",
+        "CORE-DEF-05"
+      ],
+      "teach": "C10",
+      "revisit": [
+        "C13"
+      ],
+      "misconception": "\"Foreclosure takes about the same time everywhere.\" Judicial and power-of-sale states differ by months of carry, and carry drives loss severity (TM-32).",
+      "mcq": [
+        {
+          "stem": "Exhibit: Birchwood Plaza state note and a draft workout memo that assumes a power-of-sale timeline. What is wrong?",
+          "key": "Indiana forecloses judicially, with no sale until 3 months after filing, so the memo understates time and carry (SLT-IN-02).",
+          "distractors": [
+            "Nothing; Indiana forecloses by power of sale.",
+            "Only the default rate in the memo is wrong.",
+            "Indiana bars deficiency claims on commercial loans."
+          ],
+          "exhibit": "state note and memo",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Which state fact most changes the value of Maple Run's recourse guaranty?",
+          "key": "Ohio's deficiency rules, checked against the loan before the term sheet (CORE-DOC-04; SLT-OH-01).",
+          "distractors": [
+            "Ohio's usury ceiling for entity loans.",
+            "Ohio's broker licensing rules.",
+            "Ohio's flood insurance rules."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C10-O1",
+        "C10-O5",
+        "C10-O7",
+        "C13-O4",
+        "C13-O6"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-23",
+      "topic": "Fair Housing Act on residential collateral",
+      "qb_topic": "added by professor review 11 (named in C1 O4 and O5)",
+      "rule": [
+        "The Fair Housing Act bars discrimination in residential real estate-related transactions, including loans secured by residential property and appraisals.",
+        "It applies whatever the loan's purpose, so business-purpose loans on 1-4 unit and apartment collateral are covered."
+      ],
+      "sources": [
+        {
+          "cite": "42 U.S.C. 3605",
+          "url": "https://www.law.cornell.edu/uscode/text/42/3605",
+          "tag": "[VERIFY: 42 U.S.C. 3605; not opened; REG-05 and REG-13 cite the same reach]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled. No pending change found in this build.",
+      "policy": [],
+      "policy_gap": "No fair-lending rule in the Model Credit Policy. Ask the owner.",
+      "teach": "C1",
+      "revisit": [
+        "C5"
+      ],
+      "misconception": "\"Fair housing law protects home buyers, not investors.\" It reaches the transaction and the collateral, so an investor loan on a rental is covered.",
+      "mcq": [
+        {
+          "stem": "Exhibit: a fictional appraisal comment calls a neighborhood's 'changing ethnic make-up' a value risk. What should the desk reviewer do?",
+          "key": "Return the report for revision, because the comment raises a fair-housing concern (CORE-VAL-03).",
+          "distractors": [
+            "Accept it, because the loan is business purpose.",
+            "Accept it, if the value is otherwise supported.",
+            "Lower the value to reflect the comment."
+          ],
+          "exhibit": "appraisal comment",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Why does the Fair Housing Act reach Cedar Court even though the loan is business purpose?",
+          "key": "It covers loans secured by residential real estate, and Cedar Court is an apartment building.",
+          "distractors": [
+            "Because the borrower is based in North Carolina.",
+            "Because the loan is over $2,000,000.",
+            "It does not reach Cedar Court at all."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C01-O4",
+        "C01-O5",
+        "C05-O7"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    },
+    {
+      "id": "REG-24",
+      "topic": "Interagency real estate lending standards (12 CFR Part 34, Subpart D)",
+      "qb_topic": "added by professor review 11 (C2 O2)",
+      "rule": [
+        "Bank regulators require real estate lending policies with supervisory loan-to-value limits by loan type, and track loans above them as exceptions.",
+        "The rules bind banks, not the course lender. The course uses them as a benchmark for its credit box."
+      ],
+      "sources": [
+        {
+          "cite": "12 CFR Part 34, Subpart D and Appendix A",
+          "url": "https://www.ecfr.gov/current/title-12/chapter-I/part-34/subpart-D",
+          "tag": "[VERIFY: 12 CFR Part 34, Subpart D, Appendix A; not opened; C2 blueprint lists it as checked 22 Nov 2026]"
+        }
+      ],
+      "state_examples": [],
+      "status": "Settled. No pending change found in this build.",
+      "policy": [],
+      "teach": "C2",
+      "revisit": [
+        "C8"
+      ],
+      "misconception": "\"Supervisory limits are legal caps for every lender.\" They bind bank policies. A non-bank lender adopts them only by choice.",
+      "mcq": [
+        {
+          "stem": "Exhibit: the supervisory LTV table beside the model credit box. A raw-land request asks for 70% LTV. What is the best reading?",
+          "key": "A bank would log it as an exception to the 65% benchmark; our own land rule decides our answer.",
+          "distractors": [
+            "It is illegal for any lender above 65%.",
+            "It passes, because 70% is under every supervisory limit.",
+            "It passes, because supervisory limits apply only to houses."
+          ],
+          "exhibit": "supervisory LTV table",
+          "use": "review-only draft"
+        },
+        {
+          "stem": "Why does the course compare its credit box with the interagency standards?",
+          "key": "They show where a bank buyer or warehouse lender would see a policy exception.",
+          "distractors": [
+            "They bind every lender in the United States.",
+            "They set the state usury limits.",
+            "They replace the Model Credit Policy."
+          ],
+          "exhibit": null,
+          "use": "review-only draft"
+        }
+      ],
+      "outcomes": [
+        "C02-O2",
+        "C08-O1"
+      ],
+      "preview_outcomes": [],
+      "previews": []
+    }
+  ],
+  "what_to_look_up_yourself": [
+    "Open the Federal Register text of FR Doc. 2026-08494 and settle the section 1071 effective date (30 Jun or 21 Jul 2026).",
+    "Open 31 CFR 1031.320 and confirm the financed-transfer exception before teaching REG-11's second item.",
+    "Check the Fifth Circuit docket in Flowers Title Companies v. Bessent for any ruling after June 2026.",
+    "Open the Federal Register version of FinCEN's 2026 BOI final rule for its publication and effective date.",
+    "Open 31 CFR 1010.605(e)(1) to confirm the CDD rule does not reach a loan or finance company.",
+    "Open ORC 1345.01 and IC 24-5-0.5-2 (both sites refused connection) and N.C. G.S. 75-1.1 (403).",
+    "Confirm ACORD certificate form numbers and the current USPAP edition.",
+    "Check NFIP reauthorization status on the build date.",
+    "Open 12 CFR 1003.2(g) and comment 3(c)(10)-2 to settle Reg C coverage for a non-depository lender (REG-17).",
+    "Open ORC 1311.04, N.C. G.S. 44A-11.1 and IC 32-28-3 before C9 teaches mechanics' liens (REG-19).",
+    "Open 15 U.S.C. 1681b and 1681m, and any FTC or CFPB guidance on guarantor reports (REG-20).",
+    "Open 50 U.S.C. 3953, the PTFA note at 12 U.S.C. 5220 and 11 U.S.C. 362(a) and 101(51B) (REG-21; TM-38).",
+    "Open 42 U.S.C. 3605 and 12 CFR Part 34, Subpart D, Appendix A (REG-23, REG-24)."
+  ],
+  "how_to_check_it": [
+    "Run the JSON check below. Every quality bar 11.1 topic maps to a row, and every row has two MCQ ideas and outcomes in its teaching module.",
+    "Open each URL in the sources column and find the quoted subsection.",
+    "Spot-check: 12 CFR 1002.7(d)(5) should say the creditor 'shall not require that the spouse be the additional party'.",
+    "Spot-check: the CFPB redline at 1002.105(b) should read 1,000 covered credit transactions.",
+    "For any row, confirm every module in `previews` comes before `teach`, and every module in `revisit` comes after it."
+  ]
+}

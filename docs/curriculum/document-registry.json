@@ -1,0 +1,5032 @@
+{
+  "registry": "BPL Academy document registry",
+  "version": "v1 for owner review (professor and CCO review fixes applied 22 Nov 2026)",
+  "prepared": "2026-11-22",
+  "label": "Model policy for training - not for live lending decisions.",
+  "quality_bar_rows": [
+    "9.1",
+    "9.3",
+    "9.6",
+    "9.7"
+  ],
+  "id_format": "DOC-NN",
+  "deals": {
+    "RD-RES-01": "Maple Run (Ohio), fix-and-flip to DSCR refinance",
+    "RD-MF-01": "Cedar Court (North Carolina), value-add bridge to agency take-out",
+    "RD-COM-01": "Birchwood Plaza (Indiana), retail bridge to bank take-out",
+    "CAP-01": "Capstone ground-up construction deal (fourth, unseen deal; not yet authored)"
+  },
+  "documents": [
+    {
+      "id": "DOC-01",
+      "name": "Rent roll",
+      "group": "9.1",
+      "quality_bar": "9.1 item 1",
+      "what_it_is": "A list of every unit or suite with its tenant, lease dates and rent, as of one date.",
+      "producer": "Borrower or its property manager, exported from property management software. The lender ties it to leases and bank deposits.",
+      "format": {
+        "description": "Spreadsheet or PDF export. Multifamily rolls list units; commercial rolls list suites and lease terms. No single industry form.",
+        "references": [
+          "Agency multifamily lenders publish their own rent roll templates [VERIFY: Fannie Mae and Freddie Mac multifamily rent roll forms; not yet checked]",
+          "For 2-4 unit residential collateral, rent data sits in the appraisal: legacy Fannie Mae Form 1025, now the redesigned URAR Small Residential Income report [VERIFY: Freddie Mac UAD and forms redesign FAQ; checked 22 Nov 2026]"
+        ]
+      },
+      "fields_to_read": [
+        "As-of date, and whether it matches the T-12 end date",
+        "Unit or suite, type and square feet",
+        "Status: occupied, vacant, notice, model, down",
+        "Tenant name, lease start and end, move-in date",
+        "Market rent and contract rent; concessions and free rent",
+        "Security deposit and balance owed (delinquency)",
+        "Commercial only: base rent per square foot, escalations, recovery type (NNN, modified gross, gross), renewal options, share of total rent"
+      ],
+      "planted_defects": [
+        "Rent roll collections do not tie to bank deposits within the MF-GEN-04 tolerance for the last 3 months (fake rent roll).",
+        "Occupied units include model, down or long-delinquent units, so physical occupancy overstates economic occupancy.",
+        "Contract rent shown gross of concessions; free months appear only in the lease file.",
+        "A lease end date disagrees with the lease or estoppel (Birchwood: the largest tenant's lease ends in month 20).",
+        "Several new leases signed in the last 60 days at rents above the rest of the roll, to tenants with no deposit."
+      ],
+      "first_taught": "C4",
+      "reappears": [
+        "C5",
+        "C8",
+        "C9",
+        "C12",
+        "C14"
+      ],
+      "deals": [
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Cedar Court: 44 of 50 units leased (88%); GPR $780,000; rent-roll collections annualized $702,000; trailing 3 months annualized $708,000. Birchwood Plaza: 11 suites, 28,000 of 40,000 sf leased (70%); base rent $420,000; largest tenant $90,000, lease ends month 20; $150,000 of rent expires within 24 months.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-07",
+          "input": "market rent per unit (GPR)"
+        },
+        {
+          "id": "F-CORE-08",
+          "input": "vacant units and delinquency"
+        },
+        {
+          "id": "F-CORE-09",
+          "input": "other income lines"
+        },
+        {
+          "id": "F-MF-01",
+          "input": "occupied units"
+        },
+        {
+          "id": "F-MF-02",
+          "input": "collected rent"
+        },
+        {
+          "id": "F-MF-03",
+          "input": "market versus contract rent"
+        },
+        {
+          "id": "F-MF-17",
+          "input": "in-place rent"
+        },
+        {
+          "id": "F-MF-19",
+          "input": "rent roll total, compared with deposits"
+        },
+        {
+          "id": "F-COM-01",
+          "input": "lease end dates and rent"
+        },
+        {
+          "id": "F-COM-02",
+          "input": "rent expiring within 24 months"
+        },
+        {
+          "id": "F-COM-09",
+          "input": "rent expiring within 24 months"
+        },
+        {
+          "id": "F-COM-16",
+          "input": "largest tenant's rent"
+        }
+      ],
+      "input_rule": "Multifamily income is the lesser of rent-roll collections annualized and trailing 3 months annualized (MF-GEN-05): Cedar Court $702,000, not $708,000. Commercial rent is checked against leases and estoppels; where they differ, the lease and estoppel control and the difference is a finding (COM-GEN-09).",
+      "policy_rules": [
+        "MF-GEN-04",
+        "MF-GEN-05",
+        "COM-GEN-05",
+        "COM-GEN-08",
+        "COM-GEN-09",
+        "CORE-SVC-06"
+      ],
+      "fraud_typologies": [
+        "Fake leases or rent rolls"
+      ],
+      "fraud_typology_ids": [
+        "FRD-05"
+      ],
+      "data_needed": "Unit-level Cedar Court rows (unit mix, rents, concessions) and suite-level Birchwood rows that sum to the deal totals. Not in the Running Deals tab.",
+      "previews": [],
+      "outcomes": [
+        "C04-O1",
+        "C04-O3",
+        "C05-O2",
+        "C08-O2",
+        "C09-O7",
+        "C09-O8",
+        "C12-O4",
+        "C14-O5"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-02",
+      "name": "T-12 operating statement",
+      "group": "9.1",
+      "quality_bar": "9.1 item 2",
+      "what_it_is": "Twelve months of income and expenses, month by month, for the property.",
+      "producer": "Borrower or property manager, from the property's books. The underwriter normalizes it to underwritten NOI.",
+      "format": {
+        "description": "Spreadsheet with 12 monthly columns and a total. Cash or accrual basis, which the statement should state.",
+        "references": [
+          "Fannie Mae Form 216, Operating Income Statement, for 2-4 unit residential [VERIFY: Fannie Mae Selling Guide forms page; not yet checked]",
+          "CREFC Investor Reporting Package Operating Statement Analysis Report as the normalization layout in CMBS [VERIFY: CREFC IRP v8.4, Mar 2024; crefc.org; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Period covered and basis (cash or accrual)",
+        "Income lines: rent, vacancy loss, concessions, other income, recoveries",
+        "Expense lines: taxes, insurance, utilities, repairs, payroll, management, general and administrative",
+        "Items that are capital, one-time or non-cash",
+        "Monthly pattern: seasonality and late-year jumps",
+        "NOI line and whether it ties to the monthly columns"
+      ],
+      "planted_defects": [
+        "One-time income left in revenue, such as an insurance recovery or a lease termination fee.",
+        "Capital work booked as repairs, or repairs capitalized below the NOI line.",
+        "Taxes at the seller's old assessment and insurance at the old premium, with no reset for the sale.",
+        "Cash-basis statement that omits an unpaid tax installment, so expenses are understated.",
+        "Management fee missing or below the family floor (MF-GEN-06; COM-GEN-06)."
+      ],
+      "first_taught": "C4",
+      "reappears": [
+        "C5",
+        "C8",
+        "C12",
+        "C14"
+      ],
+      "deals": [
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Cedar Court: T-12 expenses $298,000; appraiser $310,000; other income $18,000; taxes $74,000 and insurance $38,000 a year. Birchwood Plaza: T-12 expenses $196,000; appraiser $204,000; recoveries $84,000.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-10",
+          "input": "operating expenses"
+        },
+        {
+          "id": "F-MF-04",
+          "input": "total expenses"
+        },
+        {
+          "id": "F-MF-05",
+          "input": "total expenses"
+        },
+        {
+          "id": "F-MF-09",
+          "input": "expenses and other income"
+        },
+        {
+          "id": "F-COM-03",
+          "input": "expenses and recoveries"
+        },
+        {
+          "id": "F-CORE-35",
+          "input": "annual taxes and insurance"
+        },
+        {
+          "id": "F-CORE-11",
+          "input": "NOI"
+        },
+        {
+          "id": "F-MF-12",
+          "input": "in-place NCF"
+        },
+        {
+          "id": "F-MF-11",
+          "input": "NCF"
+        },
+        {
+          "id": "F-MF-20",
+          "input": "stabilized NCF"
+        },
+        {
+          "id": "F-COM-10",
+          "input": "NCF"
+        }
+      ],
+      "input_rule": "Expenses are the greater of the T-12 and the appraiser's estimate (MF-GEN-06; COM-GEN-06): Cedar Court $310,000, Birchwood $204,000.",
+      "policy_rules": [
+        "MF-GEN-06",
+        "COM-GEN-06",
+        "COM-GEN-07",
+        "CORE-SVC-06"
+      ],
+      "fraud_typologies": [
+        "Fake leases or rent rolls"
+      ],
+      "fraud_typology_ids": [
+        "FRD-05"
+      ],
+      "data_needed": "Monthly line items for both deals that sum to the stated totals.",
+      "previews": [],
+      "outcomes": [
+        "C04-O2",
+        "C04-O3",
+        "C04-O4",
+        "C05-O2",
+        "C08-O2",
+        "C12-O4",
+        "C14-O5"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-03",
+      "name": "Appraisal excerpt",
+      "group": "9.1",
+      "quality_bar": "9.1 item 3",
+      "what_it_is": "Key pages of the appraiser's report: value conclusions, premises, approaches, comparables and certification.",
+      "producer": "State-certified appraiser engaged by the lender through an appraisal management company (CORE-VAL-01). MAI-designated for multifamily and commercial (MF-GEN-08; COM-GEN-13).",
+      "format": {
+        "description": "1-4 unit: the redesigned Uniform Residential Appraisal Report, with a rental section. Income property: a narrative report.",
+        "references": [
+          "Redesigned URAR under UAD 3.6, mandatory for GSE submissions from 2 Nov 2026 [VERIFY: Fannie Mae UAD 3.6 FAQ; checked 22 Nov 2026; a later exception date was reported but not confirmed]",
+          "Single Family Comparable Rent Schedule (legacy Form 1007), now a URAR rental section; the legacy form is accepted only in limited cases [VERIFY: Freddie Mac UAD and forms redesign FAQ; checked 22 Nov 2026]",
+          "Federally related transactions: appraisals follow USPAP and the agencies' minimum standards [VERIFY: 12 CFR 34.44; not yet checked]. Our model lender is a non-bank, so this is a benchmark."
+        ]
+      },
+      "fields_to_read": [
+        "Client and intended user (the lender, not the borrower)",
+        "Effective date versus report date",
+        "Value premises: as-is, as-complete or as-stabilized, ARV",
+        "Extraordinary assumptions and hypothetical conditions",
+        "Income approach: NOI, cap rate, vacancy and expenses used",
+        "Sales comparison grid: dates, distance, condition, adjustments",
+        "Cost approach where used (new or heavily renovated property)",
+        "Market rent (residential rental section, or the commercial rent survey)",
+        "Reconciliation and final value; exposure time",
+        "Certification, license number and expiry"
+      ],
+      "planted_defects": [
+        "Client is the borrower or a broker: a borrower-supplied appraisal is rejected (CORE-VAL-01).",
+        "Effective date more than 120 days before closing (CORE-VAL-02, F-CORE-36).",
+        "ARV comparables are unrenovated, outside the submarket, or listings rather than sales.",
+        "An as-stabilized value is presented as as-is, or a hypothetical condition is not disclosed.",
+        "Appraiser's NOI uses rents above the rent roll with no explanation."
+      ],
+      "first_taught": "C5",
+      "reappears": [
+        "C8",
+        "C11",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Maple Run: as-is $310,000; ARV $520,000; market rent $2,400 a month; effective 12 days before closing. Cedar Court: as-is $6,300,000; as-stabilized $8,600,000. Birchwood Plaza: as-is $4,500,000; as-stabilized $6,000,000; stabilized cap rate on NOI 8.00%.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-13",
+          "input": "NOI and value"
+        },
+        {
+          "id": "F-CORE-14",
+          "input": "as-is value"
+        },
+        {
+          "id": "F-CORE-36",
+          "input": "effective date"
+        },
+        {
+          "id": "F-RES-02",
+          "input": "ARV"
+        },
+        {
+          "id": "F-RES-03",
+          "input": "as-is value"
+        },
+        {
+          "id": "F-RES-23",
+          "input": "market rent"
+        },
+        {
+          "id": "F-MF-13",
+          "input": "as-is and as-stabilized value"
+        },
+        {
+          "id": "F-COM-08",
+          "input": "as-stabilized value"
+        },
+        {
+          "id": "F-CORE-44",
+          "input": "value and NOI"
+        }
+      ],
+      "input_rule": "Value is the lower of price and appraised as-is value (F-CORE-14): Maple Run $300,000, Cedar Court $6,200,000, Birchwood $4,400,000. DSCR rent is the lesser of lease rent and appraisal market rent (RES-DSCR-01, F-RES-23): Maple Run $2,400.",
+      "policy_rules": [
+        "CORE-VAL-01",
+        "CORE-VAL-02",
+        "CORE-VAL-03",
+        "MF-GEN-08",
+        "COM-GEN-13",
+        "RES-GEN-06"
+      ],
+      "fraud_typologies": [
+        "Inflated or broker-supplied after-repair value",
+        "Related-party appraiser or contractor"
+      ],
+      "fraud_typology_ids": [
+        "FRD-03",
+        "FRD-07"
+      ],
+      "data_needed": "Comparable grids and approach detail for each deal. ARV and rent are labelled course assumptions in the Running Deals tab.",
+      "previews": [],
+      "outcomes": [
+        "C05-O1",
+        "C05-O3",
+        "C05-O4",
+        "C05-O6",
+        "C05-O8",
+        "C08-O1",
+        "C11-O1",
+        "C12-O3",
+        "C13-O2",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-04",
+      "name": "Appraisal review (desk review)",
+      "group": "9.1",
+      "quality_bar": "9.1 item 4",
+      "what_it_is": "A second appraiser's or internal reviewer's check of whether the appraisal is credible and usable.",
+      "producer": "Internal review appraiser or third-party reviewer, independent of loan production (CORE-VAL-03).",
+      "format": {
+        "description": "Review memo or review form: scope, checks by approach, deficiencies, conclusion.",
+        "references": [
+          "USPAP Standard 3 sets appraisal review development and reporting [VERIFY: USPAP current edition, The Appraisal Foundation; not yet checked]",
+          "Reviewer independence from production [VERIFY: Interagency Appraisal and Evaluation Guidelines, Section XV; cited in C5 blueprint; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Reviewer name, credential and reporting line",
+        "Scope: desk or field; report version and effective date reviewed",
+        "Checks on each approach and on the comparables",
+        "Deficiencies, each with its effect on value",
+        "Conclusion: accept, revise or reject",
+        "Whether the reviewer states a value opinion of their own"
+      ],
+      "planted_defects": [
+        "Reviewer reports to the loan officer or was paid by production.",
+        "Review accepts a comparable that the appraisal excerpt shows is unrenovated or stale.",
+        "Review checks a different report version or effective date than the one in the file.",
+        "Review of a flip appraisal checks ARV but not the as-is value that sizes the day-one advance.",
+        "Review is dated after closing."
+      ],
+      "first_taught": "C5",
+      "reappears": [
+        "C8",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Reviews the DOC-03 report for each deal. No review exists in the Running Deals tab.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-14",
+          "input": "accepted value (gate)"
+        },
+        {
+          "id": "F-RES-02",
+          "input": "accepted ARV (gate)"
+        }
+      ],
+      "input_rule": "Only a value the review accepts may enter a formula. A rejected appraisal leaves the value input blank, not estimated.",
+      "policy_rules": [
+        "CORE-VAL-03"
+      ],
+      "fraud_typologies": [
+        "Inflated or broker-supplied after-repair value"
+      ],
+      "fraud_typology_ids": [
+        "FRD-03"
+      ],
+      "data_needed": "Review text and findings, written to match DOC-03.",
+      "previews": [],
+      "outcomes": [
+        "C05-O7",
+        "C08-O1",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-05",
+      "name": "Purchase contract and chain of title",
+      "group": "supporting",
+      "quality_bar": "9.6; 11.3",
+      "what_it_is": "The signed contract to buy the property, with any assignment, read against the recorded deeds.",
+      "producer": "Buyer and seller, often through brokers or a wholesaler. The title company supplies the deed history.",
+      "format": {
+        "description": "Purchase and sale agreement with addenda; assignment of contract; deed history from the title search.",
+        "references": [
+          "No standard national form; state realtor forms are common for 1-4 units [VERIFY: Ohio REALTORS purchase contract; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Buyer entity and seller names",
+        "Price, deposit, credits and seller concessions",
+        "Assignment and assignment fee",
+        "Closing date and contingencies",
+        "Seller's acquisition date and price on the deed history",
+        "Relationship between buyer and seller"
+      ],
+      "planted_defects": [
+        "Assignment fee lifts the price well above the seller's recent purchase price (rapid flip chain).",
+        "Seller credits make the real price lower than the contract price.",
+        "Seller is related to the borrower, so the deal is not arm's length.",
+        "Buyer on the contract differs from the borrowing entity."
+      ],
+      "first_taught": "C5",
+      "reappears": [
+        "C7",
+        "C8",
+        "C11"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Maple Run: $300,000 arm's-length contract with an unrelated seller. Cedar Court price $6,200,000. Birchwood Plaza price $4,400,000.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-14",
+          "input": "price"
+        },
+        {
+          "id": "F-CORE-15",
+          "input": "price within total cost"
+        },
+        {
+          "id": "F-RES-01",
+          "input": "price"
+        },
+        {
+          "id": "F-RES-05",
+          "input": "price"
+        },
+        {
+          "id": "F-RES-09",
+          "input": "price"
+        }
+      ],
+      "input_rule": "Price is the contract price net of seller credits. Where an assignment adds a fee, test value against the price paid by the end buyer and flag the chain.",
+      "policy_rules": [
+        "CORE-VAL-01"
+      ],
+      "fraud_typologies": [
+        "Rapid flip chains (title chain, seasoning)",
+        "Straw borrower"
+      ],
+      "fraud_typology_ids": [
+        "FRD-04",
+        "FRD-01"
+      ],
+      "data_needed": "Contract terms beyond price, and a deed history, for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C05-O4",
+        "C07-O3",
+        "C08-O1",
+        "C11-O2"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-06",
+      "name": "Credit report (tri-merge)",
+      "group": "9.1",
+      "quality_bar": "9.1 item 8",
+      "what_it_is": "A merged personal credit report on each guarantor, from the three national bureaus.",
+      "producer": "A credit reporting agency or reseller, pulled by the lender with a permissible purpose.",
+      "format": {
+        "description": "Tri-merge report: scores, identity, addresses, tradelines, public records, inquiries, alerts.",
+        "references": [
+          "Permissible purpose for a report on a guarantor [VERIFY: 15 U.S.C. 1681b(a)(3)(A); cited in C6 blueprint; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Report date",
+        "Three scores and the mid-score (CORE-BOR-07)",
+        "Name, SSN match and address history",
+        "Current address versus the subject property",
+        "Mortgage tradelines and late payments",
+        "Public records, collections, recent inquiries",
+        "Fraud and identity alerts"
+      ],
+      "planted_defects": [
+        "Report older than 90 days at closing (CORE-BOR-07).",
+        "Subject property shows as the guarantor's current address (occupancy red flag, CORE-BP-02).",
+        "Highest score used instead of the mid-score.",
+        "Mortgages on the report that are missing from the schedule of real estate owned.",
+        "Foreclosure or short sale inside 48 months (CORE-BOR-08), or an SSN mismatch alert."
+      ],
+      "first_taught": "C6",
+      "reappears": [
+        "C7",
+        "C11",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Dana Reyes 705 / 712 / 730 (mid 712); Sam Okafor 640 / 655 / 668 (mid 655). Marcus Hale mid 728; Priya Nand mid 702. Dana Whitlow mid 742; Leo Marsh mid 690.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-26",
+          "input": "liabilities"
+        },
+        {
+          "id": "F-CORE-27",
+          "input": "track-record properties (cross-check)"
+        }
+      ],
+      "input_rule": "Mid-score is the middle of three scores, or the lower of two (CORE-BOR-07). Liabilities on the PFS must include every debt on the credit report.",
+      "policy_rules": [
+        "CORE-BOR-06",
+        "CORE-BOR-07",
+        "CORE-BOR-08",
+        "CORE-BP-02",
+        "RES-DSCR-03",
+        "RES-GU-08"
+      ],
+      "fraud_typologies": [
+        "Occupancy fraud",
+        "Straw borrower"
+      ],
+      "fraud_typology_ids": [
+        "FRD-02",
+        "FRD-01"
+      ],
+      "data_needed": "Tradelines and addresses for each guarantor. Only scores exist in the Running Deals tab.",
+      "previews": [],
+      "outcomes": [
+        "C06-O2",
+        "C07-O3",
+        "C11-O1",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-07",
+      "name": "Background report",
+      "group": "9.1",
+      "quality_bar": "9.1 item 8",
+      "what_it_is": "A public-records search on each guarantor and the borrower: criminal, bankruptcy, foreclosure, liens, judgments, litigation.",
+      "producer": "A background search vendor, ordered by the lender (CORE-KYC-03).",
+      "format": {
+        "description": "Vendor report with search scope, lookback period, sources and hits.",
+        "references": [
+          "Fair-chance hiring laws do not govern credit decisions, but state rules on criminal history should be checked [VERIFY: CORE-BOR-09 tag; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Subject identifiers: name, aliases, date of birth",
+        "Lookback period (10 years, CORE-KYC-03)",
+        "Criminal records",
+        "Bankruptcy, foreclosure, deed in lieu, short sale",
+        "Liens, judgments and their status",
+        "Active litigation",
+        "Affiliated entities and property records"
+      ],
+      "planted_defects": [
+        "Search run on a name match with a different date of birth, or without aliases.",
+        "A lien shows as open with no release in the file (Maple Run: the 2019 lien is released; the file must prove it).",
+        "Active litigation or judgment over the CORE-BOR-10 threshold not resolved before closing.",
+        "Affiliated entity with a foreclosure that is missing from the track record.",
+        "Lookback shorter than 10 years, or the borrowing LLC was not searched."
+      ],
+      "first_taught": "C6",
+      "reappears": [
+        "C7",
+        "C11"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Dana Reyes: one $8,000 state tax lien, filed 2019, paid and released 2020; no bankruptcy, foreclosure, felony or open litigation. Sam Okafor: no adverse items.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-27",
+          "input": "properties in the track record (cross-check)"
+        }
+      ],
+      "input_rule": "Where the background report and the borrower's disclosure differ, the report controls until the borrower documents otherwise.",
+      "policy_rules": [
+        "CORE-KYC-03",
+        "CORE-BOR-08",
+        "CORE-BOR-09",
+        "CORE-BOR-10"
+      ],
+      "fraud_typologies": [
+        "Straw borrower"
+      ],
+      "fraud_typology_ids": [
+        "FRD-01"
+      ],
+      "data_needed": "Report pages for each guarantor. Only Maple Run has background facts in the Running Deals tab.",
+      "previews": [],
+      "outcomes": [
+        "C06-O2",
+        "C07-O3",
+        "C11-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-08",
+      "name": "Operating agreement",
+      "group": "9.1",
+      "quality_bar": "9.1 item 9",
+      "what_it_is": "The borrowing LLC's governing contract: members, percentages, managers and authority.",
+      "producer": "Borrower's counsel; signed by the members. The lender's counsel reviews it.",
+      "format": {
+        "description": "LLC operating agreement under the state LLC act, with a borrowing resolution or consent.",
+        "references": [
+          "Ohio Revised Code chapter 1706; N.C. G.S. chapter 57D; Indiana Code 23-18.1 [VERIFY: state code sites; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Members and ownership percentages",
+        "Managing member and authority to borrow and sign",
+        "Purpose clause",
+        "Single-purpose entity covenants (MF and COM)",
+        "Transfer and admission rules",
+        "Signatures, amendments and date"
+      ],
+      "planted_defects": [
+        "Percentages differ from the application, hiding a 20% owner who must guarantee and be screened (CORE-BOR-03; CORE-KYC-01).",
+        "Signer lacks authority; the agreement needs a member consent that is missing.",
+        "Purpose clause is not real estate, or the entity is not single-purpose where required (CORE-BOR-02; COM-GEN-04).",
+        "Unsigned copy, or an older version with later amendments missing.",
+        "A member is a trust, with no look-through to the people behind it."
+      ],
+      "first_taught": "C6",
+      "reappears": [
+        "C7",
+        "C9",
+        "C11"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Harborline Holdings LLC (Ohio, 2021): Dana Reyes 60%, Sam Okafor 40%. Cedar Court Partners LLC (NC SPE): Marcus Hale 60%, Priya Nand 40%. Birchwood Plaza LLC (Indiana SPE): Dana Whitlow 75%, Leo Marsh 25%.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-27",
+          "input": "ownership share in each track-record entity"
+        },
+        {
+          "id": "F-CORE-29",
+          "input": "ownership links for exposure"
+        }
+      ],
+      "input_rule": "Ownership comes from the signed operating agreement, multiplied through each layer. The application is a claim to test, not a source.",
+      "policy_rules": [
+        "CORE-BOR-01",
+        "CORE-BOR-02",
+        "CORE-BOR-03",
+        "CORE-BOR-15",
+        "CORE-KYC-02",
+        "COM-GEN-04",
+        "CORE-CLS-01"
+      ],
+      "fraud_typologies": [
+        "Straw borrower"
+      ],
+      "fraud_typology_ids": [
+        "FRD-01"
+      ],
+      "data_needed": "Agreement text. Ownership percentages exist in the Running Deals tab.",
+      "previews": [],
+      "outcomes": [
+        "C06-O1",
+        "C06-O7",
+        "C07-O2",
+        "C09-O1",
+        "C11-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-09",
+      "name": "Good-standing certificate",
+      "group": "9.1",
+      "quality_bar": "9.1 item 9",
+      "what_it_is": "The state's certificate that the entity exists and is current on its filings.",
+      "producer": "The Secretary of State of the formation state (and of the property state, if different).",
+      "format": {
+        "description": "One-page state certificate with entity name, number, status and issue date.",
+        "references": [
+          "Certificate names vary by state (good standing, existence) [VERIFY: Ohio, North Carolina and Indiana Secretary of State sites; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Exact entity name and number",
+        "State of formation",
+        "Status",
+        "Issue date",
+        "Foreign registration in the property state, if formed elsewhere"
+      ],
+      "planted_defects": [
+        "Name differs from the operating agreement or title commitment by a word or suffix.",
+        "Status is inactive, forfeited or revoked.",
+        "Entity formed in another state with no foreign registration in the property state.",
+        "Certificate issued for a similarly named, different entity."
+      ],
+      "first_taught": "C6",
+      "reappears": [
+        "C11"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Harborline Holdings LLC is in good standing (Running Deals). The other two are newly formed SPEs.",
+      "formulas_fed": [],
+      "input_rule": "Not a formula input. A gate for CORE-BOR-01 and CORE-CLS-01.",
+      "policy_rules": [
+        "CORE-BOR-01",
+        "CORE-CLS-01"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "None beyond entity names. The policy has no age limit for this certificate (open item).",
+      "previews": [],
+      "outcomes": [
+        "C06-O1",
+        "C11-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-10",
+      "name": "Personal financial statement and schedule of real estate owned",
+      "group": "supporting",
+      "quality_bar": "9.6",
+      "what_it_is": "The guarantor's own statement of assets, liabilities and properties owned.",
+      "producer": "The guarantor, on the lender's form, signed and dated.",
+      "format": {
+        "description": "Lender PFS form with a schedule of real estate owned (SREO).",
+        "references": [
+          "No federal form for private lenders. SBA Form 413 is a familiar public example [VERIFY: SBA Form 413; sba.gov; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Date signed",
+        "Liquid assets by type",
+        "Retirement assets",
+        "Real estate at stated value",
+        "Liabilities and contingent liabilities (guaranties given)",
+        "SREO: each property, ownership share, value, debt, payment, rent"
+      ],
+      "planted_defects": [
+        "Mortgages on the credit report are missing from the SREO.",
+        "Values on the SREO exceed recent purchase prices with no support.",
+        "Contingent liabilities left blank while the guarantor has guaranteed other loans.",
+        "Statement is unsigned or old (no policy age rule yet: P-C6-3)."
+      ],
+      "first_taught": "C6",
+      "reappears": [
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Dana Reyes: total assets $1,150,000; total liabilities $610,000. Marcus Hale net worth $6,800,000. Dana Whitlow net worth $5,200,000.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-26",
+          "input": "total assets and liabilities"
+        },
+        {
+          "id": "F-CORE-27",
+          "input": "properties and ownership shares"
+        },
+        {
+          "id": "F-CORE-29",
+          "input": "other loans with us"
+        }
+      ],
+      "input_rule": "Liquid assets come from statements (DOC-11), not the PFS. The PFS supplies net worth, tested against the credit report and SREO.",
+      "policy_rules": [
+        "CORE-BOR-14",
+        "CORE-BOR-15"
+      ],
+      "fraud_typologies": [
+        "Altered bank statements",
+        "Double-pledged collateral"
+      ],
+      "fraud_typology_ids": [
+        "FRD-06",
+        "FRD-10"
+      ],
+      "data_needed": "SREO rows and contingent guaranties for Marcus Hale and Dana Whitlow (P-C6-4).",
+      "previews": [],
+      "outcomes": [
+        "C06-O4",
+        "C06-O5",
+        "C12-O5",
+        "C13-O6",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-11",
+      "name": "Bank and brokerage statements",
+      "group": "supporting",
+      "quality_bar": "9.6; 11.3",
+      "what_it_is": "The guarantor's two most recent monthly account statements, used to verify liquidity.",
+      "producer": "The guarantor's bank or broker; delivered by the guarantor or by a verification service.",
+      "format": {
+        "description": "Monthly statement PDF: account holder, period, balances, transactions.",
+        "references": [
+          "No standard form. Direct verification services are market practice [VERIFY: market practice; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Account holder name",
+        "Statement period and date",
+        "Ending and average balance",
+        "Large recent deposits and their source",
+        "Account type (cash, securities, retirement)"
+      ],
+      "planted_defects": [
+        "Statements older than 60 days at closing, or only one month (CORE-BOR-13).",
+        "Fonts, totals or running balances do not add up (altered statement).",
+        "A large deposit days before the statement with no source (borrowed funds).",
+        "Account held by a different person or entity."
+      ],
+      "first_taught": "C4",
+      "reappears": [
+        "C6",
+        "C7",
+        "C11",
+        "C12"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Dana Reyes: cash $95,000; brokerage $40,000; vested 401(k) $60,000; unused HELOC $75,000. Marcus Hale: cash $650,000; securities $400,000. Dana Whitlow: cash $550,000; securities $300,000.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-24",
+          "input": "cash, securities and retirement balances"
+        },
+        {
+          "id": "F-CORE-25",
+          "input": "verified liquidity"
+        },
+        {
+          "id": "F-CORE-21",
+          "input": "liquid reserves"
+        }
+      ],
+      "input_rule": "Unused credit lines count at zero (D-CORE-06). Securities and retirement balances take the F-CORE-24 haircut.",
+      "policy_rules": [
+        "CORE-BOR-11",
+        "CORE-BOR-12",
+        "CORE-BOR-13"
+      ],
+      "fraud_typologies": [
+        "Altered bank statements"
+      ],
+      "fraud_typology_ids": [
+        "FRD-06"
+      ],
+      "data_needed": "Statement pages that match the balances above.",
+      "previews": [],
+      "outcomes": [
+        "C04-O3",
+        "C06-O3",
+        "C06-O4",
+        "C07-O3",
+        "C11-O1",
+        "C12-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-12",
+      "name": "Ownership chart and OFAC screening record",
+      "group": "supporting",
+      "quality_bar": "11.1",
+      "what_it_is": "A chart of every ownership layer down to people, with the sanctions screening result for each.",
+      "producer": "Originator builds the chart; compliance runs and records the screening.",
+      "format": {
+        "description": "Org chart plus a screening log: name screened, list, date and time, result, resolution.",
+        "references": [
+          "OFAC regulations and the 50 Percent Rule [VERIFY: 31 CFR Part 501; treasury.gov; cited in CORE-KYC-01; not yet checked here]",
+          "Beneficial ownership customer due diligence rule [VERIFY: 31 CFR 1010.230; CORE-KYC-02 tag; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Each entity layer and percentage",
+        "Control person",
+        "Trusts: trustee and beneficiaries",
+        "Names screened, list version, date and time",
+        "Potential matches and how each was cleared"
+      ],
+      "planted_defects": [
+        "A middle layer is missing, so a 20% indirect owner is not screened.",
+        "Screening predates a name change or was not re-run before funding (CORE-KYC-01; CORE-CLS-03).",
+        "A potential match closed with no note of why it is a false positive.",
+        "Trust shown as owner with no trustee or beneficiary named."
+      ],
+      "first_taught": "C7",
+      "reappears": [
+        "C11",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Cedar Court and Birchwood equity also comes from passive investors in a separate holding LLC; their percentages are not in the Running Deals tab.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-29",
+          "input": "ownership links for exposure"
+        }
+      ],
+      "input_rule": "The chart is built from operating agreements (DOC-08), never from the application alone.",
+      "policy_rules": [
+        "CORE-KYC-01",
+        "CORE-KYC-02",
+        "CORE-BOR-03",
+        "CORE-EXC-03"
+      ],
+      "fraud_typologies": [
+        "Straw borrower"
+      ],
+      "fraud_typology_ids": [
+        "FRD-01"
+      ],
+      "data_needed": "Holding-LLC investor list for Cedar Court and Birchwood. F-CORE-38 and -39 are reserved for C7 and not yet defined.",
+      "previews": [],
+      "outcomes": [
+        "C07-O2",
+        "C11-O1",
+        "C14-O8"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-13",
+      "name": "Wire instructions and funding request",
+      "group": "supporting",
+      "quality_bar": "11.3",
+      "what_it_is": "The closing agent's instructions for where the lender sends loan funds, and the request to release them.",
+      "producer": "Closing agent (title agent or attorney); verified by the lender's closer.",
+      "format": {
+        "description": "Letter or secure-portal instructions; the lender's funding request and callback record.",
+        "references": [
+          "Name and account number mismatch: the beneficiary's bank may rely on the number [VERIFY: UCC 4A-207(b)(1); cited in C11 blueprint; not yet checked here]",
+          "ALTA closing protection letter [VERIFY: ALTA CPL form; cited in C11 blueprint; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Beneficiary name and account",
+        "Bank and ABA routing number",
+        "How and when received",
+        "Match to the CPL agent's escrow account",
+        "Callback: number used, person, time",
+        "Preparer and releaser"
+      ],
+      "planted_defects": [
+        "Instructions changed by email the day before funding.",
+        "Beneficiary name and account number belong to different parties.",
+        "Sender's email domain differs by one character from the agent's.",
+        "Callback made to the number in the email, not the number on file.",
+        "One person prepared and released the wire (CORE-CLS-03)."
+      ],
+      "first_taught": "C7",
+      "reappears": [
+        "C11"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Maple Run net funding wire $233,738.33 (F-CORE-41).",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-41",
+          "input": "wire amount"
+        }
+      ],
+      "input_rule": "The wire amount must equal the settlement statement (DOC-28), not the funding request.",
+      "policy_rules": [
+        "CORE-CLS-02",
+        "CORE-CLS-03",
+        "CORE-KYC-05",
+        "CORE-KYC-07"
+      ],
+      "fraud_typologies": [
+        "Closing wire fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-09"
+      ],
+      "data_needed": "Agent names and fictional account details for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C07-O4",
+        "C11-O3",
+        "C11-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-14",
+      "name": "Term sheet",
+      "group": "9.1",
+      "quality_bar": "9.1 item 13",
+      "what_it_is": "The lender's non-binding summary of proposed loan terms, issued before full underwriting.",
+      "producer": "Originator, from the lender's template; approved for issue by credit where required.",
+      "format": {
+        "description": "Two to four pages: parties, amount, advances, rate, fees, term, recourse, escrows, conditions, expiry.",
+        "references": [
+          "No standard form. Non-binding language and a deposit clause are market practice [VERIFY: market practice; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Borrower and guarantors",
+        "Total commitment, initial advance, holdbacks",
+        "Rate, index, spread, cap; points and fees",
+        "Term and extensions",
+        "Recourse and guaranties",
+        "Prepayment",
+        "Escrows and reserves",
+        "Cash to close",
+        "Conditions and expiry"
+      ],
+      "planted_defects": [
+        "Cash to close does not add up (Maple Run $74,100; Cedar Court $2,240,066.67; Birchwood $1,735,200).",
+        "Points computed on the initial advance, not the commitment (F-CORE-06).",
+        "Rate leaves out a grid adjuster (Maple Run: +0.25% at the 85% LTC cap).",
+        "Recourse or completion guaranty wrong for the product (CORE-DOC-01 to -03).",
+        "Issued before the State Law Table check or OFAC screen (CORE-BP-03; CORE-KYC-01)."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C10",
+        "C11",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Maple Run: $340,000 commitment; $240,000 initial; $100,000 holdback; 10.250%; 1.50 points ($5,100). Cedar Court: $5,140,000; $4,340,000 initial; SOFR + 4.00%; 1.00% fee ($51,400). Birchwood Plaza: $3,520,000; $2,860,000 initial; SOFR + 4.00%; 1.00% fee ($35,200).",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-06",
+          "input": "commitment and points"
+        },
+        {
+          "id": "F-CORE-28",
+          "input": "tier and adjusters"
+        },
+        {
+          "id": "F-MF-24",
+          "input": "spread and adjusters"
+        },
+        {
+          "id": "F-RES-05",
+          "input": "initial advance"
+        },
+        {
+          "id": "F-RES-09",
+          "input": "cash to close"
+        },
+        {
+          "id": "F-RES-13",
+          "input": "commitment"
+        },
+        {
+          "id": "F-CORE-35",
+          "input": "escrow deposits"
+        },
+        {
+          "id": "F-CORE-40",
+          "input": "rate and fees"
+        }
+      ],
+      "input_rule": "The term sheet is an output, not a source. Its numbers must be recomputed from the source documents before approval.",
+      "policy_rules": [
+        "CORE-PRC-01",
+        "CORE-PRC-02",
+        "CORE-PRC-03",
+        "CORE-BP-03",
+        "CORE-DOC-01",
+        "CORE-DOC-02",
+        "CORE-DOC-03"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "None: all terms are in the Running Deals tab.",
+      "previews": [],
+      "outcomes": [
+        "C08-O3",
+        "C08-O5",
+        "C08-O8",
+        "C10-O3",
+        "C11-O1",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-15",
+      "name": "Construction contract or GMP summary",
+      "group": "construction",
+      "quality_bar": "9.3; C8 and C12 deepening",
+      "what_it_is": "The contract between owner and general contractor, or a summary of its price, scope and risk terms.",
+      "producer": "Owner and general contractor; reviewed by the lender's construction consultant and counsel.",
+      "format": {
+        "description": "Standard-form owner-contractor agreement, or a lender's one-page GMP summary of it.",
+        "references": [
+          "AIA A102 (cost of the work plus a fee, with a guaranteed maximum price) and A101 (stipulated sum) [VERIFY: AIA Contract Documents; aiacontracts.com; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Parties and the contractor's license",
+        "Contract sum or GMP; fee; general conditions",
+        "Contractor contingency versus owner contingency",
+        "Allowances and exclusions",
+        "Retainage terms",
+        "Substantial completion date; liquidated damages",
+        "Bonds and insurance",
+        "Change order procedure",
+        "Contractor's consent to assignment to the lender"
+      ],
+      "planted_defects": [
+        "GMP excludes work the budget assumes is in the contract, so the budget has a gap.",
+        "Contractor is an affiliate of the borrower and this is not disclosed.",
+        "No payment and performance bond and no GMP (COM-CON-11).",
+        "Completion date falls after loan maturity or after the interest reserve runs out.",
+        "Unsigned, or dated after closing."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C12",
+        "Capstone"
+      ],
+      "deals": [
+        "CAP-01"
+      ],
+      "deal_facts": "Capstone not yet authored.",
+      "formulas_fed": [
+        {
+          "id": "F-RES-01",
+          "input": "hard costs"
+        },
+        {
+          "id": "F-RES-20",
+          "input": "hard costs"
+        },
+        {
+          "id": "F-COM-14",
+          "input": "hard costs"
+        },
+        {
+          "id": "F-MF-15",
+          "input": "hard costs"
+        },
+        {
+          "id": "F-CORE-15",
+          "input": "total cost"
+        }
+      ],
+      "input_rule": "Hard costs come from the signed contract plus approved change orders. The borrower's budget is checked against it; the contract controls.",
+      "policy_rules": [
+        "MF-CON-04",
+        "COM-CON-11",
+        "RES-GU-10",
+        "CORE-DOC-03"
+      ],
+      "fraud_typologies": [
+        "Related-party appraiser or contractor"
+      ],
+      "fraud_typology_ids": [
+        "FRD-07"
+      ],
+      "data_needed": "Whole document, once the capstone deal is authored.",
+      "previews": [],
+      "outcomes": [
+        "C08-O4",
+        "C12-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-16",
+      "name": "Hard and soft cost budget",
+      "group": "construction",
+      "quality_bar": "9.3; C8 deepening",
+      "what_it_is": "Line-item budget for the project: land, hard costs, soft costs, contingency, interest reserve, and who funds each.",
+      "producer": "Borrower or developer; checked by the lender's construction consultant (plan and cost review).",
+      "format": {
+        "description": "Sources and uses table with a line-item budget, often in the same lines as the schedule of values.",
+        "references": [
+          "Line-item budget against a schedule of values is market practice [VERIFY: OCC Comptroller's Handbook, CRE Lending v2.0, 'Underwriting ADC Loans'; cited in needs analysis; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Land at cost and at appraised value",
+        "Hard costs by trade",
+        "Hard-cost contingency",
+        "Soft costs: design, permits, legal, insurance, taxes, financing fees",
+        "Interest reserve",
+        "Developer fee",
+        "Equity and loan funding by line; equity-first order"
+      ],
+      "planted_defects": [
+        "Contingency below 10% of hard costs, or computed on total cost (RES-GU-05; MF-CON-04; COM-CON-04).",
+        "Interest reserve missing, or sized at the note rate where COM-CON-06 needs strike + spread.",
+        "Land carried at contract price above appraised value (COM-CON-01).",
+        "Soft costs missing: builder's risk, property taxes during construction.",
+        "Developer fee counted as borrower equity."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C12",
+        "Capstone"
+      ],
+      "deals": [
+        "CAP-01",
+        "RD-RES-01"
+      ],
+      "deal_facts": "Rehab variant, Maple Run: hard costs $90,000; contingency $9,000; permits $1,000; total $100,000. Capstone not yet authored.",
+      "formulas_fed": [
+        {
+          "id": "F-RES-01",
+          "input": "all budget lines"
+        },
+        {
+          "id": "F-RES-16",
+          "input": "interest reserve inputs"
+        },
+        {
+          "id": "F-RES-20",
+          "input": "total project cost"
+        },
+        {
+          "id": "F-RES-21",
+          "input": "land value and price"
+        },
+        {
+          "id": "F-RES-22",
+          "input": "equity required"
+        },
+        {
+          "id": "F-MF-15",
+          "input": "loan and rate"
+        },
+        {
+          "id": "F-COM-14",
+          "input": "total cost"
+        },
+        {
+          "id": "F-CORE-15",
+          "input": "total cost"
+        }
+      ],
+      "input_rule": "Land is the lower of cost and appraised value (COM-CON-01). Hard costs tie to the contract (DOC-15). Contingency is tested on hard costs only.",
+      "policy_rules": [
+        "RES-GU-02",
+        "RES-GU-04",
+        "RES-GU-05",
+        "RES-GU-06",
+        "RES-GU-07",
+        "MF-CON-01",
+        "MF-CON-04",
+        "MF-CON-05",
+        "COM-CON-01",
+        "COM-CON-04",
+        "COM-CON-06",
+        "RES-FF-05",
+        "RES-FF-06"
+      ],
+      "fraud_typologies": [
+        "Draw fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-08"
+      ],
+      "data_needed": "Capstone budget. Maple Run rehab budget exists.",
+      "previews": [],
+      "outcomes": [
+        "C08-O4",
+        "C12-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-17",
+      "name": "Construction schedule",
+      "group": "construction",
+      "quality_bar": "9.3; C8 deepening",
+      "what_it_is": "The contractor's timeline from permits to certificate of occupancy, with the expected draw curve.",
+      "producer": "General contractor; reviewed by the construction consultant.",
+      "format": {
+        "description": "Gantt or critical-path schedule with milestones and a monthly draw forecast.",
+        "references": [
+          "No standard form; critical-path scheduling is industry practice [VERIFY: industry practice; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Start date and permit milestones",
+        "Foundation, framing, dry-in, systems, finishes",
+        "Critical path and float",
+        "Substantial completion and certificate of occupancy",
+        "Monthly draw forecast (S-curve)",
+        "Lease-up start, where income-producing"
+      ],
+      "planted_defects": [
+        "Completion falls after maturity, so an extension is assumed from day one.",
+        "First construction draw scheduled before permits are issued (RES-GU-04).",
+        "Draw curve front-loads spending, so the 60% average outstanding assumption fails (MF-CON-05; COM-CON-06).",
+        "No float on the critical path.",
+        "Leasing income starts before the certificate of occupancy."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C12",
+        "Capstone"
+      ],
+      "deals": [
+        "CAP-01"
+      ],
+      "deal_facts": "Capstone not yet authored.",
+      "formulas_fed": [
+        {
+          "id": "F-RES-16",
+          "input": "months of construction"
+        },
+        {
+          "id": "F-MF-15",
+          "input": "months and average outstanding"
+        },
+        {
+          "id": "F-COM-14",
+          "input": "months and average outstanding"
+        }
+      ],
+      "input_rule": "The interest reserve uses the policy's 60% average outstanding. The schedule tests whether that holds; it does not replace it.",
+      "policy_rules": [
+        "RES-GU-04",
+        "RES-GU-09",
+        "MF-CON-05",
+        "COM-CON-06",
+        "COM-CON-09"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Whole document, once the capstone deal is authored.",
+      "previews": [],
+      "outcomes": [
+        "C08-O4",
+        "C12-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-18",
+      "name": "Builder background report",
+      "group": "construction",
+      "quality_bar": "9.3; C8 and C12 deepening",
+      "what_it_is": "The lender's check on the general contractor: license, insurance, record, liens, litigation and capacity.",
+      "producer": "Lender's credit staff or construction consultant, from public records and references.",
+      "format": {
+        "description": "Short report or checklist with license lookup, insurance certificate, project list and search results.",
+        "references": [
+          "Contractor licensing is state law [VERIFY: Ohio, North Carolina and Indiana contractor licensing boards; not yet checked]",
+          "General liability evidence on ACORD 25 [VERIFY: ACORD forms FAQ; acord.org; checked 22 Nov 2026 via search summary]"
+        ]
+      },
+      "fields_to_read": [
+        "License number, class and status",
+        "General liability and workers' compensation evidence",
+        "Years in business; completed projects of similar size",
+        "Current backlog",
+        "Mechanics' liens filed by subcontractors on past jobs",
+        "Litigation, bankruptcy",
+        "Relationship to the borrower"
+      ],
+      "planted_defects": [
+        "License expired, or for a different trade or state.",
+        "Several subcontractor liens on recent jobs, a sign the builder pays late.",
+        "Builder owned by a guarantor's relative (related party), not disclosed.",
+        "Liability insurance lapsed between the certificate date and closing.",
+        "Project several times larger than any the builder has finished."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C12",
+        "Capstone"
+      ],
+      "deals": [
+        "CAP-01"
+      ],
+      "deal_facts": "Capstone not yet authored.",
+      "formulas_fed": [],
+      "input_rule": "Not a formula input. A gate for RES-GU-10, MF-CON-04 and COM-CON-11.",
+      "policy_rules": [
+        "RES-GU-10",
+        "MF-CON-04",
+        "COM-CON-11"
+      ],
+      "fraud_typologies": [
+        "Related-party appraiser or contractor"
+      ],
+      "fraud_typology_ids": [
+        "FRD-07"
+      ],
+      "data_needed": "Whole document, once the capstone deal is authored.",
+      "previews": [],
+      "outcomes": [
+        "C08-O4",
+        "C12-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-19",
+      "name": "Title commitment",
+      "group": "9.1",
+      "quality_bar": "9.1 item 5",
+      "what_it_is": "The title insurer's promise to issue a lender's policy once listed requirements are met, subject to listed exceptions.",
+      "producer": "Title insurer or its agent.",
+      "format": {
+        "description": "ALTA Commitment for Title Insurance: Schedule A, Schedule B Part I (Requirements), Schedule B Part II (Exceptions).",
+        "references": [
+          "ALTA Commitment for Title Insurance, 2021 v. 01.00 (07-01-2021); not valid without its notice, conditions and schedules [VERIFY: ALTA 2021 Commitment form, Florida OIR filed copy; checked 22 Nov 2026]",
+          "Endorsements named in policy: ALTA 32-series, ALTA 33 at each draw, ALTA 14 for other future advances (CORE-CLS-06) [VERIFY: ALTA endorsement forms; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Commitment date and number",
+        "Proposed insured lender and policy amount",
+        "Vested owner and legal description",
+        "Schedule B-I: payoffs, deeds, authority documents, lien releases",
+        "Schedule B-II: standard exceptions, taxes, easements, recorded leases, liens, judgments",
+        "Endorsements requested"
+      ],
+      "planted_defects": [
+        "Policy amount equals the initial funding, not the full commitment (CORE-CLS-06; Maple Run $340,000, not $240,000).",
+        "A mechanics' lien or judgment in B-II with no matching release in B-I.",
+        "Vested owner is not the seller on the contract, or took title weeks ago at a lower price.",
+        "Proposed insured or borrower name differs from the operating agreement.",
+        "Standard survey exception left in although a survey was ordered."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C11",
+        "C12",
+        "C13",
+        "Capstone"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Maple Run closing costs $9,000 include title. Policy amounts must equal commitments: $340,000; $5,140,000; $3,520,000.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-41",
+          "input": "title charges in uses"
+        },
+        {
+          "id": "F-RES-09",
+          "input": "closing costs"
+        }
+      ],
+      "input_rule": "The deed history in the commitment is checked against the purchase contract (DOC-05). Where they differ, the recorded record controls and the gap is a finding.",
+      "policy_rules": [
+        "CORE-CLS-01",
+        "CORE-CLS-06",
+        "CORE-SVC-05",
+        "CORE-DEF-04"
+      ],
+      "fraud_typologies": [
+        "Rapid flip chains (title chain, seasoning)",
+        "Double-pledged collateral"
+      ],
+      "fraud_typology_ids": [
+        "FRD-04",
+        "FRD-10"
+      ],
+      "data_needed": "Schedules for each deal. None in the Running Deals tab.",
+      "previews": [],
+      "outcomes": [
+        "C09-O3",
+        "C11-O5",
+        "C12-O1",
+        "C13-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-20",
+      "name": "Survey",
+      "group": "9.1",
+      "quality_bar": "9.1 item 6",
+      "what_it_is": "A licensed surveyor's drawing of the boundaries, improvements, easements and encroachments.",
+      "producer": "Licensed land surveyor, certified to the lender and title insurer.",
+      "format": {
+        "description": "Income property: ALTA/NSPS Land Title Survey with chosen Table A items. 1-4 units: often a boundary survey, or none.",
+        "references": [
+          "2026 Minimum Standard Detail Requirements for ALTA/NSPS Land Title Surveys, effective 23 Feb 2026 [VERIFY: alta.org; read via law-firm summaries, primary text not opened; checked 22 Nov 2026]",
+          "Residential product table requires title, survey and flood for some products (Model Credit Policy, residential table)"
+        ]
+      },
+      "fields_to_read": [
+        "Certification parties and title commitment number",
+        "Field work date",
+        "Legal description",
+        "Boundaries and area",
+        "Easements plotted with recording references",
+        "Encroachments",
+        "Flood zone note",
+        "Zoning setbacks and parking count, where ordered",
+        "Access to a public road"
+      ],
+      "planted_defects": [
+        "Certification omits the lender or cites a different commitment.",
+        "Legal description or area differs from Schedule A.",
+        "An encroachment on the drawing is not an exception in Schedule B-II.",
+        "Survey flood zone differs from the flood determination.",
+        "Old field date; newer improvements missing."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C11",
+        "C13"
+      ],
+      "deals": [
+        "RD-COM-01",
+        "RD-MF-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Birchwood Plaza: 40,000 sf, 11 suites. Cedar Court: 50 units, garden-style.",
+      "formulas_fed": [
+        {
+          "id": "F-COM-06",
+          "input": "building square feet (cross-check)"
+        }
+      ],
+      "input_rule": "Building area is cross-checked across survey, appraisal and rent roll. A difference is a finding, not an average.",
+      "policy_rules": [
+        "CORE-CLS-01",
+        "CORE-INS-03"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Drawing content for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C09-O3",
+        "C11-O1",
+        "C13-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-21",
+      "name": "Property condition assessment summary",
+      "group": "9.1",
+      "quality_bar": "9.1 item 10",
+      "what_it_is": "An engineer's walk-through report on the building's condition, repairs needed and future capital costs.",
+      "producer": "Property condition consultant engaged by the lender, with reliance to the lender.",
+      "format": {
+        "description": "Executive summary, immediate repairs table, replacement reserve table, system descriptions.",
+        "references": [
+          "ASTM E2018-24, baseline property condition assessment guide; replaced E2018-15 in Jan 2024 [VERIFY: ASTM store page; checked 22 Nov 2026]"
+        ]
+      },
+      "fields_to_read": [
+        "Site visit date and consultant",
+        "Immediate repairs and cost",
+        "Short-term and long-term costs",
+        "Replacement reserve table",
+        "Remaining useful life of roof, systems, paving",
+        "Reliance letter to the lender"
+      ],
+      "planted_defects": [
+        "Immediate repairs total differs from the repair escrow basis (Cedar Court: $40,000, so escrow $50,000).",
+        "Roof shown near the end of its life, yet not in repairs or reserves.",
+        "Report prepared for the borrower, with no reliance to the lender.",
+        "Report is for a different address or an old site visit.",
+        "Condition in the report contradicts the appraisal's condition rating."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C12",
+        "C14"
+      ],
+      "deals": [
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Cedar Court: immediate repairs $40,000; repair escrow 125% = $50,000. Birchwood Plaza: no immediate repairs.",
+      "formulas_fed": [
+        {
+          "id": "F-MF-23",
+          "input": "immediate repairs"
+        },
+        {
+          "id": "F-MF-06",
+          "input": "reserve per unit (cross-check)"
+        },
+        {
+          "id": "F-COM-03",
+          "input": "reserve basis (cross-check)"
+        }
+      ],
+      "input_rule": "Repair escrow uses the report's immediate repairs (F-MF-23). Underwriting reserves use the policy figures; a higher report figure is a finding to raise, not a silent swap.",
+      "policy_rules": [
+        "MF-GEN-08",
+        "MF-BR-13",
+        "COM-GEN-13"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Reserve table and system detail for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C09-O8",
+        "C12-O4",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-22",
+      "name": "Phase I environmental site assessment summary",
+      "group": "9.1",
+      "quality_bar": "9.1 item 11; 11.1",
+      "what_it_is": "An environmental professional's review of current and past uses for contamination risk.",
+      "producer": "Environmental professional engaged by the lender or borrower, with reliance to the lender.",
+      "format": {
+        "description": "Phase I report: findings, recognized environmental conditions (RECs), data gaps, recommendations.",
+        "references": [
+          "ASTM E1527-21 satisfies all appropriate inquiries; E1527-13 could be used only until 13 Feb 2024 [VERIFY: 40 CFR 312.11(a), (c); ecfr.gov; checked 22 Nov 2026]",
+          "Inquiry within one year before acquisition; interviews, lien search, records review, site visit and declaration within 180 days [VERIFY: 40 CFR 312.20(a), (b); ecfr.gov; checked 22 Nov 2026]",
+          "Lender secured-creditor exemption [VERIFY: 42 U.S.C. 9601(20)(E)-(F) and 40 CFR 300.1100; cited in C9 blueprint; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Standard used and user",
+        "Site visit date and each component's date",
+        "Historical uses and sources",
+        "RECs, controlled RECs, historical RECs, de minimis conditions",
+        "Data gaps",
+        "Recommendations, including Phase II",
+        "Environmental professional's declaration",
+        "Reliance letter"
+      ],
+      "planted_defects": [
+        "Components older than 180 days, or the whole inquiry older than one year, at closing.",
+        "Former dry cleaner found in the history but called de minimis with no reason.",
+        "Report prepared under E1527-13.",
+        "User is the borrower, with no reliance letter to the lender.",
+        "A significant data gap, such as no owner interview, is not addressed."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C11",
+        "C13",
+        "C14",
+        "Capstone"
+      ],
+      "deals": [
+        "RD-COM-01",
+        "RD-MF-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Birchwood Plaza: no RECs; former dry cleaner checked and cleared. Cedar Court: no RECs.",
+      "formulas_fed": [],
+      "input_rule": "Not a formula input. A REC triggers a Phase II before closing (COM-GEN-14).",
+      "policy_rules": [
+        "COM-GEN-14",
+        "MF-GEN-08",
+        "CORE-DOC-03",
+        "CORE-DEF-04"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Report text for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C09-O6",
+        "C11-O1",
+        "C13-O4",
+        "C13-O7",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-23",
+      "name": "Insurance certificate and evidence of property insurance",
+      "group": "9.1",
+      "quality_bar": "9.1 item 12; 11.1",
+      "what_it_is": "The agent's evidence that required property, liability and other cover is in force and names the lender.",
+      "producer": "Borrower's insurance agent or broker.",
+      "format": {
+        "description": "Liability: ACORD 25. Property: ACORD 28 Evidence of Commercial Property Insurance. Policy declarations and the mortgagee endorsement behind them.",
+        "references": [
+          "ACORD 25 is the certificate of liability insurance; ACORD 28 is evidence of commercial property insurance and confers no rights [VERIFY: ACORD certificates FAQ and NY DFS approved forms list; checked 22 Nov 2026 via search summary]",
+          "Mortgagee rights come from the policy's mortgage clause, not the certificate [VERIFY: ISO standard mortgage clause; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Named insured and property address",
+        "Policy number and dates",
+        "Cause of loss form and valuation basis",
+        "Limit versus insurable value",
+        "Coinsurance or agreed amount",
+        "Deductible",
+        "Business income or loss of rents period",
+        "Builder's risk or vacancy cover during works",
+        "Mortgagee and loss payee wording",
+        "Flood cover where required"
+      ],
+      "planted_defects": [
+        "Lender shown only as certificate holder or additional insured on an ACORD 25, not as mortgagee on property cover.",
+        "90% coinsurance with no agreed amount (CORE-INS-01; F-CORE-37 prices the gap).",
+        "Limit set at the loan amount, not insurable value (F-CORE-34).",
+        "Loss of rents shorter than 12 months (MF-GEN-10; COM-GEN-16) or 6 months (RES-GEN-08).",
+        "No builder's risk or vacant cover during rehab (CORE-INS-04)."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C11",
+        "C12",
+        "Capstone"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Cedar Court property insurance $38,000 a year. Maple Run landlord insurance $160 a month after rehab.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-34",
+          "input": "limit and insurable value"
+        },
+        {
+          "id": "F-CORE-37",
+          "input": "limit, insurable value, coinsurance %"
+        },
+        {
+          "id": "F-CORE-35",
+          "input": "annual premium"
+        }
+      ],
+      "input_rule": "Insurable value is replacement cost of improvements, excluding land (CORE-INS-01). It comes from an insurance valuation or the appraisal's cost approach, never the loan amount.",
+      "policy_rules": [
+        "CORE-INS-01",
+        "CORE-INS-02",
+        "CORE-INS-03",
+        "CORE-INS-04",
+        "RES-GEN-08",
+        "MF-GEN-10",
+        "COM-GEN-16"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Insurable values and limits for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C09-O4",
+        "C11-O1",
+        "C12-O6"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-24",
+      "name": "Flood hazard determination",
+      "group": "supporting",
+      "quality_bar": "11.1",
+      "what_it_is": "A determination of whether the building sits in a FEMA special flood hazard area.",
+      "producer": "Flood zone determination company, ordered by the lender.",
+      "format": {
+        "description": "FEMA Standard Flood Hazard Determination Form.",
+        "references": [
+          "Standard Flood Hazard Determination Form, FEMA Form 086-0-32, now FF-206-FY-21-116 [VERIFY: OMB 1660-0040 supporting statement; checked 22 Nov 2026 via search summary]",
+          "Regulated lenders need flood cover of at least the lesser of the principal balance and the NFIP maximum [VERIFY: 42 U.S.C. 4012a(b)(1)(A); law.cornell.edu; checked 22 Nov 2026]. Our non-bank model follows CORE-INS-03 instead."
+        ]
+      },
+      "fields_to_read": [
+        "Property address and building",
+        "NFIP community number and participation",
+        "Map panel and effective date",
+        "Flood zone",
+        "Building in special flood hazard area: yes or no",
+        "Letter of map amendment, if any"
+      ],
+      "planted_defects": [
+        "Map panel superseded by a newer map.",
+        "Zone differs from the survey.",
+        "Determination covers the wrong building on a multi-building site.",
+        "Zone A or V, but the insurance evidence shows no flood cover (CORE-INS-03)."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C11"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "No flood zones in the Running Deals tab.",
+      "formulas_fed": [],
+      "input_rule": "Not a formula input. Sets whether CORE-INS-03 applies.",
+      "policy_rules": [
+        "CORE-INS-03",
+        "MF-GEN-08",
+        "COM-GEN-13"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Zone for each property.",
+      "previews": [],
+      "outcomes": [
+        "C09-O4",
+        "C11-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-25",
+      "name": "Promissory note and loan agreement excerpt",
+      "group": "supporting",
+      "quality_bar": "11.1",
+      "what_it_is": "The clauses that set interest, late fees, default interest, prepayment and extensions.",
+      "producer": "Lender's counsel, from the lender's forms; signed by the borrower.",
+      "format": {
+        "description": "Note and loan agreement sections; the guaranty's key clauses.",
+        "references": [
+          "Negotiable instruments rules that may apply to a note [VERIFY: UCC 3-104, 3-204, 3-309; cited in C11 blueprint; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Interest basis and day count",
+        "Payment dates",
+        "Late fee and grace period",
+        "Default rate and trigger",
+        "Prepayment terms",
+        "Extension conditions",
+        "Notice addresses",
+        "Recourse and carve-outs"
+      ],
+      "planted_defects": [
+        "Late fee applies to the balloon at maturity (CORE-SVC-04 forbids it).",
+        "Default rate exceeds the state usury cap where one applies (CORE-SVC-03; State Law Table).",
+        "Prepayment premium where state law bars it (RES-GEN-10).",
+        "Day count differs from the servicing system (Actual/360 versus 30/360).",
+        "Extension conditions differ from the term sheet."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C10",
+        "C12",
+        "C13"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Default rate is note rate + 5.00% (CORE-SVC-03): Maple Run 15.25%. Bridges bill Actual/360 (CORE-PRC-06).",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-01",
+          "input": "rate and day count"
+        },
+        {
+          "id": "F-CORE-31",
+          "input": "default rate"
+        },
+        {
+          "id": "F-COM-24",
+          "input": "prepayment premium schedule"
+        },
+        {
+          "id": "F-CORE-40",
+          "input": "fees and rate"
+        },
+        {
+          "id": "F-CORE-22",
+          "input": "extension fee"
+        },
+        {
+          "id": "F-CORE-11",
+          "input": "debt service terms"
+        },
+        {
+          "id": "F-MF-12",
+          "input": "note rate"
+        },
+        {
+          "id": "F-CORE-22",
+          "input": "commitment and extension fee"
+        }
+      ],
+      "input_rule": "The signed note controls billing. Where the term sheet and note differ, the note controls and the difference is a closing finding.",
+      "policy_rules": [
+        "CORE-PRC-06",
+        "CORE-SVC-03",
+        "CORE-SVC-04",
+        "RES-GEN-10",
+        "CORE-DOC-01",
+        "CORE-DOC-02"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Clause text for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C09-O1",
+        "C09-O2",
+        "C10-O3",
+        "C10-O4",
+        "C12-O2",
+        "C12-O3",
+        "C13-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-26",
+      "name": "Tenant estoppel certificate and SNDA",
+      "group": "supporting",
+      "quality_bar": "9.6",
+      "what_it_is": "The tenant's signed confirmation of lease facts, and its agreement on priority with the lender.",
+      "producer": "Tenant signs; landlord's counsel prepares from the lender's form.",
+      "format": {
+        "description": "Estoppel certificate; subordination, non-disturbance and attornment agreement (SNDA).",
+        "references": [
+          "No standard national form; lenders use their own [VERIFY: market practice; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Lease date, amendments and term",
+        "Current rent and rent paid ahead",
+        "Security deposit",
+        "Landlord defaults claimed",
+        "Options: renewal, termination, purchase, right of first refusal",
+        "Signature and date"
+      ],
+      "planted_defects": [
+        "Rent or end date differs from the rent roll.",
+        "A side letter grants free rent not shown anywhere else.",
+        "Tenant holds a purchase option or right of first refusal.",
+        "Unsigned, or signed months before closing.",
+        "Missing for a tenant that COM-GEN-09 requires."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C12"
+      ],
+      "deals": [
+        "RD-COM-01"
+      ],
+      "deal_facts": "Birchwood Plaza: largest tenant pays $90,000 (21.4% of base rent); estoppels from 20%+ tenants and the top five; SNDAs from 10%+.",
+      "formulas_fed": [
+        {
+          "id": "F-COM-01",
+          "input": "lease terms"
+        },
+        {
+          "id": "F-COM-02",
+          "input": "lease end dates"
+        },
+        {
+          "id": "F-COM-16",
+          "input": "tenant rent"
+        }
+      ],
+      "input_rule": "Where rent roll, lease and estoppel disagree, the estoppel and lease control; the rent roll is corrected (COM-GEN-09). C4 gives the estoppel's lease facts as stated figures; C9 teaches the document.",
+      "policy_rules": [
+        "COM-GEN-09",
+        "COM-GEN-10",
+        "COM-GEN-12"
+      ],
+      "fraud_typologies": [
+        "Fake leases or rent rolls"
+      ],
+      "fraud_typology_ids": [
+        "FRD-05"
+      ],
+      "data_needed": "Tenant names and lease terms for Birchwood's suites.",
+      "previews": [],
+      "outcomes": [
+        "C09-O7",
+        "C12-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-27",
+      "name": "Closing checklist (funding conditions)",
+      "group": "9.1",
+      "quality_bar": "9.1 item 14",
+      "what_it_is": "The list of every condition to closing, its source document, status, date and who cleared it.",
+      "producer": "Lender's closer or processor; signed off before funding.",
+      "format": {
+        "description": "Spreadsheet or loan-system checklist with document ages and sign-offs.",
+        "references": [
+          "No standard form (lender's own)."
+        ]
+      },
+      "fields_to_read": [
+        "Each condition and its rule",
+        "Document date and age at funding",
+        "Cleared by and date",
+        "Exceptions with approval reference",
+        "Same-day OFAC re-run",
+        "Preparer and releaser of the wire"
+      ],
+      "planted_defects": [
+        "Appraisal past 120 days at funding but marked cleared (CORE-VAL-02, F-CORE-36).",
+        "No same-day OFAC re-run (CORE-CLS-03).",
+        "Item marked waived with no pre-closing exception (CORE-EXC-01).",
+        "CPL missing or naming the wrong agent (CORE-CLS-02).",
+        "Same person prepared and released the wire."
+      ],
+      "first_taught": "C11",
+      "reappears": [
+        "C12",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Closing conditions listed in Role 3 of each deal. Maple Run: cash at closing $75,261.67, including prepaid interest $1,161.67.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-36",
+          "input": "document dates"
+        },
+        {
+          "id": "F-CORE-41",
+          "input": "wire amount tie"
+        }
+      ],
+      "input_rule": "Each condition cites its source document and date. A condition with no document is open, whatever its status says.",
+      "policy_rules": [
+        "CORE-CLS-01",
+        "CORE-CLS-02",
+        "CORE-CLS-03",
+        "CORE-CLS-05",
+        "CORE-VAL-02",
+        "CORE-BOR-07",
+        "CORE-BOR-13",
+        "CORE-EXC-01"
+      ],
+      "fraud_typologies": [
+        "Closing wire fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-09"
+      ],
+      "data_needed": "None for conditions; dates must be set for each document.",
+      "previews": [],
+      "outcomes": [
+        "C11-O1",
+        "C12-O1",
+        "C14-O3"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-28",
+      "name": "Settlement statement",
+      "group": "supporting",
+      "quality_bar": "9.6",
+      "what_it_is": "The closing agent's statement of every source and use of funds at closing.",
+      "producer": "Closing agent; approved by the lender's closer.",
+      "format": {
+        "description": "ALTA Settlement Statement, commercial version. TRID disclosures do not apply to business-purpose credit.",
+        "references": [
+          "ALTA Settlement Statement - Commercial [VERIFY: alta.org; not yet checked]",
+          "Business-purpose exemption from Regulation Z: 'An extension of credit primarily for a business, commercial or agricultural purpose' [VERIFY: 12 CFR 1026.3(a)(1); ecfr.gov; checked 22 Nov 2026]"
+        ]
+      },
+      "fields_to_read": [
+        "Price, deposits and credits",
+        "Loan amount and holdbacks",
+        "Points and lender fees",
+        "Prepaid interest and its days",
+        "Escrow deposits and cushion",
+        "Rate cap and reserves",
+        "Payoffs and other payees",
+        "Borrower cash and lender wire"
+      ],
+      "planted_defects": [
+        "Prepaid interest days miscounted (Maple Run: 15-31 Jan is 17 days, $1,161.67).",
+        "Escrow cushion wrong (Cedar Court: $18,666.67).",
+        "Lender wire does not tie to loan less holdback and lender charges (Maple Run: $233,738.33).",
+        "Points on the initial advance, not the commitment.",
+        "A payee with no link to the deal (third-party funds or diverted proceeds)."
+      ],
+      "first_taught": "C11",
+      "reappears": [
+        "C12"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Maple Run: cash at closing $75,261.67; wire $233,738.33. Cedar Court cash to close $2,240,066.67. Birchwood: $1,759,183.33 with the interest reserve.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-33",
+          "input": "funding date and rate"
+        },
+        {
+          "id": "F-CORE-35",
+          "input": "taxes and insurance"
+        },
+        {
+          "id": "F-CORE-41",
+          "input": "all uses"
+        },
+        {
+          "id": "F-CORE-06",
+          "input": "commitment"
+        },
+        {
+          "id": "F-RES-09",
+          "input": "price, costs, points, advance"
+        }
+      ],
+      "input_rule": "Sources must equal uses. The term sheet's cash to close is recomputed, not copied.",
+      "policy_rules": [
+        "CORE-CLS-04",
+        "CORE-INS-02",
+        "CORE-CLS-03"
+      ],
+      "fraud_typologies": [
+        "Closing wire fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-09"
+      ],
+      "data_needed": "Line items for Cedar Court and Birchwood beyond the term-sheet totals.",
+      "previews": [],
+      "outcomes": [
+        "C11-O2",
+        "C11-O3",
+        "C12-O7"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-29",
+      "name": "Draw request",
+      "group": "9.1",
+      "quality_bar": "9.1 item 7",
+      "what_it_is": "The borrower's request to release holdback or construction funds for work done, by budget line.",
+      "producer": "Borrower or general contractor; reviewed by the lender's draw desk.",
+      "format": {
+        "description": "Construction: application for payment with a continuation sheet (schedule of values). Rehab: lender's draw form by budget line.",
+        "references": [
+          "AIA G702 Application and Certificate for Payment with G703 Continuation Sheet (1992 editions most used) [VERIFY: AIA help center, G702-1992 instructions; checked 22 Nov 2026 via search summary]"
+        ]
+      },
+      "fields_to_read": [
+        "Draw number and period",
+        "Budget by line: original, changes, revised",
+        "Prior draws and this request by line",
+        "Percent complete by line",
+        "Retainage",
+        "Stored materials",
+        "Balance to finish",
+        "Invoices and lien waivers attached"
+      ],
+      "planted_defects": [
+        "A line's request exceeds the work the inspector saw (D-CONV-05: stored materials do not count).",
+        "Contingency moved to a line with no written approval (Maple Run month 7 roof).",
+        "Lines do not sum to the request, hiding an out-of-balance loan (F-RES-25).",
+        "Missing waivers for this draw or the last (CORE-SVC-05).",
+        "Request under 30 days after the last, or the final 10% asked for early (RES-FF-09)."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "C13",
+        "Capstone"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Maple Run draws: month 2 $30,000; month 4 $25,000; month 6 $20,000; month 8 $15,000; month 10 final $10,000. Cedar Court $400,000 capex drawn by month 10. Birchwood $300,000 capex and $300,000 TI/LC by month 18.",
+      "formulas_fed": [
+        {
+          "id": "F-RES-06",
+          "input": "work in place and budget"
+        },
+        {
+          "id": "F-RES-18",
+          "input": "work in place, prior draws"
+        },
+        {
+          "id": "F-RES-25",
+          "input": "balance to finish and undisbursed funds"
+        },
+        {
+          "id": "F-COM-21",
+          "input": "work in place and retainage"
+        },
+        {
+          "id": "F-CORE-01",
+          "input": "balance after draw"
+        },
+        {
+          "id": "F-CORE-05",
+          "input": "balance after draw"
+        }
+      ],
+      "input_rule": "Work in place comes from the inspection report (DOC-30), never the request. Fund the lower of the requested and inspected amounts.",
+      "policy_rules": [
+        "CORE-SVC-05",
+        "RES-FF-08",
+        "RES-FF-09",
+        "MF-BR-10",
+        "COM-BR-05",
+        "COM-CON-10",
+        "D-CONV-05",
+        "CORE-CLS-06"
+      ],
+      "fraud_typologies": [
+        "Draw fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-08"
+      ],
+      "data_needed": "Line-by-line requests for each Maple Run draw that tie to the table above.",
+      "previews": [],
+      "outcomes": [
+        "C12-O1",
+        "C13-O2"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-30",
+      "name": "Draw inspection report",
+      "group": "9.1",
+      "quality_bar": "9.1 item 7",
+      "what_it_is": "A site inspector's report of work in place by budget line, with photos, for one draw.",
+      "producer": "Third-party inspector engaged by the lender (CORE-SVC-05).",
+      "format": {
+        "description": "Short report: date, line-by-line percent complete, photos, comments, recommended amount.",
+        "references": [
+          "No standard form; examiners expect inspections to show a draw fits the stage of work [VERIFY: OCC CRE Handbook v2.0, 'Monitoring Progress of Construction Projects'; cited in C12 blueprint; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Inspection date and inspector",
+        "Percent complete by line",
+        "Stored materials (noted, not counted)",
+        "Dated photos",
+        "Work outside the scope",
+        "Permit card status",
+        "Recommended draw"
+      ],
+      "planted_defects": [
+        "Photos reused from a prior visit or another property.",
+        "Stored materials counted as complete.",
+        "Overall percent complete does not match the weighted lines.",
+        "Inspector related to the borrower or contractor.",
+        "Permits not posted, but full funding recommended."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "C13",
+        "Capstone"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Maple Run work in place: $30,000; $55,000; $75,000; $90,000; $100,000 (30%, 55%, 75%, 90%, 100%).",
+      "formulas_fed": [
+        {
+          "id": "F-RES-06",
+          "input": "work in place"
+        },
+        {
+          "id": "F-RES-18",
+          "input": "work in place"
+        },
+        {
+          "id": "F-RES-25",
+          "input": "cost to complete"
+        },
+        {
+          "id": "F-COM-21",
+          "input": "work in place"
+        }
+      ],
+      "input_rule": "Inspection controls the draw amount. Extension progress tests use the same figure (RES-FF-11; MF-BR-11).",
+      "policy_rules": [
+        "CORE-SVC-05",
+        "RES-FF-09",
+        "RES-FF-11",
+        "D-CONV-05",
+        "COM-CON-10"
+      ],
+      "fraud_typologies": [
+        "Draw fraud",
+        "Related-party appraiser or contractor"
+      ],
+      "fraud_typology_ids": [
+        "FRD-08",
+        "FRD-07"
+      ],
+      "data_needed": "Line-level inspection results for each Maple Run draw.",
+      "previews": [],
+      "outcomes": [
+        "C12-O1",
+        "C13-O2"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-31",
+      "name": "Loan-monitor (construction consultant) report",
+      "group": "construction",
+      "quality_bar": "9.3; C12 deepening",
+      "what_it_is": "The lender's construction consultant's review: plan and cost review before closing, then a monthly monitoring report.",
+      "producer": "Independent construction consultant engaged by the lender (RES-GU-10: third-party plan and cost review).",
+      "format": {
+        "description": "Pre-closing plan and cost review; monthly report with budget status, schedule, change orders and an in-balance opinion.",
+        "references": [
+          "No standard form [VERIFY: OCC CRE Handbook v2.0, 'Underwriting ADC Loans' and 'Monitoring Progress of Construction Projects'; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Budget adequacy and missing items",
+        "Contract and permit review",
+        "Schedule status and delay",
+        "Percent complete by line",
+        "Change orders reviewed",
+        "Retainage held",
+        "Balance to complete and in-balance opinion",
+        "Recommended draw"
+      ],
+      "planted_defects": [
+        "Consultant flags the budget as short but recommends a full draw.",
+        "Cumulative percent complete exceeds the line totals.",
+        "Retainage not withheld before 50% complete (COM-CON-10).",
+        "Change orders approved by the contractor alone.",
+        "In-balance opinion ignores pending change orders."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "Capstone"
+      ],
+      "deals": [
+        "CAP-01"
+      ],
+      "deal_facts": "Capstone not yet authored.",
+      "formulas_fed": [
+        {
+          "id": "F-RES-25",
+          "input": "cost to complete"
+        },
+        {
+          "id": "F-COM-21",
+          "input": "work in place and retainage"
+        },
+        {
+          "id": "F-RES-06",
+          "input": "work in place"
+        },
+        {
+          "id": "F-RES-18",
+          "input": "work in place"
+        }
+      ],
+      "input_rule": "Cost to complete comes from the consultant, not the borrower. Pending change orders count in the in-balance test.",
+      "policy_rules": [
+        "RES-GU-10",
+        "COM-CON-10",
+        "CORE-SVC-05"
+      ],
+      "fraud_typologies": [
+        "Draw fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-08"
+      ],
+      "data_needed": "Whole document, once the capstone deal is authored.",
+      "previews": [],
+      "outcomes": [
+        "C12-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-32",
+      "name": "Change order",
+      "group": "construction",
+      "quality_bar": "9.3; C12 deepening",
+      "what_it_is": "A signed change to the construction contract's scope, price or time.",
+      "producer": "General contractor proposes; owner, architect and, where the loan documents need it, the lender approve.",
+      "format": {
+        "description": "Standard change order form, carried as a line on the continuation sheet.",
+        "references": [
+          "AIA G701 Change Order; changes appear as lines on the G703 [VERIFY: AIA payment application procedure; checked 22 Nov 2026 via search summary; G701 form itself not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Change order number and date",
+        "Description and reason",
+        "Cost change and revised contract sum",
+        "Time change and revised completion date",
+        "Funding source: contingency or new equity",
+        "Signatures"
+      ],
+      "planted_defects": [
+        "Raises the contract sum with no funding source, putting the loan out of balance.",
+        "Signed by the contractor only.",
+        "One change split into several small ones.",
+        "Time change pushes completion past maturity.",
+        "Charges for work already in the base scope."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "Capstone"
+      ],
+      "deals": [
+        "CAP-01",
+        "RD-RES-01"
+      ],
+      "deal_facts": "Maple Run month 7: roof subcontractor quits; replacement costs $8,000 more than the roof line; covered by the $9,000 contingency as a written reallocation (a budget change, not a contract change order).",
+      "formulas_fed": [
+        {
+          "id": "F-RES-25",
+          "input": "revised budget"
+        },
+        {
+          "id": "F-COM-21",
+          "input": "revised contract sum"
+        }
+      ],
+      "input_rule": "An approved change order changes the budget line before the next in-balance test.",
+      "policy_rules": [
+        "CORE-SVC-05"
+      ],
+      "fraud_typologies": [
+        "Draw fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-08"
+      ],
+      "data_needed": "Capstone change orders. The policy has no lender-consent threshold for change orders (open item).",
+      "previews": [],
+      "outcomes": [
+        "C12-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-33",
+      "name": "Lien waivers",
+      "group": "construction",
+      "quality_bar": "9.3; C12 deepening",
+      "what_it_is": "Releases of lien rights from the contractor, subcontractors and suppliers for amounts paid.",
+      "producer": "Contractor, subcontractors and suppliers; collected by the borrower or title company.",
+      "format": {
+        "description": "Conditional (on receipt of payment) and unconditional waivers, progress and final. Some states set statutory forms.",
+        "references": [
+          "Lien priority and waiver rules in the deal states: ORC 1311.13-.14 (OH); G.S. 44A-11.1, 44A-11.2(m) (NC); IC 32-28-3-16 (IN) [VERIFY: cited in C12 blueprint via FindLaw mirrors; checked 22 Nov 2026 there]"
+        ]
+      },
+      "fields_to_read": [
+        "Claimant and customer",
+        "Job address",
+        "Through date",
+        "Amount",
+        "Conditional or unconditional",
+        "Exceptions",
+        "Signature and notary"
+      ],
+      "planted_defects": [
+        "Conditional waiver from the last draw never replaced by an unconditional one (CORE-SVC-05).",
+        "Through date stops short of the draw period.",
+        "Amount less than the sum paid.",
+        "A subcontractor on the job has no waiver.",
+        "Contractor signs on behalf of a subcontractor."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "Capstone"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Maple Run: five draws, months 2 to 10.",
+      "formulas_fed": [],
+      "input_rule": "Not a formula input. A gate for each draw (CORE-SVC-05) and the title date-down (CORE-CLS-06).",
+      "policy_rules": [
+        "CORE-SVC-05",
+        "CORE-CLS-06"
+      ],
+      "fraud_typologies": [
+        "Draw fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-08"
+      ],
+      "data_needed": "Subcontractor list for Maple Run's rehab.",
+      "previews": [],
+      "outcomes": [
+        "C12-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-34",
+      "name": "Loan servicing report",
+      "group": "9.1",
+      "quality_bar": "9.1 item 15",
+      "what_it_is": "The servicer's monthly loan-level record: billing, payments, balance, escrows, reserves, draws and reporting status.",
+      "producer": "Servicer (in-house or subservicer), from the servicing system.",
+      "format": {
+        "description": "System report or monthly statement per loan.",
+        "references": [
+          "CMBS loan-level fields: CREFC Investor Reporting Package, Loan Periodic Update File [VERIFY: CREFC IRP v8.4, Mar 2024; v8.5 approval reported 2026, status unconfirmed; crefc.org; checked 22 Nov 2026 via search summary]"
+        ]
+      },
+      "fields_to_read": [
+        "Funded balance and commitment",
+        "Rate, index and day count",
+        "Interest billed: days and amount",
+        "Payment received date and paid-through date",
+        "Late fees and default interest",
+        "Escrow and reserve balances",
+        "Rate-cap receipts",
+        "Maturity and extension status",
+        "Reporting items due and received",
+        "Risk rating"
+      ],
+      "planted_defects": [
+        "A 31-day month billed as 30 days (Maple Run at $340,000: $3,000.97, not $2,904.17).",
+        "Late fee charged on the full balance or the balloon (CORE-SVC-04).",
+        "Cap payment computed on the funded balance, not the notional (Cedar Court month 10: $3,212.50).",
+        "Paid-through date wrong after a partial payment.",
+        "Overdue rent roll or operating statement not flagged (CORE-SVC-06)."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "C13",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Maple Run interest at 10.25% Actual/360; Cedar Court month 10 interest $35,550.00 for 30 days; Birchwood month 18 interest $25,229.17 for 30 days.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-01",
+          "input": "balance, rate, days"
+        },
+        {
+          "id": "F-CORE-05",
+          "input": "balance and rate"
+        },
+        {
+          "id": "F-CORE-31",
+          "input": "default rate"
+        },
+        {
+          "id": "F-CORE-32",
+          "input": "balance, accrued interest, fees"
+        },
+        {
+          "id": "F-COM-19",
+          "input": "trailing NCF and debt service"
+        }
+      ],
+      "input_rule": "Billing follows the signed note (DOC-25). Cap receipts follow the cap confirmation's notional (D-CORE-30).",
+      "policy_rules": [
+        "CORE-PRC-06",
+        "CORE-CLS-04",
+        "CORE-SVC-04",
+        "CORE-SVC-06",
+        "CORE-SVC-07",
+        "MF-BR-09",
+        "COM-BR-03",
+        "COM-GEN-12"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Monthly payment history for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C12-O2",
+        "C12-O4",
+        "C13-O1",
+        "C14-O8"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-35",
+      "name": "Executed residential lease",
+      "group": "supporting",
+      "quality_bar": "9.6",
+      "what_it_is": "The signed lease on a residential collateral property, delivered during the loan.",
+      "producer": "Borrower (landlord) and tenant; delivered to the servicer (RES-GEN-11).",
+      "format": {
+        "description": "State residential lease form or landlord's own lease.",
+        "references": [
+          "Ohio landlord-tenant law [VERIFY: ORC chapter 5321; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Tenant names",
+        "Term and start date",
+        "Monthly rent and deposit",
+        "Purchase option",
+        "Signatures and date",
+        "Delivery date to lender"
+      ],
+      "planted_defects": [
+        "Tenant related to a guarantor (occupancy fraud; CORE-BP-02).",
+        "Term under 12 months or a purchase option (RES-GEN-11).",
+        "Rent well above market with no deposit (fake lease).",
+        "Delivered after the 10 business days RES-GEN-11 allows."
+      ],
+      "first_taught": "C4",
+      "reappears": [
+        "C9",
+        "C12",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01"
+      ],
+      "deal_facts": "Maple Run month 11: lease at $2,450 a month, 12-month term, unrelated tenant.",
+      "formulas_fed": [
+        {
+          "id": "F-RES-23",
+          "input": "lease rent"
+        },
+        {
+          "id": "F-RES-07",
+          "input": "qualifying rent"
+        },
+        {
+          "id": "F-RES-17",
+          "input": "qualifying rent"
+        }
+      ],
+      "input_rule": "Qualifying rent is the lesser of lease rent and appraisal market rent (RES-DSCR-01, F-RES-23): $2,400, not $2,450.",
+      "policy_rules": [
+        "RES-GEN-11",
+        "RES-DSCR-01",
+        "CORE-BP-02",
+        "D-CORE-22"
+      ],
+      "fraud_typologies": [
+        "Occupancy fraud",
+        "Fake leases or rent rolls"
+      ],
+      "fraud_typology_ids": [
+        "FRD-02",
+        "FRD-05"
+      ],
+      "data_needed": "None beyond lease terms.",
+      "previews": [],
+      "outcomes": [
+        "C04-O1",
+        "C04-O2",
+        "C04-O5",
+        "C09-O8",
+        "C12-O4",
+        "C14-O5"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-36",
+      "name": "Watchlist with risk ratings",
+      "group": "9.7",
+      "quality_bar": "9.7",
+      "what_it_is": "The monthly list of loans rated 2 to 5, each with its trigger, action, owner and review date.",
+      "producer": "Asset management or credit administration; reviewed monthly (CORE-SVC-07).",
+      "format": {
+        "description": "Spreadsheet or system report. CMBS servicers keep a Servicer Watchlist with set criteria.",
+        "references": [
+          "CREFC Servicer Watchlist guideline: a loan two or more payments past due is added as a credit item [VERIFY: CREFC IRP watchlist implementation guideline, v8.0; crefc.org; checked 22 Nov 2026 via search summary]",
+          "Interagency rating scale (pass, special mention, substandard, doubtful, loss) [VERIFY: OCC Bulletin 2026-56; cited in C12 blueprint; open full text]"
+        ]
+      },
+      "fields_to_read": [
+        "Loan, balance and maturity",
+        "Rating 1-5 and date changed",
+        "Trigger",
+        "Exit cover (CORE-SVC-08)",
+        "Action, owner and due date",
+        "Next review date"
+      ],
+      "planted_defects": [
+        "Maturity within 90 days with no confirmed exit, but rated 1 (CORE-SVC-07 needs at least 2).",
+        "A sweep trigger (Birchwood month 9) is not on the list.",
+        "Action with no owner or due date.",
+        "Exit cover computed without accrued interest and fees.",
+        "A payment default rated 3, not 4 (CORE-SVC-08)."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "C13",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Birchwood month 9: largest tenant gives notice; sweep starts. Maple Run month 12: maturity and extension request. Cedar Court month 24: maturity, NCF $520,000.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-42",
+          "input": "as-is value less cost to sell, balance"
+        },
+        {
+          "id": "F-CORE-23",
+          "input": "value, costs, balance"
+        },
+        {
+          "id": "F-COM-19",
+          "input": "sweep inputs"
+        }
+      ],
+      "input_rule": "Exit cover uses as-is value less cost to sell over balance plus accrued interest and fees (CORE-SVC-08).",
+      "policy_rules": [
+        "CORE-SVC-07",
+        "CORE-SVC-08",
+        "COM-GEN-12",
+        "D-CORE-23"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Updated as-is values at each rating date.",
+      "previews": [],
+      "outcomes": [
+        "C12-O5",
+        "C13-O1",
+        "C14-O8"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-37",
+      "name": "Delinquency tape",
+      "group": "9.7",
+      "quality_bar": "9.7",
+      "what_it_is": "A one-row-per-loan portfolio file showing payment status, days past due and default flags.",
+      "producer": "Servicer, monthly, from the servicing system; sent to management, warehouse lenders and loan buyers.",
+      "format": {
+        "description": "Spreadsheet or CSV with a data dictionary.",
+        "references": [
+          "Loan-level delinquency fields in CMBS: CREFC IRP Loan Periodic Update File [VERIFY: CREFC IRP v8.4; not yet checked for field names]",
+          "Market context: the delinquency rate on bank CRE loans (excluding farmland) was 1.53% in Q2 2026. Source: FRED DRCRELEXFACBS, cited in the C12 blueprint, opened 22 Nov 2026. Market, as of Aug 2026"
+        ]
+      },
+      "fields_to_read": [
+        "Loan ID, product, state",
+        "Balance and next due date",
+        "Paid-through date",
+        "Days past due and bucket",
+        "Maturity and extension status",
+        "Default interest accrued",
+        "Rating and accrual status",
+        "Forbearance or modification flag"
+      ],
+      "planted_defects": [
+        "Days past due counted from the paid-through date in one row and the due date in another.",
+        "A loan past maturity shown current because interest was paid.",
+        "A loan in forbearance shown current with no flag.",
+        "Tape totals do not tie to the servicing trial balance.",
+        "Rating does not match delinquency (CORE-SVC-08)."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "C13",
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Maple Run what-if: 1 Aug payment 45 days late on $315,000; default per diem $133.44 versus $89.69.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-30",
+          "input": "balances by bucket"
+        },
+        {
+          "id": "F-CORE-31",
+          "input": "default rate and days"
+        },
+        {
+          "id": "F-CORE-42",
+          "input": "balance for charge-off"
+        }
+      ],
+      "input_rule": "Days past due run from the contractual due date. The tape is checked against the servicing report (DOC-34), which controls.",
+      "policy_rules": [
+        "CORE-SVC-03",
+        "CORE-SVC-07",
+        "CORE-SVC-08",
+        "CORE-CONC-07"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "A fictional portfolio of loans around the three deals. No portfolio list exists in the Running Deals tab.",
+      "previews": [],
+      "outcomes": [
+        "C12-O5",
+        "C13-O1",
+        "C14-O7"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-38",
+      "name": "Investor remittance report",
+      "group": "9.7",
+      "quality_bar": "9.7",
+      "what_it_is": "The servicer's monthly report to a loan buyer, warehouse lender or trust: collections, remittance and loan status.",
+      "producer": "Servicer, under the servicing or sale agreement.",
+      "format": {
+        "description": "Remittance summary with loan-level detail; CMBS uses the CREFC package.",
+        "references": [
+          "CREFC Investor Reporting Package as the CMBS standard [VERIFY: CREFC IRP v8.4; crefc.org; not yet checked for remittance fields]"
+        ]
+      },
+      "fields_to_read": [
+        "Reporting period and cut-off",
+        "Collections by loan: interest, principal, fees",
+        "Servicing fee",
+        "Net remittance and date",
+        "Delinquency and rating per loan",
+        "Advances, if any"
+      ],
+      "planted_defects": [
+        "Collections do not tie to the servicing report (DOC-34).",
+        "A defaulted loan reported as current.",
+        "Payments received after cut-off included in the period.",
+        "Remitted total differs from the sum of the lines.",
+        "Rate-cap receipts left out."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "C14"
+      ],
+      "deals": [
+        "RD-MF-01"
+      ],
+      "deal_facts": "Uses a what-if in which Cedar Court is a serviced loan sold to a loan buyer (owner to confirm). Month 10: interest $35,550.00; cap receipt $3,212.50.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-01",
+          "input": "interest collected"
+        },
+        {
+          "id": "F-CORE-05",
+          "input": "per diem for partial periods"
+        }
+      ],
+      "input_rule": "Collections come from the servicing report. The policy has no servicing-fee, remittance-date or deadline rule (C12 blueprint 4.5 item 6), so the report shows gross collections only.",
+      "policy_rules": [
+        "CORE-SVC-06",
+        "CORE-SVC-07"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "A remittance rule (owner decision) and the sale what-if.",
+      "previews": [],
+      "outcomes": [
+        "C12-O8",
+        "C14-O2"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-39",
+      "name": "Extension or modification request",
+      "group": "9.7",
+      "quality_bar": "9.7",
+      "what_it_is": "The borrower's written request to extend maturity or change loan terms, with its support.",
+      "producer": "Borrower, often with its broker; reviewed by asset management.",
+      "format": {
+        "description": "Letter or lender form with an updated rent roll, operating statement, budget, schedule and cap quote.",
+        "references": [
+          "No standard form. Workout talks need a pre-negotiation letter first (CORE-DEF-01)."
+        ]
+      },
+      "fields_to_read": [
+        "Terms requested",
+        "Reason",
+        "Progress evidence: percent complete, occupancy, NCF",
+        "Proposed paydown or fee",
+        "Cap extension quote",
+        "Guarantor reaffirmation"
+      ],
+      "planted_defects": [
+        "No evidence for the family progress test (RES-FF-11; MF-BR-11).",
+        "NCF from a pro forma, not trailing figures.",
+        "Fee computed on the balance, not the commitment (F-CORE-22).",
+        "A rate cut bundled in, with talks begun before a pre-negotiation letter (CORE-DEF-01).",
+        "No cap extension where MF-BR-11 needs one."
+      ],
+      "first_taught": "C12",
+      "reappears": [
+        "C13"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Maple Run month 12: 100% complete; fee $1,700. Cedar Court month 24: debt yield 10.12%; fee $25,700; cap about $19,275.00. Birchwood what-if month 24: NCF $380,000; fee $8,800.",
+      "formulas_fed": [],
+      "input_rule": "The request is a trigger, not an input source. Its tests take NCF from the rent roll and T-12 and the rate and commitment from the note.",
+      "policy_rules": [
+        "CORE-SVC-01",
+        "CORE-SVC-02",
+        "RES-FF-11",
+        "MF-BR-11",
+        "COM-BR-01",
+        "COM-BR-02",
+        "CORE-DEF-01",
+        "CORE-DEF-03"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Request letters written to the timeline facts above.",
+      "previews": [],
+      "outcomes": [
+        "C12-O3",
+        "C13-O3"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-40",
+      "name": "Default notice and pre-negotiation letter",
+      "group": "supporting",
+      "quality_bar": "9.4",
+      "what_it_is": "The lender's written notice of default, and the letter all parties sign before any workout talk.",
+      "producer": "Lender's asset manager and counsel; signed by borrower and every guarantor.",
+      "format": {
+        "description": "Notice letter citing the loan documents; pre-negotiation agreement.",
+        "references": [
+          "Pre-negotiation letter practice [VERIFY: Fannie Mae Multifamily Guide, as cited in CORE-DEF-01; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Default described and cited",
+        "Cure period",
+        "Default interest start date",
+        "Reservation of rights",
+        "Notice address used",
+        "Pre-negotiation terms and signatures"
+      ],
+      "planted_defects": [
+        "A guarantor has not signed the letter.",
+        "Notice sent to an address other than the note's notice clause.",
+        "No reservation of rights, inviting a waiver-by-conduct claim.",
+        "Default interest start date wrong.",
+        "Letter dated after talks began."
+      ],
+      "first_taught": "C13",
+      "reappears": [
+        "C14"
+      ],
+      "deals": [
+        "RD-COM-01",
+        "RD-RES-01"
+      ],
+      "deal_facts": "Birchwood: Dana Whitlow calls 'to talk options' (C13 T2). Maple Run what-if: 45 days late; default rate 15.25%.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-31",
+          "input": "default rate and dates"
+        },
+        {
+          "id": "F-CORE-05",
+          "input": "balance and rate"
+        }
+      ],
+      "input_rule": "Dates come from the servicing report. The note's notice clause sets the address.",
+      "policy_rules": [
+        "CORE-DEF-01",
+        "CORE-SVC-03",
+        "CORE-SVC-08"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Letter text and dates.",
+      "previews": [],
+      "outcomes": [
+        "C13-O1",
+        "C14-O8"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-41",
+      "name": "Updated valuation for resolution",
+      "group": "supporting",
+      "quality_bar": "9.5; 9.6",
+      "what_it_is": "A new appraisal, appraisal update or broker opinion used to value a troubled loan's collateral.",
+      "producer": "Appraiser (update) or broker (opinion of value), ordered by asset management.",
+      "format": {
+        "description": "Appraisal update, restricted report or broker opinion of value with sale comparables.",
+        "references": [
+          "Banks record foreclosed real estate at fair value less cost to sell [VERIFY: Fed SR 12-10 attachment; cited in C13 blueprint; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Effective date",
+        "As-is value",
+        "Marketing time",
+        "Cost to sell",
+        "Condition and occupancy",
+        "Preparer independence"
+      ],
+      "planted_defects": [
+        "Uses as-stabilized value or ARV instead of as-is.",
+        "No cost to sell, so exit cover is overstated.",
+        "A broker opinion used to size a new loan (CORE-VAL-03 allows it only as a check).",
+        "Stale effective date."
+      ],
+      "first_taught": "C13",
+      "reappears": [
+        "C14"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Maple Run: updated value on a tenant-in-place basis ordered after the refinance fails (Role 3, item 5).",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-23",
+          "input": "value and costs"
+        },
+        {
+          "id": "F-CORE-42",
+          "input": "fair value less cost to sell"
+        }
+      ],
+      "input_rule": "Resolution uses as-is value less cost to sell (CORE-SVC-08; F-CORE-42).",
+      "policy_rules": [
+        "CORE-VAL-03",
+        "CORE-SVC-08",
+        "CORE-DEF-02",
+        "CORE-DEF-06"
+      ],
+      "fraud_typologies": [
+        "Inflated or broker-supplied after-repair value"
+      ],
+      "fraud_typology_ids": [
+        "FRD-03"
+      ],
+      "data_needed": "Updated values and sale costs for each what-if.",
+      "previews": [],
+      "outcomes": [
+        "C13-O2",
+        "C13-O7",
+        "C14-O7"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-42",
+      "name": "Credit memo",
+      "group": "supporting",
+      "quality_bar": "9.3",
+      "what_it_is": "The underwriter's decision record for committee, in the eleven-section house standard.",
+      "producer": "Underwriter; approved by the authority in CORE-AUTH-01.",
+      "format": {
+        "description": "House template, eleven sections (CORE-AUTH-02).",
+        "references": [
+          "Regulators expect a written credit approval record [VERIFY: Interagency Guidelines for Real Estate Lending Policies, 12 CFR 34 Subpart D Appendix A; cited in C14 blueprint; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Request and recommendation",
+        "Borrower and guarantors",
+        "Property and valuation",
+        "Cash flow or budget",
+        "Sizing table with rule and formula references",
+        "Exit with cushion",
+        "State law check",
+        "Portfolio impact",
+        "Risks with mitigants",
+        "Risk rating",
+        "Conditions to close"
+      ],
+      "planted_defects": [
+        "A section missing or out of order.",
+        "A risk with no mitigant.",
+        "Sizing table names the wrong binding test.",
+        "An exception used but not logged.",
+        "Approver outside authority."
+      ],
+      "first_taught": "C14",
+      "reappears": [
+        "Capstone"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Memo outlines exist for Maple Run and Cedar Court (Role 2).",
+      "formulas_fed": [],
+      "input_rule": "Derived document: it reports results; it is never an input source. Inputs come from the rent roll, T-12 and note (section 4).",
+      "policy_rules": [
+        "CORE-AUTH-01",
+        "CORE-AUTH-02",
+        "CORE-AUTH-03"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "A model memo per deal; the capstone model memo needs industry sign-off (9.3).",
+      "previews": [],
+      "outcomes": [
+        "C14-O1",
+        "C14-O6"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-43",
+      "name": "Exception request and log entry",
+      "group": "supporting",
+      "quality_bar": "9.4",
+      "what_it_is": "A request to approve a loan outside a policy rule, with its compensating factors, and its log line.",
+      "producer": "Underwriter requests; approver signs; credit administration logs it.",
+      "format": {
+        "description": "Request form and exception log (CORE-EXC-02 fields).",
+        "references": [
+          "Exceptions documented, approved and reported [VERIFY: OCC CRE Lending handbook, Mar 2022; cited in CORE-EXC-01; not yet checked here]"
+        ]
+      },
+      "fields_to_read": [
+        "Rule, policy value and approved value",
+        "At least two compensating factors",
+        "Approver and date",
+        "Before or after closing"
+      ],
+      "planted_defects": [
+        "Only one compensating factor (CORE-EXC-02).",
+        "Exception to a KYC, OFAC, LEGAL or CORE-BP rule (CORE-EXC-03 bars it).",
+        "Approved after closing (CORE-EXC-01).",
+        "Approver lacks authority (CORE-AUTH-01)."
+      ],
+      "first_taught": "C14",
+      "reappears": [
+        "Capstone"
+      ],
+      "deals": [
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Cedar Court and Birchwood exceed the Tier 1 sponsor exposure cap, so committee approves (CORE-CONC-01).",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-25",
+          "input": "liquidity shortfall"
+        },
+        {
+          "id": "F-CORE-29",
+          "input": "exposure"
+        }
+      ],
+      "input_rule": "Policy value comes from the Model Credit Policy, never from the request.",
+      "policy_rules": [
+        "CORE-EXC-01",
+        "CORE-EXC-02",
+        "CORE-EXC-03",
+        "CORE-AUTH-01",
+        "CORE-CONC-01"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "None.",
+      "previews": [],
+      "outcomes": [
+        "C14-O3"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-44",
+      "name": "Loan sale data tape",
+      "group": "supporting",
+      "quality_bar": "10.3",
+      "what_it_is": "One row per loan offered to a buyer or warehouse lender, with the fields its eligibility rules test.",
+      "producer": "Lender's capital markets team, from the loan file and servicing system.",
+      "format": {
+        "description": "Spreadsheet in the buyer's template, with a data dictionary.",
+        "references": [
+          "Risk retention for securitizations [VERIFY: 17 CFR 246.4 and 246.7; cited in coverage review; re-open before C14 T2]"
+        ]
+      },
+      "fields_to_read": [
+        "Loan amount, rate, term, product",
+        "Value and LTV or LTC",
+        "DSCR or debt yield",
+        "FICO and experience tier",
+        "State and property type",
+        "Days since funding (aging)",
+        "Payment status"
+      ],
+      "planted_defects": [
+        "Tape value differs from the accepted appraisal.",
+        "DSCR on the tape uses a different rent than the file.",
+        "Loan past the buyer's aging limit still listed as eligible.",
+        "Payment status differs from the delinquency tape."
+      ],
+      "first_taught": "C14",
+      "reappears": [],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Uses the three deals' sizing results.",
+      "formulas_fed": [],
+      "input_rule": "Derived document: it reports results; it is never an input source. Inputs come from the rent roll, T-12 and note (section 4).",
+      "policy_rules": [
+        "CORE-CONC-01"
+      ],
+      "fraud_typologies": [
+        "Double-pledged collateral"
+      ],
+      "fraud_typology_ids": [
+        "FRD-10"
+      ],
+      "data_needed": "A fictional buyer eligibility sheet (coverage review open item 2).",
+      "previews": [],
+      "outcomes": [
+        "C14-O2"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-45",
+      "name": "Portfolio concentration report",
+      "group": "supporting",
+      "quality_bar": "6.1",
+      "what_it_is": "The portfolio by bucket (state, product, sponsor) against each limit, with headroom.",
+      "producer": "Credit administration, monthly (CORE-CONC-07).",
+      "format": {
+        "description": "Table by bucket: commitment, share, limit, headroom.",
+        "references": [
+          "Supervisory CRE concentration screens [VERIFY: OCC Bulletin 2006-46; cited in C14 blueprint as opened]"
+        ]
+      },
+      "fields_to_read": [
+        "Total commitments",
+        "Each bucket's commitments and share",
+        "Limit and headroom",
+        "Loans in the pipeline"
+      ],
+      "planted_defects": [
+        "Uses balances, not commitments.",
+        "A sponsor's affiliated entities not combined.",
+        "Pipeline loan not added before the share is tested.",
+        "Breached bucket not sent to committee."
+      ],
+      "first_taught": "C14",
+      "reappears": [],
+      "deals": [
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Commitments: Cedar Court $5,140,000; Birchwood $3,520,000; Maple Run $340,000.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-30",
+          "input": "bucket and total commitments"
+        },
+        {
+          "id": "F-CORE-43",
+          "input": "limit and commitments"
+        },
+        {
+          "id": "F-CORE-29",
+          "input": "sponsor commitments"
+        }
+      ],
+      "input_rule": "Commitments, not funded balances (CORE-CONC-02).",
+      "policy_rules": [
+        "CORE-CONC-01",
+        "CORE-CONC-02",
+        "CORE-CONC-07"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "A fictional portfolio around the three deals.",
+      "previews": [],
+      "outcomes": [
+        "C14-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-46",
+      "name": "Business-purpose, non-occupancy and use-of-proceeds certification",
+      "group": "supporting",
+      "quality_bar": "9.6; 11.1; 11.3",
+      "what_it_is": "A statement signed by the borrower and every guarantor. It says the loan is for business purposes and no guarantor or relative will occupy the property. On a cash-out refinance it states the use of proceeds.",
+      "producer": "Lender's form, signed by the borrower and each guarantor before closing. The closer checks signatures and dates; the underwriter tests it against the file.",
+      "format": {
+        "description": "One- or two-page lender form with a business-purpose statement, an occupancy statement and, for cash-out, a proceeds table. No industry standard form.",
+        "references": [
+          "Purpose test it supports: Reg Z business-purpose exemption [VERIFY: 12 CFR 1026.3(a) and comment 3(a)-4; checked 18 Nov 2026 per Model Credit Policy CORE-BP-01]"
+        ]
+      },
+      "fields_to_read": [
+        "Borrower entity name and every guarantor's name and signature",
+        "Signature dates against the closing date",
+        "Occupancy statement covering guarantors and relatives",
+        "Stated purpose of the loan",
+        "Cash-out only: use-of-proceeds lines and the personal-use total",
+        "Property address as shown on IDs and bills"
+      ],
+      "planted_defects": [
+        "One guarantor has not signed it (CORE-BP-01).",
+        "It is dated after the closing date.",
+        "The proceeds table puts more than half of cash-out to personal use (CORE-BP-04).",
+        "A utility bill or the guarantor's ID shows the subject address, contradicting the occupancy statement (CORE-BP-02)."
+      ],
+      "first_taught": "C6",
+      "reappears": [
+        "C7",
+        "C11",
+        "C12"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Maple Run: both guarantors, Dana Reyes and Sam Okafor, sign the certifications. Dana lives elsewhere, and the property will be leased to an unrelated tenant. Cedar Court and Birchwood: signed certifications are closing conditions.",
+      "formulas_fed": [],
+      "input_rule": "The certification supports purpose but never overrides contrary evidence. Any contradiction stops the file for the BSA officer (CORE-BP-02; CORE-KYC-07).",
+      "policy_rules": [
+        "CORE-BP-01",
+        "CORE-BP-02",
+        "CORE-BP-04",
+        "CORE-KYC-07",
+        "RES-GEN-09"
+      ],
+      "fraud_typologies": [
+        "Occupancy fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-02"
+      ],
+      "data_needed": "The lender's form text. Course Bible needs a template; cash-out what-if figures for C1 come from REG-03 (55% personal).",
+      "previews": [
+        "C1"
+      ],
+      "outcomes": [
+        "C06-O1",
+        "C07-O3",
+        "C11-O1",
+        "C12-O4"
+      ],
+      "preview_outcomes": [
+        "C01-O6",
+        "C01-O7"
+      ]
+    },
+    {
+      "id": "DOC-47",
+      "name": "Security instruments: mortgage or deed of trust, assignment of leases and rents, UCC-1",
+      "group": "supporting",
+      "quality_bar": "9.6; C9 O1",
+      "what_it_is": "The recorded documents that give the lender its lien on the real estate and the rents, and its filing on personal property.",
+      "producer": "Lender's counsel drafts; the borrower signs; the title agent records them and files the UCC-1.",
+      "format": {
+        "description": "State-form mortgage or deed of trust with a legal description, a separate or embedded assignment of leases and rents, and a UCC-1 financing statement.",
+        "references": [
+          "Ohio and Indiana use mortgages; North Carolina uses deeds of trust with a power of sale [VERIFY: State Law Table SLT-OH-01, SLT-NC-01, SLT-IN-01; checked 20 Nov 2026]",
+          "UCC-1 national form [VERIFY: UCC 9-521 national financing statement form; not yet checked]"
+        ]
+      },
+      "fields_to_read": [
+        "Grantor matches the borrower entity exactly",
+        "Legal description matches the title commitment and survey",
+        "Secured amount covers the full commitment",
+        "Recording data and date",
+        "Assignment of rents: present assignment and licence terms",
+        "UCC-1: debtor name, collateral description, filing office, lapse date"
+      ],
+      "planted_defects": [
+        "The grantor name differs from the borrower's legal name.",
+        "The legal description omits a parcel shown on the survey.",
+        "The UCC-1 is filed in the wrong state or office.",
+        "The secured amount covers only the initial advance, not future funding."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C11",
+        "C13"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Maple Run (Ohio) and Birchwood Plaza (Indiana) take mortgages; Cedar Court (North Carolina) takes a deed of trust.",
+      "formulas_fed": [],
+      "input_rule": "Trailing recorded originals are logged at funding and chased until received (CORE-CLS-05).",
+      "policy_rules": [
+        "CORE-CLS-05",
+        "CORE-CLS-06"
+      ],
+      "fraud_typologies": [
+        "Double-pledged collateral"
+      ],
+      "fraud_typology_ids": [
+        "FRD-10"
+      ],
+      "data_needed": "Legal descriptions and recording data for each deal.",
+      "previews": [],
+      "outcomes": [
+        "C09-O1",
+        "C09-O3",
+        "C11-O5",
+        "C11-O6",
+        "C13-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-48",
+      "name": "Guaranty agreements: payment, carve-out and completion guaranties; environmental indemnity",
+      "group": "supporting",
+      "quality_bar": "9.6; C9 O2",
+      "what_it_is": "The guarantor's signed promises to pay the loan, to pay losses from listed bad acts, to finish the work, and to cover environmental cost.",
+      "producer": "Lender's counsel drafts; each guarantor signs at closing.",
+      "format": {
+        "description": "Separate agreements per guarantor or one joint and several agreement, with a schedule of carve-outs and waivers.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Each guarantor's name, signature and capacity",
+        "Guaranty type and cap",
+        "Carve-out list and springing full-recourse triggers",
+        "Completion scope and budget reference",
+        "Waivers and governing law",
+        "Environmental indemnity scope and survival"
+      ],
+      "planted_defects": [
+        "A 20% owner has not signed (CORE-BOR-03).",
+        "A non-owner spouse is required to sign though the guarantor qualifies alone (CORE-BOR-05).",
+        "No completion guaranty on a loan with future funding (CORE-DOC-03).",
+        "The carve-out list omits voluntary bankruptcy on a non-recourse bridge (CORE-DOC-02)."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C10",
+        "C13"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01"
+      ],
+      "deal_facts": "Maple Run: full-recourse guaranty from Dana and Sam, and a completion guaranty for the $100,000 rehab. Cedar Court: non-recourse with carve-outs, a completion guaranty for capex and an environmental indemnity.",
+      "formulas_fed": [],
+      "input_rule": "Guaranty and remedy terms are checked against state deficiency and one-action rules before the term sheet (CORE-DOC-04).",
+      "policy_rules": [
+        "CORE-BOR-03",
+        "CORE-BOR-05",
+        "CORE-DOC-01",
+        "CORE-DOC-02",
+        "CORE-DOC-03",
+        "CORE-DOC-04"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Birchwood Plaza guaranty package is not stated in the deal file.",
+      "previews": [
+        "C6"
+      ],
+      "outcomes": [
+        "C09-O1",
+        "C09-O2",
+        "C10-O7",
+        "C13-O6"
+      ],
+      "preview_outcomes": [
+        "C06-O1"
+      ]
+    },
+    {
+      "id": "DOC-49",
+      "name": "Zoning report",
+      "group": "supporting",
+      "quality_bar": "9.6; C5 O6",
+      "what_it_is": "A third-party report on the property's zoning, permitted use, conformity and any open violations.",
+      "producer": "Zoning consultant ordered by the lender.",
+      "format": {
+        "description": "Report with the zoning district, permitted uses, required versus actual parking and setbacks, conformity status, rebuild rights and municipal letters.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Zoning district and permitted use",
+        "Legal conforming, legal nonconforming or illegal",
+        "Rebuild rights after casualty",
+        "Open code or zoning violations",
+        "Certificates of occupancy"
+      ],
+      "planted_defects": [
+        "The use is legal nonconforming and rebuild after a major casualty is limited.",
+        "Parking is short of the code requirement.",
+        "An open violation is noted but not addressed in the conditions."
+      ],
+      "first_taught": "C5",
+      "reappears": [
+        "C9"
+      ],
+      "deals": [
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Cedar Court: zoning report required (MF-GEN-08). Birchwood Plaza: zoning report required (COM-GEN-13).",
+      "formulas_fed": [],
+      "input_rule": "Where the appraisal's highest and best use and the zoning report disagree, the zoning report controls on legal use; the difference is a finding.",
+      "policy_rules": [
+        "MF-GEN-08",
+        "COM-GEN-13"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Zoning facts for both deals.",
+      "previews": [],
+      "outcomes": [
+        "C05-O6",
+        "C09-O8"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-50",
+      "name": "Site visit report with photos",
+      "group": "supporting",
+      "quality_bar": "9.6; C9 O8",
+      "what_it_is": "The lender's own record of a property visit, with dated photos and notes on condition, occupancy and the neighbourhood.",
+      "producer": "Originator, underwriter or third-party inspector.",
+      "format": {
+        "description": "Short form with checklist, narrative and dated, labelled photos.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Date, visitor and access",
+        "Occupancy signs by unit",
+        "Condition and deferred maintenance",
+        "Environmental clues",
+        "Match to the rent roll and the appraisal"
+      ],
+      "planted_defects": [
+        "Photos show personal belongings in a unit the file calls vacant.",
+        "Units on the rent roll as leased look empty.",
+        "Photos are undated or of a different property.",
+        "Staining or drums near a former service use are not followed up."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C12",
+        "C13"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "No site visit facts in the deal file.",
+      "formulas_fed": [],
+      "input_rule": "Contradictions with the certification go to the BSA officer (CORE-BP-02).",
+      "policy_rules": [
+        "CORE-BP-02",
+        "CORE-KYC-07"
+      ],
+      "fraud_typologies": [
+        "Occupancy fraud",
+        "Fake leases or rent rolls"
+      ],
+      "fraud_typology_ids": [
+        "FRD-02",
+        "FRD-05"
+      ],
+      "data_needed": "Visit notes and photo list for each deal. No policy rule requires a site visit (open item).",
+      "previews": [],
+      "outcomes": [
+        "C09-O8",
+        "C12-O4",
+        "C13-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-51",
+      "name": "Title date-down and UCC search",
+      "group": "supporting",
+      "quality_bar": "9.6; 11.3",
+      "what_it_is": "An update of the title search to a later date, and a search of UCC filings against the borrower.",
+      "producer": "Title agent (date-down); search vendor or Secretary of State (UCC).",
+      "format": {
+        "description": "Date-down endorsement or letter listing new matters; UCC search report by debtor name and filing office.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Effective date",
+        "New liens, deeds or judgments since the last date",
+        "Mechanics' liens",
+        "UCC filings by other lenders on rents or fixtures"
+      ],
+      "planted_defects": [
+        "A new mortgage to another lender appears.",
+        "A recorded claim of lien from a contractor appears before a draw.",
+        "A UCC filing by another lender covers rents."
+      ],
+      "first_taught": "C11",
+      "reappears": [
+        "C12",
+        "C13"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "No date-down facts in the deal file; FRD-08 and FRD-10 items are what-ifs.",
+      "formulas_fed": [],
+      "input_rule": "Each draw is insured as it funds (CORE-CLS-06); date-down with no new liens before each draw (CORE-SVC-05).",
+      "policy_rules": [
+        "CORE-CLS-06",
+        "CORE-SVC-05",
+        "CORE-DEF-04",
+        "COM-CON-10"
+      ],
+      "fraud_typologies": [
+        "Double-pledged collateral",
+        "Draw fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-10",
+        "FRD-08"
+      ],
+      "data_needed": "No rule requires a UCC search at origination (FRD-10 policy gap).",
+      "previews": [],
+      "outcomes": [
+        "C11-O5",
+        "C12-O1",
+        "C13-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-52",
+      "name": "Experience verification pack: prior settlement statements and deeds",
+      "group": "supporting",
+      "quality_bar": "9.6; 11.3",
+      "what_it_is": "The evidence behind each project in the guarantor's track record.",
+      "producer": "Borrower supplies; the underwriter checks public deed records.",
+      "format": {
+        "description": "Schedule of projects with settlement statements, deeds and entity records for each.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Project address and dates",
+        "Guarantor's ownership share in the owning entity",
+        "Completion evidence: sale, refinance or 12 months held",
+        "Match to public deed records"
+      ],
+      "planted_defects": [
+        "The guarantor owned under 20% of a listed project (CORE-BOR-15).",
+        "A project completed more than 36 months ago is counted.",
+        "A deed shows a different owner with no link to the guarantor."
+      ],
+      "first_taught": "C6",
+      "reappears": [
+        "C7"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01"
+      ],
+      "deal_facts": "Maple Run: Dana Reyes lists 7 projects; the 15% deal fails the 20% rule, so 6 count (Tier 2). Cedar Court: Marcus Hale lists 3 apartment properties; the 18-unit property owned 8% does not count.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-27",
+          "input": "projects and ownership shares"
+        }
+      ],
+      "input_rule": "Signed operating agreements, multiplied through layers, control ownership shares (CORE-BOR-03; CORE-BOR-15).",
+      "policy_rules": [
+        "CORE-BOR-15",
+        "CORE-BOR-16",
+        "CORE-BOR-18"
+      ],
+      "fraud_typologies": [
+        "Straw borrower"
+      ],
+      "fraud_typology_ids": [
+        "FRD-01"
+      ],
+      "data_needed": "Project-level track records for each guarantor.",
+      "previews": [],
+      "outcomes": [
+        "C06-O6",
+        "C07-O3"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-53",
+      "name": "Government ID",
+      "group": "supporting",
+      "quality_bar": "11.1; 11.3",
+      "what_it_is": "A photo ID for each 20% owner, the control person, each guarantor and, on a purchase, the seller's signer.",
+      "producer": "Borrower parties; verified by the lender or closing agent.",
+      "format": {
+        "description": "Driver's licence or passport copy, with the verification record.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Name matching the ownership chart",
+        "Address",
+        "Expiry date",
+        "Verification method and date"
+      ],
+      "planted_defects": [
+        "The ID address is the subject property (CORE-BP-02).",
+        "The ID has expired.",
+        "The name does not match the ownership chart."
+      ],
+      "first_taught": "C7",
+      "reappears": [
+        "C11"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01",
+        "CAP-01"
+      ],
+      "deal_facts": "Cedar Court: ID checks on both owners (CORE-KYC-01 to -03).",
+      "formulas_fed": [],
+      "input_rule": "ID and OFAC results must name the same person as the ownership chart (CORE-KYC-02).",
+      "policy_rules": [
+        "CORE-KYC-02",
+        "CORE-KYC-01"
+      ],
+      "fraud_typologies": [
+        "Straw borrower",
+        "Occupancy fraud",
+        "Seller impersonation or title theft"
+      ],
+      "fraud_typology_ids": [
+        "FRD-01",
+        "FRD-02",
+        "FRD-11"
+      ],
+      "data_needed": "None beyond names in the deal file.",
+      "previews": [],
+      "outcomes": [
+        "C07-O2",
+        "C07-O3",
+        "C11-O4"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-54",
+      "name": "AMC engagement letter",
+      "group": "supporting",
+      "quality_bar": "9.6; 11.1",
+      "what_it_is": "The lender's order to an appraisal management company, naming the appraiser, the scope and the client.",
+      "producer": "Lender, through its AMC.",
+      "format": {
+        "description": "Engagement letter or order confirmation with the intended user, value types and fee.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Client and intended user is the lender",
+        "Ordered through the AMC, not the borrower",
+        "Value types: as-is, after-repair, as-stabilized",
+        "Appraiser licence"
+      ],
+      "planted_defects": [
+        "The borrower or broker is named as client.",
+        "The appraiser was named by the broker.",
+        "The scope omits the after-repair value the loan sizes on."
+      ],
+      "first_taught": "C5",
+      "reappears": [
+        "C7"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "All three deals use lender-ordered appraisals (CORE-VAL-01).",
+      "formulas_fed": [],
+      "input_rule": "Only an appraisal ordered under this letter may size a loan (CORE-VAL-01).",
+      "policy_rules": [
+        "CORE-VAL-01",
+        "CORE-VAL-03",
+        "RES-GEN-06"
+      ],
+      "fraud_typologies": [
+        "Inflated or broker-supplied after-repair value",
+        "Related-party appraiser or contractor"
+      ],
+      "fraud_typology_ids": [
+        "FRD-03",
+        "FRD-07"
+      ],
+      "data_needed": "None.",
+      "previews": [],
+      "outcomes": [
+        "C05-O4",
+        "C05-O7",
+        "C07-O3"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-55",
+      "name": "Rate-cap confirmation and collateral assignment",
+      "group": "supporting",
+      "quality_bar": "9.6; C8 O3",
+      "what_it_is": "The trade confirmation for the interest-rate cap and the assignment of its payments to the lender.",
+      "producer": "Cap counterparty, through the borrower's hedge adviser; assignment signed by the borrower and acknowledged by the counterparty.",
+      "format": {
+        "description": "Confirmation with notional, strike, index, term, premium and day count; separate assignment and acknowledgement.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Counterparty and its rating",
+        "Notional against the full commitment",
+        "Strike and index",
+        "Term against loan maturity",
+        "Day count",
+        "Assignment to the lender acknowledged"
+      ],
+      "planted_defects": [
+        "The notional covers the funded balance, not the full commitment (D-CORE-30).",
+        "The term ends before loan maturity.",
+        "The counterparty is rated below A / A2 (MF-BR-09).",
+        "The assignment is not acknowledged by the counterparty."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C11",
+        "C12"
+      ],
+      "deals": [
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Cedar Court: strike 4.25%, 24 months, notional $5,140,000, A-rated counterparty, cost $60,000 (course assumption). Birchwood Plaza: strike 4.25%, 24 months, notional $3,520,000, cost $40,000.",
+      "formulas_fed": [
+        {
+          "id": "F-MF-22",
+          "input": "strike"
+        },
+        {
+          "id": "F-MF-12",
+          "input": "strike plus spread"
+        }
+      ],
+      "input_rule": "Coverage is tested at the higher of the note rate and strike plus spread (F-MF-12; MF-BR-09).",
+      "policy_rules": [
+        "MF-BR-09",
+        "MF-BR-11"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "None.",
+      "previews": [],
+      "outcomes": [
+        "C08-O3",
+        "C11-O1",
+        "C12-O2",
+        "C12-O3"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-56",
+      "name": "Plans, specifications and building permit",
+      "group": "construction",
+      "quality_bar": "9.3; C8 O4",
+      "what_it_is": "The drawings and specifications for the work, and the municipal permit that allows it.",
+      "producer": "Architect or engineer; the municipality issues the permit.",
+      "format": {
+        "description": "Plan set and specification book; permit card or letter with scope and expiry.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Permit number, scope and expiry",
+        "Plans match the budget and the contract",
+        "Third-party plan and cost review"
+      ],
+      "planted_defects": [
+        "No permit before the first construction draw (RES-GU-04).",
+        "The permit scope is narrower than the budget.",
+        "The plan set differs from the one priced in the contract."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C12",
+        "Capstone"
+      ],
+      "deals": [
+        "CAP-01",
+        "RD-RES-01"
+      ],
+      "deal_facts": "Maple Run: rehab budget includes $1,000 for permits; no structural work.",
+      "formulas_fed": [],
+      "input_rule": "Permits are needed before the first construction draw; no exception (RES-GU-04).",
+      "policy_rules": [
+        "RES-GU-04",
+        "RES-GU-10"
+      ],
+      "fraud_typologies": [
+        "Related-party appraiser or contractor"
+      ],
+      "fraud_typology_ids": [
+        "FRD-07"
+      ],
+      "data_needed": "Capstone plan set (CAP-01 not authored).",
+      "previews": [],
+      "outcomes": [
+        "C08-O4",
+        "C12-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-57",
+      "name": "Payoff letter",
+      "group": "supporting",
+      "quality_bar": "9.6; C12 O7",
+      "what_it_is": "A lender's statement of the amount needed to repay a loan in full on a stated date, with per diem after that date.",
+      "producer": "The servicer of the loan being repaid.",
+      "format": {
+        "description": "Letter with principal, accrued interest to the payoff date, fees, per diem and wire instructions.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Good-through date",
+        "Principal and accrued interest",
+        "Exit and other fees",
+        "Per diem",
+        "Wire instructions verified by callback"
+      ],
+      "planted_defects": [
+        "Interest counts the payoff day (the payoff day does not count).",
+        "The exit fee is missing.",
+        "Wire instructions differ from those on file."
+      ],
+      "first_taught": "C11",
+      "reappears": [
+        "C12"
+      ],
+      "deals": [
+        "RD-RES-01",
+        "RD-MF-01"
+      ],
+      "deal_facts": "Maple Run bridge payoff $340,000. Cedar Court bridge payoff $5,140,000 plus the 0.50% exit fee, $25,700: $5,165,700.",
+      "formulas_fed": [
+        {
+          "id": "F-CORE-32",
+          "input": "balance, rate, days and fees"
+        },
+        {
+          "id": "F-CORE-05",
+          "input": "per diem"
+        }
+      ],
+      "input_rule": "Interest runs up to but not including the payoff day.",
+      "policy_rules": [
+        "CORE-PRC-06",
+        "CORE-KYC-07"
+      ],
+      "fraud_typologies": [
+        "Closing wire fraud"
+      ],
+      "fraud_typology_ids": [
+        "FRD-09"
+      ],
+      "data_needed": "None.",
+      "previews": [],
+      "outcomes": [
+        "C11-O2",
+        "C12-O7"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-58",
+      "name": "Intercreditor agreement",
+      "group": "supporting",
+      "quality_bar": "9.6; TM-31",
+      "what_it_is": "The agreement between the senior lender and a mezzanine lender on payment priority, cure rights and foreclosure on the pledged equity.",
+      "producer": "Counsel for both lenders.",
+      "format": {
+        "description": "Agreement with standstill, cure, purchase-option and transfer terms.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Payment priority",
+        "Cure rights and periods",
+        "Purchase option",
+        "Qualified transferee test for a mezzanine foreclosure",
+        "Modification consents"
+      ],
+      "planted_defects": [
+        "The mezzanine lender may foreclose without meeting a transferee test.",
+        "Cure periods run past the senior lender's remedies.",
+        "The senior loan cannot be modified without mezzanine consent."
+      ],
+      "first_taught": "C9",
+      "reappears": [
+        "C13"
+      ],
+      "deals": [],
+      "deal_facts": "No running deal has mezzanine debt. Items use an exam-only fictional deal.",
+      "formulas_fed": [],
+      "input_rule": "Senior documents and the intercreditor agreement decide who loses first.",
+      "policy_rules": [],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "An exam-only deal with mezzanine debt. No policy rule on mezzanine debt (open item).",
+      "previews": [],
+      "outcomes": [
+        "C09-O1",
+        "C13-O3"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-59",
+      "name": "Take-out lender quote",
+      "group": "supporting",
+      "quality_bar": "9.6; C8 O6",
+      "what_it_is": "A refinance lender's indicative terms for the loan that will repay the bridge.",
+      "producer": "Agency, bank or life-company lender, often through a broker.",
+      "format": {
+        "description": "Term sheet or quote letter with rate, amortization, DSCR and LTV tests and its date.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Quote date and expiry",
+        "Rate basis",
+        "Amortization and term",
+        "DSCR and LTV tests",
+        "Conditions"
+      ],
+      "planted_defects": [
+        "The quote is stale.",
+        "The quote's DSCR uses pro forma income.",
+        "The rate omits a spread or fee the course adds."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C12",
+        "C14"
+      ],
+      "deals": [
+        "RD-MF-01",
+        "RD-COM-01"
+      ],
+      "deal_facts": "Cedar Court: agency 10-year fixed 6.55% as of 16 Nov 2026; the course sizes at the 7.25% grid rate. Birchwood Plaza: course take-out rate 7.75%.",
+      "formulas_fed": [
+        {
+          "id": "F-MF-20",
+          "input": "take-out rate"
+        },
+        {
+          "id": "F-COM-10",
+          "input": "take-out rate"
+        }
+      ],
+      "input_rule": "The course sizes exits on its own stated rate, not the quote, where the policy says so (D-CORE-31).",
+      "policy_rules": [
+        "MF-BR-08"
+      ],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "None.",
+      "previews": [],
+      "outcomes": [
+        "C08-O6",
+        "C12-O3",
+        "C14-O5"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-60",
+      "name": "Sources and uses with mezzanine debt and preferred equity",
+      "group": "supporting",
+      "quality_bar": "9.6; C8 O7",
+      "what_it_is": "A table of every source and every use of funds for a deal with a layered capital stack.",
+      "producer": "Sponsor or its adviser; the underwriter rebuilds it.",
+      "format": {
+        "description": "Two-column table, sources and uses, with totals that tie.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Senior loan, mezzanine, preferred equity and common equity",
+        "Uses: price, costs, reserves, fees",
+        "Totals tie",
+        "Combined leverage"
+      ],
+      "planted_defects": [
+        "Sources do not equal uses.",
+        "Preferred equity with a fixed return is shown as common equity.",
+        "Fees financed by the mezzanine loan are left out of combined leverage."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C14"
+      ],
+      "deals": [],
+      "deal_facts": "No running deal has a layered stack. Items use an exam-only fictional deal.",
+      "formulas_fed": [
+        {
+          "id": "F-MF-16",
+          "input": "senior and mezzanine amounts"
+        }
+      ],
+      "input_rule": "Combined leverage counts every layer ahead of common equity.",
+      "policy_rules": [],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "An exam-only deal. No policy rule on combined leverage beyond F-MF-16 (open item).",
+      "previews": [],
+      "outcomes": [
+        "C08-O7",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-61",
+      "name": "Buyer or warehouse eligibility sheet",
+      "group": "supporting",
+      "quality_bar": "10.3; C14 O2",
+      "what_it_is": "A capital partner's list of loans it will buy or finance, with advance rates and exclusions.",
+      "producer": "Loan buyer or warehouse lender.",
+      "format": {
+        "description": "Matrix of eligibility criteria, concentration limits and repurchase triggers.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Eligible products and states",
+        "Leverage and coverage limits",
+        "Advance rate",
+        "Exclusions and concentration limits",
+        "Repurchase triggers"
+      ],
+      "planted_defects": [
+        "A loan breaches one criterion but is listed as eligible.",
+        "A repurchase trigger is missed on a seasoned loan.",
+        "A concentration limit is breached by a new loan."
+      ],
+      "first_taught": "C14",
+      "reappears": [],
+      "deals": [],
+      "deal_facts": "Not authored. C14 O2 is blocked until the owner supplies it.",
+      "formulas_fed": [],
+      "input_rule": "The partner's sheet binds the loan's financing; our policy binds approval.",
+      "policy_rules": [],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Owner to supply a fictional sheet (open item 9). No figures are invented here.",
+      "previews": [],
+      "outcomes": [
+        "C14-O2"
+      ],
+      "preview_outcomes": []
+    },
+    {
+      "id": "DOC-62",
+      "name": "Market or feasibility study",
+      "group": "construction",
+      "quality_bar": "9.3; TM-26",
+      "what_it_is": "A study of demand, supply, rents or sale prices and absorption that tests whether a project can lease or sell as planned.",
+      "producer": "Market consultant, or the appraiser's market section.",
+      "format": {
+        "description": "Narrative report with supply pipeline, comparable rents or sales, absorption and a stabilization date.",
+        "references": []
+      },
+      "fields_to_read": [
+        "Comparable rents or sale prices",
+        "Supply pipeline",
+        "Absorption rate and stabilization date",
+        "Sensitivity to rent and cap rate"
+      ],
+      "planted_defects": [
+        "Comparables are newer or in a stronger submarket.",
+        "The supply pipeline omits permitted projects.",
+        "Absorption assumes no competition."
+      ],
+      "first_taught": "C8",
+      "reappears": [
+        "C14",
+        "Capstone"
+      ],
+      "deals": [
+        "CAP-01"
+      ],
+      "deal_facts": "Capstone not authored.",
+      "formulas_fed": [],
+      "input_rule": "Stabilized income for the back-door test comes from the study, cross-checked to the appraisal.",
+      "policy_rules": [],
+      "fraud_typologies": [],
+      "fraud_typology_ids": [],
+      "data_needed": "Capstone study. No policy rule on feasibility (theory map owner decision 3).",
+      "previews": [],
+      "outcomes": [
+        "C08-O4",
+        "C08-O6",
+        "C14-O1"
+      ],
+      "preview_outcomes": []
+    }
+  ],
+  "coverage": {
+    "qb_9_1": [
+      {
+        "item": "1",
+        "type": "Rent roll",
+        "documents": [
+          "DOC-01"
+        ]
+      },
+      {
+        "item": "2",
+        "type": "T-12 operating statement",
+        "documents": [
+          "DOC-02"
+        ]
+      },
+      {
+        "item": "3",
+        "type": "Appraisal excerpt",
+        "documents": [
+          "DOC-03"
+        ]
+      },
+      {
+        "item": "4",
+        "type": "Appraisal review",
+        "documents": [
+          "DOC-04"
+        ]
+      },
+      {
+        "item": "5",
+        "type": "Title commitment (Schedules B-I and B-II)",
+        "documents": [
+          "DOC-19"
+        ]
+      },
+      {
+        "item": "6",
+        "type": "Survey",
+        "documents": [
+          "DOC-20"
+        ]
+      },
+      {
+        "item": "7",
+        "type": "Draw request with inspection report",
+        "documents": [
+          "DOC-29",
+          "DOC-30"
+        ]
+      },
+      {
+        "item": "8",
+        "type": "Credit and background reports",
+        "documents": [
+          "DOC-06",
+          "DOC-07"
+        ]
+      },
+      {
+        "item": "9",
+        "type": "Operating agreement and good-standing certificate",
+        "documents": [
+          "DOC-08",
+          "DOC-09"
+        ]
+      },
+      {
+        "item": "10",
+        "type": "Property condition summary",
+        "documents": [
+          "DOC-21"
+        ]
+      },
+      {
+        "item": "11",
+        "type": "Phase I environmental summary",
+        "documents": [
+          "DOC-22"
+        ]
+      },
+      {
+        "item": "12",
+        "type": "Insurance certificate",
+        "documents": [
+          "DOC-23"
+        ]
+      },
+      {
+        "item": "13",
+        "type": "Term sheet",
+        "documents": [
+          "DOC-14"
+        ]
+      },
+      {
+        "item": "14",
+        "type": "Closing checklist",
+        "documents": [
+          "DOC-27"
+        ]
+      },
+      {
+        "item": "15",
+        "type": "Servicing report",
+        "documents": [
+          "DOC-34"
+        ]
+      }
+    ],
+    "qb_9_7": [
+      {
+        "type": "Delinquency tape",
+        "documents": [
+          "DOC-37"
+        ]
+      },
+      {
+        "type": "Watchlist with risk ratings",
+        "documents": [
+          "DOC-36"
+        ]
+      },
+      {
+        "type": "Investor remittance report",
+        "documents": [
+          "DOC-38"
+        ]
+      },
+      {
+        "type": "Extension or modification request",
+        "documents": [
+          "DOC-39"
+        ]
+      }
+    ],
+    "construction": [
+      {
+        "type": "Construction contract or GMP summary",
+        "documents": [
+          "DOC-15"
+        ]
+      },
+      {
+        "type": "Hard and soft cost budget",
+        "documents": [
+          "DOC-16"
+        ]
+      },
+      {
+        "type": "Construction schedule",
+        "documents": [
+          "DOC-17"
+        ]
+      },
+      {
+        "type": "Loan-monitor or inspection report",
+        "documents": [
+          "DOC-31"
+        ]
+      },
+      {
+        "type": "Change order",
+        "documents": [
+          "DOC-32"
+        ]
+      },
+      {
+        "type": "Lien waivers",
+        "documents": [
+          "DOC-33"
+        ]
+      },
+      {
+        "type": "Builder background report",
+        "documents": [
+          "DOC-18"
+        ]
+      },
+      {
+        "type": "Plans, specifications and building permit",
+        "documents": [
+          "DOC-56"
+        ]
+      },
+      {
+        "type": "Market or feasibility study",
+        "documents": [
+          "DOC-62"
+        ]
+      }
+    ],
+    "modules": {
+      "C4": {
+        "first_taught": [
+          "DOC-01",
+          "DOC-02",
+          "DOC-11",
+          "DOC-35"
+        ],
+        "reappears": []
+      },
+      "C5": {
+        "first_taught": [
+          "DOC-03",
+          "DOC-04",
+          "DOC-05",
+          "DOC-49",
+          "DOC-54"
+        ],
+        "reappears": [
+          "DOC-01",
+          "DOC-02"
+        ]
+      },
+      "C6": {
+        "first_taught": [
+          "DOC-06",
+          "DOC-07",
+          "DOC-08",
+          "DOC-09",
+          "DOC-10",
+          "DOC-46",
+          "DOC-52"
+        ],
+        "reappears": [
+          "DOC-11"
+        ]
+      },
+      "C7": {
+        "first_taught": [
+          "DOC-12",
+          "DOC-13",
+          "DOC-53"
+        ],
+        "reappears": [
+          "DOC-05",
+          "DOC-06",
+          "DOC-07",
+          "DOC-08",
+          "DOC-11",
+          "DOC-46",
+          "DOC-52",
+          "DOC-54"
+        ]
+      },
+      "C8": {
+        "first_taught": [
+          "DOC-14",
+          "DOC-15",
+          "DOC-16",
+          "DOC-17",
+          "DOC-18",
+          "DOC-55",
+          "DOC-56",
+          "DOC-59",
+          "DOC-60",
+          "DOC-62"
+        ],
+        "reappears": [
+          "DOC-01",
+          "DOC-02",
+          "DOC-03",
+          "DOC-04",
+          "DOC-05"
+        ]
+      },
+      "C9": {
+        "first_taught": [
+          "DOC-19",
+          "DOC-20",
+          "DOC-21",
+          "DOC-22",
+          "DOC-23",
+          "DOC-24",
+          "DOC-25",
+          "DOC-26",
+          "DOC-47",
+          "DOC-48",
+          "DOC-50",
+          "DOC-58"
+        ],
+        "reappears": [
+          "DOC-01",
+          "DOC-08",
+          "DOC-35",
+          "DOC-49"
+        ]
+      },
+      "C10": {
+        "first_taught": [],
+        "reappears": [
+          "DOC-14",
+          "DOC-25",
+          "DOC-48"
+        ]
+      },
+      "C11": {
+        "first_taught": [
+          "DOC-27",
+          "DOC-28",
+          "DOC-51",
+          "DOC-57"
+        ],
+        "reappears": [
+          "DOC-03",
+          "DOC-05",
+          "DOC-06",
+          "DOC-07",
+          "DOC-08",
+          "DOC-09",
+          "DOC-11",
+          "DOC-12",
+          "DOC-13",
+          "DOC-14",
+          "DOC-19",
+          "DOC-20",
+          "DOC-22",
+          "DOC-23",
+          "DOC-24",
+          "DOC-46",
+          "DOC-47",
+          "DOC-53",
+          "DOC-55"
+        ]
+      },
+      "C12": {
+        "first_taught": [
+          "DOC-29",
+          "DOC-30",
+          "DOC-31",
+          "DOC-32",
+          "DOC-33",
+          "DOC-34",
+          "DOC-36",
+          "DOC-37",
+          "DOC-38",
+          "DOC-39"
+        ],
+        "reappears": [
+          "DOC-01",
+          "DOC-02",
+          "DOC-03",
+          "DOC-10",
+          "DOC-11",
+          "DOC-15",
+          "DOC-16",
+          "DOC-17",
+          "DOC-18",
+          "DOC-19",
+          "DOC-21",
+          "DOC-23",
+          "DOC-25",
+          "DOC-26",
+          "DOC-27",
+          "DOC-28",
+          "DOC-35",
+          "DOC-46",
+          "DOC-50",
+          "DOC-51",
+          "DOC-55",
+          "DOC-56",
+          "DOC-57",
+          "DOC-59"
+        ]
+      },
+      "C13": {
+        "first_taught": [
+          "DOC-40",
+          "DOC-41"
+        ],
+        "reappears": [
+          "DOC-03",
+          "DOC-10",
+          "DOC-19",
+          "DOC-20",
+          "DOC-22",
+          "DOC-25",
+          "DOC-29",
+          "DOC-30",
+          "DOC-34",
+          "DOC-36",
+          "DOC-37",
+          "DOC-39",
+          "DOC-47",
+          "DOC-48",
+          "DOC-50",
+          "DOC-51",
+          "DOC-58"
+        ]
+      },
+      "C14": {
+        "first_taught": [
+          "DOC-42",
+          "DOC-43",
+          "DOC-44",
+          "DOC-45",
+          "DOC-61"
+        ],
+        "reappears": [
+          "DOC-01",
+          "DOC-02",
+          "DOC-03",
+          "DOC-04",
+          "DOC-06",
+          "DOC-10",
+          "DOC-12",
+          "DOC-14",
+          "DOC-21",
+          "DOC-22",
+          "DOC-27",
+          "DOC-34",
+          "DOC-35",
+          "DOC-36",
+          "DOC-37",
+          "DOC-38",
+          "DOC-40",
+          "DOC-41",
+          "DOC-59",
+          "DOC-60",
+          "DOC-62"
+        ]
+      }
+    },
+    "gaps": [],
+    "thin": [
+      "C10"
+    ],
+    "capstone": [
+      "DOC-03",
+      "DOC-05",
+      "DOC-06",
+      "DOC-07",
+      "DOC-08",
+      "DOC-09",
+      "DOC-12",
+      "DOC-14",
+      "DOC-15",
+      "DOC-16",
+      "DOC-17",
+      "DOC-18",
+      "DOC-19",
+      "DOC-20",
+      "DOC-21",
+      "DOC-22",
+      "DOC-23",
+      "DOC-24",
+      "DOC-27",
+      "DOC-29",
+      "DOC-30",
+      "DOC-31",
+      "DOC-32",
+      "DOC-33",
+      "DOC-42",
+      "DOC-43",
+      "DOC-46",
+      "DOC-51",
+      "DOC-53",
+      "DOC-56",
+      "DOC-62"
+    ]
+  },
+  "provenance_rules": [
+    {
+      "conflict": "Value: price versus appraisal",
+      "rule": "Lower of price and appraised as-is value",
+      "source_rule": "F-CORE-14; COM-CON-01 (land)",
+      "documents": "Purchase contract (DOC-05); appraisal (DOC-03)",
+      "deal_example": "Cedar Court: $6,200,000 price, not $6,300,000"
+    },
+    {
+      "conflict": "Residential rent: lease versus appraisal",
+      "rule": "Lesser of lease rent and appraisal market rent",
+      "source_rule": "RES-DSCR-01; F-RES-23",
+      "documents": "Lease (DOC-35); appraisal (DOC-03)",
+      "deal_example": "Maple Run: $2,400, not $2,450"
+    },
+    {
+      "conflict": "Multifamily income: rent roll versus trailing 3 months",
+      "rule": "Lesser of the two annualized",
+      "source_rule": "MF-GEN-05",
+      "documents": "Rent roll (DOC-01); T-12 (DOC-02)",
+      "deal_example": "Cedar Court: $702,000, not $708,000"
+    },
+    {
+      "conflict": "Expenses: T-12 versus appraiser",
+      "rule": "Greater of the two",
+      "source_rule": "MF-GEN-06; COM-GEN-06",
+      "documents": "T-12 (DOC-02); appraisal (DOC-03)",
+      "deal_example": "Cedar Court $310,000; Birchwood $204,000"
+    },
+    {
+      "conflict": "Commercial lease facts: rent roll versus lease and estoppel",
+      "rule": "Lease and estoppel control",
+      "source_rule": "COM-GEN-09",
+      "documents": "Rent roll (DOC-01); estoppel (DOC-26)",
+      "deal_example": "Birchwood largest tenant: lease ends month 20"
+    },
+    {
+      "conflict": "Work in place: draw request versus inspection",
+      "rule": "Inspection controls; stored materials do not count",
+      "source_rule": "CORE-SVC-05; D-CONV-05",
+      "documents": "Draw request (DOC-29); inspection (DOC-30)",
+      "deal_example": "Maple Run month 8: $90,000 in place; draw capped at 90% of holdback"
+    },
+    {
+      "conflict": "Liquidity: PFS versus statements",
+      "rule": "Dated statements control; unused lines count at zero",
+      "source_rule": "CORE-BOR-11; CORE-BOR-13; D-CORE-06",
+      "documents": "PFS (DOC-10); statements (DOC-11)",
+      "deal_example": "Dana Reyes: HELOC $75,000 counts as $0"
+    },
+    {
+      "conflict": "Ownership: application versus operating agreement",
+      "rule": "Signed operating agreement, multiplied through layers",
+      "source_rule": "CORE-BOR-03; CORE-BOR-15",
+      "documents": "Operating agreement (DOC-08); ownership chart (DOC-12)",
+      "deal_example": "Marcus Hale's 8% stake does not count toward experience"
+    },
+    {
+      "conflict": "Hard costs: budget versus contract",
+      "rule": "Signed contract plus approved change orders",
+      "source_rule": "MF-CON-04; COM-CON-11",
+      "documents": "Budget (DOC-16); contract (DOC-15); change order (DOC-32)",
+      "deal_example": "Capstone (not yet authored)"
+    },
+    {
+      "conflict": "Billing terms: term sheet versus note",
+      "rule": "Signed note controls",
+      "source_rule": "CORE-PRC-06",
+      "documents": "Term sheet (DOC-14); note (DOC-25)",
+      "deal_example": "Bridges bill Actual/360 on the funded balance"
+    },
+    {
+      "conflict": "Insurable value: loan amount versus replacement cost",
+      "rule": "Replacement cost of improvements, excluding land",
+      "source_rule": "CORE-INS-01; F-CORE-34",
+      "documents": "Insurance evidence (DOC-23); appraisal cost approach (DOC-03)",
+      "deal_example": "No deal figure yet"
+    },
+    {
+      "conflict": "Value in default: stabilized versus as-is",
+      "rule": "As-is value less cost to sell",
+      "source_rule": "CORE-SVC-08; F-CORE-42",
+      "documents": "Updated valuation (DOC-41)",
+      "deal_example": "No deal figure yet"
+    },
+    {
+      "conflict": "Purpose: certification versus file evidence",
+      "rule": "Contrary evidence wins; contradictions go to the BSA officer",
+      "source_rule": "CORE-BP-02; CORE-KYC-07",
+      "documents": "Certification (DOC-46); ID (DOC-53); lease (DOC-35); site visit (DOC-50)",
+      "deal_example": "Maple Run: Dana lives elsewhere; no red flag"
+    }
+  ],
+  "open_items": [
+    {
+      "item": "Capstone deal",
+      "detail": "The ground-up capstone (CAP-01) is not authored. Recommendation (CCO review 6): RES-GU, a ground-up 1-4 unit spec build, because RES-GU-02 to -10 give a full rule set while MF-CON is teaching only. The owner decides before M4; DOC-15 to -18, -31 to -33, -56 and -62 wait on it.",
+      "needs": "Owner decision (cfi-cref-comparison H.2)"
+    },
+    {
+      "item": "Running Deals detail",
+      "detail": "Most documents need detail the Running Deals tab lacks: unit and suite rows, T-12 lines, comparables, title schedules, survey, insurable values, SREO, payment history. Each addition must tie to existing totals and be made in the Course Bible.",
+      "needs": "Course Bible change; changelog"
+    },
+    {
+      "item": "Good-standing certificate age",
+      "detail": "No policy age limit. Defects test name and status only until a rule exists.",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "PFS age",
+      "detail": "No policy age limit (P-C6-3).",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Change-order consent",
+      "detail": "No rule on when the lender must approve a change order. This is the C8 grey case in the exam template (7.4): the key is to condition the draw on credit-officer approval.",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Retainage outside commercial construction",
+      "detail": "Only COM-CON-10 sets retainage. Residential and multifamily drafts treat retainage as a market concept.",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Remittance rule",
+      "detail": "No servicing-fee, remittance-date or deadline rule (C12 4.5 item 6). DOC-38 shows gross collections only.",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Remittance deal",
+      "detail": "DOC-38 needs a what-if in which Cedar Court is sold to a loan buyer. Confirm, or pick another deal.",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Buyer eligibility sheet",
+      "detail": "DOC-44 needs a fictional buyer or warehouse eligibility sheet (coverage review item 2).",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Portfolio list",
+      "detail": "DOC-37 and DOC-45 need a small fictional portfolio around the three deals.",
+      "needs": "Course Bible change"
+    },
+    {
+      "item": "F-CORE-38 and -39",
+      "detail": "Reserved for C7. DOC-12 feeds them once defined.",
+      "needs": "Formula Library"
+    },
+    {
+      "item": "Site visit rule",
+      "detail": "No policy rule requires a site visit (DOC-50).",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Seller identity and seller credits",
+      "detail": "No rule on confirming the seller's identity on a purchase (FRD-11) or on netting seller credits (FRD-12).",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Mezzanine and preferred equity",
+      "detail": "No rule on subordinate debt (DOC-58, DOC-60). Items use exam-only deals.",
+      "needs": "Owner decision"
+    },
+    {
+      "item": "Birchwood environmental basis",
+      "detail": "REG-14 item 1 needs a stated basis for no Phase II, such as a no-further-action letter. Add it to the Course Bible or keep the item a what-if.",
+      "needs": "Course Bible change"
+    }
+  ],
+  "exhibit_map": {
+    "EXH-C08-01": [
+      "DOC-14",
+      "DOC-05"
+    ],
+    "EXH-C08-02": [
+      "DOC-03"
+    ],
+    "EXH-C08-03": [
+      "DOC-01",
+      "DOC-02",
+      "DOC-03"
+    ],
+    "EXH-C08-04": [
+      "DOC-14",
+      "DOC-55",
+      "DOC-02"
+    ],
+    "EXH-C08-05": [
+      "DOC-16",
+      "DOC-17",
+      "DOC-15"
+    ],
+    "EXH-C08-06": [
+      "DOC-59",
+      "DOC-02"
+    ],
+    "EXH-C08-07": [
+      "DOC-60"
+    ],
+    "EXH-C08-08": [
+      "DOC-14"
+    ]
+  }
+}

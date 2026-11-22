@@ -1,0 +1,671 @@
+{
+  "built": "2026-11-22",
+  "label": "Model policy for training - not for live lending decisions. Not legal advice.",
+  "quality_bar_rows": [
+    "11.3"
+  ],
+  "document_registry": "docs/curriculum/document-registry.json (DOC ids in document_ids)",
+  "review_log": [
+    "REG-01: previews C0; revisits dropped (no outcome) C2; revisits added -",
+    "REG-03: previews -; revisits dropped (no outcome) -; revisits added C9",
+    "REG-04: previews C1, C2; revisits dropped (no outcome) -; revisits added -",
+    "REG-07: previews -; revisits dropped (no outcome) C14; revisits added -",
+    "REG-08: previews C1; revisits dropped (no outcome) -; revisits added -",
+    "REG-09: previews C6; revisits dropped (no outcome) -; revisits added -",
+    "REG-10: previews C6; revisits dropped (no outcome) -; revisits added -",
+    "REG-12: previews -; revisits dropped (no outcome) C10; revisits added -",
+    "REG-18: previews -; revisits dropped (no outcome) -; revisits added C12, C13",
+    "REG-19: previews -; revisits dropped (no outcome) -; revisits added C12",
+    "REG-21: previews -; revisits dropped (no outcome) -; revisits added C13",
+    "REG-22: previews -; revisits dropped (no outcome) -; revisits added C13",
+    "REG-23: previews -; revisits dropped (no outcome) -; revisits added C5",
+    "REG-24: previews -; revisits dropped (no outcome) -; revisits added C8",
+    "FRD-01: previews C6; revisits dropped (no outcome) -; revisits added -",
+    "FRD-02: previews -; revisits dropped (no outcome) -; revisits added C9",
+    "FRD-04: previews C5; revisits dropped (no outcome) -; revisits added -",
+    "FRD-07: previews -; revisits dropped (no outcome) -; revisits added C12",
+    "FRD-08: previews C7; revisits dropped (no outcome) -; revisits added -",
+    "FRD-09: previews -; revisits dropped (no outcome) -; revisits added C11",
+    "FRD-11: previews -; revisits dropped (no outcome) -; revisits added C9, C11",
+    "FRD-12: previews -; revisits dropped (no outcome) -; revisits added C11"
+  ],
+  "rows": [
+    {
+      "id": "FRD-01",
+      "typology": "Straw borrower or nominee owner",
+      "red_flags": [
+        "Owner with no real estate history fronting a deal an experienced party runs",
+        "Track record borrowed from a partner who is not on the chart",
+        "Third party pays the deposit or cash to close",
+        "Guarantor cannot explain the project in a call"
+      ],
+      "documents": [
+        "Operating agreement and ownership chart",
+        "Government ID and OFAC results",
+        "Bank statements and source of cash to close",
+        "Settlement statements and deeds for the track record"
+      ],
+      "control": "Chart to natural persons and verify each 20% owner (CORE-KYC-02, -08); verify experience by settlement statement or public record (CORE-BOR-15); straw or nominee owner and unrelated third-party funds stop the file for the BSA officer (CORE-KYC-07).",
+      "policy": [
+        "CORE-KYC-02",
+        "CORE-KYC-07",
+        "CORE-KYC-08",
+        "CORE-BOR-15"
+      ],
+      "teach": "C7",
+      "revisit": [],
+      "mcq": {
+        "stem": "Exhibit: Maple Run track record listing 7 flips; one settlement statement shows Dana owned 15% of a deal. Which count does policy allow?",
+        "key": "6 projects; the 15% deal fails the 20% ownership test (CORE-BOR-15).",
+        "distractors": [
+          "7 projects, as listed.",
+          "0, because one entry is doubtful.",
+          "7, if Sam Okafor co-signs."
+        ],
+        "exhibit": "track record and settlement statement",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C07-O3"
+      ],
+      "preview_outcomes": [
+        "C01-O6",
+        "C06-O6"
+      ],
+      "previews": [
+        "C1",
+        "C6"
+      ],
+      "document_ids": [
+        "DOC-08",
+        "DOC-12",
+        "DOC-53",
+        "DOC-11",
+        "DOC-52"
+      ]
+    },
+    {
+      "id": "FRD-02",
+      "typology": "Occupancy fraud",
+      "red_flags": [
+        "Guarantor's ID, mail or utilities at the subject address",
+        "Lease to a relative or with a shared surname",
+        "No proof of the guarantor's other home",
+        "Cash-out for personal use"
+      ],
+      "documents": [
+        "Business-purpose and non-occupancy certification",
+        "Lease and tenant ID",
+        "Utility bills, credit report address history",
+        "Use-of-proceeds letter"
+      ],
+      "control": "Certification before closing (CORE-BP-01); red flag stops the file and needs written evidence, with contradictions sent to the BSA officer (CORE-BP-02); cash-out majority-personal is declined (CORE-BP-04); lease to an unrelated tenant (RES-GEN-11).",
+      "policy": [
+        "CORE-BP-01",
+        "CORE-BP-02",
+        "CORE-BP-04",
+        "RES-GEN-09",
+        "RES-GEN-11"
+      ],
+      "teach": "C1",
+      "revisit": [
+        "C7",
+        "C9",
+        "C12"
+      ],
+      "mcq": {
+        "stem": "Exhibit: Maple Run month-11 lease to 'C. Reyes' and the guarantor's credit report showing the subject as a current address. What happens?",
+        "key": "The file stops; contradicting evidence goes to the BSA officer, who alone clears it (CORE-BP-02).",
+        "distractors": [
+          "Accept the lease; a lease is enough.",
+          "Raise the rate for consumer risk.",
+          "Ask Chris Reyes to sign the guaranty."
+        ],
+        "exhibit": "lease and credit report",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C01-O6",
+        "C07-O3",
+        "C09-O8",
+        "C12-O4"
+      ],
+      "preview_outcomes": [],
+      "previews": [],
+      "document_ids": [
+        "DOC-46",
+        "DOC-35",
+        "DOC-06",
+        "DOC-53",
+        "DOC-50"
+      ]
+    },
+    {
+      "id": "FRD-03",
+      "typology": "Inflated or broker-supplied after-repair value (ARV)",
+      "red_flags": [
+        "Borrower or broker sends their own appraisal or names the appraiser",
+        "Comparables are newer, larger or in a different market",
+        "ARV per square foot far above the comparables",
+        "Pressure to 'hit a value'"
+      ],
+      "documents": [
+        "Lender-ordered appraisal and AMC engagement letter",
+        "Desk review",
+        "Comparable sales grid",
+        "Rehab budget and scope"
+      ],
+      "control": "Appraisal ordered only through the lender's AMC from a certified appraiser (CORE-VAL-01); desk review of every appraisal (CORE-VAL-03); BPOs and AVMs as checks only (CORE-VAL-03, RES-GEN-06).",
+      "policy": [
+        "CORE-VAL-01",
+        "CORE-VAL-03",
+        "RES-GEN-06"
+      ],
+      "teach": "C5",
+      "revisit": [
+        "C7",
+        "C8"
+      ],
+      "mcq": {
+        "stem": "Exhibit: a broker email attaching an 'updated ARV' of $575,000 for Maple Run, against the AMC's $520,000. What should the underwriter do?",
+        "key": "Size on the AMC value and log the broker's pressure as a red flag (CORE-VAL-01).",
+        "distractors": [
+          "Use $575,000; it is more recent.",
+          "Average the two values.",
+          "Order a BPO to break the tie."
+        ],
+        "exhibit": "broker email and appraisal summary",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C05-O7",
+        "C07-O3",
+        "C08-O1"
+      ],
+      "preview_outcomes": [],
+      "previews": [],
+      "document_ids": [
+        "DOC-54",
+        "DOC-03",
+        "DOC-04",
+        "DOC-16"
+      ]
+    },
+    {
+      "id": "FRD-04",
+      "typology": "Rapid flip chains (title chain and seasoning)",
+      "red_flags": [
+        "Seller took title weeks ago at a much lower price",
+        "Related parties on both sides of prior sales",
+        "Assignment of contract with a large fee",
+        "No work done to explain the price jump"
+      ],
+      "documents": [
+        "Title commitment with 24-month chain of title",
+        "Purchase contract and any assignment",
+        "Prior settlement statements",
+        "Appraisal sales history section"
+      ],
+      "control": "A prior sale within 12 months at 20% or more below today's price or value stops the file for the BSA officer (CORE-KYC-07);title commitment review (CORE-CLS-01); DSCR value is the lesser of appraisal and cost basis if owned under 6 months (RES-DSCR-05).",
+      "policy": [
+        "CORE-KYC-07",
+        "CORE-CLS-01",
+        "RES-DSCR-05"
+      ],
+      "teach": "C7",
+      "revisit": [
+        "C9"
+      ],
+      "mcq": {
+        "stem": "Exhibit: title chain showing the subject sold 4 months ago for $230,000; contract price now $300,000. Does a policy flag fire?",
+        "key": "Yes: $230,000 is 23.3% below $300,000, within 12 months (CORE-KYC-07).",
+        "distractors": [
+          "No: the gap is under 25%.",
+          "No: only the appraiser reviews prior sales.",
+          "No: the lookback covers refinances, not purchases."
+        ],
+        "exhibit": "title chain",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C07-O3",
+        "C09-O3"
+      ],
+      "preview_outcomes": [
+        "C05-O4"
+      ],
+      "previews": [
+        "C5"
+      ],
+      "document_ids": [
+        "DOC-19",
+        "DOC-05",
+        "DOC-52",
+        "DOC-03"
+      ]
+    },
+    {
+      "id": "FRD-05",
+      "typology": "Fake leases or rent rolls",
+      "red_flags": [
+        "Rent roll income not seen in bank deposits",
+        "Many leases signed the same week at above-market rents",
+        "Tenant names repeat or match related parties",
+        "No security deposits held"
+      ],
+      "documents": [
+        "Certified rent roll",
+        "Leases and estoppel certificates",
+        "Three months of operating bank statements",
+        "T-12 operating statement"
+      ],
+      "control": "Rent roll must tie to bank deposits within 5% for the last 3 months (MF-GEN-04); underwritten income is the lesser of rent roll and trailing 3 months (MF-GEN-05); estoppels (COM-GEN-09).",
+      "policy": [
+        "MF-GEN-04",
+        "MF-GEN-05",
+        "COM-GEN-09",
+        "CORE-SVC-06"
+      ],
+      "teach": "C4",
+      "revisit": [
+        "C7",
+        "C9",
+        "C12"
+      ],
+      "mcq": {
+        "stem": "Cedar Court what-if: rent roll annualized $702,000 against deposits annualized $640,000 for three months. What does policy say?",
+        "key": "It fails the 5% tie-out ($62,000 is 8.8% of $702,000), so income must be explained before underwriting (MF-GEN-04).",
+        "distractors": [
+          "It passes; deposits are within 10%.",
+          "Use the rent roll; deposits lag.",
+          "Use GPR instead."
+        ],
+        "exhibit": "rent roll and bank summary",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C04-O3",
+        "C07-O3",
+        "C09-O8",
+        "C12-O4"
+      ],
+      "preview_outcomes": [],
+      "previews": [],
+      "document_ids": [
+        "DOC-01",
+        "DOC-35",
+        "DOC-26",
+        "DOC-11",
+        "DOC-02"
+      ]
+    },
+    {
+      "id": "FRD-06",
+      "typology": "Altered bank statements",
+      "red_flags": [
+        "Fonts, alignment or totals that do not foot",
+        "Round-number deposits just before application",
+        "Statement dates outside the 60-day window",
+        "Balances that differ from a verification of deposit"
+      ],
+      "documents": [
+        "Two most recent monthly bank statements",
+        "Direct bank verification or account-aggregation report",
+        "Brokerage and retirement statements"
+      ],
+      "control": "Two most recent statements dated within 60 days of closing (CORE-BOR-13); conflicting documents stop the file for the BSA officer (CORE-KYC-07).",
+      "policy": [
+        "CORE-BOR-11",
+        "CORE-BOR-13",
+        "CORE-KYC-07"
+      ],
+      "policy_gap": "No rule requires direct verification from the bank. Ask the owner whether to add one.",
+      "teach": "C6",
+      "revisit": [
+        "C7"
+      ],
+      "mcq": {
+        "stem": "Exhibit: Dana Reyes's statement showing a $95,000 ending balance, but the transaction lines add to $59,000. What is the next step?",
+        "key": "Treat it as conflicting documents: stop the file and send it to the BSA officer (CORE-KYC-07).",
+        "distractors": [
+          "Use the ending balance shown.",
+          "Use the average of the two figures.",
+          "Ask the borrower for a letter explaining it, then proceed."
+        ],
+        "exhibit": "bank statement",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C06-O4",
+        "C07-O3"
+      ],
+      "preview_outcomes": [],
+      "previews": [],
+      "document_ids": [
+        "DOC-11",
+        "DOC-10"
+      ]
+    },
+    {
+      "id": "FRD-07",
+      "typology": "Related-party appraiser or contractor",
+      "red_flags": [
+        "Contractor owned by the borrower or a relative",
+        "Appraiser named by the borrower or broker",
+        "Draw inspector paid by the borrower",
+        "Budget lines far above local costs"
+      ],
+      "documents": [
+        "AMC engagement letter",
+        "Contractor licence, insurance and state business-entity record",
+        "Ownership chart cross-checked against the contractor",
+        "Third-party plan and cost review"
+      ],
+      "control": "Appraiser engaged through the AMC (CORE-VAL-01); third-party draw inspections (CORE-SVC-05); licensed, insured contractor and third-party cost review on ground-up (RES-GU-10).",
+      "policy": [
+        "CORE-VAL-01",
+        "CORE-SVC-05",
+        "RES-GU-10"
+      ],
+      "policy_gap": "No rule bans or discloses a related-party contractor on rehab loans. Ask the owner.",
+      "teach": "C5",
+      "revisit": [
+        "C7",
+        "C8",
+        "C12"
+      ],
+      "mcq": {
+        "stem": "Exhibit: a state business-entity record showing Maple Run's general contractor is managed by Sam Okafor. What is the strongest response?",
+        "key": "Flag the related party, require third-party inspection before each draw, and refer the gap to a credit officer.",
+        "distractors": [
+          "No issue; related contractors save cost.",
+          "Release draws on the contractor's own invoices.",
+          "Decline the loan automatically under policy."
+        ],
+        "exhibit": "entity record",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C05-O7",
+        "C07-O3",
+        "C08-O4",
+        "C12-O1"
+      ],
+      "preview_outcomes": [],
+      "previews": [],
+      "document_ids": [
+        "DOC-54",
+        "DOC-18",
+        "DOC-12",
+        "DOC-56"
+      ]
+    },
+    {
+      "id": "FRD-08",
+      "typology": "Draw fraud",
+      "red_flags": [
+        "Draw requests for work not in place",
+        "Photos reused or not of the subject",
+        "Missing or unsigned lien waivers",
+        "Subcontractor complaints or mechanics' liens"
+      ],
+      "documents": [
+        "Draw request against the budget",
+        "Third-party inspection report with dated photos",
+        "Conditional and unconditional lien waivers",
+        "Title date-down"
+      ],
+      "control": "Inspection of work in place; conditional waivers for this draw and unconditional for the last; date-down with no new liens; loan in balance (CORE-SVC-05); reimbursement only, one draw per 30 days, 10% held to completion (RES-FF-09).",
+      "policy": [
+        "CORE-SVC-05",
+        "RES-FF-09",
+        "CORE-CLS-06"
+      ],
+      "teach": "C12",
+      "revisit": [],
+      "mcq": {
+        "stem": "Exhibit: Maple Run month-8 draw. The roof is 60% done but billed at 100%. Last draw's unconditional waiver is missing. What may be released?",
+        "key": "Nothing until the missing waiver arrives; then only work in place (CORE-SVC-05).",
+        "distractors": [
+          "The full request, since the budget allows it.",
+          "60% of the roof line now.",
+          "The full request, holding back 10%."
+        ],
+        "exhibit": "draw request and inspection",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C12-O1"
+      ],
+      "preview_outcomes": [
+        "C07-O3"
+      ],
+      "previews": [
+        "C7"
+      ],
+      "document_ids": [
+        "DOC-29",
+        "DOC-30",
+        "DOC-33",
+        "DOC-51"
+      ]
+    },
+    {
+      "id": "FRD-09",
+      "typology": "Closing wire fraud (business email compromise)",
+      "red_flags": [
+        "Changed wire instructions",
+        "New or look-alike email domain or phone number",
+        "Rush to fund early or skip a step",
+        "Payee name not the CPL agent's escrow account"
+      ],
+      "documents": [
+        "Closing protection letter",
+        "Written closing instructions",
+        "Wire instructions on file",
+        "Callback log"
+      ],
+      "control": "CPL in hand (CORE-CLS-02); callback to a number already on file, never one from the request; stop-and-verify flags hold the wire (CORE-KYC-07); dual control and receipt confirmation (CORE-CLS-03).",
+      "policy": [
+        "CORE-KYC-07",
+        "CORE-CLS-02",
+        "CORE-CLS-03"
+      ],
+      "teach": "C7",
+      "revisit": [
+        "C11"
+      ],
+      "mcq": {
+        "stem": "Exhibit: an email from 'title-agency-closings.co' on funding day with new wire instructions and a phone number to confirm. What does policy require?",
+        "key": "Hold the wire and call the agent on the number already on file (CORE-KYC-07; CORE-CLS-03).",
+        "distractors": [
+          "Call the number in the email to confirm.",
+          "Wire to the new account; the CPL covers it.",
+          "Reply to the email asking if it is genuine."
+        ],
+        "exhibit": "email",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C07-O4",
+        "C11-O4"
+      ],
+      "preview_outcomes": [],
+      "previews": [],
+      "document_ids": [
+        "DOC-13",
+        "DOC-27"
+      ]
+    },
+    {
+      "id": "FRD-10",
+      "typology": "Double-pledged collateral",
+      "red_flags": [
+        "Second lender's mortgage or deed of trust recorded after ours",
+        "Borrower refinancing the same asset elsewhere",
+        "UCC filings by another lender on rents or fixtures",
+        "Title date-down shows new liens"
+      ],
+      "documents": [
+        "Title commitment and date-down",
+        "UCC search",
+        "Recorded security instrument and assignment of rents",
+        "Final lender's title policy"
+      ],
+      "control": "Title commitment with lender's policy (CORE-CLS-01); trailing documents logged and chased (CORE-CLS-05); date-down at each draw (CORE-SVC-05).",
+      "policy": [
+        "CORE-CLS-01",
+        "CORE-CLS-05",
+        "CORE-SVC-05"
+      ],
+      "policy_gap": "No rule requires a UCC search at origination, or a periodic lien search on loans with no draws. Ask the owner.",
+      "teach": "C9",
+      "revisit": [
+        "C11",
+        "C12"
+      ],
+      "mcq": {
+        "stem": "Exhibit: a Birchwood title date-down at month 6 shows a $400,000 mortgage to another lender. What does this most likely show?",
+        "key": "A second pledge of our collateral, which is likely a default under the loan documents.",
+        "distractors": [
+          "A routine tax lien.",
+          "Our own recording, filed twice.",
+          "A mechanics' lien from the capex work."
+        ],
+        "exhibit": "title date-down",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C09-O3",
+        "C11-O5",
+        "C12-O1"
+      ],
+      "preview_outcomes": [],
+      "previews": [],
+      "document_ids": [
+        "DOC-19",
+        "DOC-51",
+        "DOC-47"
+      ]
+    },
+    {
+      "id": "FRD-11",
+      "typology": "Seller impersonation or title theft",
+      "red_flags": [
+        "Vacant land or a free-and-clear property",
+        "Seller reachable only by email or text, often out of state",
+        "Price below market and a rush to close",
+        "Seller asks for proceeds by wire to a new account"
+      ],
+      "documents": [
+        "Title commitment and vesting deed",
+        "Seller's government ID and signature",
+        "Purchase contract",
+        "Settlement statement and seller proceeds instructions"
+      ],
+      "control": "Title commitment with lender's policy (CORE-CLS-01); closing agent under a closing protection letter (CORE-CLS-02); callback and stop-and-verify flags on any wire (CORE-KYC-07; CORE-CLS-03)",
+      "policy": [
+        "CORE-CLS-01",
+        "CORE-CLS-02",
+        "CORE-CLS-03",
+        "CORE-KYC-07"
+      ],
+      "policy_gap": "No rule requires the lender to confirm the seller's identity on a purchase. Ask the owner.",
+      "teach": "C7",
+      "revisit": [
+        "C9",
+        "C11"
+      ],
+      "mcq": {
+        "stem": "Fictional what-if: a free-and-clear lot whose 'seller' signs remotely, wants a quick close and asks for proceeds to a new overseas account. What is the strongest response?",
+        "key": "Treat it as possible seller impersonation: hold closing and ask the title agent to verify the owner's identity.",
+        "distractors": [
+          "Close, because title insurance covers every forgery loss.",
+          "Close, but wire the proceeds in two parts.",
+          "Close, once the buyer confirms the seller by email."
+        ],
+        "exhibit": "contract and wire request",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C07-O3",
+        "C09-O3",
+        "C11-O4"
+      ],
+      "preview_outcomes": [],
+      "previews": [],
+      "document_ids": [
+        "DOC-19",
+        "DOC-53",
+        "DOC-05",
+        "DOC-28"
+      ]
+    },
+    {
+      "id": "FRD-12",
+      "typology": "Dual contracts or undisclosed seller credits",
+      "red_flags": [
+        "Two versions of the purchase contract",
+        "Seller credits on the settlement statement that are not in the contract",
+        "Price raised with a matching credit back to the buyer",
+        "Large assignment fee to a related party"
+      ],
+      "documents": [
+        "Purchase contract and all addenda",
+        "Settlement statement",
+        "Appraisal contract-review section",
+        "Wire and funds-flow record"
+      ],
+      "control": "Value is the lower of price and appraised value (F-CORE-14); the wire must tie to the settlement statement (F-CORE-41; CORE-CLS-03); conflicting documents stop the file (CORE-KYC-07)",
+      "policy": [
+        "CORE-KYC-07",
+        "CORE-CLS-03"
+      ],
+      "policy_gap": "No rule nets seller credits from price or caps them. Ask the owner; no limit is set here.",
+      "teach": "C7",
+      "revisit": [
+        "C11"
+      ],
+      "mcq": {
+        "stem": "Fictional what-if: the contract says $300,000, and the settlement statement shows a $30,000 seller credit not in the contract. What does this most likely show?",
+        "key": "A dual contract or hidden credit that overstates the price and the borrower's equity.",
+        "distractors": [
+          "A routine closing-cost credit that needs no review.",
+          "An appraisal error that the desk review will fix.",
+          "A title charge the closing agent forgot to list."
+        ],
+        "exhibit": "contract and settlement statement",
+        "use": "review-only draft"
+      },
+      "outcomes": [
+        "C07-O3",
+        "C11-O3"
+      ],
+      "preview_outcomes": [
+        "C05-O4"
+      ],
+      "previews": [
+        "C5"
+      ],
+      "document_ids": [
+        "DOC-05",
+        "DOC-28",
+        "DOC-03",
+        "DOC-13"
+      ]
+    }
+  ],
+  "what_to_look_up_yourself": [
+    "Read FinCEN advisory FIN-2012-A009 and FIN-2019-A005 for each red-flag family.",
+    "Read the FBI IC3 2025 annual report for current real estate and BEC loss figures.",
+    "Ask the owner to decide the three policy gaps: direct bank verification, related-party contractors, UCC and lien searches.",
+    "Look for FinCEN or FBI material on seller impersonation of vacant and free-and-clear property (FRD-11).",
+    "Ask the owner to decide the two new policy gaps: seller identity on purchases (FRD-11) and seller credits (FRD-12)."
+  ],
+  "how_to_check_it": [
+    "Check that the ten quality bar 11.3 typologies, FRD-11 and FRD-12 each have a row with a document, an outcome and an MCQ idea.",
+    "Look up each policy rule ID in the Model Credit Policy and confirm it says what the control column claims.",
+    "Re-work the MCQ calculations: ($300,000 − $230,000) ÷ $300,000 = 23.3%; ($702,000 − $640,000) ÷ $702,000 = 8.83%.",
+    "For any row, confirm each DOC ID exists in `document-registry.json` and lists this typology."
+  ]
+}

@@ -1,0 +1,2046 @@
+{
+  "title": "BPL core theory map",
+  "label": "Model policy for training - not for live lending decisions.",
+  "prepared": "2026-11-22",
+  "status": "v1 for owner review (professor and CCO review fixes applied 22 Nov 2026)",
+  "quality_bar_rows": [
+    "6.1",
+    "6.2",
+    "6.5",
+    "6.6",
+    "6.7",
+    "7.3"
+  ],
+  "id_convention": "Module IDs are C0-C14. The two-digit form (C08) appears only inside outcome IDs (C08-O5) and exhibit IDs (EXH-C08-05).",
+  "bloom_scale": {
+    "1": "Remember",
+    "2": "Understand",
+    "3": "Apply",
+    "4": "Analyze",
+    "5": "Evaluate",
+    "6": "Create"
+  },
+  "concepts": [
+    {
+      "id": "TM-01",
+      "name": "Real estate and credit cycles",
+      "origin": "Quality bar 6.1",
+      "mechanism": "Space markets clear slowly. Developers build on today's rents, and new supply arrives two or three years later, often after demand has turned. Vacancy then rises while rents and values fall together. Credit is easiest near the peak, when values are highest and recent losses are lowest. So loans made near a peak are sized on the top of the curve and default more often (MIT lec. 12: lifetime default by origination year tracks the cycle). A lender that sizes on current value is betting that value at maturity will be similar. The cycle explains why that bet fails in clusters, not one loan at a time.",
+      "home": "C0",
+      "revisit": [
+        "C5",
+        "C8",
+        "C13",
+        "C14"
+      ],
+      "bloom": {
+        "C0": 2,
+        "C5": 2,
+        "C8": 4,
+        "C13": 4,
+        "C14": 5
+      },
+      "revisit_notes": {
+        "C5": "cap rates widen in downturns; value at maturity differs from value at origination",
+        "C8": "vintage effect; why debt yield entered US practice after 2008",
+        "C13": "workouts and REO cluster in busts",
+        "C14": "portfolio losses are correlated through the cycle"
+      },
+      "previews": {},
+      "reading": [
+        "None listed in syllabi notes section F. Nearest: Geltner, Miller, Clayton and Eichholtz, *Commercial Real Estate Analysis and Investments*, 2nd ed. (Thomson South-Western, 2007), Ch. 1-2 (MIT session 1 reading, section A1)",
+        "DiPasquale and Wheaton (1992) and Mueller (1995), named in the C0 blueprint; confirm titles before citing",
+        "Wheaton, W. C. (1999), \"Real Estate 'Cycles': Some Fundamentals\", *Real Estate Economics* 27(2) (citation from the professor's review; paper not opened; confirm before citing)",
+        "Geltner, D. (1991), \"Smoothing in Appraisal-Based Returns\", *Journal of Real Estate Finance and Economics* 4(3) (citation from the professor's review; paper not opened; confirm before citing)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Today's appraised value is a fair guide to value at maturity.",
+          "correction": "Cedar Court's exit uses stabilized cash flow two years out. If stabilized NCF is $500,000, the take-out is $4,886,322.54 against a $5,165,700 payoff: short $279,377.46 (RD-MF-01)."
+        },
+        {
+          "misconception": "Low default rates today mean the book is safe.",
+          "correction": "Defaults lag origination by years. Loans written at a peak look clean until values turn, then fail together."
+        }
+      ],
+      "historical_episode": {
+        "module": "C0",
+        "episode": "The commercial real estate boom and bust of the 1980s and early 1990s",
+        "use": "Show overbuilding, falling values and bank losses as one cycle. Tie it to FIRREA and appraisal regulation (C5).",
+        "source": "FDIC, *History of the Eighties: Lessons for the Future*, Vol. 1 (1997), Ch. 3, \"Commercial Real Estate and the Banking Crises of the 1980s and Early 1990s\"",
+        "verify": "[VERIFY: FDIC, History of the Eighties, Vol. 1, Ch. 3; chapter title and 1997 date confirmed on fdic.gov publication page; chapter text not opened; checked 22 Nov 2026]"
+      },
+      "formulas": [],
+      "blueprint_status": "present",
+      "blueprint_note": "C0 O5 and depth item 5 (cycle models) teach it. Depth item 8 names the S&L crisis and 2008 only as history; add the FDIC chapter as the cited episode. P-06 applied: C0 O5 now explains the cycle (level 2); C8 and C13 analyze it (level 4).",
+      "outcomes": [
+        "C00-O5",
+        "C05-O2",
+        "C08-O6",
+        "C13-O2",
+        "C14-O5"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-02",
+      "name": "Lender types, funding routes and the capital partner's credit box",
+      "origin": "Syllabi B2 (CMBS and securitization; REIT debt; loan valuation context)",
+      "mechanism": "Most non-bank business-purpose lenders do not hold their loans. They fund through a warehouse line, a whole-loan sale or a securitization. Each capital partner has its own eligibility rules, advance rates and repurchase rights. A loan outside those rules cannot be financed or sold at par. So the partner's box quietly sets the lender's credit box. Bank and REIT lenders face different regulators and capital rules, which explains why they price and size differently.",
+      "home": "C0",
+      "revisit": [
+        "C11",
+        "C12",
+        "C14"
+      ],
+      "bloom": {
+        "C0": 3,
+        "C11": 3,
+        "C12": 3,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C11": "collateral file delivery to a custodian or buyer (O6)",
+        "C12": "loan-level investor reporting (O8)",
+        "C14": "eligibility, repurchase and risk retention analysis (O2)"
+      },
+      "previews": {},
+      "reading": [
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 19-20 \"The Secondary Mortgage Market\"; Ch. 21 \"REITs\"; Ch. 23 \"Real Estate Funds\"",
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 26 \"Real Estate Investment Trusts (REITs)\""
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A lender's credit policy is set only by its own risk appetite.",
+          "correction": "A loan that breaks a warehouse eligibility rule gets no advance, so the lender must fund it with its own equity. The buyer's box binds first."
+        },
+        {
+          "misconception": "Selling the loan removes all the lender's risk.",
+          "correction": "Sale agreements carry representations and warranties. A breach found later can force a repurchase at par."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "present",
+      "blueprint_note": "C0 O2-O3 and C14 O2 cover it. C14 needs the fictional buyer eligibility sheet (coverage review, open item 2).",
+      "outcomes": [
+        "C00-O2",
+        "C00-O3",
+        "C11-O6",
+        "C12-O8",
+        "C14-O2"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-03",
+      "name": "The regulatory perimeter: business-purpose versus consumer credit",
+      "origin": "Added so C1 has a home concept (quality bar 6.2)",
+      "mechanism": "Consumer credit law assumes a household borrower who cannot easily judge loan terms. Business-purpose and entity loans fall outside most of it. That exemption lowers cost and speeds closing. It also creates a strong incentive to dress a consumer loan as a business loan. If the purpose test fails, the lender can lose the exemption and face consumer-law remedies on a loan priced as commercial [VERIFY: 12 CFR 1026.3(a); checked 18 Nov 2026 per Course Bible §1]. Fair-lending law is the exception: it follows the credit, not only the consumer.",
+      "home": "C1",
+      "revisit": [
+        "C7",
+        "C10",
+        "C11"
+      ],
+      "bloom": {
+        "C1": 4,
+        "C7": 4,
+        "C10": 3,
+        "C11": 3
+      },
+      "revisit_notes": {
+        "C7": "occupancy fraud as a red flag",
+        "C10": "state purpose and licensing tests",
+        "C11": "use of proceeds and certifications at closing (O1)"
+      },
+      "previews": {
+        "C0": "names the two Reg Z exemptions only"
+      },
+      "reading": [
+        "None listed in syllabi notes section F. Primary law: 12 CFR 1026.3(a) and its commentary (C1 blueprint)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "An LLC borrower makes any loan business purpose.",
+          "correction": "Reg Z looks at purpose as well as the borrower. A loan that funds a guarantor's own home is a red flag, whatever the borrower's form [VERIFY: 12 CFR 1026.3(a) and comment 3(a)-1; checked 18 Nov 2026 per Course Bible §1]."
+        },
+        {
+          "misconception": "Business-purpose loans are outside fair-lending law.",
+          "correction": "Reg B covers business credit [VERIFY: 12 CFR 1002.2(g); checked 22 Nov 2026]. The Fair Housing Act reaches loans secured by residential real estate [VERIFY: 42 U.S.C. 3605(b)(1); checked 22 Nov 2026]."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "present",
+      "blueprint_note": "C1 O1-O4 teach it. Add one paragraph on why the exemption creates the disguised-consumer-loan incentive.",
+      "outcomes": [
+        "C01-O1",
+        "C01-O2",
+        "C01-O4",
+        "C07-O3",
+        "C10-O2",
+        "C11-O1"
+      ],
+      "preview_outcomes": [
+        "C00-O1"
+      ],
+      "citation_status": "Primary or regulator source; see its tag"
+    },
+    {
+      "id": "TM-04",
+      "name": "Default as the borrower's option to walk away",
+      "origin": "Quality bar 6.1",
+      "mechanism": "A non-recourse borrower can hand back the property instead of paying. That is a put option on the property, with the loan balance as the strike. The option gains value as property value falls toward the balance, and as value becomes more volatile. Equity below the loan is what keeps the option out of the money. That is the economic reason for LTV limits, equity-first rules and lower leverage on riskier collateral. Recourse and springing carve-outs raise the cost of exercising the option, so they change behavior, not only recovery.",
+      "home": "C2",
+      "revisit": [
+        "C5",
+        "C8",
+        "C9",
+        "C10",
+        "C13"
+      ],
+      "bloom": {
+        "C2": 2,
+        "C5": 2,
+        "C8": 4,
+        "C9": 4,
+        "C10": 5,
+        "C13": 4
+      },
+      "revisit_notes": {
+        "C5": "value volatility and cap-rate sensitivity move the option",
+        "C8": "why leverage limits fall as volatility rises; land and construction lowest",
+        "C9": "carve-out guaranties make walking away costly (O2)",
+        "C10": "what recourse is worth after state deficiency rules (O7)",
+        "C13": "strategic default in a workout"
+      },
+      "previews": {},
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 21 \"Commercial Mortgage Analysis and Underwriting\"",
+        "Titman, S. and Torous, W. (1989), \"Valuing Commercial Mortgages: An Empirical Investigation of the Contingent-Claims Approach to Pricing Risky Debt\", *Journal of Finance* 44(2) (citation from the professor's review; paper not opened; confirm before citing)",
+        "Foote, C., Gerardi, K. and Willen, P. (2008), \"Negative Equity and Foreclosure: Theory and Evidence\", *Journal of Urban Economics* 64(2), for double-trigger default (citation from the professor's review; paper not opened; confirm before citing)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Borrowers default only when they run out of cash.",
+          "correction": "A borrower with cash may still stop paying when the property is worth less than the loan. MIT's illustration: a 75% LTV loan, 15% annual value volatility and 7 years give about a 1-in-6 chance of being under water. Model convention: that figure assumes no amortization and a value drift of about 1.4% a year (log), measured at maturity only. At zero drift it is about 1 in 4 (23.4%). The chance of being under water at some point during the loan is higher: 38.8% at the same drift (recomputed 22 Nov 2026)."
+        },
+        {
+          "misconception": "A full guaranty makes default impossible.",
+          "correction": "A guaranty raises the cost of walking away. It works only if the guarantor can pay when the property fails (TM-17)."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "missing",
+      "blueprint_note": "No C2 blueprint section teaches it. Fix: add about 400 words to C2 T1 (\"Why loans fail\"), with the MIT under-water example labelled illustrative.",
+      "outcomes": [
+        "C02-O8",
+        "C05-O5",
+        "C08-O1",
+        "C09-O2",
+        "C10-O7",
+        "C13-O6"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-05",
+      "name": "Agency problems: adverse selection, moral hazard, originate-to-distribute and sponsor incentives",
+      "origin": "Quality bar 6.1",
+      "mechanism": "Borrowers know more about their projects than lenders do. Raising the rate to cover unknown risk drives away safe borrowers first (adverse selection, credit rationing). After closing, a borrower with little equity left gains from riskier choices, or from \"bleeding\" the property (moral hazard). A lender that sells its loans keeps less of the loss, so its screening incentive weakens (originate-to-distribute). Risk retention [VERIFY: 17 CFR 246.4(a); checked 22 Nov 2026 per needs analysis §4] and repurchase rights push that loss back. Sponsors paid by promote share the upside but not the downside below their equity. Collateral, equity first, guaranties and covenants are the lender's answers to all four.",
+      "home": "C2",
+      "revisit": [
+        "C6",
+        "C7",
+        "C8",
+        "C13",
+        "C14"
+      ],
+      "bloom": {
+        "C2": 2,
+        "C6": 4,
+        "C7": 4,
+        "C8": 4,
+        "C13": 4,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C6": "sponsor incentives; guaranty as an incentive device; read a JV and promote",
+        "C7": "fraud as the extreme form of hidden information; broker-fed files",
+        "C8": "equity first and recourse as structure",
+        "C13": "moral hazard near default: deferred maintenance, diverted rents",
+        "C14": "risk retention and repurchase in capital-partner terms (O2)"
+      },
+      "previews": {
+        "C0": "names risk retention and the 2008 crisis as history"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 15 \"Advanced Topics II: Capital Structure\"",
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 18 \"Structuring Real Estate Investments: Organizational Forms and Joint Ventures\"",
+        "Not in section F (named in the C2 blueprint): Akerlof (1970) *QJE*; Stiglitz and Weiss (1981) *AER*. Confirm volume and pages",
+        "Akerlof, G. (1970), \"The Market for 'Lemons': Quality Uncertainty and the Market Mechanism\", *Quarterly Journal of Economics* 84(3) (citation from the professor's review; paper not opened; confirm before citing)",
+        "Stiglitz, J. and Weiss, A. (1981), \"Credit Rationing in Markets with Imperfect Information\", *American Economic Review* 71(3) (citation from the professor's review; paper not opened; confirm before citing)",
+        "Keys, B., Mukherjee, T., Seru, A. and Vig, V. (2010), \"Did Securitization Lead to Lax Screening? Evidence from Subprime Loans\", *Quarterly Journal of Economics* 125(1) (citation from the professor's review; paper not opened; confirm before citing)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A riskier borrower can always be approved at a higher rate.",
+          "correction": "A higher rate attracts the borrowers most willing to take risk and pushes safe ones to cheaper lenders. Lenders ration credit and demand equity instead."
+        },
+        {
+          "misconception": "If we sell the loan, its quality is the buyer's problem.",
+          "correction": "Buyers price and police the originator's incentive. Repurchase claims and risk retention return the loss to the originator."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-RES-09"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C2 O7 covers adverse selection, moral hazard and credit rationing. Fix: add one paragraph each on originate-to-distribute and sponsor promote to C2 T7, with a pointer to C14 O2 and C6.",
+      "outcomes": [
+        "C02-O7",
+        "C06-O7",
+        "C07-O3",
+        "C08-O8",
+        "C13-O3",
+        "C14-O2"
+      ],
+      "preview_outcomes": [
+        "C00-O3"
+      ],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-06",
+      "name": "Concentration risk",
+      "origin": "Quality bar 6.1",
+      "mechanism": "Loans to one sponsor, one state or one property type tend to fail together. Diversification only works if defaults are not correlated. A sponsor cap limits single-name exposure: one sponsor's failure can hit several loans at once. Portfolio buckets limit correlated exposure to one market or product. Capital partners and bank buyers set their own limits for the same reason.",
+      "home": "C2",
+      "revisit": [
+        "C6",
+        "C14"
+      ],
+      "bloom": {
+        "C2": 2,
+        "C6": 3,
+        "C14": 5
+      },
+      "revisit_notes": {
+        "C6": "aggregate sponsor exposure with affiliates (O6)",
+        "C14": "bucket share, headroom and participations to cure a breach (O4)"
+      },
+      "previews": {},
+      "reading": [
+        "None listed in syllabi notes section F. Regulator source: OCC Bulletin 2006-46 (C14 blueprint)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A cap on any single loan size controls concentration.",
+          "correction": "Ten small loans to one sponsor can exceed one large loan. Maple Run's exposure test adds open loans: $340,000 + $0 = $340,000 against the Tier 2 sponsor cap (F-CORE-29; CORE-CONC-01)."
+        },
+        {
+          "misconception": "A bucket share is tested before the new loan.",
+          "correction": "The new loan joins both the bucket and the portfolio total, so the share is tested after it (F-CORE-43 logic, C14 blueprint)."
+        }
+      ],
+      "historical_episode": {
+        "module": "C14",
+        "episode": "Bank failures of 2008-2011 and the 2023 commercial real estate stress, read against the regulators' 2006 concentration guidance",
+        "use": "Show the 2006 warning on CRE concentration, the concentrated books that later failed together, and office stress flagged in 2023.",
+        "source": "OCC, Federal Reserve and FDIC, *Concentrations in Commercial Real Estate Lending, Sound Risk Management Practices*, 71 FR 74580 (12 Dec 2006); Federal Reserve, *Financial Stability Report* (May 2023), \"Asset Valuations\"",
+        "verify": "[VERIFY: 71 FR 74580, interagency CRE concentration guidance, 12 Dec 2006; citation from the professor's review; not opened 22 Nov 2026] [VERIFY: Federal Reserve Financial Stability Report, May 2023, Asset Valuations: office fundamentals \"particularly weak\" in central business districts; checked 22 Nov 2026]"
+      },
+      "formulas": [
+        "F-CORE-29",
+        "F-CORE-30",
+        "F-CORE-43"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C14 O4 teaches correlation; C2 O4 and C6 O6 apply the sponsor cap earlier without the mechanism. Fix: add a 150-word mechanism paragraph to C2 T4 so C2 is the home. C2 O4 now names correlated defaults as the reason for sponsor caps.",
+      "outcomes": [
+        "C02-O4",
+        "C06-O6",
+        "C14-O4"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Primary or regulator source; see its tag"
+    },
+    {
+      "id": "TM-07",
+      "name": "Risk ratings and credit migration",
+      "origin": "Added: core lender concept (needs analysis S4, K4)",
+      "mechanism": "A risk rating is the lender's shorthand for default likelihood and loss if default happens. Ratings migrate before losses appear. Catching a move from pass to special mention buys time to act while options remain. Ratings also drive reporting, accrual status and the allowance, so a late downgrade understates risk to managers and capital partners.",
+      "home": "C2",
+      "revisit": [
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "bloom": {
+        "C2": 3,
+        "C12": 5,
+        "C13": 3,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C12": "justify a rating with guarantor support and accrual status (O5)",
+        "C13": "re-rate on default and upgrade after cure",
+        "C14": "validate ratings in loan review (O8)"
+      },
+      "previews": {
+        "C0": "names the rating scale"
+      },
+      "reading": [
+        "None listed in syllabi notes section F. Regulator source: SR 13-18 attachment 1 definitions (C2 blueprint)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A loan that is current is a pass loan.",
+          "correction": "A current loan within 90 days of maturity with no confirmed exit is at least a 2 under CORE-SVC-07 (C2 blueprint, T6)."
+        },
+        {
+          "misconception": "A rating changes only when a payment is missed.",
+          "correction": "Ratings should move on leading facts: a tenant notice, a value drop or a failed extension test."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "present",
+      "blueprint_note": "C2 O6 and C12 O5 cover it.",
+      "outcomes": [
+        "C02-O6",
+        "C12-O5",
+        "C13-O1",
+        "C14-O8"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Primary or regulator source; see its tag"
+    },
+    {
+      "id": "TM-08",
+      "name": "Time value of money and mortgage mathematics",
+      "origin": "Syllabi B2 (four rules)",
+      "mechanism": "A loan is a set of dated cash flows. Present value turns them into one comparable number. Four rules run every schedule. Interest is the prior balance times the period rate. Principal is the payment less interest. The new balance is the old balance less principal, and the first balance is the loan. Each loan type fixes one column and lets the others follow. Lenders need this to know the balance at maturity, which is what the exit must repay.",
+      "home": "C3",
+      "revisit": [
+        "C8",
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "bloom": {
+        "C3": 3,
+        "C8": 3,
+        "C12": 3,
+        "C13": 3,
+        "C14": 3
+      },
+      "revisit_notes": {
+        "C8": "balloon balance and loan constant in sizing",
+        "C12": "payoff amounts",
+        "C13": "modified schedules",
+        "C14": "loan price at a market yield (TM-36)"
+      },
+      "previews": {},
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 2 \"Present Value Mathematics for Real Estate\"",
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 19-20 \"Mortgage Basics I\" and \"II\""
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A 30-year amortizing loan is nearly paid down at a 10-year maturity.",
+          "correction": "Most principal is repaid late. Birchwood's what-if balance after 120 payments is $3,118,446.42 on a $3,900,000 loan (F-CORE-49 test 1)."
+        },
+        {
+          "misconception": "Monthly interest is the annual rate divided by 12 on every loan.",
+          "correction": "Bridge loans accrue Actual/360, so a 31-day month costs more than a 30-day one (F-CORE-01; CORE-PRC-06)."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-01",
+        "F-CORE-02",
+        "F-CORE-05",
+        "F-CORE-45",
+        "F-CORE-46",
+        "F-CORE-47",
+        "F-CORE-49"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C3 teaches the math. Fix: cite F-CORE-45 to -49 in the C3 blueprint; it still says an IRR formula is needed, but F-CORE-48 now exists.",
+      "outcomes": [
+        "C03-O2",
+        "C03-O3",
+        "C08-O3",
+        "C12-O7",
+        "C13-O3",
+        "C14-O2"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-09",
+      "name": "Loan types and amortization",
+      "origin": "Syllabi B2",
+      "mechanism": "Interest-only loans keep the payment low and leave the whole balance for the exit. Amortizing loans repay principal and lower the balance the exit must cover. Partial interest-only sits between the two. The choice shifts risk between today's cash flow test and tomorrow's refinance test. Constant-amortization, graduated-payment and negative-amortization loans are rare in business-purpose lending; they are named so the learner can spot them.",
+      "home": "C3",
+      "revisit": [
+        "C8"
+      ],
+      "bloom": {
+        "C3": 3,
+        "C8": 4
+      },
+      "revisit_notes": {
+        "C8": "amortization as a risk mitigant against refinance risk"
+      },
+      "previews": {},
+      "reading": [
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 4-5 (fixed and adjustable rate loans)",
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 20"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Interest-only is always the safer structure because the payment is lower.",
+          "correction": "Lower payment helps coverage now but leaves the full balance at maturity. MIT: an interest-only balloon \"maximizes refinancing stress\" (Geltner Ch. 17, MIT session 13)."
+        },
+        {
+          "misconception": "The loan constant equals the note rate.",
+          "correction": "On an amortizing loan the constant includes principal, so it exceeds the rate (F-CORE-04)."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-02",
+        "F-CORE-03",
+        "F-CORE-04"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C3 O3-O4 cover it.",
+      "outcomes": [
+        "C03-O3",
+        "C03-O4",
+        "C08-O8"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-10",
+      "name": "Contract rate, yield to maturity and expected return",
+      "origin": "Syllabi B2",
+      "mechanism": "The note rate is what the contract says. Points and fees paid up front raise the lender's yield, and more so if the loan pays off early. Default lowers the return actually earned below the promised yield. A lender that compares loans on note rate alone misprices short loans with points and risky loans with high coupons. C3 teaches contract rate versus yield; C8 adds expected return through expected loss (TM-19).",
+      "home": "C3",
+      "revisit": [
+        "C8",
+        "C14"
+      ],
+      "bloom": {
+        "C3": 4,
+        "C8": 4,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C8": "expected return below yield (TM-19)",
+        "C14": "price on a whole-loan sale"
+      },
+      "previews": {},
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 20 \"Mortgage Basics II: Payments, Yields and Values\"",
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 4-5 (fees and effective cost)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "The all-in cost screen is the lender's yield.",
+          "correction": "F-CORE-40 adds points straight-line. Maple Run's screen gives 11.75%; its true IRR on the real draw pattern is 12.081% nominal (F-CORE-48 test 3)."
+        },
+        {
+          "misconception": "Points add the same yield whatever the loan's life.",
+          "correction": "Points spread over fewer months add more yield per year. Early payoff raises the yield effect of points."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-06",
+        "F-CORE-40",
+        "F-CORE-48"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C3 O6 covers it.",
+      "outcomes": [
+        "C03-O6",
+        "C08-O5",
+        "C14-O2"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-11",
+      "name": "Interest-rate risk on floating-rate loans",
+      "origin": "Quality bar 6.1 (interest-rate risk, split from refinance and extension risk)",
+      "mechanism": "A floating loan moves rate risk to the borrower. When SOFR rises, the payment rises while the property's income does not. Rate risk the lender passed on comes back as credit risk if coverage falls below 1.00x. A rate cap limits the borrower's rate, so the lender sizes and tests coverage at the cap strike, not at today's rate. When a cap expires, replacing it at higher cost is a second shock.",
+      "home": "C3",
+      "revisit": [
+        "C8",
+        "C12"
+      ],
+      "bloom": {
+        "C3": 3,
+        "C8": 3,
+        "C12": 4
+      },
+      "revisit_notes": {
+        "C8": "cap strike sizing (O3)",
+        "C12": "cap payments and replacement in servicing (O2)"
+      },
+      "previews": {},
+      "reading": [
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 4-5 (adjustable rate loans)",
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 20"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A floating-rate loan protects the lender from rising rates.",
+          "correction": "The lender's coupon rises, but the borrower's coverage falls. Cedar Court's test rate is the higher of 7.65% and 4.25% + 4.00% = 8.25% (MF-BR-09, C3 blueprint T5)."
+        },
+        {
+          "misconception": "A cap protects for the whole loan life.",
+          "correction": "A cap has a term. At Cedar Court's extension the borrower must buy more cap; the intrinsic floor is $19,275.00 (RD-MF-01)."
+        }
+      ],
+      "historical_episode": {
+        "module": "C3",
+        "episode": "The end of LIBOR (optional)",
+        "use": "Explain why US loans now float over SOFR and how legacy contracts were moved.",
+        "source": "Adjustable Interest Rate (LIBOR) Act, 12 U.S.C. 5801-5807; Regulation ZZ, 12 CFR Part 253",
+        "verify": "[VERIFY: 12 U.S.C. 5803(a)-(b), Cornell LII; checked 22 Nov 2026 per C8 blueprint] [VERIFY: 12 CFR Part 253; not opened 22 Nov 2026]"
+      },
+      "formulas": [
+        "F-MF-22"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C3 O5 teaches mechanics. Fix: add one paragraph to C3 T5 on rate risk turning into credit risk.",
+      "outcomes": [
+        "C03-O5",
+        "C08-O3",
+        "C12-O2"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-12",
+      "name": "Pro forma realism and submarket evidence",
+      "origin": "Syllabi B2",
+      "mechanism": "Sellers and brokers forecast the best plausible case. A lender repaid from cash flow must underwrite the likely case. Rent growth, vacancy, capital spending and exit cap rate are the usual places where a pro forma hides optimism. Testing each against submarket evidence turns a sales document into an underwriting input.",
+      "home": "C4",
+      "revisit": [
+        "C5",
+        "C8",
+        "C14"
+      ],
+      "bloom": {
+        "C4": 4,
+        "C5": 5,
+        "C8": 4,
+        "C14": 5
+      },
+      "revisit_notes": {
+        "C5": "appraisal review (O6)",
+        "C8": "sizing on underwritten, not pro forma, NCF",
+        "C14": "committee challenge"
+      },
+      "previews": {},
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 5 \"Income Definitions\""
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A broker pro forma is a neutral forecast.",
+          "correction": "It is written to sell. MIT PS1 compares broker and realistic cash flows for the same price; most of the gap sits in growth and capital spending (illustrative)."
+        },
+        {
+          "misconception": "Market rent in an appraisal is what the tenant will pay.",
+          "correction": "Maple Run's qualifying rent is the lesser of the $2,450 lease and the $2,400 Form 1007 rent (RD-RES-01)."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-07",
+        "F-CORE-08",
+        "F-CORE-09",
+        "F-CORE-10"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C4 O3 and depth item 8 cover it.",
+      "outcomes": [
+        "C04-O3",
+        "C05-O7",
+        "C08-O6",
+        "C14-O5"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-13",
+      "name": "Cash-flow coverage and break-even",
+      "origin": "Added so C4 has a cash-flow mechanism; syllabi B2 (break-even ratio)",
+      "mechanism": "A loan is repaid from net cash flow, not from net operating income. Reserves and leasing costs come first. DSCR measures the cushion between cash flow and debt service. Break-even occupancy shows how much income can be lost before the loan stops paying. A thin cushion means a small vacancy shock turns a performing loan into a default.",
+      "home": "C4",
+      "revisit": [
+        "C8",
+        "C12"
+      ],
+      "bloom": {
+        "C4": 5,
+        "C8": 4,
+        "C12": 4
+      },
+      "revisit_notes": {
+        "C8": "maximum loan by DSCR",
+        "C12": "covenant DSCR and sweeps"
+      },
+      "previews": {
+        "C2": "names DSCR as a credit-box ratio"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 21 (DCR and break-even ratio)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "NOI and cash flow are the same thing.",
+          "correction": "NCF deducts reserves and leasing costs. Coverage on NOI overstates the cushion."
+        },
+        {
+          "misconception": "A DSCR above the minimum means the loan is safe.",
+          "correction": "Cedar Court's in-place coverage is $395,000 ÷ $358,050 = 1.10x; a modest income loss erases it (F-MF-12, C4 blueprint T5)."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-11",
+        "F-CORE-12",
+        "F-MF-09",
+        "F-MF-12",
+        "F-COM-03"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C4 O4-O6 cover it.",
+      "outcomes": [
+        "C04-O5",
+        "C04-O6",
+        "C08-O2",
+        "C12-O4"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-14",
+      "name": "Discounted cash flow, cost of capital and cap rates",
+      "origin": "Syllabi B2 (DCF, OCC and r = y + g)",
+      "mechanism": "Value is the present value of expected cash flows at an investor's required return. A cap rate is a shortcut: income yield equals required return less expected growth. So a cap rate moves when interest rates, risk premiums or growth expectations move. A lender relying on value must know which assumption would cut value most if it proved wrong.",
+      "home": "C5",
+      "revisit": [
+        "C8",
+        "C13"
+      ],
+      "bloom": {
+        "C5": 3,
+        "C8": 3,
+        "C13": 3
+      },
+      "revisit_notes": {
+        "C8": "value test in sizing",
+        "C13": "REO value at fair value less cost to sell"
+      },
+      "previews": {},
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 4 \"Micro-level Valuation of Real Estate: DCF & NPV\" and Ch. 11 \"Finding the Cost of Capital\"",
+        "Geltner, D. (1991), \"Smoothing in Appraisal-Based Returns\", *Journal of Real Estate Finance and Economics* 4(3), on appraisal lag in C5 (citation from the professor's review; paper not opened; confirm before citing)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A low cap rate means a safe property.",
+          "correction": "A low cap rate can mean high expected growth or low required return. Either can reverse, and value falls when it does."
+        },
+        {
+          "misconception": "Small cap-rate changes barely move value.",
+          "correction": "Value is income divided by the cap rate. A 25 basis point rise on an 8.00% cap cuts value by about 3% (C5 O2 sensitivity)."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-13"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C5 O2 covers it.",
+      "outcomes": [
+        "C05-O2",
+        "C08-O2",
+        "C13-O7"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-15",
+      "name": "Financial leverage",
+      "origin": "Syllabi B2",
+      "mechanism": "Debt raises the equity return when the property yield exceeds the loan constant (positive leverage). It cuts the equity return when the constant is higher (negative leverage). Either way, leverage raises the risk of the equity. A sponsor showing a high levered return may be showing high risk, not skill. Negative leverage also means the property alone cannot cover debt service growth.",
+      "home": "C5",
+      "revisit": [
+        "C6",
+        "C8"
+      ],
+      "bloom": {
+        "C5": 4,
+        "C6": 4,
+        "C8": 4
+      },
+      "revisit_notes": {
+        "C6": "reading a sponsor's levered return claims",
+        "C8": "negative leverage and debt yield"
+      },
+      "previews": {
+        "C3": "computes the loan constant"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 12 \"Use of Debt in Real Estate Investment: The Effect of Leverage\"",
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 12 \"Financial Leverage and Financing Alternatives\""
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A lower interest rate means a lower cost of capital.",
+          "correction": "Cheaper debt raises the risk and required return of the equity. MIT lec. 7: a lower debt rate is not a lower cost of capital."
+        },
+        {
+          "misconception": "Positive leverage means the deal is safe.",
+          "correction": "It means the equity yield is higher today. If the cap rate is below the constant later, coverage tightens."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-04",
+        "F-CORE-44"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C5 O5 covers it.",
+      "outcomes": [
+        "C05-O5",
+        "C06-O7",
+        "C08-O2"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-16",
+      "name": "Real options and land value",
+      "origin": "Syllabi B2",
+      "mechanism": "Vacant land is worth what someone could build on it, and when. That makes land an option on a future building. Options are worth more when outcomes are uncertain, so land prices swing more than building prices. This is why raw land carries the lowest supervisory LTV, 65% [VERIFY: 12 CFR Part 34, Subpart D, Appendix A; checked 22 Nov 2026 per C2 blueprint]. A land loan should not be sized on a hoped-for building.",
+      "home": "C5",
+      "revisit": [
+        "C8"
+      ],
+      "bloom": {
+        "C5": 2,
+        "C8": 2
+      },
+      "revisit_notes": {
+        "C8": "why land and construction leverage is lowest"
+      },
+      "previews": {
+        "C2": "the 65% raw-land supervisory limit appears in the table only"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 16 \"Real Options and Land Value\""
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Land is low risk because it does not wear out.",
+          "correction": "Land value depends on entitlement, demand and construction cost. It can fall faster than built property."
+        },
+        {
+          "misconception": "An as-complete value supports a land loan.",
+          "correction": "Until the building exists, the lender holds land. Size on the land's own value."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-COM-20",
+        "F-RES-21"
+      ],
+      "blueprint_status": "missing",
+      "blueprint_note": "C5 has no land-as-option content. Fix: add one paragraph to C5 T3 (cost approach: land value). New outcome C5 O8 serves it.",
+      "outcomes": [
+        "C05-O8",
+        "C08-O4"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-17",
+      "name": "Guaranty value and wrong-way risk",
+      "origin": "Added so C6 has a home concept",
+      "mechanism": "A guaranty is only as good as the guarantor's ability and willingness to pay when the loan fails. Sponsors often hold their wealth in similar real estate, financed by similar loans. The guarantor's net worth then falls at the same time as the collateral. Contingent liabilities on other guaranties compete for the same cash. So lenders count verified liquidity, not reported net worth.",
+      "home": "C6",
+      "revisit": [
+        "C9",
+        "C10",
+        "C13"
+      ],
+      "bloom": {
+        "C6": 5,
+        "C9": 4,
+        "C10": 5,
+        "C13": 5
+      },
+      "revisit_notes": {
+        "C9": "guaranty law and carve-outs",
+        "C10": "state deficiency limits on recourse",
+        "C13": "whether to enforce on a live default (O6)"
+      },
+      "previews": {
+        "C2": "guaranty as the secondary source of repayment"
+      },
+      "reading": [
+        "None listed in syllabi notes section F. Regulator source: OCC Bulletin 2023-23, the interagency *Policy Statement on Prudent Commercial Real Estate Loan Accommodations and Workouts*, section IV.B \"Supervisory Assessment of Guarantees and Sponsorships\" [VERIFY: 88 FR 43115 (6 Jul 2023), govinfo.gov; section heading and the capacity and willingness wording confirmed; checked 22 Nov 2026]. It replaces \"OCC Bulletin 2026-56\", which could not be confirmed"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A guarantor's net worth shows what the guaranty is worth.",
+          "correction": "Net worth tied up in other leveraged properties may vanish in the same downturn. Birchwood counts Dana Whitlow's $760,000 liquidity, not her net worth (C10 blueprint WE10)."
+        },
+        {
+          "misconception": "Two guarantors double the support.",
+          "correction": "If both own the same properties, their wealth falls together."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-24",
+        "F-CORE-25",
+        "F-CORE-26"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C6 O5 covers contingent liabilities and willingness. Fix: name the correlation (wrong-way) point explicitly in C6 T5.",
+      "outcomes": [
+        "C06-O5",
+        "C09-O2",
+        "C10-O7",
+        "C13-O6"
+      ],
+      "preview_outcomes": [
+        "C02-O1"
+      ],
+      "citation_status": "Primary or regulator source; see its tag"
+    },
+    {
+      "id": "TM-18",
+      "name": "Fraud economics and the verification chain",
+      "origin": "Added so C7 has a home concept",
+      "mechanism": "Fraud concentrates where verification is weakest and growth is fastest. Every document the lender does not verify is a place to lie. Broker-fed files, rapid flips and related-party appraisers each remove one independent check. Sanctions and AML failures are different: they create legal liability even when the loan performs. So screening is binary, not a credit trade-off.",
+      "home": "C7",
+      "revisit": [
+        "C11"
+      ],
+      "bloom": {
+        "C7": 4,
+        "C11": 5
+      },
+      "revisit_notes": {
+        "C11": "wire controls before release (O4)"
+      },
+      "previews": {
+        "C1": "names BSA/AML and OFAC in the regulatory map"
+      },
+      "reading": [
+        "None listed in syllabi notes section F. Regulator sources in the C7 blueprint (31 CFR Chapter X; OFAC)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Fraud is rare, so red flags are mostly noise.",
+          "correction": "A missed red flag can cost the whole loan. Each flag has a clearing path and an approver (CORE-KYC-07)."
+        },
+        {
+          "misconception": "A performing loan cannot create a sanctions problem.",
+          "correction": "Dealing with a blocked person is a violation whether or not the loan pays [VERIFY: OFAC regulations, 31 CFR Chapter V; strict liability per needs analysis U4; not opened 22 Nov 2026]."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "present",
+      "blueprint_note": "C7 O3 and O6 cover it. F-CORE-38 and -39 are still reserved and not in the Library.",
+      "outcomes": [
+        "C07-O3",
+        "C07-O4",
+        "C11-O4"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Primary or regulator source; see its tag"
+    },
+    {
+      "id": "TM-19",
+      "name": "Expected loss and credit spreads",
+      "origin": "Quality bar 6.1",
+      "mechanism": "Expected loss is the average loss a lender should plan for: probability of default × loss given default × exposure at default. It is a cost of doing business, like servicing. The spread over the cost of funds must cover it before any profit. Default also lowers the return actually earned below the promised yield. Early defaults cost more because less interest has been collected (yield degradation). Illustrative only: PD 8%, LGD 35% and exposure $1,000,000 give 0.08 × 0.35 × $1,000,000 = $28,000 of expected loss over the loan's life.",
+      "home": "C2",
+      "revisit": [
+        "C8",
+        "C10",
+        "C13",
+        "C14"
+      ],
+      "bloom": {
+        "C2": 2,
+        "C8": 4,
+        "C10": 3,
+        "C13": 4,
+        "C14": 3
+      },
+      "revisit_notes": {
+        "C10": "the timeline changes LGD (TM-32)",
+        "C13": "realized LGD in a workout",
+        "C14": "lifetime expected loss in the allowance (TM-37)",
+        "C8": "note rate built from cost of funds, expected loss, capital, cost and margin (O5)"
+      },
+      "previews": {},
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 21 (yield degradation; expected return)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A high coupon means a high return.",
+          "correction": "Illustrative (syllabi D1-D2): a 9% three-year loan that defaults in year 3 with 65% recovery earns −6.69%. Add an 8% chance of that default. The probability-weighted average of yields is 9.00% − 0.08 × 15.69 = 7.74%; that is an approximation. The IRR of the expected cash flows (9, 9, then 0.92 × 109 + 0.08 × 65 = 105.48, on 100) is 7.91%, the measure Geltner uses. The gap is 0.17 points."
+        },
+        {
+          "misconception": "Expected loss is what the lender will lose.",
+          "correction": "It is an average. Actual losses come in clusters during downturns (TM-01), which is why capital is held beyond expected loss."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "partial",
+      "blueprint_note": "Home moved to C2 (professor review 3; syllabi notes B1). C2 O8 teaches it at level 2 with labelled illustrative numbers (owner decision H3). C8 O5 analyzes a note rate built from expected loss. C14 O7 owns the allowance.",
+      "outcomes": [
+        "C02-O8",
+        "C08-O5",
+        "C10-O5",
+        "C13-O2",
+        "C14-O7"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-20",
+      "name": "Risk-based pricing",
+      "origin": "Task: risk-based pricing as a concept (owner decision H3)",
+      "mechanism": "A loan's spread should pay for five things: spread = cost of funds + expected loss + capital charge + operating cost + margin. Cost of funds is what the lender pays its warehouse or investors. Expected loss rises with the risk rating. The capital charge pays for equity held against losses worse than expected. Operating cost covers origination and servicing. The margin is profit. If a riskier loan is priced like a safer one, the riskier loans win the business and the book's quality falls (TM-05).",
+      "home": "C8",
+      "revisit": [
+        "C14"
+      ],
+      "bloom": {
+        "C8": 4,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C14": "is the price right for the rating and the capital partner's box"
+      },
+      "previews": {
+        "C3": "computes SOFR plus a spread without explaining it"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 21 (spread must cover expected loss plus a risk premium)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "The rate grid is set by competitors, so risk does not matter.",
+          "correction": "Matching a competitor's price on a riskier loan means earning less than its expected loss and capital cost."
+        },
+        {
+          "misconception": "Points are profit.",
+          "correction": "Points are up-front yield that also pays origination cost. They belong in the build-up, not on top of it."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-28",
+        "F-MF-24"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C8 4.1 item 3 lists cost of funds, expected loss, servicing and margin. Fix: add the capital charge term and the rating-to-spread link. Concept only, labelled illustrative numbers, no pricing grid (owner decision H3). C8 O5 now analyzes the rate build-up at level 4, with illustrative numbers only (owner decision H3).",
+      "outcomes": [
+        "C08-O5",
+        "C14-O2"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-21",
+      "name": "Commercial mortgage underwriting: several tests and the binding constraint",
+      "origin": "Syllabi B2",
+      "mechanism": "Each sizing test guards against a different failure. LTV and LTC protect recovery if the property must be sold. DSCR protects payment from cash flow. Debt yield protects against low rates and long amortization flattering DSCR. The lowest result binds because the loan must pass every guard at once. Knowing which test binds tells the lender what input to verify hardest.",
+      "home": "C8",
+      "revisit": [
+        "C14"
+      ],
+      "bloom": {
+        "C8": 4,
+        "C14": 5
+      },
+      "revisit_notes": {
+        "C14": "sizing table in the memo"
+      },
+      "previews": {
+        "C2": "tests ratios against limits and names the binding test (plain division)"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 21 \"Commercial Mortgage Analysis and Underwriting\""
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Passing DSCR means the loan is sized correctly.",
+          "correction": "Birchwood passes DSCR at $3,936,238.02 but LTV binds at $3,900,000 (C8 blueprint T2)."
+        },
+        {
+          "misconception": "Debt yield duplicates DSCR.",
+          "correction": "Debt yield ignores rate and amortization, so it cannot be flattered by a low rate. It entered US practice after 2008."
+        }
+      ],
+      "historical_episode": {
+        "module": "C8",
+        "episode": "Why debt yield became standard after 2008 (optional, supports the required C8 episode in TM-25)",
+        "use": "Show that DSCR on cheap debt overstated safety before 2008.",
+        "source": "OCC, *Comptroller's Handbook: Commercial Real Estate Lending*, v2.0 (Mar 2022), \"Debt Yield\"",
+        "verify": "[VERIFY: OCC CRE Handbook v2.0, Debt Yield section; cited in C8 blueprint; not re-opened 22 Nov 2026]"
+      },
+      "formulas": [
+        "F-CORE-14",
+        "F-CORE-15",
+        "F-CORE-16",
+        "F-CORE-17",
+        "F-CORE-18",
+        "F-CORE-19"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C8 O1-O2 cover it.",
+      "outcomes": [
+        "C08-O1",
+        "C08-O2",
+        "C14-O1"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-22",
+      "name": "Capital stack and subordination",
+      "origin": "Quality bar 6.1",
+      "mechanism": "Claims on a property are paid in order: senior debt, then mezzanine debt, then preferred equity, then common equity. Losses run the other way. Contractual subordination is a promise in a document. Structural subordination comes from where the claim sits: mezzanine lends to the owner of the borrower, not on the property. Every dollar of junior capital is a buffer for the senior lender. Combined leverage, not senior LTV alone, shows how thin the total equity cushion is. Illustrative (syllabi D12): value falls to $8,000,000, and 6% sale costs leave $7,520,000. That covers senior $6,000,000 and mezz $1,500,000 with $20,000 left, so preferred equity takes the next loss.",
+      "home": "C6",
+      "revisit": [
+        "C8",
+        "C9",
+        "C13",
+        "C14"
+      ],
+      "bloom": {
+        "C6": 4,
+        "C8": 4,
+        "C9": 2,
+        "C13": 4,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C9": "subordination as a document promise (TM-31)",
+        "C13": "who absorbs a workout loss",
+        "C14": "combined leverage in the memo",
+        "C8": "combined leverage, who loses first and the senior net recovery (O7)"
+      },
+      "previews": {
+        "C0": "names the layers and who is paid first (O2)"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 15 \"Advanced Topics II: Capital Structure\""
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Senior LTV shows the whole risk.",
+          "correction": "Mezz and preferred equity can push combined leverage near 100%. The sponsor then has little left to lose (F-MF-16)."
+        },
+        {
+          "misconception": "Preferred equity is equity, so it protects the senior lender like common equity.",
+          "correction": "Preferred equity often has redemption rights and control triggers. It can act like debt in a downturn."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-MF-16"
+      ],
+      "blueprint_status": "missing",
+      "blueprint_note": "Home moved to C6 (professor review 3). C6 O7 already asks who is paid first, at level 4. C8 O7 revisits with combined leverage. Settles P-07.",
+      "outcomes": [
+        "C06-O7",
+        "C08-O7",
+        "C09-O1",
+        "C13-O3",
+        "C14-O1"
+      ],
+      "preview_outcomes": [
+        "C00-O2"
+      ],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-23",
+      "name": "Refinance and extension risk",
+      "origin": "Quality bar 6.1",
+      "mechanism": "A bridge loan is repaid by a new loan or a sale, not by its own cash flow. At maturity the take-out lender sizes on its own rules and today's rates. If rates rose or income fell, the take-out is smaller than the payoff. An extension buys time but adds cost and can extend into a deeper loss. So the lender solves for the break-even income and take-out rate on day one, and knows how much room it has.",
+      "home": "C8",
+      "revisit": [
+        "C12",
+        "C14"
+      ],
+      "bloom": {
+        "C8": 4,
+        "C12": 5,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C12": "extension decision under stress (O3)",
+        "C14": "exit at committee (O5)"
+      },
+      "previews": {
+        "C0": "cycle phase and refinance risk named (O5)",
+        "C3": "balloon balance computed"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 20-21 (balloon risk; terminal LTV)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A loan that performs to maturity has no exit risk.",
+          "correction": "Cedar Court's cushion is gone at a 6.1% NCF miss at 7.25% (RD-MF-01 memo). Performance before maturity says little about the take-out."
+        },
+        {
+          "misconception": "An extension cures a weak exit.",
+          "correction": "It adds a fee and more interest and leaves the take-out gap in place unless income or rates change."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-MF-20",
+        "F-COM-10",
+        "F-RES-24",
+        "F-CORE-22"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C8 O5 owns it. Fix: replace the stale $253,677.46 shortfall in C8 T6 with $279,377.46 (exit fee included).",
+      "outcomes": [
+        "C08-O6",
+        "C12-O3",
+        "C14-O5"
+      ],
+      "preview_outcomes": [
+        "C00-O5"
+      ],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-24",
+      "name": "Prepayment option and prepayment premiums",
+      "origin": "Syllabi B2",
+      "mechanism": "A borrower can usually repay early, and will when rates fall or the plan finishes early. That cuts the lender's expected interest. Premiums, step-downs, yield maintenance and defeasance price that option. Securitized loans defease because a REMIC may release a mortgage only for substitute government securities [VERIFY: 26 CFR 1.860G-2(a)(8); checked 22 Nov 2026 per C8 blueprint].",
+      "home": "C8",
+      "revisit": [
+        "C10"
+      ],
+      "bloom": {
+        "C8": 3,
+        "C10": 5
+      },
+      "revisit_notes": {
+        "C10": "enforceability under state law and the penalty doctrine (O4)"
+      },
+      "previews": {
+        "C3": "early payoff changes the yield of points (O6)"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 20"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A prepayment premium is a penalty for bad behavior.",
+          "correction": "It prices an option the borrower holds. Courts still test it against the penalty doctrine (C10)."
+        },
+        {
+          "misconception": "No-premium bridges have no prepayment risk.",
+          "correction": "The lender loses expected interest. Minimum-interest periods and exit fees play the same role."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-COM-24"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C8 O6 owns it (coverage review D14).",
+      "outcomes": [
+        "C08-O8",
+        "C10-O4"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-25",
+      "name": "Development phases and phased risk",
+      "origin": "Task: construction risk (development phases); syllabi B2 (development risk taxonomy)",
+      "mechanism": "A development passes through land, entitlement, construction, lease-up and stabilization. Each phase has its own risks and its own lender. Costs are committed before value is known, so the project is far riskier than the finished building (operational leverage). MIT's example puts development risk at 2.1 to 2.9 times stabilized risk (illustrative). That is the economic reason LTC limits sit below LTV limits and equity goes in first. The ten-factor risk list (entitlement to valuation) frames the risk-and-mitigant table.",
+      "home": "C8",
+      "revisit": [
+        "C12",
+        "C14"
+      ],
+      "bloom": {
+        "C8": 4,
+        "C12": 4,
+        "C14": 5
+      },
+      "revisit_notes": {
+        "C12": "which phase a stalled draw sits in",
+        "C14": "capstone memo on the ground-up deal"
+      },
+      "previews": {
+        "C0": "construction limits appear in the supervisory table",
+        "C5": "as-completed and as-stabilized values defined (O1)"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 17-18 \"Investment Analysis of Real Estate Development Projects I and II\"",
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 16 \"Financing Project Development\"; Ch. 17 \"Financing Land Development Projects\""
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A 10% fall in completed value cuts the developer's return by about 10%.",
+          "correction": "Costs are fixed before value is known, so the equity return falls by much more (syllabi D11; operational leverage)."
+        },
+        {
+          "misconception": "A construction loan is a bridge loan with draws.",
+          "correction": "Until completion there is no income and no finished collateral. The lender's recovery depends on someone finishing the job."
+        }
+      ],
+      "historical_episode": {
+        "module": "C8",
+        "episode": "Construction and land loans in the 2008-2011 bank failures",
+        "use": "Show how acquisition, development and construction exposure drove small-bank failures, and why survivors had stronger controls.",
+        "source": "GAO-13-704T (June 2013) and GAO-13-71 (Jan 2013); FDIC OIG, EVAL-13-001 (Oct 2012), on banks with ADC concentrations that did not fail",
+        "verify": "[VERIFY: GAO-13-704T: small-bank failures in ten states driven mainly by CRE losses, \"especially\" land development and construction loans; 298 of 414 failures; seen via search summary only; open before citing; checked 22 Nov 2026] [VERIFY: FDIC OIG EVAL-13-001; seen via search summary; not opened; checked 22 Nov 2026]"
+      },
+      "formulas": [
+        "F-RES-22",
+        "F-RES-20"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C8 T3b is a 10-minute primer on Library test cases. Fix: add phased risk, operational leverage and the ten-factor list (syllabi E3 C8 items 4-5). Taught in a separate construction lesson inside C8 (professor review 3). Splitting C8 stays an owner decision.",
+      "outcomes": [
+        "C08-O4",
+        "C12-O1",
+        "C14-O1"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-26",
+      "name": "Development feasibility: front door and back door",
+      "origin": "Syllabi B2",
+      "mechanism": "Simple feasibility asks one lender question: can a take-out loan repay this project? Front door: from cost, find the rent the project must earn to support the take-out. Back door: from market rent, find the most the land can cost. If the required rent is above the market, the take-out cannot work, however good the developer is.",
+      "home": "C8",
+      "revisit": [
+        "C14"
+      ],
+      "bloom": {
+        "C8": 3,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C14": "capstone feasibility check"
+      },
+      "previews": {
+        "C5": "as-complete value (O1)"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 17"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A feasible project is a good investment.",
+          "correction": "MIT's back-door case shows $91,647 of headroom while its NPV is still negative. Feasibility tests the loan, not the equity."
+        },
+        {
+          "misconception": "Feasibility can ignore vacancy.",
+          "correction": "Leaving out vacancy is the named distractor in syllabi D8. It overstates supportable land cost."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "missing",
+      "blueprint_note": "No Library formula (syllabi C16-C17). Fix: teach D8 and D9 in C8 as illustrative, unscored until the owner adds formulas. C8 O4 (contract, schedule, permits) and C8 O6 (back-door test) now serve it. Taught in a separate construction lesson inside C8 (professor review 3). Splitting C8 stays an owner decision.",
+      "outcomes": [
+        "C08-O4",
+        "C08-O6",
+        "C14-O1"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-27",
+      "name": "Interest during construction",
+      "origin": "Task: construction risk (interest during construction); syllabi B2",
+      "mechanism": "Each draw starts accruing interest on its draw date, so the balance and the interest grow together. Before completion there is no income to pay it. The interest reserve inside the loan pays it, which makes financing cost part of project cost. An average-balance factor estimates the reserve; a draw schedule computes it. A back-loaded or delayed schedule can make the estimate wrong in either direction. Illustrative (syllabi D10): draws of $400,000, $600,000, $900,000 and $1,100,000 at 9% compound to $47,537.80 of interest; a 60% average-balance estimate gives $54,000.00.",
+      "home": "C8",
+      "revisit": [
+        "C12"
+      ],
+      "bloom": {
+        "C8": 3,
+        "C12": 3
+      },
+      "revisit_notes": {
+        "C12": "interest rising after each draw; reserve depletion"
+      },
+      "previews": {},
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 18",
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 16"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "The interest reserve is a borrower cost, not a lender risk.",
+          "correction": "If the reserve runs out before completion, unpaid interest becomes a default with no income behind it."
+        },
+        {
+          "misconception": "The average-balance factor is always conservative.",
+          "correction": "It assumes a draw shape. A delay that stretches the schedule adds months of interest the factor never counted."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-20",
+        "F-RES-16",
+        "F-MF-15",
+        "F-COM-14"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C8 O3 sizes the interest reserve by factor. Fix: add D10's schedule method beside F-MF-15 (syllabi E3 C8 item 2); owner question Q3 governs scoring. Taught in a separate construction lesson inside C8 (professor review 3). Splitting C8 stays an owner decision.",
+      "outcomes": [
+        "C08-O4",
+        "C12-O1"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-28",
+      "name": "Completion and cost-overrun risk",
+      "origin": "Task: construction risk (completion and cost overrun)",
+      "mechanism": "An unfinished building is worth far less than its cost. So the lender's first risk is that the project stops. Overruns come from change orders, soft costs left out and contingency spent early. Each one leaves the loan out of balance: remaining funds no longer cover remaining work. Equity first, a contingency line, a completion guaranty, bonds and an in-balance test each move overrun risk away from the lender.",
+      "home": "C8",
+      "revisit": [
+        "C9",
+        "C12",
+        "C14"
+      ],
+      "bloom": {
+        "C8": 4,
+        "C9": 3,
+        "C12": 5,
+        "C14": 5
+      },
+      "revisit_notes": {
+        "C9": "completion guaranty, payment and performance bonds, builder's risk",
+        "C12": "draws, change orders and the in-balance test (O1)",
+        "C14": "capstone defects and grey cases"
+      },
+      "previews": {
+        "C6": "names the completion guaranty as a guaranty type (O1)"
+      },
+      "reading": [
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 16 \"Financing Project Development\"",
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 17"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A guaranteed maximum price contract removes overrun risk.",
+          "correction": "Owner changes, soft costs and contractor failure sit outside the GMP. MIT's One Lincoln Street case still required a completion guaranty."
+        },
+        {
+          "misconception": "Contingency is spare money.",
+          "correction": "It is budget for known unknowns. Spending it early is a warning sign. The policy sets no contingency minimum yet (coverage review, open item 5)."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-RES-25",
+        "F-COM-21"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C8 4.1 item 6 adds budget review; C12 O1 runs the in-balance test. No contingency or contractor rule exists, so these stay unscored. C8 O4 now names the contractor, contract type and permits (CCO review 8). Taught in a separate construction lesson inside C8 (professor review 3). Splitting C8 stays an owner decision.",
+      "outcomes": [
+        "C08-O4",
+        "C09-O2",
+        "C12-O1",
+        "C14-O1"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-29",
+      "name": "Take-out risk",
+      "origin": "Task: construction risk (take-out risk); syllabi B2",
+      "mechanism": "A construction loan is repaid by a permanent loan or a sale after completion. The classical structure made the construction lender wait for a permanent commitment. Today many business-purpose projects exit to a third-party lender or a sale with no commitment in hand. The lender then carries the risk that the finished, leased building will not qualify for enough debt at the rates of that day.",
+      "home": "C8",
+      "revisit": [
+        "C12",
+        "C14"
+      ],
+      "bloom": {
+        "C8": 4,
+        "C12": 5,
+        "C14": 5
+      },
+      "revisit_notes": {
+        "C12": "extension and exit at maturity (O3)",
+        "C14": "capstone exit evidence"
+      },
+      "previews": {},
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 18",
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 16"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Our own term rules decide the take-out.",
+          "correction": "Each running deal exits to a third-party lender. Our term rules only stand in for that lender's box (D-CORE-31)."
+        },
+        {
+          "misconception": "A take-out sized on pro forma rent is evidence of an exit.",
+          "correction": "It is a planted defect in the capstone design (syllabi E3). Size on achievable rent and a stressed rate."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-MF-20",
+        "F-COM-10"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C8 O5 covers the bridge exit. Fix: add the classical take-out and the sale exit for ground-up (syllabi E1 item 4). Taught in a separate construction lesson inside C8 (professor review 3). Splitting C8 stays an owner decision.",
+      "outcomes": [
+        "C08-O6",
+        "C12-O3",
+        "C14-O5"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-30",
+      "name": "Lien priority and perfection",
+      "origin": "Added so C9 has a property-law mechanism",
+      "mechanism": "A lender's collateral is only as good as its place in line. Recording, title insurance and UCC filings set and prove that place. Anything recorded or attached ahead of the mortgage, such as a tax lien or a mechanic's lien, is paid first in a sale. So the lender reads every title exception and closes only when it knows who stands ahead of it.",
+      "home": "C9",
+      "revisit": [
+        "C11",
+        "C12",
+        "C13"
+      ],
+      "bloom": {
+        "C9": 4,
+        "C11": 2,
+        "C12": 3,
+        "C13": 4
+      },
+      "revisit_notes": {
+        "C11": "recording acts and the gap period (O5)",
+        "C12": "mechanics' lien priority and date-downs per draw",
+        "C13": "junior liens survive a deed in lieu"
+      },
+      "previews": {},
+      "reading": [
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 2 (notes, mortgages, default, foreclosure)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A title policy means there are no prior liens.",
+          "correction": "The policy lists exceptions it does not insure. Schedule B-I and B-II items must be cleared or accepted."
+        },
+        {
+          "misconception": "A mortgage recorded first always comes first.",
+          "correction": "Some state mechanics' liens can relate back to the start of work [VERIFY: Ohio, North Carolina and Indiana lien statutes; not opened 22 Nov 2026]. C12 owns that state law."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "present",
+      "blueprint_note": "C9 O3 and C11 O5 cover it.",
+      "outcomes": [
+        "C09-O3",
+        "C11-O5",
+        "C12-O1",
+        "C13-O4"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-31",
+      "name": "Intercreditor terms and mezzanine foreclosure",
+      "origin": "Quality bar 6.1",
+      "mechanism": "When a senior and a mezzanine lender share one project, an intercreditor agreement sets who may act and when. Typical terms give the mezz lender notice, cure rights and a purchase option, and limit what the senior may change. A mezz lender holds a pledge of the borrower's ownership interests. It forecloses by a UCC sale of those interests, not by a mortgage foreclosure. The sale must be commercially reasonable in every aspect [VERIFY: UCC 9-610(b), Cornell LII; checked 22 Nov 2026]. It can be fast, which changes who the senior lender's borrower is.",
+      "home": "C9",
+      "revisit": [
+        "C13"
+      ],
+      "bloom": {
+        "C9": 2,
+        "C13": 3
+      },
+      "revisit_notes": {
+        "C13": "a mezz foreclosure in a workout changes the counterparty"
+      },
+      "previews": {
+        "C0": "names mezzanine in the capital stack"
+      },
+      "reading": [
+        "None listed in syllabi notes section F; MIT does not cover intercreditor law (syllabi B1). Primary law: UCC Article 9, Part 6; enacted text in each state"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A mezz lender forecloses on the property.",
+          "correction": "It forecloses on the ownership interests. The senior mortgage stays in place."
+        },
+        {
+          "misconception": "The senior lender can ignore the mezz lender after a default.",
+          "correction": "The intercreditor agreement usually requires notice and gives cure rights first."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [],
+      "blueprint_status": "missing",
+      "blueprint_note": "No blueprint teaches it. Fix: add a short C9 section (intercreditor terms; pledge; UCC 9-610 sale) and a C13 grey case. Open the enacted UCC 9-610 text in Ohio, North Carolina and Indiana first.",
+      "outcomes": [
+        "C09-O1",
+        "C13-O3"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Primary or regulator source; see its tag"
+    },
+    {
+      "id": "TM-32",
+      "name": "Loss severity and recovery timing",
+      "origin": "Quality bar 6.1",
+      "mechanism": "Loss given default is the balance plus unpaid interest and costs, less net recovery, as a share of the balance. Time drives it. Every month to recovery adds unpaid interest, taxes, insurance and legal cost. The property state's foreclosure process sets much of that time, so the same loan loses more in a slow judicial state. Early default also hurts yield more, because less interest has been collected (TM-19).",
+      "home": "C10",
+      "revisit": [
+        "C13",
+        "C14"
+      ],
+      "bloom": {
+        "C10": 4,
+        "C13": 5,
+        "C14": 3
+      },
+      "revisit_notes": {
+        "C13": "compare workout options by net loss (O2)",
+        "C14": "LGD in the allowance (O7)"
+      },
+      "previews": {
+        "C2": "names loss severity"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 21 (recovery and loss severity)",
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 2 (default, foreclosure, bankruptcy)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Loss is balance minus sale price.",
+          "correction": "Interest, carry and sale costs come first. The $3,150,000 recovery is a C10 scenario assumption (P-14), not a running-deal figure. On it, Birchwood's severity is ($3,520,000 + $310,000 − $3,150,000) ÷ $3,520,000 = 19.3% (F-CORE-23)."
+        },
+        {
+          "misconception": "A strong appraisal at origination caps the loss.",
+          "correction": "Recovery is the value at sale, after months of carry, in a market that has usually fallen."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-23",
+        "F-CORE-05"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "Home moved from C13 (syllabi B1) to C10, where F-CORE-23 is first computed (C10 O5, T7). C13 revisits at Analyze and Evaluate.",
+      "outcomes": [
+        "C10-O5",
+        "C13-O2",
+        "C14-O7"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-33",
+      "name": "Conditions precedent and the point of no return",
+      "origin": "Added so C11 has a home concept",
+      "mechanism": "Before funding, the lender can still say no. After the wire, its only protections are the documents and the collateral. Conditions precedent are the last chance to make every earlier approval true on the funding day. A wire is close to irreversible, so a diverted wire is a total loss of the advance. That is why controls sit before release, not after.",
+      "home": "C11",
+      "revisit": [
+        "C12"
+      ],
+      "bloom": {
+        "C11": 5,
+        "C12": 3
+      },
+      "revisit_notes": {
+        "C12": "draw conditions repeat the same logic on each advance"
+      },
+      "previews": {
+        "C2": "names the stage in the life cycle"
+      },
+      "reading": [
+        "None listed in syllabi notes section F. Primary law: UCC Article 4A (C11 blueprint)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A condition can be cleared after closing if the borrower promises.",
+          "correction": "After funding the lender has lost its leverage. Post-closing items need an approved exception (CORE-EXC-01)."
+        },
+        {
+          "misconception": "The closing agent's wire instructions can be trusted if they come by email.",
+          "correction": "Business email compromise targets exactly that step. Verify by callback (CORE-CLS-03)."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-33",
+        "F-CORE-41"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C11 O1 and O4 cover it.",
+      "outcomes": [
+        "C11-O1",
+        "C12-O1"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Primary or regulator source; see its tag"
+    },
+    {
+      "id": "TM-34",
+      "name": "Covenants, monitoring and early warning",
+      "origin": "Added so C12 has a home concept",
+      "mechanism": "Covenants are tripwires set at origination. They let the lender act while the borrower still has options and the property still has value. Reporting, cash-management triggers and sweeps turn a slow decline into an early, contractual response. A lender that waits for a missed payment has usually waited too long.",
+      "home": "C12",
+      "revisit": [
+        "C13",
+        "C14"
+      ],
+      "bloom": {
+        "C12": 4,
+        "C13": 3,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C13": "a covenant breach opens the workout",
+        "C14": "portfolio watchlist"
+      },
+      "previews": {
+        "C4": "notes that covenant DSCR definitions differ"
+      },
+      "reading": [
+        "None listed in syllabi notes section F. Regulator source: OCC CRE Handbook, \"Credit Administration\" (needs analysis S4)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A covenant breach means the loan is in default and must be called.",
+          "correction": "It gives the lender rights. The best response is often a sweep, a reserve or a cure plan."
+        },
+        {
+          "misconception": "Late reports are an administrative issue.",
+          "correction": "Missing reports often hide falling income. Treat lateness as a credit signal."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-COM-19"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C12 O4 covers it.",
+      "outcomes": [
+        "C12-O4",
+        "C13-O1",
+        "C14-O8"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Primary or regulator source; see its tag"
+    },
+    {
+      "id": "TM-35",
+      "name": "Workout economics",
+      "origin": "Added so C13 has a home concept (loss severity moved to C10)",
+      "mechanism": "After default, the lender chooses the path with the lowest net loss, counting time, carry and income collected. Foreclosure is not always best: it is slow, costly and leaves the lender owning the property. A modification can lose less if the borrower adds equity or a guarantor reaffirms. Regulators accept prudent workouts with creditworthy borrowers [VERIFY: OCC Bulletin 2023-23; checked 22 Nov 2026 per needs analysis S6]. That frees the lender to choose on economics.",
+      "home": "C13",
+      "revisit": [
+        "C14"
+      ],
+      "bloom": {
+        "C13": 5,
+        "C14": 4
+      },
+      "revisit_notes": {
+        "C14": "losses roll up into the allowance and loan review"
+      },
+      "previews": {
+        "C10": "timeline effect on loss (TM-32)"
+      },
+      "reading": [
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 2 (default, foreclosure, bankruptcy)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Foreclosure is the conservative choice.",
+          "correction": "It is often the most expensive. C13 compares options by net loss, including time (F-CORE-23)."
+        },
+        {
+          "misconception": "A modification hides a loss.",
+          "correction": "A prudent modification on reasonable terms is accepted by regulators; the rating and accrual must still reflect the facts."
+        }
+      ],
+      "historical_episode": {
+        "module": "C13",
+        "episode": "The 2009 interagency workout policy statement and its 2023 replacement",
+        "use": "Show regulators telling banks, during the 2008-09 CRE downturn and again in the 2023 office stress, how to restructure rather than foreclose by reflex.",
+        "source": "Federal Reserve press release and *Policy Statement on Prudent Commercial Real Estate Loan Workouts*, 30 Oct 2009; OCC Bulletin 2023-23, 29 Jun 2023",
+        "verify": "[VERIFY: Federal Reserve press release, 30 Oct 2009: performing loans \"renewed or restructured on reasonable modified terms, made to creditworthy borrowers, will not be subject to adverse classification solely because the value of the underlying collateral declined\"; checked 22 Nov 2026] [VERIFY: OCC Bulletin 2023-23, 29 Jun 2023; occ.gov; checked 22 Nov 2026 per needs analysis S6]"
+      },
+      "formulas": [
+        "F-CORE-23",
+        "F-CORE-42",
+        "F-CORE-31"
+      ],
+      "blueprint_status": "present",
+      "blueprint_note": "C13 O2-O3 cover it. Fix: add the 2009 to 2023 episode to C13 T3.",
+      "outcomes": [
+        "C13-O2",
+        "C13-O3",
+        "C14-O7"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-36",
+      "name": "Loan valuation at a market yield",
+      "origin": "Syllabi B2",
+      "mechanism": "A loan's price is the present value of its remaining payments at today's market yield. If market yields rise above the note rate, the loan sells below par. That is why a lender holding fixed-rate loans in a rising-rate market cannot sell them without a loss. Illustrative (syllabi D15): $2,000,000 interest-only at 8% with 36 months left, priced at a 9% yield (monthly), is worth $1,947,588.66.",
+      "home": "C14",
+      "revisit": [],
+      "bloom": {
+        "C14": 3
+      },
+      "revisit_notes": {},
+      "previews": {
+        "C0": "names whole-loan sale (O3)"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 20"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A performing loan is always worth par.",
+          "correction": "Price depends on market yield. A sound loan can sell at a discount."
+        },
+        {
+          "misconception": "Only credit problems create loan-sale losses.",
+          "correction": "Rate moves alone can, as the D15 example shows."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-45"
+      ],
+      "blueprint_status": "missing",
+      "blueprint_note": "C14 O2 covers eligibility, not price. Fix: add the D15 example to C14 T2 as read-only math, recomputed in code. C14 O2 now names the sale price at the market yield.",
+      "outcomes": [
+        "C14-O2"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-37",
+      "name": "Lifetime expected loss and the allowance",
+      "origin": "Syllabi B2 (hazard functions); needs analysis K4",
+      "mechanism": "Under CECL, a lender reserves for expected losses over a loan's whole life, not only losses already incurred [VERIFY: FDIC CECL page (ASC 326); checked 22 Nov 2026 per needs analysis S7]. Lifetime loss builds from yearly default chances (hazard rates) applied to the loans that survive each year. Illustrative (syllabi D3): hazards of 1.0%, 1.5% and 2.0% give 1 − (0.99 × 0.985 × 0.98) = 4.44% cumulative default, not 4.50%. Ratings, accrual and charge-offs on single loans roll up into this portfolio estimate.",
+      "home": "C14",
+      "revisit": [],
+      "bloom": {
+        "C14": 2
+      },
+      "revisit_notes": {},
+      "previews": {
+        "C2": "one sentence pointer",
+        "C12": "single-loan rating, accrual and charge-off"
+      },
+      "reading": [
+        "Geltner, Miller, van de Minne, Eichholtz, Lindenthal and Shen, *Commercial Real Estate Analysis for Investment, Finance, and Development*, 4th ed. (Routledge, 2026), Ch. 21 (hazard functions)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "Add the yearly default rates to get lifetime default.",
+          "correction": "Loans that already defaulted cannot default again. Multiply survival rates: 4.44%, not 4.50% (illustrative)."
+        },
+        {
+          "misconception": "The allowance equals this year's charge-offs.",
+          "correction": "It is a forward estimate over the remaining life of the book."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-23",
+        "F-CORE-42"
+      ],
+      "blueprint_status": "partial",
+      "blueprint_note": "C14 O7 explains the allowance. Fix: add the D3 hazard example as read-only; no PD source exists (coverage review open item 1).",
+      "outcomes": [
+        "C14-O7"
+      ],
+      "preview_outcomes": [],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    },
+    {
+      "id": "TM-38",
+      "name": "Bankruptcy and bankruptcy-remote borrowers",
+      "origin": "Professor review 2 (C13 O5 had no theory home)",
+      "mechanism": "A bankruptcy filing stops foreclosure at once through the automatic stay [VERIFY: 11 U.S.C. 362(a); Cornell LII; not opened 22 Nov 2026]. Time is the lender's main loss in a stay: interest, taxes and carry run while the collateral cannot be sold. For a single-asset real estate debtor, the court must lift the stay unless the debtor acts within about 90 days. It must file a plan with a reasonable chance of confirmation, or start monthly interest payments [VERIFY: 11 U.S.C. 362(d)(3); Cornell LII; checked 22 Nov 2026] [VERIFY: 11 U.S.C. 101(51B), single asset real estate; Cornell LII; not opened 22 Nov 2026]. So lenders lend to single-purpose entities with separateness covenants. They add recourse that springs to the guarantor on a voluntary filing. That makes a filing costly for the sponsor, not impossible.",
+      "home": "C13",
+      "revisit": [],
+      "bloom": {
+        "C13": 4
+      },
+      "revisit_notes": {},
+      "previews": {
+        "C9": "single-purpose entity covenants and recourse that springs on a filing (O2)"
+      },
+      "reading": [
+        "None listed in syllabi notes section F. Primary law: 11 U.S.C. 362(a), 362(d)(3) and 101(51B) (Cornell LII)",
+        "Brueggeman and Fisher, *Real Estate Finance and Investments*, 2024 Release (18th ed.) (McGraw Hill, 2024), Ch. 2 (default, foreclosure, bankruptcy)"
+      ],
+      "misconceptions": [
+        {
+          "misconception": "A single-purpose entity cannot file for bankruptcy.",
+          "correction": "It can. Separateness covenants and springing recourse make a filing less likely and more costly for the sponsor. They do not remove the right to file."
+        },
+        {
+          "misconception": "Once a sale notice goes out, the sale goes ahead whatever the borrower does.",
+          "correction": "A filing before the sale stops it. The lender must ask the court for relief, and carry costs run meanwhile."
+        }
+      ],
+      "historical_episode": null,
+      "formulas": [
+        "F-CORE-23"
+      ],
+      "blueprint_status": "missing",
+      "blueprint_note": "New. C9 O2 previews single-purpose entity covenants and springing recourse. C13 O5 analyzes how a filing changes the plan and its timeline. The C13 blueprint needs the mechanism section.",
+      "outcomes": [
+        "C13-O5"
+      ],
+      "preview_outcomes": [
+        "C09-O2"
+      ],
+      "citation_status": "Editions confirmed on publisher pages 22 Nov 2026. Chapter numbers come from the syllabi notes; confirm each chapter number and title in the book before citing (book not opened)"
+    }
+  ],
+  "module_home_check": {
+    "C0": [
+      "TM-01",
+      "TM-02"
+    ],
+    "C1": [
+      "TM-03"
+    ],
+    "C2": [
+      "TM-04",
+      "TM-05",
+      "TM-06",
+      "TM-07",
+      "TM-19"
+    ],
+    "C3": [
+      "TM-08",
+      "TM-09",
+      "TM-10",
+      "TM-11"
+    ],
+    "C4": [
+      "TM-12",
+      "TM-13"
+    ],
+    "C5": [
+      "TM-14",
+      "TM-15",
+      "TM-16"
+    ],
+    "C6": [
+      "TM-17",
+      "TM-22"
+    ],
+    "C7": [
+      "TM-18"
+    ],
+    "C8": [
+      "TM-20",
+      "TM-21",
+      "TM-23",
+      "TM-24",
+      "TM-25",
+      "TM-26",
+      "TM-27",
+      "TM-28",
+      "TM-29"
+    ],
+    "C9": [
+      "TM-30",
+      "TM-31"
+    ],
+    "C10": [
+      "TM-32"
+    ],
+    "C11": [
+      "TM-33"
+    ],
+    "C12": [
+      "TM-34"
+    ],
+    "C13": [
+      "TM-35",
+      "TM-38"
+    ],
+    "C14": [
+      "TM-36",
+      "TM-37"
+    ]
+  }
+}
