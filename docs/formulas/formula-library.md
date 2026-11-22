@@ -61,6 +61,10 @@
 | F-CORE-42 | REO carrying value and charge-off | SUGGESTED | CORE-DEF-06 |
 | F-CORE-43 | Bucket headroom | SUGGESTED | CORE-CONC-02 to -07 |
 | F-CORE-44 | Cash-on-cash return | SUGGESTED | No policy limit; C5 |
+| F-CORE-45 | Present and future value (time value of money) | SUGGESTED | No policy limit; C3 |
+| F-CORE-46 | Effective annual rate from a nominal rate | SUGGESTED | D-CONV-01; C3 |
+| F-CORE-47 | Remaining loan balance after k payments | SUGGESTED | COM-TRM-02, MF-TRM-05 |
+| F-CORE-48 | Internal rate of return (IRR) | SUGGESTED | CORE-PRC-02, -03 |
 
 ### F-CORE-01: Interest-only payment (Actual/360)
 
@@ -1632,7 +1636,173 @@ CoC = \frac{NOI - ADS}{E}
 | 2 | NOI $480,000; ADS $330,772.68; cash $1,918,181.82 (value at 8.25% cap) | 7.78% |
 | 3 | NOI $300,000 (in place); ADS $330,772.68; cash $2,100,000 | −1.47% |
 
-**Core library complete: 30 REQUIRED and 12 SUGGESTED formulas, 126 test cases.**
+### F-CORE-45: Present and future value (time value of money) (SUGGESTED)
+
+**Purpose.** Values a level stream of payments plus a lump sum at one date. It is the base of the payment, balance and yield formulas.
+
+**Formula.** PV = PMT × (1 − (1 + i)^−n) ÷ i + FV\_n × (1 + i)^−n. FV = PV × (1 + i)^n. Here i = annual rate ÷ periods a year
+
+```latex
+PV = PMT \times \frac{1-(1+i)^{-n}}{i} + FV_n (1+i)^{-n},\quad FV = PV (1+i)^{n}
+```
+
+**Variables and units.** PMT = level payment at the end of each period (USD); FV\_n = lump sum paid with the last payment (USD); i = rate per period (decimal; annual rate ÷ 12 for monthly); n = number of periods; PV, FV = value today and at period n (USD)
+
+**Worked example.**
+
+1. Birchwood term loan: payment $27,564.39 (F-CORE-02); 7.000% ÷ 12 = 0.0058333 a month; n = 300; no lump sum.
+2. Annuity factor = (1 − 1.0058333^−300) ÷ 0.0058333 = 141.486903.
+3. PV = $27,564.39 × 141.486903 = $3,900,000.18. That is the $3,900,000 loan, plus 18 cents from rounding the payment.
+4. Turn it round: payment = $3,900,000 ÷ 141.486903 = $27,564.39. That is F-CORE-02, derived from the annuity.
+5. FV = $3,900,000.18 × 1.0058333^300 = $22,329,132.07: what the payments grow to if each is reinvested at 7.000%.
+
+**Interpretation.** A loan's amount is the present value of its payments at the note rate. Discount at a higher rate and the same payments are worth less.
+
+**Related rules.** No policy limit. D-CONV-01; F-CORE-02, F-CORE-47, F-CORE-48
+
+**Common mistakes.**
+
+- Using the annual rate as i on monthly payments; divide by 12 first.
+- Treating payments as made at the start of each period; this formula assumes the end (an ordinary annuity).
+- Leaving out the balloon or loan payoff (FV\_n) when valuing an interest-only or partly amortizing loan.
+
+**Edge cases.** i = 0 → PV = PMT × n + FV\_n. i must be above −100%. n must be 1 or more. PMT = 0 gives a plain lump-sum discount.
+
+**Rounding and day count.** Periodic compounding at the rate per period (12 a year for monthly loans), not Actual/360. Keep full precision; round PV and FV to the cent.
+
+**Modules.** C3
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | PMT $27,564.39; 7.000% ÷ 12; 300 months; lump $0 (Birchwood) | PV $3,900,000.18; FV $22,329,132.07 |
+| 2 | PMT $2,904.17; 10.250% ÷ 12; 12 months; lump $340,000 (Maple Run) | PV $340,000.04; FV $376,534.79 |
+| 3 | PMT $37,328.69; 7.250% ÷ 12; 120 months; lump $4,722,901.67 (Cedar Court) | PV $5,472,000.00; FV $11,273,590.40 |
+
+### F-CORE-46: Effective annual rate from a nominal rate (SUGGESTED)
+
+**Purpose.** Turns a quoted nominal rate into the rate actually earned over a year, allowing for day count and compounding.
+
+**Formula.** EAR = (1 + r × (D ÷ 360) ÷ m)^m − 1, where D = 365 (366 in a leap year) for an Actual/360 note and 360 for a 30/360 rate
+
+```latex
+EAR = \left(1+\frac{r \times D/360}{m}\right)^{m} - 1
+```
+
+**Variables and units.** r = nominal annual rate (%); D = days the rate accrues over in a year (days); m = payments (compounding periods) a year
+
+**Worked example.**
+
+1. Maple Run: 10.250% note rate, billed Actual/360, paid monthly (m = 12), 365-day year.
+2. Day-count uplift: 10.250% × 365 ÷ 360 = 10.392% simple interest over the year.
+3. Monthly compounding: (1 + 10.392% ÷ 12)^12 − 1 = 0.109019 = 10.902%.
+4. Without the uplift (30/360): (1 + 10.250% ÷ 12)^12 − 1 = 10.746%.
+
+**Interpretation.** Two loans with the same note rate cost different amounts if their day count or payment frequency differs. Compare loans on EAR, not on the quote.
+
+**Related rules.** No policy limit. D-CONV-01 (tests use the nominal rate); CORE-PRC-03; F-CORE-01, F-CORE-40, F-CORE-48
+
+**Common mistakes.**
+
+- Using EAR in a DSCR or sizing test; those use the nominal rate (D-CONV-01).
+- Applying the 365 ÷ 360 uplift to a payment-formula rate; F-CORE-02 is a 12-period year.
+- Compounding when interest is not paid or added to principal during the year; set m = 1.
+
+**Edge cases.** m = 1 with D = 365 → the simple Actual/360 uplift, r × 365 ÷ 360. D = 360 → plain compounding. Leap year → D = 366. r must be 0 or more; m must be 1 or more.
+
+**Rounding and day count.** Keep full precision; display three decimals.
+
+**Modules.** C3
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | 7.000%; 30/360 (D = 360); monthly | 7.229% |
+| 2 | 10.250%; Actual/360, 365 days; monthly (Maple Run) | 10.902% |
+| 3 | 7.650%; Actual/360, 365 days; m = 1 (Cedar Court bridge) | 7.756% |
+
+### F-CORE-47: Remaining loan balance after k payments (SUGGESTED)
+
+**Purpose.** Principal still owed after k scheduled payments. It sizes the balloon at maturity.
+
+**Formula.** B\_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i, where P is the F-CORE-02 payment rounded to the cent
+
+```latex
+B_k = L(1+i)^{k} - P \times \frac{(1+i)^{k}-1}{i}
+```
+
+**Variables and units.** L = original loan (USD); i = annual rate ÷ 12 (decimal); n = amortization (months); P = monthly payment from F-CORE-02, rounded to the cent (USD); k = payments made (months)
+
+**Worked example.**
+
+1. Birchwood term loan: $3,900,000; 7.000%; 300-month amortization; P = $27,564.39. A 120-month term is a what-if: Running Deals sets no term.
+2. Growth factor: 1.0058333^120 = 2.009661. The loan grows to $3,900,000 × 2.009661 = $7,837,679.37.
+3. Payments grow to $27,564.39 × (2.009661 − 1) ÷ 0.0058333 = $4,770,977.14.
+4. Balance after 120 payments = $7,837,679.37 − $4,770,977.14 = $3,066,702.23. That is the balloon at a 10-year maturity.
+
+**Interpretation.** A long amortization with a short term leaves a large balloon. The borrower must refinance or sell to pay it, so maturity is a credit risk.
+
+**Related rules.** COM-TRM-02, MF-TRM-05; F-CORE-02, F-CORE-45
+
+**Common mistakes.**
+
+- Computing with the unrounded payment; the balance then drifts from the schedule by cents.
+- Using the term instead of the amortization for n when finding P.
+- Reading the balance after k payments as the payoff; payoff adds accrued interest and fees (F-CORE-32).
+
+**Edge cases.** k = 0 → B = L. k = n → a small residue from rounding the payment (Birchwood: −$1.06); the last payment absorbs it. Rate 0% → B = L − P × k. k must be between 0 and n.
+
+**Rounding and day count.** Monthly 30/360 schedule, as F-CORE-02. Round P to the cent first; round B to the cent.
+
+**Modules.** C3, C8
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | $3,900,000; 7.000%; 300 months; after 120 (Birchwood what-if) | $3,066,702.23 |
+| 2 | $5,472,000; 7.250%; 360 months; after 120 (Cedar Court what-if) | $4,722,901.67 |
+| 3 | $3,900,000; 7.000%; 300 months; after 60 (Birchwood 5-year what-if) | $3,555,323.85 |
+
+### F-CORE-48: Internal rate of return (IRR) (SUGGESTED)
+
+**Purpose.** The yield a cash-flow series earns: the one rate per period that makes its net present value zero.
+
+**Formula.** Find i so that NPV = Σ CF\_t ÷ (1 + i)^t = 0, by bisection. Nominal IRR = i × m; effective IRR = (1 + i)^m − 1
+
+```latex
+\sum_{t=0}^{N} \frac{CF_t}{(1+i)^{t}} = 0,\quad IRR_{nom} = m\,i,\quad IRR_{eff} = (1+i)^{m}-1
+```
+
+**Variables and units.** CF\_t = net cash flow at period t, negative out and positive in (USD); t = 0 to N (periods); i = IRR per period (decimal); m = periods a year
+
+**Worked example.**
+
+1. Maple Run, simplified to full funding on day one: commitment $340,000; 1.50 points = $5,100; 10.250%; 12 months.
+2. Lender's cash flows: t = 0, −$340,000 + $5,100 = −$334,900; t = 1 to 11, interest $340,000 × 10.250% ÷ 12 = $2,904.17; t = 12, $342,904.17.
+3. Solve NPV = 0 by bisection: start with i between −99% and 100% a month, halve the bracket, and stop when it is narrower than 1e-12.
+4. Monthly IRR i = 0.009873. Nominal = 0.009873 × 12 = 11.848%. Effective = (1 + 0.009873)^12 − 1 = 12.513%.
+5. The F-CORE-40 screen gives 11.75%. It spreads the points evenly and ignores timing, so it is not a yield.
+
+**Interpretation.** Points paid up front raise the lender's yield above the note rate, more so on a short term. A loan with no fees yields its note rate.
+
+**Related rules.** CORE-PRC-02, CORE-PRC-03; F-CORE-06, F-CORE-40, F-CORE-45, F-CORE-46
+
+**Common mistakes.**
+
+- Netting the points from the loan but also counting them as income later; count each dollar once.
+- Quoting the monthly IRR as an annual rate; multiply by 12 for nominal, or compound for effective.
+- Treating IRR as the usury test; counsel decides how a state counts fees \[VERIFY: State Law Table usury column; checked 20 Nov 2026\].
+
+**Edge cases.** Needs at least one outflow and one inflow, with one sign change. More than one sign change can give several IRRs: report NPV at a stated rate instead. No root between −99% and 100% a period → not defined.
+
+**Rounding and day count.** Periods as the cash flows fall (monthly here, interest at rate ÷ 12; Actual/360 billing would raise the yield slightly). Bisection tolerance 1e-12 on the periodic rate; display three decimals.
+
+**Modules.** C3
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | −$334,900; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (Maple Run) | 11.848% nominal; 12.513% effective |
+| 2 | −$3,484,800; 23 × $22,440.00; $3,542,440.00 at month 24; m = 12 (Birchwood bridge) | 8.194% nominal; 8.509% effective |
+| 3 | −$340,000; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (no points) | 10.250% nominal; 10.746% effective |
+
+**Core library complete: 30 REQUIRED and 16 SUGGESTED formulas, 138 test cases.**
 
 ## Residential formulas (F-RES)
 

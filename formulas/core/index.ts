@@ -20,6 +20,7 @@ import {
   RTL_GRID,
   type Tier,
 } from "./policy";
+import { roundHalfUp } from "../shared/round";
 
 /** F-CORE-01: Interest-only payment, Actual/360. balance × rate ÷ 360 × days. */
 export function interestOnly(balance: number, annualRate: number, days: number): number {
@@ -418,6 +419,98 @@ export function cashOnCash(noi: number, annualDebtService: number, cashInvested:
   assertNonNegative({ annualDebtService });
   assertPositive({ cashInvested });
   return (noi - annualDebtService) / cashInvested;
+}
+
+/**
+ * F-CORE-45: Present and future value (time value of money).
+ * PV = PMT × (1 − (1 + i)^−n) ÷ i + FV_n × (1 + i)^−n; FV = PV × (1 + i)^n. i = rate per period; i = 0 → PMT × n + FV_n.
+ */
+export function presentFutureValue(
+  periodRate: number,
+  periods: number,
+  payment: number,
+  lumpSum: number,
+): { pv: number; fv: number } {
+  assertFinite({ periodRate });
+  if (!(periodRate > -1)) throw new RangeError("periodRate must be > −1");
+  if (!Number.isInteger(periods) || periods < 1) throw new RangeError("periods must be a whole number ≥ 1");
+  assertNonNegative({ payment, lumpSum });
+  const i = periodRate;
+  const pv = i === 0 ? payment * periods + lumpSum : (payment * (1 - (1 + i) ** -periods)) / i + lumpSum * (1 + i) ** -periods;
+  return { pv, fv: pv * (1 + i) ** periods };
+}
+
+/**
+ * F-CORE-46: Effective annual rate from a nominal rate. EAR = (1 + r × (D ÷ 360) ÷ m)^m − 1,
+ * D = 365 (366 in a leap year) for an Actual/360 note, 360 for a 30/360 rate.
+ */
+export function effectiveAnnualRate(nominalRate: number, periodsPerYear: number, daysInYear: 360 | 365 | 366 = 360): number {
+  assertNonNegative({ nominalRate });
+  if (!Number.isInteger(periodsPerYear) || periodsPerYear < 1) throw new RangeError("periodsPerYear must be a whole number ≥ 1");
+  if (![360, 365, 366].includes(daysInYear)) throw new RangeError("daysInYear must be 360, 365 or 366");
+  return (1 + (nominalRate * daysInYear) / 360 / periodsPerYear) ** periodsPerYear - 1;
+}
+
+/**
+ * F-CORE-47: Remaining loan balance after k payments. B_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i,
+ * i = rate ÷ 12, P = the F-CORE-02 payment rounded to the cent; rate 0 → L − P × k.
+ */
+export function remainingBalance(loan: number, annualRate: number, months: number, paymentsMade: number): number {
+  assertNonNegative({ loan, annualRate });
+  if (!Number.isInteger(months) || months < 1) throw new RangeError("months must be a whole number ≥ 1");
+  if (!Number.isInteger(paymentsMade) || paymentsMade < 0 || paymentsMade > months) {
+    throw new RangeError("paymentsMade must be a whole number from 0 to months");
+  }
+  const i = annualRate / 12;
+  const p = roundHalfUp(amortizingPayment(loan, annualRate, months), 2);
+  if (i === 0) return loan - p * paymentsMade;
+  const g = (1 + i) ** paymentsMade;
+  return loan * g - (p * (g - 1)) / i;
+}
+
+/** Net present value of cash flows CF_t at t = 0, 1, 2, … periods, discounted at periodRate (used by F-CORE-48). */
+export function netPresentValue(periodRate: number, cashFlows: readonly number[]): number {
+  let s = 0;
+  for (let t = 0; t < cashFlows.length; t++) s += cashFlows[t] / (1 + periodRate) ** t;
+  return s;
+}
+
+/** Bisection bracket and stop width for F-CORE-48, per period. */
+export const IRR_BRACKET = { low: -0.99, high: 1.0, tolerance: 1e-12 } as const;
+
+/**
+ * F-CORE-48: Internal rate of return. Solve Σ CF_t ÷ (1 + i)^t = 0 for i by bisection on [−99%, 100%] a period,
+ * stopping when the bracket is narrower than 1e-12. Nominal = i × m; effective = (1 + i)^m − 1.
+ * Needs exactly one sign change in the cash flows (else several IRRs may exist), so other series throw.
+ */
+export function internalRateOfReturn(
+  cashFlows: readonly number[],
+  periodsPerYear: number,
+): { periodic: number; nominal: number; effective: number } {
+  if (cashFlows.length < 2) throw new RangeError("need at least two cash flows");
+  cashFlows.forEach((cf, t) => assertFinite({ [`cashFlows[${t}]`]: cf }));
+  if (!Number.isInteger(periodsPerYear) || periodsPerYear < 1) throw new RangeError("periodsPerYear must be a whole number ≥ 1");
+  const signs = cashFlows.filter((cf) => cf !== 0).map(Math.sign);
+  let changes = 0;
+  for (let k = 1; k < signs.length; k++) if (signs[k] !== signs[k - 1]) changes++;
+  if (changes !== 1) throw new RangeError("cash flows must change sign exactly once (one outflow block, one inflow block)");
+  let lo: number = IRR_BRACKET.low;
+  let hi: number = IRR_BRACKET.high;
+  let flo = netPresentValue(lo, cashFlows);
+  const fhi = netPresentValue(hi, cashFlows);
+  if (flo > 0 === fhi > 0) throw new RangeError("no IRR between −99% and 100% a period");
+  while (hi - lo > IRR_BRACKET.tolerance) {
+    const mid = (lo + hi) / 2;
+    const fm = netPresentValue(mid, cashFlows);
+    if (fm > 0 === flo > 0) {
+      lo = mid;
+      flo = fm;
+    } else {
+      hi = mid;
+    }
+  }
+  const i = (lo + hi) / 2;
+  return { periodic: i, nominal: i * periodsPerYear, effective: (1 + i) ** periodsPerYear - 1 };
 }
 
 /** Parse an ISO "YYYY-MM-DD" date as UTC midnight, in milliseconds. */

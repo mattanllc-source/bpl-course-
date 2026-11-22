@@ -43,6 +43,14 @@ Researched 22 Nov 2026. Primary source: *Statement on Standards for CPE Programs
 ## Our build rule for item counts
 Size each module after its lesson is final: compute credits, then write at least the minimums plus a bank. Target: review questions = 4 per credit (rounded up); exam bank = 2 parallel forms (Set A, Set B), each with at least 6 items per credit and at least 2 items per objective, no overlap with review questions. Multiple choice only, four options, one best answer, feedback for every option.
 
+**Counting items for credits (decided 22 Nov 2026; Gate 1 observation 1).** The "all questions" term counts scored items only:
+
+- review questions (multiple choice, with feedback);
+- scored interactive exercises;
+- one final-exam form (the form a learner sits; the retake form is not added).
+
+Open-answer practice and OJT tasks are excluded. Self-check items are review questions: count them once, inside the review total.
+
 ## Course-level requirements
 
 | Item | Rule | Ref |

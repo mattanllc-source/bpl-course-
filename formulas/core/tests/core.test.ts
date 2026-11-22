@@ -16,6 +16,7 @@ const byId = (id: string) => {
 const PORTED = [
   ...Array.from({ length: 37 }, (_, i) => `F-CORE-${String(i + 1).padStart(2, "0")}`),
   "F-CORE-40", "F-CORE-41", "F-CORE-42", "F-CORE-43", "F-CORE-44",
+  "F-CORE-45", "F-CORE-46", "F-CORE-47", "F-CORE-48",
 ];
 
 describe("F-CORE-01 interest-only (Actual/360)", () => {
@@ -505,9 +506,71 @@ describe("F-CORE-44 cash-on-cash return", () => {
   it("rejects negative debt service", () => expect(() => core.cashOnCash(480_000, -1, 2_100_000)).toThrow(RangeError));
 });
 
+describe("F-CORE-45 present and future value", () => {
+  const exp = byId("F-CORE-45");
+  it.each([
+    [0.07 / 12, 300, 27_564.39, 0, exp[0]],
+    [0.1025 / 12, 12, 2_904.17, 340_000, exp[1]],
+    [0.0725 / 12, 120, 37_328.69, 4_722_901.67, exp[2]],
+  ])("i %d; n %d; PMT %d; lump %d", (i, n, p, fv, want) => {
+    const r = core.presentFutureValue(i, n, p, fv);
+    expect(`PV ${money(r.pv)}; FV ${money(r.fv)}`).toBe(want);
+  });
+  it("zero rate sums the payments", () => expect(core.presentFutureValue(0, 10, 100, 1_000)).toEqual({ pv: 2_000, fv: 2_000 }));
+  it("rejects a rate of −100%", () => expect(() => core.presentFutureValue(-1, 10, 100, 0)).toThrow(RangeError));
+  it("rejects zero periods", () => expect(() => core.presentFutureValue(0.01, 0, 100, 0)).toThrow(RangeError));
+  it("rejects a negative payment", () => expect(() => core.presentFutureValue(0.01, 10, -1, 0)).toThrow(RangeError));
+});
+
+describe("F-CORE-46 effective annual rate", () => {
+  const exp = byId("F-CORE-46");
+  it.each([
+    [0.07, 12, 360, exp[0]],
+    [0.1025, 12, 365, exp[1]],
+    [0.0765, 1, 365, exp[2]],
+  ] as const)("%d; m %d; D %d", (r, m, d, want) => expect(pct(core.effectiveAnnualRate(r, m, d), 3)).toBe(want));
+  it("m = 1 on 30/360 is the nominal rate", () => expect(core.effectiveAnnualRate(0.08, 1)).toBeCloseTo(0.08, 15));
+  it("rejects zero periods a year", () => expect(() => core.effectiveAnnualRate(0.07, 0)).toThrow(RangeError));
+  it("rejects a negative rate", () => expect(() => core.effectiveAnnualRate(-0.01, 12)).toThrow(RangeError));
+});
+
+describe("F-CORE-47 remaining balance after k payments", () => {
+  const exp = byId("F-CORE-47");
+  it.each([
+    [3_900_000, 0.07, 300, 120, exp[0]],
+    [5_472_000, 0.0725, 360, 120, exp[1]],
+    [3_900_000, 0.07, 300, 60, exp[2]],
+  ])("%d at %d over %d months, after %d", (l, r, n, k, want) => expect(money(core.remainingBalance(l, r, n, k))).toBe(want));
+  it("k = 0 is the loan", () => expect(core.remainingBalance(3_900_000, 0.07, 300, 0)).toBe(3_900_000));
+  it("k = n leaves the payment-rounding residue", () => expect(money(core.remainingBalance(3_900_000, 0.07, 300, 300))).toBe("−$1.06"));
+  it("zero rate → L − P × k", () => expect(core.remainingBalance(120_000, 0, 120, 60)).toBe(60_000));
+  it("rejects k above n", () => expect(() => core.remainingBalance(1_000, 0.07, 12, 13)).toThrow(RangeError));
+  it("rejects a negative loan", () => expect(() => core.remainingBalance(-1, 0.07, 12, 1)).toThrow(RangeError));
+});
+
+describe("F-CORE-48 internal rate of return", () => {
+  const exp = byId("F-CORE-48");
+  const flows = (out: number, coupon: number, n: number, last: number) => [out, ...Array<number>(n - 1).fill(coupon), last];
+  it.each([
+    [flows(-334_900, 2_904.17, 12, 342_904.17), exp[0]],
+    [flows(-3_484_800, 22_440, 24, 3_542_440), exp[1]],
+    [flows(-340_000, 2_904.17, 12, 342_904.17), exp[2]],
+  ])("case %#", (cfs, want) => {
+    const r = core.internalRateOfReturn(cfs, 12);
+    expect(`${pct(r.nominal, 3)} nominal; ${pct(r.effective, 3)} effective`).toBe(want);
+  });
+  it("NPV at the IRR is zero", () => {
+    const cfs = flows(-334_900, 2_904.17, 12, 342_904.17);
+    expect(Math.abs(core.netPresentValue(core.internalRateOfReturn(cfs, 12).periodic, cfs))).toBeLessThan(1e-4);
+  });
+  it("rejects a single cash flow", () => expect(() => core.internalRateOfReturn([-100], 12)).toThrow(RangeError));
+  it("rejects flows with no sign change", () => expect(() => core.internalRateOfReturn([100, 10, 110], 12)).toThrow(RangeError));
+  it("rejects flows with two sign changes", () => expect(() => core.internalRateOfReturn([-100, 230, -132], 1)).toThrow(RangeError));
+});
+
 describe("fixture catalogue", () => {
-  it("core has 42 scripted formulas with 3 cases each", () => {
-    expect(all).toHaveLength(42);
+  it("core has 46 scripted formulas with 3 cases each", () => {
+    expect(all).toHaveLength(46);
     for (const x of all) expect(x.tests).toHaveLength(3);
   });
   it("every fixture ID is ported, and nothing else", () => {

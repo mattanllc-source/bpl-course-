@@ -754,5 +754,77 @@
         "expected": "−1.47%"
       }
     ]
+  },
+  {
+    "id": "F-CORE-45",
+    "name": "Present and future value (time value of money) (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "PMT $27,564.39; 7.000% ÷ 12; 300 months; lump $0 (Birchwood)",
+        "expected": "PV $3,900,000.18; FV $22,329,132.07"
+      },
+      {
+        "inputs": "PMT $2,904.17; 10.250% ÷ 12; 12 months; lump $340,000 (Maple Run)",
+        "expected": "PV $340,000.04; FV $376,534.79"
+      },
+      {
+        "inputs": "PMT $37,328.69; 7.250% ÷ 12; 120 months; lump $4,722,901.67 (Cedar Court)",
+        "expected": "PV $5,472,000.00; FV $11,273,590.40"
+      }
+    ]
+  },
+  {
+    "id": "F-CORE-46",
+    "name": "Effective annual rate from a nominal rate (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "7.000%; 30/360 (D = 360); monthly",
+        "expected": "7.229%"
+      },
+      {
+        "inputs": "10.250%; Actual/360, 365 days; monthly (Maple Run)",
+        "expected": "10.902%"
+      },
+      {
+        "inputs": "7.650%; Actual/360, 365 days; m = 1 (Cedar Court bridge)",
+        "expected": "7.756%"
+      }
+    ]
+  },
+  {
+    "id": "F-CORE-47",
+    "name": "Remaining loan balance after k payments (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "$3,900,000; 7.000%; 300 months; after 120 (Birchwood what-if)",
+        "expected": "$3,066,702.23"
+      },
+      {
+        "inputs": "$5,472,000; 7.250%; 360 months; after 120 (Cedar Court what-if)",
+        "expected": "$4,722,901.67"
+      },
+      {
+        "inputs": "$3,900,000; 7.000%; 300 months; after 60 (Birchwood 5-year what-if)",
+        "expected": "$3,555,323.85"
+      }
+    ]
+  },
+  {
+    "id": "F-CORE-48",
+    "name": "Internal rate of return (IRR) (SUGGESTED)",
+    "tests": [
+      {
+        "inputs": "−$334,900; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (Maple Run)",
+        "expected": "11.848% nominal; 12.513% effective"
+      },
+      {
+        "inputs": "−$3,484,800; 23 × $22,440.00; $3,542,440.00 at month 24; m = 12 (Birchwood bridge)",
+        "expected": "8.194% nominal; 8.509% effective"
+      },
+      {
+        "inputs": "−$340,000; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (no points)",
+        "expected": "10.250% nominal; 10.746% effective"
+      }
+    ]
   }
 ]

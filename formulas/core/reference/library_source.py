@@ -707,6 +707,138 @@ add(id="F-CORE-44", name="Cash-on-cash return (SUGGESTED)",
         ("NOI $480,000; ADS $330,772.68; cash $1,918,181.82 (value at 8.25% cap)", pct_s(coc(480000,330772.68,1918181.82),2)),
         ("NOI $300,000 (in place); ADS $330,772.68; cash $2,100,000", pct_s(coc(300000,330772.68,2100000),2))])
 
+# ---------- F-CORE-45 to -48 (C3 blueprint: time value of money, rate conversion, balance, IRR) ----------
+def tvm(i, n, P, FV):
+    if i == 0:
+        pv = P*n + FV
+    else:
+        pv = P*(1 - (1 + i)**-n)/i + FV*(1 + i)**-n
+    return pv, pv*(1 + i)**n
+def tvm_s(i, n, P, FV):
+    pv, fv = tvm(i, n, P, FV)
+    return "PV " + m(pv) + "; FV " + m(fv)
+_a300 = (1 - (1 + .07/12)**-300)/(.07/12)
+add(id="F-CORE-45", name="Present and future value (time value of money) (SUGGESTED)",
+ purpose="Values a level stream of payments plus a lump sum at one date. It is the base of the payment, balance and yield formulas.",
+ plain="PV = PMT × (1 − (1 + i)^−n) ÷ i + FV_n × (1 + i)^−n. FV = PV × (1 + i)^n. Here i = annual rate ÷ periods a year",
+ latex=r"PV = PMT \times \frac{1-(1+i)^{-n}}{i} + FV_n (1+i)^{-n},\quad FV = PV (1+i)^{n}",
+ vars="PMT = level payment at the end of each period ($); FV_n = lump sum paid with the last payment ($); i = rate per period (decimal; annual rate ÷ 12 for monthly); n = number of periods; PV, FV = value today and at period n ($)",
+ example=["Birchwood term loan: payment $27,564.39 (F-CORE-02); 7.000% ÷ 12 = 0.0058333 a month; n = 300; no lump sum.",
+          f"Annuity factor = (1 − 1.0058333^−300) ÷ 0.0058333 = {_a300:.6f}.",
+          f"PV = $27,564.39 × {_a300:.6f} = {m(27564.39*_a300)}. That is the $3,900,000 loan, plus 18 cents from rounding the payment.",
+          f"Turn it round: payment = $3,900,000 ÷ {_a300:.6f} = {m(3900000/_a300)}. That is F-CORE-02, derived from the annuity.",
+          f"FV = {m(27564.39*_a300)} × 1.0058333^300 = {m(tvm(.07/12,300,27564.39,0)[1])}: what the payments grow to if each is reinvested at 7.000%."],
+ interp="A loan's amount is the present value of its payments at the note rate. Discount at a higher rate and the same payments are worth less.",
+ rules="No policy limit. D-CONV-01; F-CORE-02, F-CORE-47, F-CORE-48",
+ mistakes=["Using the annual rate as i on monthly payments; divide by 12 first.",
+           "Treating payments as made at the start of each period; this formula assumes the end (an ordinary annuity).",
+           "Leaving out the balloon or loan payoff (FV_n) when valuing an interest-only or partly amortizing loan."],
+ edges="i = 0 → PV = PMT × n + FV_n. i must be above −100%. n must be 1 or more. PMT = 0 gives a plain lump-sum discount.",
+ rounding="Periodic compounding at the rate per period (12 a year for monthly loans), not Actual/360. Keep full precision; round PV and FV to the cent.",
+ modules="C3",
+ tests=[("PMT $27,564.39; 7.000% ÷ 12; 300 months; lump $0 (Birchwood)", tvm_s(.07/12, 300, 27564.39, 0)),
+        ("PMT $2,904.17; 10.250% ÷ 12; 12 months; lump $340,000 (Maple Run)", tvm_s(.1025/12, 12, 2904.17, 340000)),
+        ("PMT $37,328.69; 7.250% ÷ 12; 120 months; lump $4,722,901.67 (Cedar Court)", tvm_s(.0725/12, 120, 37328.69, 4722901.67))])
+
+def ear(r, mper, days):
+    return (1 + r*days/360/mper)**mper - 1
+add(id="F-CORE-46", name="Effective annual rate from a nominal rate (SUGGESTED)",
+ purpose="Turns a quoted nominal rate into the rate actually earned over a year, allowing for day count and compounding.",
+ plain="EAR = (1 + r × (D ÷ 360) ÷ m)^m − 1, where D = 365 (366 in a leap year) for an Actual/360 note and 360 for a 30/360 rate",
+ latex=r"EAR = \left(1+\frac{r \times D/360}{m}\right)^{m} - 1",
+ vars="r = nominal annual rate (%); D = days the rate accrues over in a year (days); m = payments (compounding periods) a year",
+ example=["Maple Run: 10.250% note rate, billed Actual/360, paid monthly (m = 12), 365-day year.",
+          f"Day-count uplift: 10.250% × 365 ÷ 360 = {pct(.1025*365/360, 3)} simple interest over the year.",
+          f"Monthly compounding: (1 + {pct(.1025*365/360, 3)} ÷ 12)^12 − 1 = {ear(.1025, 12, 365):.6f} = {pct(ear(.1025, 12, 365), 3)}.",
+          f"Without the uplift (30/360): (1 + 10.250% ÷ 12)^12 − 1 = {pct(ear(.1025, 12, 360), 3)}."],
+ interp="Two loans with the same note rate cost different amounts if their day count or payment frequency differs. Compare loans on EAR, not on the quote.",
+ rules="No policy limit. D-CONV-01 (tests use the nominal rate); CORE-PRC-03; F-CORE-01, F-CORE-40, F-CORE-48",
+ mistakes=["Using EAR in a DSCR or sizing test; those use the nominal rate (D-CONV-01).",
+           "Applying the 365 ÷ 360 uplift to a payment-formula rate; F-CORE-02 is a 12-period year.",
+           "Compounding when interest is not paid or added to principal during the year; set m = 1."],
+ edges="m = 1 with D = 365 → the simple Actual/360 uplift, r × 365 ÷ 360. D = 360 → plain compounding. Leap year → D = 366. r must be 0 or more; m must be 1 or more.",
+ rounding="Keep full precision; display three decimals.",
+ modules="C3",
+ tests=[("7.000%; 30/360 (D = 360); monthly", pct(ear(.07, 12, 360), 3)),
+        ("10.250%; Actual/360, 365 days; monthly (Maple Run)", pct(ear(.1025, 12, 365), 3)),
+        ("7.650%; Actual/360, 365 days; m = 1 (Cedar Court bridge)", pct(ear(.0765, 1, 365), 3))])
+
+def rbal(L, r, n, k):
+    i = r/12
+    P = float(c(pmt(L, r, n)))
+    if i == 0:
+        return L - P*k
+    return L*(1 + i)**k - P*((1 + i)**k - 1)/i
+_g120 = (1 + .07/12)**120
+add(id="F-CORE-47", name="Remaining loan balance after k payments (SUGGESTED)",
+ purpose="Principal still owed after k scheduled payments. It sizes the balloon at maturity.",
+ plain="B_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i, where P is the F-CORE-02 payment rounded to the cent",
+ latex=r"B_k = L(1+i)^{k} - P \times \frac{(1+i)^{k}-1}{i}",
+ vars="L = original loan ($); i = annual rate ÷ 12 (decimal); n = amortization (months); P = monthly payment from F-CORE-02, rounded to the cent ($); k = payments made (months)",
+ example=["Birchwood term loan: $3,900,000; 7.000%; 300-month amortization; P = $27,564.39. A 120-month term is a what-if: Running Deals sets no term.",
+          f"Growth factor: 1.0058333^120 = {_g120:.6f}. The loan grows to $3,900,000 × {_g120:.6f} = {m(3900000*_g120)}.",
+          f"Payments grow to $27,564.39 × ({_g120:.6f} − 1) ÷ 0.0058333 = {m(27564.39*(_g120-1)/(.07/12))}.",
+          f"Balance after 120 payments = {m(3900000*_g120)} − {m(27564.39*(_g120-1)/(.07/12))} = {m(rbal(3900000,.07,300,120))}. That is the balloon at a 10-year maturity."],
+ interp="A long amortization with a short term leaves a large balloon. The borrower must refinance or sell to pay it, so maturity is a credit risk.",
+ rules="COM-TRM-02, MF-TRM-05; F-CORE-02, F-CORE-45",
+ mistakes=["Computing with the unrounded payment; the balance then drifts from the schedule by cents.",
+           "Using the term instead of the amortization for n when finding P.",
+           "Reading the balance after k payments as the payoff; payoff adds accrued interest and fees (F-CORE-32)."],
+ edges=f"k = 0 → B = L. k = n → a small residue from rounding the payment (Birchwood: {m(rbal(3900000,.07,300,300))}); the last payment absorbs it. Rate 0% → B = L − P × k. k must be between 0 and n.",
+ rounding="Monthly 30/360 schedule, as F-CORE-02. Round P to the cent first; round B to the cent.",
+ modules="C3, C8",
+ tests=[("$3,900,000; 7.000%; 300 months; after 120 (Birchwood what-if)", m(rbal(3900000, .07, 300, 120))),
+        ("$5,472,000; 7.250%; 360 months; after 120 (Cedar Court what-if)", m(rbal(5472000, .0725, 360, 120))),
+        ("$3,900,000; 7.000%; 300 months; after 60 (Birchwood 5-year what-if)", m(rbal(3900000, .07, 300, 60)))])
+
+def npv(i, cfs):
+    s = 0.0
+    for t, cf in enumerate(cfs):
+        s += cf/(1 + i)**t
+    return s
+def irr(cfs, mper):
+    lo, hi = -0.99, 1.0
+    flo, fhi = npv(lo, cfs), npv(hi, cfs)
+    if (flo > 0) == (fhi > 0):
+        raise ValueError("no sign change in NPV between -99% and 100% a period")
+    while hi - lo > 1e-12:
+        mid = (lo + hi)/2
+        fm = npv(mid, cfs)
+        if (fm > 0) == (flo > 0):
+            lo, flo = mid, fm
+        else:
+            hi = mid
+    i = (lo + hi)/2
+    return i, i*mper, (1 + i)**mper - 1
+def irr_s(cfs, mper):
+    _, nom, eff = irr(cfs, mper)
+    return pct(nom, 3) + " nominal; " + pct(eff, 3) + " effective"
+_mr = [-334900] + [2904.17]*11 + [342904.17]
+_bw = [-3484800] + [22440.00]*23 + [3542440.00]
+_mr0 = [-340000] + [2904.17]*11 + [342904.17]
+_mri = irr(_mr, 12)
+add(id="F-CORE-48", name="Internal rate of return (IRR) (SUGGESTED)",
+ purpose="The yield a cash-flow series earns: the one rate per period that makes its net present value zero.",
+ plain="Find i so that NPV = Σ CF_t ÷ (1 + i)^t = 0, by bisection. Nominal IRR = i × m; effective IRR = (1 + i)^m − 1",
+ latex=r"\sum_{t=0}^{N} \frac{CF_t}{(1+i)^{t}} = 0,\quad IRR_{nom} = m\,i,\quad IRR_{eff} = (1+i)^{m}-1",
+ vars="CF_t = net cash flow at period t, negative out and positive in ($); t = 0 to N (periods); i = IRR per period (decimal); m = periods a year",
+ example=["Maple Run, simplified to full funding on day one: commitment $340,000; 1.50 points = $5,100; 10.250%; 12 months.",
+          "Lender's cash flows: t = 0, −$340,000 + $5,100 = −$334,900; t = 1 to 11, interest $340,000 × 10.250% ÷ 12 = $2,904.17; t = 12, $342,904.17.",
+          "Solve NPV = 0 by bisection: start with i between −99% and 100% a month, halve the bracket, and stop when it is narrower than 1e-12.",
+          f"Monthly IRR i = {_mri[0]:.6f}. Nominal = {_mri[0]:.6f} × 12 = {pct(_mri[1], 3)}. Effective = (1 + {_mri[0]:.6f})^12 − 1 = {pct(_mri[2], 3)}.",
+          "The F-CORE-40 screen gives 11.75%. It spreads the points evenly and ignores timing, so it is not a yield."],
+ interp="Points paid up front raise the lender's yield above the note rate, more so on a short term. A loan with no fees yields its note rate.",
+ rules="CORE-PRC-02, CORE-PRC-03; F-CORE-06, F-CORE-40, F-CORE-45, F-CORE-46",
+ mistakes=["Netting the points from the loan but also counting them as income later; count each dollar once.",
+           "Quoting the monthly IRR as an annual rate; multiply by 12 for nominal, or compound for effective.",
+           "Treating IRR as the usury test; counsel decides how a state counts fees [VERIFY: State Law Table usury column; checked 20 Nov 2026]."],
+ edges="Needs at least one outflow and one inflow, with one sign change. More than one sign change can give several IRRs: report NPV at a stated rate instead. No root between −99% and 100% a period → not defined.",
+ rounding="Periods as the cash flows fall (monthly here, interest at rate ÷ 12; Actual/360 billing would raise the yield slightly). Bisection tolerance 1e-12 on the periodic rate; display three decimals.",
+ modules="C3",
+ tests=[("−$334,900; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (Maple Run)", irr_s(_mr, 12)),
+        ("−$3,484,800; 23 × $22,440.00; $3,542,440.00 at month 24; m = 12 (Birchwood bridge)", irr_s(_bw, 12)),
+        ("−$340,000; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (no points)", irr_s(_mr0, 12))])
+
 def md(f):
     o = [f"### {f['id']}: {f['name']}", "",
          f"**Purpose.** {f['purpose']}", "",

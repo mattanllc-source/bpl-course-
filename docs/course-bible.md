@@ -173,7 +173,7 @@ A "critical credit error" is any of: a wrong sizing result that changes the loan
 
 Every module is 1-4 hours, has 3-6 measurable objectives, and ends with practice plus an on-the-job task. A module that breaks a rule below is not done.
 
-**Rule LD-01: Objectives use one Bloom's verb each.** Write "By the end of \[code\], you will be able to \[verb\] \[object\] \[standard\]." One verb per objective. Never use "understand", "know", "learn", "be aware of" or "appreciate".
+**Rule LD-01: Objectives use one Bloom's verb each.** Each module has 3-8 measurable objectives. Write "By the end of \[code\], you will be able to \[verb\] \[object\] \[standard\]." Each objective has one observable verb. Never use "understand", "know", "learn", "be aware of" or "appreciate". Amended 22 Nov 2026 (Flagship plan; QAS Self Study).
 
 | Bloom's level | Use for | Approved verbs | BPL example |
 | --- | --- | --- | --- |
@@ -184,7 +184,7 @@ Every module is 1-4 hours, has 3-6 measurable objectives, and ends with practice
 | 5 Evaluate | Making and defending a credit call | recommend, justify, critique, decide | Recommend approve, decline or restructure, citing rule IDs |
 | 6 Create | Building a credit product | draft, structure, design | Structure a bridge loan with extension tests for a value-add deal |
 
-**Rule LD-02: Level mix.** Core modules aim at levels 2-3. Family modules reach level 4. Capstones reach level 5 or 6. At least one objective per module is level 3 or above.
+**Rule LD-02: Level mix.** Objectives use levels 1-5, Remember to Evaluate. At least half of each module's objectives are level 3 (Apply) or above. Capstones may also reach level 6. Amended 22 Nov 2026 (Flagship plan; QAS Self Study).
 
 **Rule LD-03: Module length.** 1-4 hours of learner time, including practice and quiz. OJT time is extra. A topic needing more than 4 hours splits into two modules.
 

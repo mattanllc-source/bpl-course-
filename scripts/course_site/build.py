@@ -36,7 +36,47 @@ def read(rel: str) -> str:
 # ---------- learner view: strip authoring scaffolding, keep all teaching content ----------
 # Sections that exist only for the course author (Course Bible LD-04/LD-07 and Section 7 checks).
 AUTHOR_SECTIONS = ("Timing plan", "Alignment matrix")
-KEEP_FACTS = ("Formulas", "Rules", "Running deals")
+# "Rules" is left out on purpose: a bare list of rule IDs means nothing to a learner.
+# Rules stay linked in the lesson text, where each chip shows the rule's name on hover.
+KEEP_FACTS = ("Formulas", "Running deals")
+# Author placeholders that must never reach the learner page.
+PLACEHOLDER_RE = re.compile(r"^\s*(\*\*)?Review questions\.?(\*\*)?\s*Added in Phase 3\b.*$", re.I)
+
+
+def formula_names() -> dict:
+    """F-ID -> plain name, from the Formula Library headings ("### F-CORE-01: Interest-only payment")."""
+    names = {}
+    for m in re.finditer(r"^### (F-[A-Z]+-\d+):\s*(.+?)\s*$", read("docs/formulas/formula-library.md"), re.M):
+        names[m.group(1)] = re.sub(r"\s*\(SUGGESTED\)$", "", m.group(2)).strip()
+    return names
+
+
+FORMULA_NAMES: dict = {}
+
+
+def formula_list(cell: str) -> list:
+    """Expand "F-CORE-01, -02; F-RES-09" into named bullets; return [] when no IDs are listed."""
+    ids, family = [], None
+    for tok in re.findall(r"F-[A-Z]+-\d+|(?<![\w-])-\d{2}\b|\bto\b", cell):
+        if tok.startswith("F-"):
+            family = tok.rsplit("-", 1)[0]
+            ids.append(tok)
+        elif tok == "to":
+            ids.append("to")
+        elif family:
+            ids.append(f"{family}{tok}")
+    out, i = [], 0
+    while i < len(ids):                         # expand "F-CORE-40 to -43" ranges
+        if ids[i] == "to" and out and i + 1 < len(ids):
+            fam, a = out[-1].rsplit("-", 1)
+            b = ids[i + 1].rsplit("-", 1)[1]
+            out += [f"{fam}-{n:02d}" for n in range(int(a) + 1, int(b) + 1)]
+            i += 2
+            continue
+        if ids[i] != "to" and ids[i] not in out:
+            out.append(ids[i])
+        i += 1
+    return [f"  - {f}: {FORMULA_NAMES[f]}" if f in FORMULA_NAMES else f"  - {f}" for f in out]
 LABEL = "**Model policy for training - not for live lending decisions.**"
 
 
@@ -89,6 +129,7 @@ def clean_heading(h: str) -> str:
     h = re.sub(r"\s*\((?:Objectives? [\d,\- ]+,\s*)?\d+ minutes?\)", "", h)   # "(15 minutes)"
     h = re.sub(r"\s*\(Objectives? [\d,\- ]+\)\s*$", "", h)                    # trailing "(Objective 2)"
     h = re.sub(r"^(#+ )T\d+\.\s+", r"\1", h)                           # "### T1. Title" -> "### Title"
+    h = re.sub(r"\s*\(O\d+(?:\s*(?:,|and|-|to)\s*O?\d+)*\)", "", h)    # objective tags "(O1)", "(O2, O3)"
     return h
 
 
@@ -128,6 +169,8 @@ def learner_view(md: str) -> str:
             in_code = not in_code
         if in_code:
             out.append(line); i += 1; continue
+        if PLACEHOLDER_RE.match(line):
+            i += 1; continue
         # Module facts table (the one before the first section) -> short "In this module" list.
         # Later Item/Detail tables are OJT briefs and stay.
         if not seen_section and re.match(r"^\|\s*Item\s*\|\s*Detail\s*\|", line):
@@ -136,7 +179,14 @@ def learner_view(md: str) -> str:
             while i < len(lines) and lines[i].startswith("|"):
                 cells = [c.strip() for c in lines[i].strip().strip("|").split("|")]
                 if len(cells) >= 2 and cells[0] in KEEP_FACTS:
-                    facts.append(f"- **{cells[0]}:** {clean_line(cells[1])}")
+                    if cells[0] == "Formulas" and formula_list(cells[1]):
+                        facts.append("- **Formulas you will use:**")
+                        facts += formula_list(cells[1])
+                    elif cells[0] == "Running deals":
+                        deals = re.sub(r"\s*\((?:[^()]*\bLD-\d+[^()]*)\)", "", cells[1])
+                        facts.append(f"- **Running deals:** {clean_line(deals)}")
+                    elif cells[0] != "Formulas":
+                        facts.append(f"- **{cells[0]}:** {clean_line(cells[1])}")
                 i += 1
             if facts:
                 out += ["**In this module**", ""] + facts
@@ -164,6 +214,37 @@ def learner_view(md: str) -> str:
         if line.startswith("#"):
             out.append(clean_heading(line)); i += 1; continue
         out.append(name_teach_refs(clean_line(line), titles)); i += 1
+    return problems_to_list("\n".join(out))
+
+
+def problems_to_list(md: str) -> str:
+    """Practice written as "**Problem N (O1, T1).** text" + "**Model answer**" blocks (C3 pilot style)
+    becomes the numbered list the page turns into practice cards, with each answer nested under its item."""
+    out, in_practice, in_item, pad = [], False, False, "   "
+    for line in md.split("\n"):
+        if line.startswith("## "):
+            in_practice, in_item = "Practice" in line, False
+            out.append(line)
+            continue
+        if in_practice:
+            # The bold label holds author tags such as "(O1, T1)"; the learner needs only the problem.
+            m = re.match(r"^\*\*Problem (\d+)\b.*?\*\*\.?\s*(.*)$", line)
+            if m:
+                marker = f"{m.group(1)}. "
+                out.append(marker + m.group(2))
+                # Continuation lines align exactly with the item text ("1. " = 3, "10. " = 4);
+                # an extra space would leave a stray text node before "Model answer".
+                in_item, pad = True, " " * len(marker)
+                continue
+            if in_item:
+                if not line.strip():
+                    out.append("")
+                    continue
+                if re.fullmatch(r"\*\*Model answer\*\*\s*", line):
+                    line = "**Model answer:**"
+                out.append(pad + line)
+                continue
+        out.append(line)
     return "\n".join(out)
 
 
@@ -218,6 +299,7 @@ def bundle_and_exercises() -> tuple[str, dict]:
 
 
 def main() -> None:
+    FORMULA_NAMES.update(formula_names())
     table = core_table()
     bplf, exercises = bundle_and_exercises()
     modules = []
