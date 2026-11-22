@@ -36,10 +36,10 @@ add(id="F-CORE-01", name="Interest-only payment (Actual/360)",
  interp="What the borrower owes each period. Months with more days cost more under Actual/360.",
  rules="CORE-PRC-01, CORE-SVC-01; used in every interest-only bridge rule (RES-FF, MF-BR, COM-BR)",
  mistakes=["Dividing by 12 instead of using actual days; this understates interest in 31-day months.",
-           "Using the commitment instead of the funded balance on future-funded loans.",
+           "Using the commitment instead of the funded balance when the note charges the funded balance (RES-FF-08). A Dutch-interest note charges the full commitment from day one; compare it with ours on all-in cost (CORE-PRC-06).",
            "Rounding the daily rate before multiplying by days."],
  edges="Zero balance or rate → $0. Negative inputs are invalid. Partial period (funding mid-month) → count actual days funded, including the funding day and excluding the payoff day [CONFIRM]. Not affected by vacancy.",
- rounding="Actual/360. Keep full precision; round the period amount to the cent (half up) once.",
+ rounding="Actual/360 on bridge and MF and COM term notes; DSCR loans accrue 30/360 (CORE-PRC-06). Keep full precision; round the period amount to the cent (half up) once.",
  modules="C3, C11, C12; also the family bridge modules",
  tests=[("$500,000; 10.000%; 30 days", m(f01(500000,.10,30))),
         ("$4,340,000; 7.650%; 31 days", m(f01(4340000,.0765,31))),
@@ -57,9 +57,9 @@ add(id="F-CORE-02", name="Amortizing payment (principal and interest)",
  rules="RES-DSCR rules (F-RES-07, -08), MF-TRM, COM-TRM-02, COM-DSCR-09",
  mistakes=["Using the term (e.g. 10 years) instead of the amortization (e.g. 30 years) for n.",
            "Entering the annual rate without dividing by 12.",
-           "Applying Actual/360 here; the payment formula uses a 12-period year by convention."],
+           "Setting the payment on actual days. Every product sets the payment on 12 equal months; accrual then follows the note (CORE-PRC-06)."],
  edges="Rate 0% → P = L ÷ n. n must be ≥ 1. Negative L invalid. Partial first period → interest for odd days is collected separately (F-CORE-33), not by changing P.",
- rounding="Monthly 30/360 payment convention (market standard for amortizing schedules; accrual on billing still follows the note) [CONFIRM]. Round P to the cent.",
+ rounding="Payment basis 30/360 (rate ÷ 12) on every product (CORE-PRC-06, D-CORE-29). DSCR loans also accrue 30/360, so the payment fully amortizes. MF and COM term notes accrue Actual/360, so the balloon is F-CORE-49, not F-CORE-47. Round P to the cent.",
  modules="C3, C8; also the family term-loan modules",
  tests=[("$500,000; 7.000%; 360 months", m(pmt(500000,.07,360))),
         ("$3,900,000; 7.000%; 300 months", m(pmt(3900000,.07,300))),
@@ -727,7 +727,7 @@ add(id="F-CORE-45", name="Present and future value (time value of money) (SUGGES
           f"Annuity factor = (1 − 1.0058333^−300) ÷ 0.0058333 = {_a300:.6f}.",
           f"PV = $27,564.39 × {_a300:.6f} = {m(27564.39*_a300)}. That is the $3,900,000 loan, plus 18 cents from rounding the payment.",
           f"Turn it round: payment = $3,900,000 ÷ {_a300:.6f} = {m(3900000/_a300)}. That is F-CORE-02, derived from the annuity.",
-          f"FV = {m(27564.39*_a300)} × 1.0058333^300 = {m(tvm(.07/12,300,27564.39,0)[1])}: what the payments grow to if each is reinvested at 7.000%."],
+          f"FV = {m(27564.39*_a300)} × 1.0058333^300 = {m(tvm(.07/12,300,27564.39,0)[1])}: what the payments would grow to if each earned 7.000% to month 300. That is a future-wealth measure, not what the 7.000% yield means (F-CORE-48)."],
  interp="A loan's amount is the present value of its payments at the note rate. Discount at a higher rate and the same payments are worth less.",
  rules="No policy limit. D-CONV-01; F-CORE-02, F-CORE-47, F-CORE-48",
  mistakes=["Using the annual rate as i on monthly payments; divide by 12 first.",
@@ -763,6 +763,22 @@ add(id="F-CORE-46", name="Effective annual rate from a nominal rate (SUGGESTED)"
         ("10.250%; Actual/360, 365 days; monthly (Maple Run)", pct(ear(.1025, 12, 365), 3)),
         ("7.650%; Actual/360, 365 days; m = 1 (Cedar Court bridge)", pct(ear(.0765, 1, 365), 3))])
 
+import calendar as _cal
+def a360_rows(L, r, n, k, y, mo):
+    """F-CORE-49 rows: (days, interest, principal, balance); payment set on 30/360 (F-CORE-02), interest Actual/360 by calendar month."""
+    P = float(c(pmt(L, r, n))); B = L; out = []
+    for _ in range(k):
+        d = _cal.monthrange(y, mo)[1]
+        I = float(c(B*r/360*d))
+        B = float(c(B + I - P))
+        out.append((d, I, float(c(P - I)), B))
+        mo += 1
+        if mo > 12:
+            mo, y = 1, y + 1
+    return out
+def bal_a360(L, r, n, k, y, mo):
+    rows = a360_rows(L, r, n, k, y, mo)
+    return rows[-1][3] if rows else L
 def rbal(L, r, n, k):
     i = r/12
     P = float(c(pmt(L, r, n)))
@@ -778,14 +794,14 @@ add(id="F-CORE-47", name="Remaining loan balance after k payments (SUGGESTED)",
  example=["Birchwood term loan: $3,900,000; 7.000%; 300-month amortization; P = $27,564.39. A 120-month term is a what-if: Running Deals sets no term.",
           f"Growth factor: 1.0058333^120 = {_g120:.6f}. The loan grows to $3,900,000 × {_g120:.6f} = {m(3900000*_g120)}.",
           f"Payments grow to $27,564.39 × ({_g120:.6f} − 1) ÷ 0.0058333 = {m(27564.39*(_g120-1)/(.07/12))}.",
-          f"Balance after 120 payments = {m(3900000*_g120)} − {m(27564.39*(_g120-1)/(.07/12))} = {m(rbal(3900000,.07,300,120))}. That is the balloon at a 10-year maturity."],
+          f"Balance after 120 payments = {m(3900000*_g120)} − {m(27564.39*(_g120-1)/(.07/12))} = {m(rbal(3900000,.07,300,120))}. That is the balloon at a 10-year maturity on a 30/360 note. Birchwood's term note accrues Actual/360 (CORE-PRC-06), so its balloon is larger: {m(bal_a360(3900000, .07, 300, 120, 2029, 1))} (F-CORE-49)."],
  interp="A long amortization with a short term leaves a large balloon. The borrower must refinance or sell to pay it, so maturity is a credit risk.",
  rules="COM-TRM-02, MF-TRM-05; F-CORE-02, F-CORE-45",
  mistakes=["Computing with the unrounded payment; the balance then drifts from the schedule by cents.",
            "Using the term instead of the amortization for n when finding P.",
            "Reading the balance after k payments as the payoff; payoff adds accrued interest and fees (F-CORE-32)."],
  edges=f"k = 0 → B = L. k = n → a small residue from rounding the payment (Birchwood: {m(rbal(3900000,.07,300,300))}); the last payment absorbs it. Rate 0% → B = L − P × k. k must be between 0 and n.",
- rounding="Monthly 30/360 schedule, as F-CORE-02. Round P to the cent first; round B to the cent.",
+ rounding="Basis: 30/360 accrual. Exact for DSCR loans (CORE-PRC-06). For MF and COM term notes, which accrue Actual/360, it is the payment-schedule balance only; use F-CORE-49 for the balloon. Round P to the cent first; round B to the cent.",
  modules="C3, C8",
  tests=[("$3,900,000; 7.000%; 300 months; after 120 (Birchwood what-if)", m(rbal(3900000, .07, 300, 120))),
         ("$5,472,000; 7.250%; 360 months; after 120 (Cedar Court what-if)", m(rbal(5472000, .0725, 360, 120))),
@@ -817,6 +833,11 @@ _mr = [-334900] + [2904.17]*11 + [342904.17]
 _bw = [-3484800] + [22440.00]*23 + [3542440.00]
 _mr0 = [-340000] + [2904.17]*11 + [342904.17]
 _mri = irr(_mr, 12)
+# Maple Run real draw pattern (Running Deals Role 3): interest at rate ÷ 12 on the drawn balance, less that month's draw
+_mrd = [-234900, 2050.00, -27950.00, 2306.25, -22693.75, 2519.79, -17480.21, 2690.63, -12309.37, 2818.75, -7181.25, 2904.17, 342904.17]
+_mrdi = irr(_mrd, 12)
+_cum = [sum(_mrd[:t+1]) for t in range(len(_mrd))]
+_sgn = sum(1 for t in range(1, len(_mrd)) if (_mrd[t] > 0) != (_mrd[t-1] > 0))
 add(id="F-CORE-48", name="Internal rate of return (IRR) (SUGGESTED)",
  purpose="The yield a cash-flow series earns: the one rate per period that makes its net present value zero.",
  plain="Find i so that NPV = Σ CF_t ÷ (1 + i)^t = 0, by bisection. Nominal IRR = i × m; effective IRR = (1 + i)^m − 1",
@@ -826,18 +847,44 @@ add(id="F-CORE-48", name="Internal rate of return (IRR) (SUGGESTED)",
           "Lender's cash flows: t = 0, −$340,000 + $5,100 = −$334,900; t = 1 to 11, interest $340,000 × 10.250% ÷ 12 = $2,904.17; t = 12, $342,904.17.",
           "Solve NPV = 0 by bisection: start with i between −99% and 100% a month, halve the bracket, and stop when it is narrower than 1e-12.",
           f"Monthly IRR i = {_mri[0]:.6f}. Nominal = {_mri[0]:.6f} × 12 = {pct(_mri[1], 3)}. Effective = (1 + {_mri[0]:.6f})^12 − 1 = {pct(_mri[2], 3)}.",
-          "The F-CORE-40 screen gives 11.75%. It spreads the points evenly and ignores timing, so it is not a yield."],
- interp="Points paid up front raise the lender's yield above the note rate, more so on a short term. A loan with no fees yields its note rate.",
+          "The F-CORE-40 screen gives 11.75%. It spreads the points evenly and ignores timing, so it is not a yield.",
+          f"Real draw pattern (Running Deals, Maple Run Role 3): t = 0, −$234,900; each month, interest on the drawn balance less any draw ($30,000, $25,000, $20,000, $15,000 and $10,000 in months 2, 4, 6, 8 and 10); t = 12, $342,904.17. The flows change sign {_sgn} times, but the running total stays negative to month 11 ({m(_cum[11])}) and turns positive at month 12 ({m(_cum[12])}). So the IRR is unique: monthly {_mrdi[0]*100:.4f}%, {pct(_mrdi[1], 3)} nominal, {pct(_mrdi[2], 3)} effective. It beats 11.848% because the points are charged on the full $340,000 while less cash is out."],
+ interp="Points paid up front raise the lender's yield above the note rate, more so on a short term. A loan with no fees yields its note rate. The IRR is the rate earned on the money still invested each period. It does not assume payments are reinvested at that rate; a terminal-wealth measure needs its own reinvestment rate (the modified IRR).",
  rules="CORE-PRC-02, CORE-PRC-03; F-CORE-06, F-CORE-40, F-CORE-45, F-CORE-46",
  mistakes=["Netting the points from the loan but also counting them as income later; count each dollar once.",
            "Quoting the monthly IRR as an annual rate; multiply by 12 for nominal, or compound for effective.",
            "Treating IRR as the usury test; counsel decides how a state counts fees [VERIFY: State Law Table usury column; checked 20 Nov 2026]."],
- edges="Needs at least one outflow and one inflow, with one sign change. More than one sign change can give several IRRs: report NPV at a stated rate instead. No root between −99% and 100% a period → not defined.",
+ edges="Needs at least one outflow and one inflow. One sign change gives one IRR. Several sign changes can give several IRRs, but need not. Add the flows up period by period: if the running total changes sign once, from negative to positive, the nonnegative IRR is unique (Norstrøm, \"A Sufficient Condition for a Unique Nonnegative Internal Rate of Return\", Journal of Financial and Quantitative Analysis 7(3), June 1972, pp. 1835-1839). Loans with draws pass this test (test 3). If the running total changes sign more than once, report NPV at a stated rate instead. No root between −99% and 100% a period → not defined.",
  rounding="Periods as the cash flows fall (monthly here, interest at rate ÷ 12; Actual/360 billing would raise the yield slightly). Bisection tolerance 1e-12 on the periodic rate; display three decimals.",
  modules="C3",
  tests=[("−$334,900; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (Maple Run)", irr_s(_mr, 12)),
         ("−$3,484,800; 23 × $22,440.00; $3,542,440.00 at month 24; m = 12 (Birchwood bridge)", irr_s(_bw, 12)),
-        ("−$340,000; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (no points)", irr_s(_mr0, 12))])
+        ("−$234,900; interest on the drawn balance less draws of $30,000, $25,000, $20,000, $15,000 and $10,000 in months 2, 4, 6, 8 and 10; $342,904.17 at month 12; m = 12 (Maple Run draws)", irr_s(_mrd, 12))])
+
+_r3 = a360_rows(3900000, .07, 300, 3, 2029, 1)
+_b49 = bal_a360(3900000, .07, 300, 120, 2029, 1)
+_b47 = rbal(3900000, .07, 300, 120)
+add(id="F-CORE-49", name="Remaining balance with Actual/360 accrual (SUGGESTED)",
+ purpose="Principal still owed after k payments on a note whose payment is set on 30/360 but whose interest accrues Actual/360. It sizes the real balloon on MF and COM term loans (CORE-PRC-06).",
+ plain="Each month: interest I_t = B_(t−1) × r ÷ 360 × d_t, rounded to the cent; B_t = B_(t−1) + I_t − P. P is the F-CORE-02 payment rounded to the cent; d_t is the days in accrual month t",
+ latex=r"B_t = B_{t-1} + \mathrm{round}\left(B_{t-1}\,\frac{r}{360}\,d_t\right) - P,\quad B_0 = L",
+ vars="L = original loan ($); r = annual note rate (%); n = amortization used to set P (months); P = F-CORE-02 payment, rounded to the cent ($); d_t = actual days in calendar month t, counted from the first accrual month (days); k = payments made (months)",
+ example=["Birchwood term loan what-if: $3,900,000; 7.000%; 300-month amortization; P = $27,564.39 (F-CORE-02); first accrual month January 2029 (a what-if date); 120 payments.",
+          f"Month 1 (31 days): interest $3,900,000 × 7.000% ÷ 360 × 31 = {m(_r3[0][1])}. Principal $27,564.39 − {m(_r3[0][1])} = {m(_r3[0][2])}. Balance {m(_r3[0][3])}.",
+          f"Month 2 (28 days): interest {m(_r3[1][1])}; principal {m(_r3[1][2])}; balance {m(_r3[1][3])}. Month 3 (31 days): interest {m(_r3[2][1])}; principal {m(_r3[2][2])}; balance {m(_r3[2][3])}.",
+          f"Repeat to month 120: balance {m(_b49)}.",
+          f"F-CORE-47 on 30/360 gives {m(_b47)}. The Actual/360 balloon is {m(_b49 - _b47)} higher ({pct((_b49 - _b47)/_b47, 1)}), because each year charges 365 or 366 days of interest, not 360."],
+ interp="With a 30/360 payment and Actual/360 interest, principal is repaid more slowly, so the balloon is larger. Size the refinance on this balloon, not on F-CORE-47.",
+ rules="CORE-PRC-06, MF-TRM-05, COM-TRM-02; F-CORE-02, F-CORE-47",
+ mistakes=["Using F-CORE-47 for the balloon on an Actual/360 term note; it understates the balance.",
+           "Re-setting the payment each month on actual days; the payment stays fixed (CORE-PRC-06).",
+           "Starting the day count in the wrong month; the result depends on the first accrual month and on leap years."],
+ edges=f"k = 0 → B = L. Rate 0% → B = L − P × k, as F-CORE-47. With k = n the loan does not fully amortize: $500,000 at 7.000% over 360 months leaves {m(bal_a360(500000, .07, 360, 360, 2027, 1))} (test 3). That is why DSCR loans accrue 30/360. k must be between 0 and n.",
+ rounding="Actual/360 interest each month, rounded to the cent half up once; payment from F-CORE-02 rounded to the cent; balance to the cent.",
+ modules="C3, C8, C12",
+ tests=[("$3,900,000; 7.000%; 300 months; 120 payments from Jan 2029 (Birchwood what-if)", m(bal_a360(3900000, .07, 300, 120, 2029, 1))),
+        ("$5,472,000; 7.250%; 360 months; 120 payments from Apr 2029 (Cedar Court what-if)", m(bal_a360(5472000, .0725, 360, 120, 2029, 4))),
+        ("$500,000; 7.000%; 360 months; 360 payments from Jan 2027 (DSCR-length what-if)", m(bal_a360(500000, .07, 360, 360, 2027, 1)))])
 
 def md(f):
     o = [f"### {f['id']}: {f['name']}", "",

@@ -16,7 +16,7 @@ const byId = (id: string) => {
 const PORTED = [
   ...Array.from({ length: 37 }, (_, i) => `F-CORE-${String(i + 1).padStart(2, "0")}`),
   "F-CORE-40", "F-CORE-41", "F-CORE-42", "F-CORE-43", "F-CORE-44",
-  "F-CORE-45", "F-CORE-46", "F-CORE-47", "F-CORE-48",
+  "F-CORE-45", "F-CORE-46", "F-CORE-47", "F-CORE-48", "F-CORE-49",
 ];
 
 describe("F-CORE-01 interest-only (Actual/360)", () => {
@@ -548,16 +548,50 @@ describe("F-CORE-47 remaining balance after k payments", () => {
   it("rejects a negative loan", () => expect(() => core.remainingBalance(-1, 0.07, 12, 1)).toThrow(RangeError));
 });
 
+describe("F-CORE-49 remaining balance with Actual/360 accrual", () => {
+  const exp = byId("F-CORE-49");
+  it.each([
+    [3_900_000, 0.07, 300, 120, "2029-01", exp[0]],
+    [5_472_000, 0.0725, 360, 120, "2029-04", exp[1]],
+    [500_000, 0.07, 360, 360, "2027-01", exp[2]],
+  ])("%d at %d over %d months, after %d from %s", (l, r, n, k, start, want) =>
+    expect(money(core.remainingBalanceActual360(l, r, n, k, start))).toBe(want));
+  it("month 1 of Birchwood (31 days) repays $4,056.06", () =>
+    expect(money(core.remainingBalanceActual360(3_900_000, 0.07, 300, 1, "2029-01"))).toBe("$3,895,943.94"));
+  it("is above the 30/360 balance (F-CORE-47) after 120 payments", () =>
+    expect(core.remainingBalanceActual360(3_900_000, 0.07, 300, 120, "2029-01")).toBeGreaterThan(core.remainingBalance(3_900_000, 0.07, 300, 120)));
+  it("k = 0 is the loan", () => expect(core.remainingBalanceActual360(3_900_000, 0.07, 300, 0, "2029-01")).toBe(3_900_000));
+  it("rejects k above n", () => expect(() => core.remainingBalanceActual360(1_000, 0.07, 12, 13, "2029-01")).toThrow(RangeError));
+  it("rejects a negative loan", () => expect(() => core.remainingBalanceActual360(-1, 0.07, 12, 1, "2029-01")).toThrow(RangeError));
+  it("rejects a bad start month", () => expect(() => core.remainingBalanceActual360(1_000, 0.07, 12, 1, "2029-13")).toThrow(RangeError));
+});
+
+/** Maple Run's real draw pattern (Running Deals Role 3): lender's monthly net cash flows, F-CORE-48 test 3. */
+const MAPLE_RUN_DRAWS = [
+  -234_900, 2_050, -27_950, 2_306.25, -22_693.75, 2_519.79, -17_480.21, 2_690.63, -12_309.37, 2_818.75, -7_181.25, 2_904.17,
+  342_904.17,
+];
+
 describe("F-CORE-48 internal rate of return", () => {
   const exp = byId("F-CORE-48");
   const flows = (out: number, coupon: number, n: number, last: number) => [out, ...Array<number>(n - 1).fill(coupon), last];
   it.each([
     [flows(-334_900, 2_904.17, 12, 342_904.17), exp[0]],
     [flows(-3_484_800, 22_440, 24, 3_542_440), exp[1]],
-    [flows(-340_000, 2_904.17, 12, 342_904.17), exp[2]],
+    [MAPLE_RUN_DRAWS, exp[2]],
   ])("case %#", (cfs, want) => {
     const r = core.internalRateOfReturn(cfs, 12);
     expect(`${pct(r.nominal, 3)} nominal; ${pct(r.effective, 3)} effective`).toBe(want);
+  });
+  it("a loan with no fees yields its note rate", () => {
+    const r = core.internalRateOfReturn(flows(-340_000, 2_904.17, 12, 342_904.17), 12);
+    expect(pct(r.nominal, 3)).toBe("10.250%");
+  });
+  it("accepts many sign changes when the running total changes sign once (draws)", () => {
+    const cum = MAPLE_RUN_DRAWS.map((_, t) => MAPLE_RUN_DRAWS.slice(0, t + 1).reduce((a, b) => a + b, 0));
+    expect(money(cum[11])).toBe("−$307,224.99");
+    expect(money(cum[12])).toBe("$35,679.18");
+    expect(core.netPresentValue(0.01, MAPLE_RUN_DRAWS)).toBeCloseTo(222.37, 2);
   });
   it("NPV at the IRR is zero", () => {
     const cfs = flows(-334_900, 2_904.17, 12, 342_904.17);
@@ -569,8 +603,8 @@ describe("F-CORE-48 internal rate of return", () => {
 });
 
 describe("fixture catalogue", () => {
-  it("core has 46 scripted formulas with 3 cases each", () => {
-    expect(all).toHaveLength(46);
+  it("core has 47 scripted formulas with 3 cases each", () => {
+    expect(all).toHaveLength(47);
     for (const x of all) expect(x.tests).toHaveLength(3);
   });
   it("every fixture ID is ported, and nothing else", () => {

@@ -468,6 +468,42 @@ export function remainingBalance(loan: number, annualRate: number, months: numbe
   return loan * g - (p * (g - 1)) / i;
 }
 
+/**
+ * F-CORE-49: Remaining balance with Actual/360 accrual. Each month I_t = round(B_(t−1) × r ÷ 360 × d_t, cents),
+ * B_t = B_(t−1) + I_t − P, where P is the F-CORE-02 payment (30/360) rounded to the cent and d_t is the days in
+ * calendar month t, counting from firstAccrualMonth ("YYYY-MM"). CORE-PRC-06: MF and COM term notes.
+ */
+export function remainingBalanceActual360(
+  loan: number,
+  annualRate: number,
+  months: number,
+  paymentsMade: number,
+  firstAccrualMonth: string,
+): number {
+  assertNonNegative({ loan, annualRate });
+  if (!Number.isInteger(months) || months < 1) throw new RangeError("months must be a whole number ≥ 1");
+  if (!Number.isInteger(paymentsMade) || paymentsMade < 0 || paymentsMade > months) {
+    throw new RangeError("paymentsMade must be a whole number from 0 to months");
+  }
+  const ym = /^(\d{4})-(\d{2})$/.exec(firstAccrualMonth);
+  if (!ym || Number(ym[2]) < 1 || Number(ym[2]) > 12) throw new RangeError(`firstAccrualMonth must be YYYY-MM: ${firstAccrualMonth}`);
+  let year = Number(ym[1]);
+  let month = Number(ym[2]); // 1-12
+  const p = roundHalfUp(amortizingPayment(loan, annualRate, months), 2);
+  let b = loan;
+  for (let t = 0; t < paymentsMade; t++) {
+    const days = new Date(Date.UTC(year, month, 0)).getUTCDate();
+    const interest = roundHalfUp((b * annualRate) / 360 * days, 2);
+    b = roundHalfUp(b + interest - p, 2);
+    month += 1;
+    if (month > 12) {
+      month = 1;
+      year += 1;
+    }
+  }
+  return b;
+}
+
 /** Net present value of cash flows CF_t at t = 0, 1, 2, … periods, discounted at periodRate (used by F-CORE-48). */
 export function netPresentValue(periodRate: number, cashFlows: readonly number[]): number {
   let s = 0;
@@ -481,7 +517,8 @@ export const IRR_BRACKET = { low: -0.99, high: 1.0, tolerance: 1e-12 } as const;
 /**
  * F-CORE-48: Internal rate of return. Solve Σ CF_t ÷ (1 + i)^t = 0 for i by bisection on [−99%, 100%] a period,
  * stopping when the bracket is narrower than 1e-12. Nominal = i × m; effective = (1 + i)^m − 1.
- * Needs exactly one sign change in the cash flows (else several IRRs may exist), so other series throw.
+ * Accepts flows with one sign change, or whose running total changes sign once (Norstrom's test: a loan
+ * with draws has a unique nonnegative IRR). Other series may have several IRRs, so they throw.
  */
 export function internalRateOfReturn(
   cashFlows: readonly number[],
@@ -490,10 +527,17 @@ export function internalRateOfReturn(
   if (cashFlows.length < 2) throw new RangeError("need at least two cash flows");
   cashFlows.forEach((cf, t) => assertFinite({ [`cashFlows[${t}]`]: cf }));
   if (!Number.isInteger(periodsPerYear) || periodsPerYear < 1) throw new RangeError("periodsPerYear must be a whole number ≥ 1");
-  const signs = cashFlows.filter((cf) => cf !== 0).map(Math.sign);
-  let changes = 0;
-  for (let k = 1; k < signs.length; k++) if (signs[k] !== signs[k - 1]) changes++;
-  if (changes !== 1) throw new RangeError("cash flows must change sign exactly once (one outflow block, one inflow block)");
+  const signChanges = (xs: readonly number[]): number => {
+    const signs = xs.filter((x) => x !== 0).map(Math.sign);
+    let n = 0;
+    for (let k = 1; k < signs.length; k++) if (signs[k] !== signs[k - 1]) n++;
+    return n;
+  };
+  let running = 0;
+  const cumulative = cashFlows.map((cf) => (running += cf));
+  if (signChanges(cashFlows) !== 1 && signChanges(cumulative) !== 1) {
+    throw new RangeError("cash flows or their running total must change sign exactly once, or the IRR may not be unique");
+  }
   let lo: number = IRR_BRACKET.low;
   let hi: number = IRR_BRACKET.high;
   let flo = netPresentValue(lo, cashFlows);

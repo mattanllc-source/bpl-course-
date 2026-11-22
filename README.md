@@ -44,11 +44,11 @@ CI (`.github/workflows/tests.yml`) runs all of these checks on every push.
 
 ## Formula port status
 
-The reference scripts hold all 123 formulas and 369 test cases (core 46, residential 25, multifamily 28, commercial 24). Ported to TypeScript so far (46 of 123):
+The reference scripts hold all 124 formulas and 372 test cases (core 47, residential 25, multifamily 28, commercial 24). Ported to TypeScript so far (47 of 124):
 
 | Family | Ported | Status |
 | --- | --- | --- |
-| Core | 46 of 46 (F-CORE-01 to -37, -40 to -48; -38 and -39 are reserved) | Done. Policy limits in `formulas/core/policy.ts` |
+| Core | 47 of 47 (F-CORE-01 to -37, -40 to -49; -38 and -39 are reserved) | Done. Policy limits in `formulas/core/policy.ts` |
 | Residential | 0 of 25 | Not started |
 | Multifamily | 0 of 28 | Not started |
 | Commercial | 0 of 24 | Not started |

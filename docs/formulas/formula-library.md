@@ -6,7 +6,7 @@
 
 | Convention | Rule | Source |
 | --- | --- | --- |
-| Day count | Actual/360 for all interest accrual and billing: per diem, period interest, reserves, prepaid, default and payoff interest | Your decision, 19 Nov 2026; replaces Bible \[POLICY: day-count\] |
+| Day count | Actual/360 for interest accrual and billing on bridge and MF and COM term notes: per diem, period interest, reserves, prepaid, default and payoff interest. DSCR loans accrue 30/360. Every amortizing payment is set on 30/360 (CORE-PRC-06, D-CORE-29, 22 Nov 2026) | Your decision, 19 Nov 2026; replaces Bible \[POLICY: day-count\] |
 | Underwriting tests | DSCR, interest coverage, liquidity and sizing use the nominal annual rate (Loan × rate) or rate ÷ 12, as in every policy example (decided 19 Nov 2026) | Assumption; keeps all existing examples valid |
 | Amortizing payments | Monthly rate = annual ÷ 12; n = amortization months (F-CORE-02) | Market convention |
 | Precision | Keep full precision in working steps; round only final answers. Loan constants are shown to 6 decimals, but sizing divides by the unrounded constant (ADS ÷ L) | Course Bible style guide |
@@ -65,6 +65,7 @@
 | F-CORE-46 | Effective annual rate from a nominal rate | SUGGESTED | D-CONV-01; C3 |
 | F-CORE-47 | Remaining loan balance after k payments | SUGGESTED | COM-TRM-02, MF-TRM-05 |
 | F-CORE-48 | Internal rate of return (IRR) | SUGGESTED | CORE-PRC-02, -03 |
+| F-CORE-49 | Remaining balance with Actual/360 accrual | SUGGESTED | CORE-PRC-06, MF-TRM-05, COM-TRM-02 |
 
 ### F-CORE-01: Interest-only payment (Actual/360)
 
@@ -91,12 +92,12 @@ I = L \times \frac{r}{360} \times d
 **Common mistakes.**
 
 - Dividing by 12 instead of using actual days; this understates interest in 31-day months.
-- Using the commitment instead of the funded balance on future-funded loans.
+- Using the commitment instead of the funded balance when the note charges the funded balance (RES-FF-08). A Dutch-interest note charges the full commitment from day one; compare it with ours on all-in cost (CORE-PRC-06).
 - Rounding the daily rate before multiplying by days.
 
 **Edge cases.** Zero balance or rate → $0. Negative inputs are invalid. Partial period (funding mid-month) → count actual days funded, including the funding day and excluding the payoff day (decided 19 Nov 2026). Not affected by vacancy.
 
-**Rounding and day count.** Actual/360. Keep full precision; round the period amount to the cent (half up) once.
+**Rounding and day count.** Actual/360 on bridge and MF and COM term notes; DSCR loans accrue 30/360 (CORE-PRC-06). Keep full precision; round the period amount to the cent (half up) once.
 
 **Modules.** C3, C11, C12; also the family bridge modules
 
@@ -132,11 +133,11 @@ P = \frac{L \times i}{1-(1+i)^{-n}},\quad i=\frac{r}{12}
 
 - Using the term (e.g. 10 years) instead of the amortization (e.g. 30 years) for n.
 - Entering the annual rate without dividing by 12.
-- Applying Actual/360 here; the payment formula uses a 12-period year by convention.
+- Setting the payment on actual days. Every product sets the payment on 12 equal months; accrual then follows the note (CORE-PRC-06).
 
 **Edge cases.** Rate 0% → P = L ÷ n. n must be ≥ 1. Negative L invalid. Partial first period → interest for odd days is collected separately (F-CORE-33), not by changing P.
 
-**Rounding and day count.** Monthly 30/360 payment convention (market standard for amortizing schedules; accrual on billing still follows the note) (decided 19 Nov 2026). Round P to the cent.
+**Rounding and day count.** Payment basis 30/360 (rate ÷ 12) on every product (CORE-PRC-06, D-CORE-29). DSCR loans also accrue 30/360, so the payment fully amortizes. MF and COM term notes accrue Actual/360, so the balloon is F-CORE-49, not F-CORE-47. Round P to the cent.
 
 **Modules.** C3, C8; also the family term-loan modules
 
@@ -1654,7 +1655,7 @@ PV = PMT \times \frac{1-(1+i)^{-n}}{i} + FV_n (1+i)^{-n},\quad FV = PV (1+i)^{n}
 2. Annuity factor = (1 − 1.0058333^−300) ÷ 0.0058333 = 141.486903.
 3. PV = $27,564.39 × 141.486903 = $3,900,000.18. That is the $3,900,000 loan, plus 18 cents from rounding the payment.
 4. Turn it round: payment = $3,900,000 ÷ 141.486903 = $27,564.39. That is F-CORE-02, derived from the annuity.
-5. FV = $3,900,000.18 × 1.0058333^300 = $22,329,132.07: what the payments grow to if each is reinvested at 7.000%.
+5. FV = $3,900,000.18 × 1.0058333^300 = $22,329,132.07: what the payments would grow to if each earned 7.000% to month 300. That is a future-wealth measure, not what the 7.000% yield means (F-CORE-48).
 
 **Interpretation.** A loan's amount is the present value of its payments at the note rate. Discount at a higher rate and the same payments are worth less.
 
@@ -1736,7 +1737,7 @@ B_k = L(1+i)^{k} - P \times \frac{(1+i)^{k}-1}{i}
 1. Birchwood term loan: $3,900,000; 7.000%; 300-month amortization; P = $27,564.39. A 120-month term is a what-if: Running Deals sets no term.
 2. Growth factor: 1.0058333^120 = 2.009661. The loan grows to $3,900,000 × 2.009661 = $7,837,679.37.
 3. Payments grow to $27,564.39 × (2.009661 − 1) ÷ 0.0058333 = $4,770,977.14.
-4. Balance after 120 payments = $7,837,679.37 − $4,770,977.14 = $3,066,702.23. That is the balloon at a 10-year maturity.
+4. Balance after 120 payments = $7,837,679.37 − $4,770,977.14 = $3,066,702.23. That is the balloon at a 10-year maturity on a 30/360 note. Birchwood's term note accrues Actual/360 (CORE-PRC-06), so its balloon is larger: $3,118,446.42 (F-CORE-49).
 
 **Interpretation.** A long amortization with a short term leaves a large balloon. The borrower must refinance or sell to pay it, so maturity is a credit risk.
 
@@ -1750,7 +1751,7 @@ B_k = L(1+i)^{k} - P \times \frac{(1+i)^{k}-1}{i}
 
 **Edge cases.** k = 0 → B = L. k = n → a small residue from rounding the payment (Birchwood: −$1.06); the last payment absorbs it. Rate 0% → B = L − P × k. k must be between 0 and n.
 
-**Rounding and day count.** Monthly 30/360 schedule, as F-CORE-02. Round P to the cent first; round B to the cent.
+**Rounding and day count.** Basis: 30/360 accrual. Exact for DSCR loans (CORE-PRC-06). For MF and COM term notes, which accrue Actual/360, it is the payment-schedule balance only; use F-CORE-49 for the balloon. Round P to the cent first; round B to the cent.
 
 **Modules.** C3, C8
 
@@ -1779,8 +1780,9 @@ B_k = L(1+i)^{k} - P \times \frac{(1+i)^{k}-1}{i}
 3. Solve NPV = 0 by bisection: start with i between −99% and 100% a month, halve the bracket, and stop when it is narrower than 1e-12.
 4. Monthly IRR i = 0.009873. Nominal = 0.009873 × 12 = 11.848%. Effective = (1 + 0.009873)^12 − 1 = 12.513%.
 5. The F-CORE-40 screen gives 11.75%. It spreads the points evenly and ignores timing, so it is not a yield.
+6. Real draw pattern (Running Deals, Maple Run Role 3): t = 0, −$234,900; each month, interest on the drawn balance less any draw ($30,000, $25,000, $20,000, $15,000 and $10,000 in months 2, 4, 6, 8 and 10); t = 12, $342,904.17. The flows change sign 11 times, but the running total stays negative to month 11 (−$307,224.99) and turns positive at month 12 ($35,679.18). So the IRR is unique: monthly 1.0067%, 12.081% nominal, 12.772% effective. It beats 11.848% because the points are charged on the full $340,000 while less cash is out.
 
-**Interpretation.** Points paid up front raise the lender's yield above the note rate, more so on a short term. A loan with no fees yields its note rate.
+**Interpretation.** Points paid up front raise the lender's yield above the note rate, more so on a short term. A loan with no fees yields its note rate. The IRR is the rate earned on the money still invested each period. It does not assume payments are reinvested at that rate; a terminal-wealth measure needs its own reinvestment rate (the modified IRR).
 
 **Related rules.** CORE-PRC-02, CORE-PRC-03; F-CORE-06, F-CORE-40, F-CORE-45, F-CORE-46
 
@@ -1790,7 +1792,7 @@ B_k = L(1+i)^{k} - P \times \frac{(1+i)^{k}-1}{i}
 - Quoting the monthly IRR as an annual rate; multiply by 12 for nominal, or compound for effective.
 - Treating IRR as the usury test; counsel decides how a state counts fees \[VERIFY: State Law Table usury column; checked 20 Nov 2026\].
 
-**Edge cases.** Needs at least one outflow and one inflow, with one sign change. More than one sign change can give several IRRs: report NPV at a stated rate instead. No root between −99% and 100% a period → not defined.
+**Edge cases.** Needs at least one outflow and one inflow. One sign change gives one IRR. Several sign changes can give several IRRs, but need not. Add the flows up period by period: if the running total changes sign once, from negative to positive, the nonnegative IRR is unique (Norstrøm, "A Sufficient Condition for a Unique Nonnegative Internal Rate of Return", Journal of Financial and Quantitative Analysis 7(3), June 1972, pp. 1835-1839). Loans with draws pass this test (test 3). If the running total changes sign more than once, report NPV at a stated rate instead. No root between −99% and 100% a period → not defined.
 
 **Rounding and day count.** Periods as the cash flows fall (monthly here, interest at rate ÷ 12; Actual/360 billing would raise the yield slightly). Bisection tolerance 1e-12 on the periodic rate; display three decimals.
 
@@ -1800,9 +1802,51 @@ B_k = L(1+i)^{k} - P \times \frac{(1+i)^{k}-1}{i}
 | --- | --- | --- |
 | 1 | −$334,900; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (Maple Run) | 11.848% nominal; 12.513% effective |
 | 2 | −$3,484,800; 23 × $22,440.00; $3,542,440.00 at month 24; m = 12 (Birchwood bridge) | 8.194% nominal; 8.509% effective |
-| 3 | −$340,000; 11 × $2,904.17; $342,904.17 at month 12; m = 12 (no points) | 10.250% nominal; 10.746% effective |
+| 3 | −$234,900; interest on the drawn balance less draws of $30,000, $25,000, $20,000, $15,000 and $10,000 in months 2, 4, 6, 8 and 10; $342,904.17 at month 12; m = 12 (Maple Run draws) | 12.081% nominal; 12.772% effective |
 
-**Core library complete: 30 REQUIRED and 16 SUGGESTED formulas, 138 test cases.**
+### F-CORE-49: Remaining balance with Actual/360 accrual (SUGGESTED)
+
+**Purpose.** Principal still owed after k payments on a note whose payment is set on 30/360 but whose interest accrues Actual/360. It sizes the real balloon on MF and COM term loans (CORE-PRC-06).
+
+**Formula.** Each month: interest I\_t = B\_(t−1) × r ÷ 360 × d\_t, rounded to the cent; B\_t = B\_(t−1) + I\_t − P. P is the F-CORE-02 payment rounded to the cent; d\_t is the days in accrual month t
+
+```latex
+B_t = B_{t-1} + \mathrm{round}\left(B_{t-1}\,\frac{r}{360}\,d_t\right) - P,\quad B_0 = L
+```
+
+**Variables and units.** L = original loan (USD); r = annual note rate (%); n = amortization used to set P (months); P = F-CORE-02 payment, rounded to the cent (USD); d\_t = actual days in calendar month t, counted from the first accrual month (days); k = payments made (months)
+
+**Worked example.**
+
+1. Birchwood term loan what-if: $3,900,000; 7.000%; 300-month amortization; P = $27,564.39 (F-CORE-02); first accrual month January 2029 (a what-if date); 120 payments.
+2. Month 1 (31 days): interest $3,900,000 × 7.000% ÷ 360 × 31 = $23,508.33. Principal $27,564.39 − $23,508.33 = $4,056.06. Balance $3,895,943.94.
+3. Month 2 (28 days): interest $21,211.25; principal $6,353.14; balance $3,889,590.80. Month 3 (31 days): interest $23,445.59; principal $4,118.80; balance $3,885,472.00.
+4. Repeat to month 120: balance $3,118,446.42.
+5. F-CORE-47 on 30/360 gives $3,066,702.23. The Actual/360 balloon is $51,744.19 higher (1.7%), because each year charges 365 or 366 days of interest, not 360.
+
+**Interpretation.** With a 30/360 payment and Actual/360 interest, principal is repaid more slowly, so the balloon is larger. Size the refinance on this balloon, not on F-CORE-47.
+
+**Related rules.** CORE-PRC-06, MF-TRM-05, COM-TRM-02; F-CORE-02, F-CORE-47
+
+**Common mistakes.**
+
+- Using F-CORE-47 for the balloon on an Actual/360 term note; it understates the balance.
+- Re-setting the payment each month on actual days; the payment stays fixed (CORE-PRC-06).
+- Starting the day count in the wrong month; the result depends on the first accrual month and on leap years.
+
+**Edge cases.** k = 0 → B = L. Rate 0% → B = L − P × k, as F-CORE-47. With k = n the loan does not fully amortize: $500,000 at 7.000% over 360 months leaves $42,293.30 (test 3). That is why DSCR loans accrue 30/360. k must be between 0 and n.
+
+**Rounding and day count.** Actual/360 interest each month, rounded to the cent half up once; payment from F-CORE-02 rounded to the cent; balance to the cent.
+
+**Modules.** C3, C8, C12
+
+| Test | Inputs | Expected |
+| --- | --- | --- |
+| 1 | $3,900,000; 7.000%; 300 months; 120 payments from Jan 2029 (Birchwood what-if) | $3,118,446.42 |
+| 2 | $5,472,000; 7.250%; 360 months; 120 payments from Apr 2029 (Cedar Court what-if) | $4,803,418.77 |
+| 3 | $500,000; 7.000%; 360 months; 360 payments from Jan 2027 (DSCR-length what-if) | $42,293.30 |
+
+**Core library complete: 30 REQUIRED and 17 SUGGESTED formulas, 141 test cases.**
 
 ## Residential formulas (F-RES)
 
