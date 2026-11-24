@@ -101,7 +101,12 @@ function compObjectives(spec, env) {
 function compPolicy(spec, env) {
   const s = el("aside", "lcard pnote"); s.setAttribute("aria-label", spec.title || "From the credit policy");
   const t = el("p", "pn-h"); t.append(icon("file"), spec.title || "From the credit policy");
-  s.append(t, md1(spec.text, env)); const a = auditNote(spec.audit); if (a) s.append(a); return s;
+  s.append(t, md1(spec.text, env));
+  // The policy topic this note draws on, by its learner label ("Credit Policy 7: ..."), linked to the rule card.
+  const rid = (String(spec.audit || "").match(/\b(?:CORE|RES|MF|COM)-[A-Z]{2,5}-\d{2}\b/) || [])[0];
+  const r = rid && RULES.get(rid);
+  if (r && r.topicLabel) { const p = el("p", "pn-src"); const l = el("a", "", r.topicLabel); l.href = "#policy/" + rid; p.append("Source: ", l); s.append(p); }
+  const a = auditNote(spec.audit); if (a) s.append(a); return s;
 }
 function compFormula(spec, env) {
   const s = el("section", "lcard fcomp"); s.append(H(env.hl, "", spec.title || "The formula"));

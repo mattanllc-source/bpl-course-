@@ -1,0 +1,2160 @@
+{
+ "_note": "Build-time map for the learner view of the Model Credit Policy (decision 12, 24 Nov 2026). Regroups rules by deal order; rule text is unchanged and comes from the policy export. Learner copy (oneLine, summary, apply, why, check) is drawn only from the rules named. Model policy for training - not for live lending decisions.",
+ "version": "2026-11-24",
+ "topics": [
+  {
+   "n": 1,
+   "slug": "business-purpose",
+   "name": "Is it a business-purpose loan?",
+   "oneLine": "Screen purpose, occupancy, cash-out use and the state's license rules before any term sheet.",
+   "summary": "We lend only for business purposes, so no guarantor or relative may live in a 1-4 unit property we lend on. The borrower and every guarantor certify purpose and non-occupancy before closing. A cash-out refinance is declined if more than half the cash will go to personal, family or household use.",
+   "apply": [
+    "Ask who lives in the property now and who will live there after closing.",
+    "Get the purpose and non-occupancy certification from the borrower and every guarantor.",
+    "On a cash-out refinance, get the written use of proceeds and apply the more-than-half test.",
+    "Before the term sheet, check the property state's row in the State Law Table and our licenses.",
+    "Send an occupancy red flag to a credit officer; evidence that contradicts the certification goes to the BSA officer."
+   ],
+   "why": "Occupancy decides whether consumer-lending law covers the loan. The cash-out test closes the gap a rental refinance can open, and licensing varies by state, so the state check comes before the term sheet.",
+   "modules": [
+    "C1",
+    "C10"
+   ],
+   "rules": [
+    "CORE-BP-01",
+    "CORE-BP-02",
+    "CORE-BP-04",
+    "CORE-BP-03",
+    "RES-GEN-09"
+   ],
+   "seeAlso": [
+    "CORE-EXC-03",
+    "CORE-KYC-07",
+    "RES-GEN-11"
+   ],
+   "glance": [
+    [
+     "Cash-out refinance",
+     "If more than half will go to personal, family or household use, treat the loan as consumer purpose and decline.",
+     "CORE-BP-04"
+    ],
+    [
+     "State screen",
+     "A state with no row gets no term sheet until one is added.",
+     "CORE-BP-03"
+    ]
+   ],
+   "check": {
+    "deal": "RD-RES-01",
+    "title": "Worked check: Maple Run",
+    "lines": [
+     [
+      "Occupancy",
+      "The house is vacant. Dana Reyes lives at a separate Columbus address she owns. The plan is to lease to an unrelated tenant"
+     ],
+     [
+      "Red flag?",
+      "None: no guarantor or relative lives in, or plans to live in, the property"
+     ],
+     [
+      "Certification",
+      "Harborline Holdings LLC, Dana Reyes and Sam Okafor each sign the business-purpose and non-occupancy certification before closing"
+     ],
+     [
+      "Cash-out test",
+      "Not triggered: this is a $300,000 purchase, not a cash-out refinance"
+     ],
+     [
+      "State screen",
+      "Ohio row: no residential mortgage license is needed, because no owner or family member will live there"
+     ]
+    ],
+    "result": "Business purpose confirmed; proceed to the term sheet",
+    "rules": [
+     "CORE-BP-01",
+     "CORE-BP-02",
+     "CORE-BP-03",
+     "CORE-BP-04",
+     "RES-GEN-09"
+    ]
+   }
+  },
+  {
+   "n": 2,
+   "slug": "borrower-guarantors",
+   "name": "Who can borrow and who guarantees",
+   "oneLine": "The borrower is a US real estate entity; every 20% owner and the managing member guarantee.",
+   "summary": "The borrower is a US LLC, LP or corporation in good standing that only owns and operates real estate; individuals and trusts cannot borrow. Every owner of 20% or more, plus the managing member, signs the guaranty. One qualifying guarantor must pass the credit, liquidity, net worth and experience tests alone, and a trust never qualifies.",
+   "apply": [
+    "Read the entity documents and the good-standing certificate.",
+    "Chart ownership through every layer and multiply the shares.",
+    "List every 20% owner and the managing member as guarantors.",
+    "Where a trust owns 20% or more, chart its trustees, grantor and 20% beneficiaries, and apply the trust guaranty rule.",
+    "Pick the qualifying guarantor and test that person alone."
+   ],
+   "why": "A real-estate-only purpose keeps unrelated business risk out, and the 20% line is the conservative side of market practice. A trust has no credit score or track record, so it never qualifies.",
+   "modules": [
+    "C6"
+   ],
+   "rules": [
+    "CORE-BOR-01",
+    "CORE-BOR-02",
+    "CORE-BOR-03",
+    "CORE-BOR-04",
+    "CORE-BOR-05",
+    "CORE-BOR-19",
+    "CORE-KYC-08",
+    "CORE-KYC-09",
+    "COM-GEN-04"
+   ],
+   "seeAlso": [
+    "CORE-KYC-02",
+    "CORE-BOR-06"
+   ],
+   "glance": [],
+   "check": {
+    "deal": "RD-RES-01",
+    "title": "Worked check: Maple Run",
+    "lines": [
+     [
+      "Borrower",
+      "Harborline Holdings LLC: an Ohio LLC formed in 2021, in good standing"
+     ],
+     [
+      "Purpose clause",
+      "Acquire, renovate and hold residential real estate: real estate only"
+     ],
+     [
+      "Dana Reyes",
+      "60% owner and managing member: signs the guaranty"
+     ],
+     [
+      "Sam Okafor",
+      "40% owner, at least 20%: signs the guaranty"
+     ],
+     [
+      "Chris Reyes",
+      "Dana's spouse, no ownership, and Dana qualifies alone: not asked to sign"
+     ],
+     [
+      "Qualifying guarantor",
+      "Dana Reyes, who must pass every guarantor test alone"
+     ]
+    ],
+    "result": "Two guarantors; Dana Reyes is the qualifying guarantor",
+    "rules": [
+     "CORE-BOR-01",
+     "CORE-BOR-02",
+     "CORE-BOR-03",
+     "CORE-BOR-04",
+     "CORE-BOR-05"
+    ]
+   }
+  },
+  {
+   "n": 3,
+   "slug": "kyc-fraud",
+   "name": "Know your customer, sanctions and fraud flags",
+   "oneLine": "Screen every party for sanctions, verify identity and background, and stop the file on any red flag.",
+   "summary": "Screen the borrower, every guarantor and every 20% owner against OFAC lists before the term sheet and again before funding. Identify every 20% owner and one control person, and run a 10-year background search on each guarantor. Listed red flags stop the file until the BSA officer clears them, and wire instructions are confirmed by calling a number already in our file.",
+   "apply": [
+    "Run OFAC on every party before the term sheet, and again before funding.",
+    "Collect government ID for every 20% owner and one control person.",
+    "Order the 10-year background search on each guarantor.",
+    "Check the file against the red-flag list, and send any flag to the BSA officer the same business day.",
+    "Never act on new or changed wire instructions without a callback to a number already on file."
+   ],
+   "why": "A red flag is a reason for due diligence and a reporting decision, not proof of fraud. Account changes are verified through a second channel because wire instructions are a common fraud target.",
+   "modules": [
+    "C7"
+   ],
+   "rules": [
+    "CORE-KYC-01",
+    "CORE-KYC-02",
+    "CORE-KYC-03",
+    "CORE-KYC-04",
+    "CORE-KYC-05",
+    "CORE-KYC-06",
+    "CORE-KYC-07"
+   ],
+   "seeAlso": [
+    "CORE-BP-02",
+    "CORE-CLS-03",
+    "CORE-KYC-08",
+    "CORE-KYC-09"
+   ],
+   "glance": [
+    [
+     "Suspicious activity report",
+     "within 30 calendar days of first detection, or 60 if no suspect is identified, when $5,000 or more is involved",
+     "CORE-KYC-05"
+    ],
+    [
+     "Sanctions records",
+     "OFAC screening records are kept 10 years",
+     "CORE-KYC-06"
+    ],
+    [
+     "Background search",
+     "criminal, bankruptcy, foreclosure, liens, judgments and litigation, 10-year lookback",
+     "CORE-KYC-03"
+    ]
+   ],
+   "check": {
+    "deal": "RD-RES-01",
+    "title": "Worked check: Maple Run",
+    "lines": [
+     [
+      "Sanctions screening",
+      "Harborline, Dana Reyes and Sam Okafor: 3 parties × 2 screenings (before the term sheet and before funding) = 6 screenings"
+     ],
+     [
+      "Identity",
+      "Government ID for every 20% owner: Dana Reyes (60%) and Sam Okafor (40%)"
+     ],
+     [
+      "Background",
+      "10-year search on Dana and Sam: one $8,000 state tax lien, filed 2019, paid and released 2020; nothing else"
+     ],
+     [
+      "Red flags",
+      "Arm's-length purchase from an unrelated seller; no occupancy red flag"
+     ]
+    ],
+    "result": "No sanctions match or red flag; re-run OFAC on the funding day",
+    "rules": [
+     "CORE-KYC-01",
+     "CORE-KYC-02",
+     "CORE-KYC-03",
+     "CORE-KYC-07"
+    ]
+   }
+  },
+  {
+   "n": 4,
+   "slug": "guarantor-strength",
+   "name": "Guarantor credit, liquidity, net worth and experience",
+   "oneLine": "The qualifying guarantor's score, cash left after closing, net worth and recent completed projects.",
+   "summary": "One guarantor must pass four tests alone: credit score, liquidity after closing, adjusted net worth and recent completed projects. Liquid assets count after haircuts, and the requirement grows with the loan and with the guarantor's other open loans with us. Experience counts projects owned at least 20% and completed in the last 36 months, and the count sets the tier.",
+   "apply": [
+    "Pull a credit report on each guarantor no older than 90 days at closing, and take the mid-score.",
+    "Check credit events, felonies, liens and judgments against their lookbacks and limits.",
+    "Haircut liquid assets, subtract cash to close, and compare with the requirement at full precision.",
+    "Compute adjusted net worth and compare it with the family's share of the commitment.",
+    "Count only verified projects owned at least 20% in the last 36 months, then set the tier."
+   ],
+   "why": "Each limit sits at the conservative end of what lenders publish, such as a 680 score floor and zero credit for unused credit lines. Ten percent of the loan in post-closing liquidity is the bridge-lending norm, and 36 months is the most common experience lookback.",
+   "modules": [
+    "C6"
+   ],
+   "rules": [
+    "CORE-BOR-06",
+    "CORE-BOR-07",
+    "CORE-BOR-08",
+    "CORE-BOR-09",
+    "CORE-BOR-10",
+    "CORE-BOR-11",
+    "CORE-BOR-12",
+    "CORE-BOR-13",
+    "CORE-BOR-14",
+    "CORE-BOR-15",
+    "CORE-BOR-16",
+    "CORE-BOR-17",
+    "CORE-BOR-18",
+    "RES-GEN-05",
+    "MF-GEN-07",
+    "COM-GEN-15"
+   ],
+   "seeAlso": [
+    "RES-GU-01",
+    "RES-GU-08",
+    "RES-STR-02",
+    "RES-STR-03",
+    "RES-DSCR-03",
+    "RES-DSCR-09",
+    "MF-DSCR-04",
+    "MF-DSCR-05",
+    "MF-LU-05",
+    "MF-CON-06",
+    "COM-DSCR-06",
+    "COM-DSCR-08",
+    "RES-FF-05",
+    "CORE-KYC-03"
+   ],
+   "glance": [],
+   "check": {
+    "deal": "RD-RES-01",
+    "title": "Worked check: Maple Run (Dana Reyes)",
+    "lines": [
+     [
+      "Mid-score",
+      "Bureau scores 705 / 712 / 730: mid-score 712; at least 680 needed"
+     ],
+     [
+      "Other guarantor",
+      "Sam Okafor 640 / 655 / 668: mid-score 655; at least 620 needed"
+     ],
+     [
+      "Experience",
+      "7 projects listed; the one owned at 15% is under 20%, so 6 count: Tier 2 (5-9)"
+     ],
+     [
+      "Adjusted liquid assets",
+      "$95,000 + $40,000 × 0.70 + $60,000 × 0.70 + $75,000 unused HELOC × 0 = $165,000"
+     ],
+     [
+      "Liquidity after cash to close, before prepaid interest",
+      "$165,000 − $74,100 = $90,900"
+     ],
+     [
+      "Required liquidity",
+      "Greater of 10% × $340,000 = $34,000 and 6 × $340,000 × 10.25% ÷ 12 = $17,425, plus 5% × $0 other loans = $34,000"
+     ],
+     [
+      "Adjusted net worth",
+      "$1,150,000 − $610,000 − $0 equity in the subject = $540,000; required 25% × $340,000 = $85,000"
+     ]
+    ],
+    "result": "Passes: liquidity by $56,900 and net worth by $455,000",
+    "rules": [
+     "CORE-BOR-06",
+     "CORE-BOR-07",
+     "CORE-BOR-11",
+     "CORE-BOR-12",
+     "CORE-BOR-14",
+     "CORE-BOR-15",
+     "CORE-BOR-16"
+    ]
+   },
+   "attach": [
+    {
+     "family": "Core",
+     "section": "Liquidity, net worth and experience tiers",
+     "group": "Rules",
+     "kind": "formula",
+     "id": "F-CORE-24"
+    },
+    {
+     "family": "Core",
+     "section": "Liquidity, net worth and experience tiers",
+     "group": "Rules",
+     "kind": "formula",
+     "id": "F-CORE-25"
+    },
+    {
+     "family": "Core",
+     "section": "Liquidity, net worth and experience tiers",
+     "group": "Rules",
+     "kind": "formula",
+     "id": "F-CORE-26"
+    },
+    {
+     "family": "Core",
+     "section": "Liquidity, net worth and experience tiers",
+     "group": "Rules",
+     "kind": "formula",
+     "id": "F-CORE-27"
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "slug": "valuation-reports",
+   "name": "Valuation and third-party reports",
+   "oneLine": "Lender-ordered appraisals under 120 days old, a desk review on each, and the family's report set.",
+   "summary": "We order every appraisal through an appraisal management company from a state-certified appraiser; borrower-supplied appraisals are refused. The appraisal is dated no more than 120 days before closing, and every one gets a desk review. Multifamily and commercial loans add an MAI appraisal, property condition, Phase I environmental and zoning reports, and a flood determination.",
+   "apply": [
+    "Order the appraisal yourself, through the appraisal management company.",
+    "Check the effective date: no more than 120 days before closing.",
+    "Send every appraisal for a desk review; use a BPO or AVM only as a secondary check.",
+    "Order the family's other reports, and a Phase II if a commercial Phase I finds a recognized environmental condition."
+   ],
+   "why": "Lenders typically order their own appraisals, and a rating agency tightened appraisal validation in 2026. The 120-day limit is the conservative side of the six-month outer limit seen in the market.",
+   "modules": [
+    "C5"
+   ],
+   "rules": [
+    "CORE-VAL-01",
+    "CORE-VAL-02",
+    "CORE-VAL-03",
+    "RES-GEN-06",
+    "MF-GEN-08",
+    "COM-GEN-13",
+    "COM-GEN-14"
+   ],
+   "seeAlso": [
+    "RES-BR-01",
+    "RES-BR-03",
+    "RES-DSCR-05",
+    "RES-GU-10",
+    "CORE-INS-03"
+   ],
+   "glance": [
+    [
+     "Residential valuation",
+     "full interior appraisal by the lender's appraisal management company. BPOs and AVMs never size a loan.",
+     "RES-GEN-06"
+    ],
+    [
+     "Commercial environmental",
+     "Phase I environmental report on every loan; Phase II if it finds a recognized environmental condition",
+     "COM-GEN-14"
+    ]
+   ],
+   "check": {
+    "deal": "RD-MF-01",
+    "title": "Worked check: Cedar Court",
+    "lines": [
+     [
+      "Appraisal",
+      "MAI appraisal with both values: as-is $6,300,000; as-stabilized $8,600,000"
+     ],
+     [
+      "Property condition report",
+      "Immediate repairs $40,000"
+     ],
+     [
+      "Phase I environmental report",
+      "No recognized environmental conditions"
+     ],
+     [
+      "Other reports",
+      "Zoning report and flood determination, also required"
+     ],
+     [
+      "Age at closing",
+      "Appraisal under 120 days old is a closing condition"
+     ]
+    ],
+    "result": "Report set complete; no environmental finding",
+    "rules": [
+     "CORE-VAL-01",
+     "CORE-VAL-02",
+     "MF-GEN-08"
+    ]
+   },
+   "attach": [
+    {
+     "family": "Residential",
+     "section": "Rules for all residential loans",
+     "group": "Third-party reports by product",
+     "kind": "md"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "slug": "income-expenses",
+   "name": "Underwriting income and expenses",
+   "oneLine": "How to count rent, vacancy, expenses and reserves before any sizing test.",
+   "summary": "Income is counted at the lower of two sources, such as rent roll and trailing 3 months annualized. Expenses are the greater of the trailing 12 months and the appraiser's estimate, with management at least 3% of effective gross income. Reserves come off NOI to give net cash flow, and commercial rent expiring within 24 months may be stressed.",
+   "apply": [
+    "Tie the rent roll to leases and bank deposits.",
+    "Take the lower income figure, and apply vacancy at the greatest of actual, market or the floor.",
+    "Take the greater expense figure, and check that management is at least 3% of effective gross income.",
+    "Subtract replacement reserves, and TI/LC reserves on commercial loans, to reach net cash flow.",
+    "On commercial loans, measure rent expiring within 24 months and the largest tenant's share."
+   ],
+   "why": "Agency practice uses conservative in-place income, and lower-of rent with amortizing payments is the conservative choice for rental loans. Office is stressed hardest, with the higher vacancy floor.",
+   "modules": [
+    "C4"
+   ],
+   "rules": [
+    "RES-DSCR-01",
+    "MF-GEN-04",
+    "MF-GEN-05",
+    "MF-GEN-06",
+    "MF-GEN-09",
+    "COM-GEN-05",
+    "COM-GEN-06",
+    "COM-GEN-07",
+    "COM-GEN-08",
+    "COM-GEN-10"
+   ],
+   "seeAlso": [
+    "RES-STR-04",
+    "RES-PF-03",
+    "MF-DSCR-02",
+    "MF-DSCR-03",
+    "COM-DSCR-03",
+    "COM-DSCR-04",
+    "COM-GEN-12"
+   ],
+   "glance": [
+    [
+     "Multifamily vacancy",
+     "vacancy at the greater of actual, market or 5%",
+     "MF-GEN-05"
+    ],
+    [
+     "Commercial vacancy",
+     "Vacancy at the greater of actual, market or 5% (10% for office)",
+     "COM-GEN-05"
+    ],
+    [
+     "Multifamily expenses",
+     "greater of T-12 and appraiser's estimate; management at least 3% of EGI; replacement reserves $300 per unit per year",
+     "MF-GEN-06"
+    ],
+    [
+     "Commercial reserves",
+     "TI/LC $1.50/sf office, $1.00/sf retail and mixed-use, $0.25/sf industrial; replacement $0.20/sf office, $0.15/sf retail, mixed-use, industrial and storage",
+     "COM-GEN-07"
+    ],
+    [
+     "Rent roll",
+     "Rent roll must tie to bank deposits within 5% for the last 3 months.",
+     "MF-GEN-04"
+    ],
+    [
+     "Commercial rollover stress, when more than 15% of rent expires within 24 months",
+     "Stressed DSCR must be at least 1.20x.",
+     "COM-GEN-08"
+    ]
+   ],
+   "check": {
+    "deal": "RD-MF-01",
+    "title": "Worked check: Cedar Court",
+    "lines": [
+     [
+      "In-place rents",
+      "Lesser of rent-roll collections $702,000 and trailing 3 months annualized $708,000 = $702,000"
+     ],
+     [
+      "Vacancy",
+      "1 − $702,000 ÷ $780,000 gross potential rent = 10.0%, above the 5% floor"
+     ],
+     [
+      "Effective gross income",
+      "$702,000 + $18,000 other income (T-12) = $720,000"
+     ],
+     [
+      "Expenses",
+      "Greater of T-12 $298,000 and appraiser's $310,000 = $310,000; management 4%, above the 3% minimum"
+     ],
+     [
+      "NOI",
+      "$720,000 − $310,000 = $410,000"
+     ],
+     [
+      "Replacement reserves",
+      "50 units × $300 = $15,000"
+     ],
+     [
+      "Net cash flow",
+      "$410,000 − $15,000 = $395,000"
+     ]
+    ],
+    "result": "Underwritten net cash flow $395,000",
+    "rules": [
+     "MF-GEN-05",
+     "MF-GEN-06"
+    ]
+   },
+   "attach": [
+    {
+     "family": "Residential",
+     "section": "DSCR rental loans",
+     "group": "",
+     "kind": "formula",
+     "id": "F-RES-07"
+    },
+    {
+     "family": "Multifamily",
+     "section": "Rules for all multifamily loans",
+     "group": "The three DSCR definitions used in this policy",
+     "kind": "formula",
+     "id": "F-MF-09"
+    },
+    {
+     "family": "Commercial",
+     "section": "Rules for all commercial loans",
+     "group": "",
+     "kind": "formula",
+     "id": "F-COM-03"
+    },
+    {
+     "family": "Commercial",
+     "section": "Rules for all commercial loans",
+     "group": "",
+     "kind": "formula",
+     "id": "F-COM-09"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "slug": "product-limits",
+   "name": "Limits and terms by product",
+   "oneLine": "Every leverage, coverage, term and pricing limit for one product, on one page.",
+   "summary": "Each product has its own eligibility, leverage, coverage, term and pricing limits. The loan is the lowest amount that passes every test, rounded down to the nearest $1,000. Pick the product first: its page holds every limit for that product in one place.",
+   "apply": [
+    "Pick the product from the property, the business plan and the exit.",
+    "Run every sizing test for that product at full precision.",
+    "Take the lowest result, then round down to the nearest $1,000; never round up past a test.",
+    "Check the product's coverage, reserve and experience tests, then its term, pricing and recourse."
+   ],
+   "why": "Sizing to the lowest of several tests follows agency practice, where the lowest criterion controls the loan amount. Most limits sit at the conservative end of the lender ranges and rated-pool caps found in research.",
+   "modules": [
+    "C8"
+   ],
+   "rules": [
+    "CORE-PRC-05",
+    "RES-GEN-01",
+    "RES-GEN-02",
+    "RES-GEN-03",
+    "RES-GEN-04",
+    "RES-FF-01",
+    "RES-FF-02",
+    "RES-FF-03",
+    "RES-FF-04",
+    "RES-FF-05",
+    "RES-FF-06",
+    "RES-FF-07",
+    "RES-FF-08",
+    "RES-FF-09",
+    "RES-FF-10",
+    "RES-FF-11",
+    "RES-FF-12",
+    "RES-FF-13",
+    "RES-BR-01",
+    "RES-BR-02",
+    "RES-BR-03",
+    "RES-BR-04",
+    "RES-BR-05",
+    "RES-BR-06",
+    "RES-GU-01",
+    "RES-GU-02",
+    "RES-GU-03",
+    "RES-GU-04",
+    "RES-GU-05",
+    "RES-GU-06",
+    "RES-GU-07",
+    "RES-GU-08",
+    "RES-GU-09",
+    "RES-GU-10",
+    "RES-GU-11",
+    "RES-LND-01",
+    "RES-LND-02",
+    "RES-LND-03",
+    "RES-LND-04",
+    "RES-LND-05",
+    "RES-LND-06",
+    "RES-LND-07",
+    "RES-DSCR-02",
+    "RES-DSCR-03",
+    "RES-DSCR-04",
+    "RES-DSCR-05",
+    "RES-DSCR-06",
+    "RES-DSCR-07",
+    "RES-DSCR-08",
+    "RES-DSCR-09",
+    "RES-DSCR-10",
+    "RES-DSCR-11",
+    "RES-DSCR-12",
+    "RES-PF-01",
+    "RES-PF-02",
+    "RES-PF-03",
+    "RES-PF-04",
+    "RES-PF-05",
+    "RES-PF-06",
+    "RES-PF-07",
+    "RES-PF-08",
+    "RES-STR-01",
+    "RES-STR-02",
+    "RES-STR-03",
+    "RES-STR-04",
+    "RES-STR-05",
+    "RES-STR-06",
+    "RES-STR-07",
+    "RES-STR-08",
+    "MF-GEN-01",
+    "MF-GEN-02",
+    "MF-GEN-03",
+    "MF-GEN-11",
+    "MF-BR-01",
+    "MF-BR-02",
+    "MF-BR-03",
+    "MF-BR-04",
+    "MF-BR-05",
+    "MF-BR-06",
+    "MF-BR-07",
+    "MF-BR-08",
+    "MF-BR-09",
+    "MF-BR-10",
+    "MF-BR-11",
+    "MF-BR-12",
+    "MF-BR-13",
+    "MF-BR-14",
+    "MF-SB-01",
+    "MF-SB-02",
+    "MF-SB-03",
+    "MF-SB-04",
+    "MF-SB-05",
+    "MF-DSCR-01",
+    "MF-DSCR-02",
+    "MF-DSCR-03",
+    "MF-DSCR-04",
+    "MF-DSCR-05",
+    "MF-DSCR-06",
+    "MF-DSCR-07",
+    "MF-TRM-01",
+    "MF-TRM-02",
+    "MF-TRM-03",
+    "MF-TRM-04",
+    "MF-TRM-05",
+    "MF-TRM-06",
+    "MF-TRM-07",
+    "MF-TRM-08",
+    "MF-LU-01",
+    "MF-LU-02",
+    "MF-LU-03",
+    "MF-LU-04",
+    "MF-LU-05",
+    "MF-LU-06",
+    "MF-CON-01",
+    "MF-CON-02",
+    "MF-CON-03",
+    "MF-CON-04",
+    "MF-CON-05",
+    "MF-CON-06",
+    "MF-MEZ-01",
+    "MF-MEZ-02",
+    "MF-MEZ-03",
+    "COM-GEN-01",
+    "COM-GEN-02",
+    "COM-GEN-03",
+    "COM-GEN-11",
+    "COM-BR-09",
+    "COM-BR-01",
+    "COM-BR-02",
+    "COM-BR-03",
+    "COM-BR-04",
+    "COM-BR-05",
+    "COM-BR-06",
+    "COM-BR-07",
+    "COM-BR-08",
+    "COM-TRM-09",
+    "COM-TRM-01",
+    "COM-TRM-02",
+    "COM-TRM-03",
+    "COM-TRM-04",
+    "COM-TRM-05",
+    "COM-TRM-06",
+    "COM-TRM-07",
+    "COM-TRM-08",
+    "COM-DSCR-01",
+    "COM-DSCR-02",
+    "COM-DSCR-03",
+    "COM-DSCR-04",
+    "COM-DSCR-05",
+    "COM-DSCR-06",
+    "COM-DSCR-07",
+    "COM-DSCR-08",
+    "COM-DSCR-09",
+    "COM-DSCR-10",
+    "COM-NNN-01",
+    "COM-NNN-02",
+    "COM-NNN-03",
+    "COM-NNN-04",
+    "COM-NNN-05",
+    "COM-NNN-06",
+    "COM-NNN-07",
+    "COM-NNN-08",
+    "COM-CON-01",
+    "COM-CON-02",
+    "COM-CON-03",
+    "COM-CON-04",
+    "COM-CON-05",
+    "COM-CON-06",
+    "COM-CON-07",
+    "COM-CON-08",
+    "COM-CON-09",
+    "COM-CON-10",
+    "COM-CON-11",
+    "COM-LND-01",
+    "COM-LND-02",
+    "COM-LND-03"
+   ],
+   "products": [
+    {
+     "slug": "every-loan",
+     "name": "Every product: rounding the loan amount",
+     "family": "Core",
+     "kind": "all",
+     "rules": [
+      "CORE-PRC-05"
+     ],
+     "check": null
+    },
+    {
+     "slug": "res-all",
+     "name": "Residential: rules for every loan",
+     "family": "Residential",
+     "kind": "family",
+     "rules": [
+      "RES-GEN-01",
+      "RES-GEN-02",
+      "RES-GEN-03",
+      "RES-GEN-04"
+     ],
+     "check": null
+    },
+    {
+     "slug": "res-fix-and-flip",
+     "name": "Residential fix-and-flip",
+     "family": "Residential",
+     "kind": "product",
+     "rules": [
+      "RES-FF-01",
+      "RES-FF-02",
+      "RES-FF-03",
+      "RES-FF-04",
+      "RES-FF-05",
+      "RES-FF-06",
+      "RES-FF-07",
+      "RES-FF-08",
+      "RES-FF-09",
+      "RES-FF-10",
+      "RES-FF-11",
+      "RES-FF-12",
+      "RES-FF-13"
+     ],
+     "glanceRows": [
+      "Fix-and-flip"
+     ],
+     "attach": [
+      {
+       "family": "Residential",
+       "section": "Fix-and-flip and bridge with no rehab",
+       "group": "Fix-and-flip leverage by experience tier (Core tiers)",
+       "kind": "md"
+      },
+      {
+       "family": "Residential",
+       "section": "Fix-and-flip and bridge with no rehab",
+       "group": "Bridge with no rehab",
+       "kind": "formula",
+       "id": "F-RES-13"
+      }
+     ],
+     "check": {
+      "deal": "RD-RES-01",
+      "title": "Worked check: Maple Run (Tier 2 caps 85% / 70% / 85%)",
+      "lines": [
+       [
+        "Total project cost",
+        "$300,000 price + $100,000 rehab = $400,000"
+       ],
+       [
+        "Cost test (85%)",
+        "85% × $400,000 = $340,000"
+       ],
+       [
+        "After-repair value test (70%)",
+        "70% × $520,000 = $364,000"
+       ],
+       [
+        "Purchase test (85%)",
+        "85% × $300,000 + $100,000 rehab = $355,000"
+       ],
+       [
+        "Maximum loan",
+        "Lowest of $340,000, $364,000 and $355,000 = $340,000; the cost test binds"
+       ],
+       [
+        "Initial advance",
+        "$240,000 ÷ $300,000 price = 80.0%, within 85%"
+       ],
+       [
+        "Contingency",
+        "$9,000 ÷ $90,000 hard costs = 10.0%; at least 10% needed"
+       ],
+       [
+        "Exit profit",
+        "$57,275 ÷ $400,000 total project cost = 14.3%; at least 10% needed"
+       ]
+      ],
+      "result": "$340,000 passes every fix-and-flip limit",
+      "rules": [
+       "RES-FF-01",
+       "RES-FF-02",
+       "RES-FF-03",
+       "RES-FF-04",
+       "RES-FF-06",
+       "RES-FF-10"
+      ]
+     }
+    },
+    {
+     "slug": "res-bridge",
+     "name": "Residential bridge, no rehab",
+     "family": "Residential",
+     "kind": "product",
+     "rules": [
+      "RES-BR-01",
+      "RES-BR-02",
+      "RES-BR-03",
+      "RES-BR-04",
+      "RES-BR-05",
+      "RES-BR-06"
+     ],
+     "glanceRows": [
+      "Bridge, no rehab"
+     ],
+     "check": null
+    },
+    {
+     "slug": "res-ground-up",
+     "name": "Residential ground-up construction",
+     "family": "Residential",
+     "kind": "product",
+     "rules": [
+      "RES-GU-01",
+      "RES-GU-02",
+      "RES-GU-03",
+      "RES-GU-04",
+      "RES-GU-05",
+      "RES-GU-06",
+      "RES-GU-07",
+      "RES-GU-08",
+      "RES-GU-09",
+      "RES-GU-10",
+      "RES-GU-11"
+     ],
+     "glanceRows": [
+      "Ground-up"
+     ],
+     "attach": [
+      {
+       "family": "Residential",
+       "section": "Ground-up construction and land",
+       "group": "Ground-up construction",
+       "kind": "formula",
+       "id": "F-RES-16"
+      },
+      {
+       "family": "Residential",
+       "section": "Ground-up construction and land",
+       "group": "Ground-up sizing check (illustrative)",
+       "kind": "md"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "res-land",
+     "name": "Residential land and lots",
+     "family": "Residential",
+     "kind": "product",
+     "rules": [
+      "RES-LND-01",
+      "RES-LND-02",
+      "RES-LND-03",
+      "RES-LND-04",
+      "RES-LND-05",
+      "RES-LND-06",
+      "RES-LND-07"
+     ],
+     "glanceRows": [
+      "Land and lots"
+     ],
+     "check": null
+    },
+    {
+     "slug": "res-dscr",
+     "name": "Residential DSCR rental, single property",
+     "family": "Residential",
+     "kind": "product",
+     "rules": [
+      "RES-DSCR-02",
+      "RES-DSCR-03",
+      "RES-DSCR-04",
+      "RES-DSCR-05",
+      "RES-DSCR-06",
+      "RES-DSCR-07",
+      "RES-DSCR-08",
+      "RES-DSCR-09",
+      "RES-DSCR-10",
+      "RES-DSCR-11",
+      "RES-DSCR-12"
+     ],
+     "glanceRows": [
+      "DSCR single"
+     ],
+     "attach": [
+      {
+       "family": "Residential",
+       "section": "DSCR rental loans",
+       "group": "Maximum LTV matrix (DSCR 1.00x or higher)",
+       "kind": "md"
+      },
+      {
+       "family": "Residential",
+       "section": "DSCR rental loans",
+       "group": "Pricing grid (illustrative)",
+       "kind": "md"
+      },
+      {
+       "family": "Residential",
+       "section": "DSCR rental loans",
+       "group": "Worked example: DSCR single property (illustrative)",
+       "kind": "md"
+      },
+      {
+       "family": "Residential",
+       "section": "DSCR rental loans",
+       "group": "Worked example: DSCR single property (illustrative)",
+       "kind": "formula",
+       "id": "F-RES-17"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "res-dscr-portfolio",
+     "name": "Residential DSCR portfolio (blanket)",
+     "family": "Residential",
+     "kind": "product",
+     "rules": [
+      "RES-PF-01",
+      "RES-PF-02",
+      "RES-PF-03",
+      "RES-PF-04",
+      "RES-PF-05",
+      "RES-PF-06",
+      "RES-PF-07",
+      "RES-PF-08"
+     ],
+     "glanceRows": [
+      "DSCR portfolio"
+     ],
+     "attach": [
+      {
+       "family": "Residential",
+       "section": "DSCR rental loans",
+       "group": "DSCR portfolio (blanket)",
+       "kind": "formula",
+       "id": "F-RES-14"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "res-str",
+     "name": "Short-term rental",
+     "family": "Residential",
+     "kind": "product",
+     "rules": [
+      "RES-STR-01",
+      "RES-STR-02",
+      "RES-STR-03",
+      "RES-STR-04",
+      "RES-STR-05",
+      "RES-STR-06",
+      "RES-STR-07",
+      "RES-STR-08"
+     ],
+     "glanceRows": [
+      "Short-term rental"
+     ],
+     "attach": [
+      {
+       "family": "Residential",
+       "section": "DSCR rental loans",
+       "group": "Short-term rental (STR)",
+       "kind": "formula",
+       "id": "F-RES-15"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "mf-all",
+     "name": "Multifamily: rules for every loan",
+     "family": "Multifamily",
+     "kind": "family",
+     "rules": [
+      "MF-GEN-01",
+      "MF-GEN-02",
+      "MF-GEN-03",
+      "MF-GEN-11"
+     ],
+     "attach": [
+      {
+       "family": "Multifamily",
+       "section": "Rules for all multifamily loans",
+       "group": "The three DSCR definitions used in this policy",
+       "kind": "md"
+      },
+      {
+       "family": "Multifamily",
+       "section": "Rules for all multifamily loans",
+       "group": "The three DSCR definitions used in this policy",
+       "kind": "formula",
+       "id": "F-MF-10"
+      },
+      {
+       "family": "Multifamily",
+       "section": "Rules for all multifamily loans",
+       "group": "The three DSCR definitions used in this policy",
+       "kind": "formula",
+       "id": "F-MF-11"
+      },
+      {
+       "family": "Multifamily",
+       "section": "Rules for all multifamily loans",
+       "group": "The three DSCR definitions used in this policy",
+       "kind": "formula",
+       "id": "F-MF-12"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "mf-value-add-bridge",
+     "name": "Multifamily value-add bridge",
+     "family": "Multifamily",
+     "kind": "product",
+     "rules": [
+      "MF-BR-01",
+      "MF-BR-02",
+      "MF-BR-03",
+      "MF-BR-04",
+      "MF-BR-05",
+      "MF-BR-06",
+      "MF-BR-07",
+      "MF-BR-08",
+      "MF-BR-09",
+      "MF-BR-10",
+      "MF-BR-11",
+      "MF-BR-12",
+      "MF-BR-13",
+      "MF-BR-14"
+     ],
+     "glanceRows": [
+      "Value-add bridge (MF-BR)"
+     ],
+     "attach": [
+      {
+       "family": "Multifamily",
+       "section": "Value-add bridge and stabilized bridge",
+       "group": "Value-add bridge",
+       "kind": "formula",
+       "id": "F-MF-13"
+      }
+     ],
+     "check": {
+      "deal": "RD-MF-01",
+      "title": "Worked check: Cedar Court",
+      "lines": [
+       [
+        "Entry tests",
+        "Occupancy 44 ÷ 50 = 88%, at least 75%; capex $800,000 ÷ $6,200,000 price = 12.9%, at most 50%"
+       ],
+       [
+        "Cost test (75%)",
+        "75% × ($6,200,000 + $800,000 + $200,000) = 75% × $7,200,000 = $5,400,000"
+       ],
+       [
+        "Stabilized value test (70%)",
+        "70% × $8,600,000 = $6,020,000"
+       ],
+       [
+        "As-is test (70%)",
+        "70% × $6,200,000 (price, lower than the $6,300,000 appraisal) = $4,340,000 funded + $800,000 capex = $5,140,000"
+       ],
+       [
+        "Commitment",
+        "Lowest of $5,400,000, $6,020,000 and $5,140,000 = $5,140,000; the as-is test binds"
+       ],
+       [
+        "As-is debt yield",
+        "$395,000 ÷ $4,340,000 = 9.10%; at least 7.0%"
+       ],
+       [
+        "Stabilized debt yield",
+        "$560,000 ÷ $5,140,000 = 10.89%; at least 8.5%"
+       ],
+       [
+        "Interest coverage",
+        "$395,000 ÷ ($4,340,000 × 8.25%) = $395,000 ÷ $358,050 = 1.10x; at least 1.00x, so no interest reserve"
+       ],
+       [
+        "Exit test at 6.55% + 0.50% = 7.05%",
+        "$560,000 ÷ 1.25 ÷ 0.0802396631 (30-year loan constant, full precision) = $5,583,273.69, above $5,140,000; the 80% value leg, 80% × $8,600,000 = $6,880,000, also passes"
+       ]
+      ],
+      "result": "$5,140,000 passes every value-add bridge test; exit cushion $443,273.69",
+      "rules": [
+       "MF-BR-01",
+       "MF-BR-02",
+       "MF-BR-03",
+       "MF-BR-04",
+       "MF-BR-05",
+       "MF-BR-06",
+       "MF-BR-07",
+       "MF-BR-08"
+      ]
+     }
+    },
+    {
+     "slug": "mf-stabilized-bridge",
+     "name": "Multifamily stabilized bridge",
+     "family": "Multifamily",
+     "kind": "product",
+     "rules": [
+      "MF-SB-01",
+      "MF-SB-02",
+      "MF-SB-03",
+      "MF-SB-04",
+      "MF-SB-05"
+     ],
+     "glanceRows": [
+      "Stabilized bridge (MF-SB)"
+     ],
+     "check": null
+    },
+    {
+     "slug": "mf-small-dscr",
+     "name": "Small multifamily DSCR, 5-10 units",
+     "family": "Multifamily",
+     "kind": "product",
+     "rules": [
+      "MF-DSCR-01",
+      "MF-DSCR-02",
+      "MF-DSCR-03",
+      "MF-DSCR-04",
+      "MF-DSCR-05",
+      "MF-DSCR-06",
+      "MF-DSCR-07"
+     ],
+     "glanceRows": [
+      "Small MF DSCR, 5-10 units (MF-DSCR)"
+     ],
+     "attach": [
+      {
+       "family": "Multifamily",
+       "section": "Small multifamily DSCR, small-balance term, lease-up",
+       "group": "Worked example: 8-unit building, both DSCR methods (illustrative)",
+       "kind": "md"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "mf-term",
+     "name": "Multifamily small-balance term, 5-50 units",
+     "family": "Multifamily",
+     "kind": "product",
+     "rules": [
+      "MF-TRM-01",
+      "MF-TRM-02",
+      "MF-TRM-03",
+      "MF-TRM-04",
+      "MF-TRM-05",
+      "MF-TRM-06",
+      "MF-TRM-07",
+      "MF-TRM-08"
+     ],
+     "glanceRows": [
+      "Small-balance term (MF-TRM)"
+     ],
+     "attach": [
+      {
+       "family": "Multifamily",
+       "section": "Small multifamily DSCR, small-balance term, lease-up",
+       "group": "Small-balance term loan, 5-50 units",
+       "kind": "formula",
+       "id": "F-MF-14"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "mf-lease-up",
+     "name": "Multifamily lease-up bridge",
+     "family": "Multifamily",
+     "kind": "product",
+     "rules": [
+      "MF-LU-01",
+      "MF-LU-02",
+      "MF-LU-03",
+      "MF-LU-04",
+      "MF-LU-05",
+      "MF-LU-06"
+     ],
+     "glanceRows": [
+      "Lease-up (MF-LU)"
+     ],
+     "check": null
+    },
+    {
+     "slug": "mf-construction",
+     "name": "Multifamily construction (teaching limits only)",
+     "family": "Multifamily",
+     "kind": "product",
+     "rules": [
+      "MF-CON-01",
+      "MF-CON-02",
+      "MF-CON-03",
+      "MF-CON-04",
+      "MF-CON-05",
+      "MF-CON-06"
+     ],
+     "glanceRows": [
+      "Construction (MF-CON), teaching only"
+     ],
+     "attach": [
+      {
+       "family": "Multifamily",
+       "section": "Construction, subordinate capital, bridge pricing and exceptions",
+       "group": "Construction: teaching limits, not an origination product",
+       "kind": "formula",
+       "id": "F-MF-15"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "mf-mezz",
+     "name": "Mezzanine and preferred equity behind our loans",
+     "family": "Multifamily",
+     "kind": "product",
+     "rules": [
+      "MF-MEZ-01",
+      "MF-MEZ-02",
+      "MF-MEZ-03"
+     ],
+     "glanceRows": [
+      "Mezzanine / preferred equity behind our loans (MF-MEZ)"
+     ],
+     "attach": [
+      {
+       "family": "Multifamily",
+       "section": "Construction, subordinate capital, bridge pricing and exceptions",
+       "group": "Mezzanine and preferred equity behind our loans",
+       "kind": "formula",
+       "id": "F-MF-16"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "com-all",
+     "name": "Commercial: rules for every loan",
+     "family": "Commercial",
+     "kind": "family",
+     "rules": [
+      "COM-GEN-01",
+      "COM-GEN-02",
+      "COM-GEN-03",
+      "COM-GEN-11"
+     ],
+     "attach": [
+      {
+       "family": "Commercial",
+       "section": "Rules for all commercial loans",
+       "group": "",
+       "kind": "formula",
+       "id": "F-COM-08"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "com-bridge",
+     "name": "Commercial bridge",
+     "family": "Commercial",
+     "kind": "product",
+     "rules": [
+      "COM-BR-09",
+      "COM-BR-01",
+      "COM-BR-02",
+      "COM-BR-03",
+      "COM-BR-04",
+      "COM-BR-05",
+      "COM-BR-06",
+      "COM-BR-07",
+      "COM-BR-08"
+     ],
+     "glanceRows": [
+      "Bridge: industrial, grocery-anchored retail",
+      "Bridge: unanchored retail, mixed-use",
+      "Bridge: medical office",
+      "Bridge: Class B office",
+      "Bridge: power center or mall",
+      "Bridge: self-storage"
+     ],
+     "attach": [
+      {
+       "family": "Commercial",
+       "section": "Commercial bridge by property type",
+       "group": "Bridge limits by property type",
+       "kind": "formula",
+       "id": "F-COM-10"
+      }
+     ],
+     "check": {
+      "deal": "RD-COM-01",
+      "title": "Worked check: Birchwood Plaza (unanchored retail: 65% / 70% / 1.30x / 9.5%)",
+      "lines": [
+       [
+        "Total cost",
+        "$4,400,000 + $120,000 + $300,000 + $360,000 = $5,180,000"
+       ],
+       [
+        "Initial funding (65% as-is)",
+        "65% × $4,400,000 (price, lower than the $4,500,000 appraisal) = $2,860,000"
+       ],
+       [
+        "Cost test (70%)",
+        "$2,860,000 + $660,000 future funding = $3,520,000; $3,520,000 ÷ $5,180,000 = 68.0%, under 70%"
+       ],
+       [
+        "In-place coverage",
+        "$254,000 ÷ ($2,860,000 × 8.25%) = $254,000 ÷ $235,950 = 1.08x; at least 1.00x, so no reserve is required"
+       ],
+       [
+        "Exit coverage at 7.75%, 25-year amortization",
+        "$434,000 ÷ $319,050.84 = 1.36x; at least 1.30x"
+       ],
+       [
+        "Exit debt yield",
+        "$434,000 ÷ $3,520,000 = 12.3%; at least 9.5%"
+       ]
+      ],
+      "result": "$3,520,000 passes every bridge test for unanchored retail",
+      "rules": [
+       "COM-BR-09",
+       "COM-BR-03",
+       "COM-BR-04",
+       "COM-BR-05"
+      ]
+     }
+    },
+    {
+     "slug": "com-term",
+     "name": "Commercial term loan",
+     "family": "Commercial",
+     "kind": "product",
+     "rules": [
+      "COM-TRM-09",
+      "COM-TRM-01",
+      "COM-TRM-02",
+      "COM-TRM-03",
+      "COM-TRM-04",
+      "COM-TRM-05",
+      "COM-TRM-06",
+      "COM-TRM-07",
+      "COM-TRM-08"
+     ],
+     "glanceRows": [
+      "Term loan"
+     ],
+     "check": null
+    },
+    {
+     "slug": "com-sbc-dscr",
+     "name": "Small-balance commercial DSCR",
+     "family": "Commercial",
+     "kind": "product",
+     "rules": [
+      "COM-DSCR-01",
+      "COM-DSCR-02",
+      "COM-DSCR-03",
+      "COM-DSCR-04",
+      "COM-DSCR-05",
+      "COM-DSCR-06",
+      "COM-DSCR-07",
+      "COM-DSCR-08",
+      "COM-DSCR-09",
+      "COM-DSCR-10"
+     ],
+     "glanceRows": [
+      "SBC DSCR ($250,000-$2M)"
+     ],
+     "attach": [
+      {
+       "family": "Commercial",
+       "section": "Term loans, small-balance commercial DSCR and single-tenant NNN",
+       "group": "Term loan limits by property type",
+       "kind": "formula",
+       "id": "F-COM-11"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "com-nnn",
+     "name": "Single-tenant net lease (NNN)",
+     "family": "Commercial",
+     "kind": "product",
+     "rules": [
+      "COM-NNN-01",
+      "COM-NNN-02",
+      "COM-NNN-03",
+      "COM-NNN-04",
+      "COM-NNN-05",
+      "COM-NNN-06",
+      "COM-NNN-07",
+      "COM-NNN-08"
+     ],
+     "glanceRows": [
+      "NNN Tier 1 (BBB- or better)",
+      "NNN Tier 2"
+     ],
+     "attach": [
+      {
+       "family": "Commercial",
+       "section": "Term loans, small-balance commercial DSCR and single-tenant NNN",
+       "group": "Term loan limits by property type",
+       "kind": "formula",
+       "id": "F-COM-08"
+      },
+      {
+       "family": "Commercial",
+       "section": "Term loans, small-balance commercial DSCR and single-tenant NNN",
+       "group": "Term loan limits by property type",
+       "kind": "formula",
+       "id": "F-COM-12"
+      },
+      {
+       "family": "Commercial",
+       "section": "Term loans, small-balance commercial DSCR and single-tenant NNN",
+       "group": "Term loan limits by property type",
+       "kind": "formula",
+       "id": "F-COM-13"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "com-construction",
+     "name": "Commercial construction",
+     "family": "Commercial",
+     "kind": "product",
+     "rules": [
+      "COM-CON-01",
+      "COM-CON-02",
+      "COM-CON-03",
+      "COM-CON-04",
+      "COM-CON-05",
+      "COM-CON-06",
+      "COM-CON-07",
+      "COM-CON-08",
+      "COM-CON-09",
+      "COM-CON-10",
+      "COM-CON-11"
+     ],
+     "glanceRows": [
+      "Construction"
+     ],
+     "attach": [
+      {
+       "family": "Commercial",
+       "section": "Construction, land, approvals and exceptions",
+       "group": "",
+       "kind": "formula",
+       "id": "F-COM-14"
+      }
+     ],
+     "check": null
+    },
+    {
+     "slug": "com-land",
+     "name": "Commercial land (entitled)",
+     "family": "Commercial",
+     "kind": "product",
+     "rules": [
+      "COM-LND-01",
+      "COM-LND-02",
+      "COM-LND-03"
+     ],
+     "glanceRows": [
+      "Land (entitled)"
+     ],
+     "check": null
+    }
+   ],
+   "seeAlso": [
+    "CORE-BOR-14",
+    "CORE-PRC-02",
+    "CORE-DOC-01",
+    "CORE-DOC-02"
+   ],
+   "glance": [],
+   "check": null
+  },
+  {
+   "n": 8,
+   "slug": "pricing-extensions",
+   "name": "Pricing, fees and extensions",
+   "oneLine": "How rate, points, interest basis, extension fees and default interest are set.",
+   "summary": "Residential transitional loans price by experience tier plus adjusters; the final rate stays within 8.50%-12.75%, and points never go below 1.00. Bridge interest is charged Actual/360 on the funded balance only, while DSCR and term loans set payments on 30/360. Every rate and fee is tested against state usury rules, and an extension needs no default, current payments, the progress test and a paid fee.",
+   "apply": [
+    "Find the experience tier, then its base rate and points.",
+    "Add each adjuster that applies, and hold the rate inside the band.",
+    "Test the rate, points and fees against the state's usury and fee rules before the term sheet.",
+    "Bill interest on the day-count basis for the product.",
+    "At an extension, check the tests and charge the fee on the commitment."
+   ],
+   "why": "The market prices by experience, credit score and leverage, so the grid does too, and it sits inside the typical market rate band. The extension fee is at the low end of the market because each extension is short.",
+   "modules": [
+    "C3",
+    "C8"
+   ],
+   "rules": [
+    "CORE-PRC-01",
+    "CORE-PRC-02",
+    "CORE-PRC-03",
+    "CORE-PRC-04",
+    "CORE-PRC-06",
+    "RES-GEN-10",
+    "CORE-SVC-01",
+    "CORE-SVC-02",
+    "CORE-SVC-03"
+   ],
+   "seeAlso": [
+    "RES-FF-08",
+    "RES-FF-11",
+    "RES-FF-13",
+    "RES-DSCR-12",
+    "MF-BR-14",
+    "MF-TRM-08",
+    "COM-BR-06",
+    "COM-TRM-04",
+    "CORE-SVC-04"
+   ],
+   "glance": [
+    [
+     "Interest basis",
+     "Dutch interest, charged on the full commitment from day one, is a common market alternative; we do not use it",
+     "CORE-PRC-06"
+    ]
+   ],
+   "check": {
+    "deal": "RD-RES-01",
+    "title": "Worked check: Maple Run",
+    "lines": [
+     [
+      "Base rate and points",
+      "Tier 2: 10.00% base rate, 1.50 points"
+     ],
+     [
+      "Adjuster",
+      "Leverage within 2.5 points of the product maximum: cost ratio 85.0% at the 85% cap, so +0.25%"
+     ],
+     [
+      "Rate",
+      "10.00% + 0.25% = 10.25%, inside the 8.50%-12.75% band"
+     ],
+     [
+      "Points",
+      "1.50% × $340,000 = $5,100"
+     ],
+     [
+      "Interest, 30-day month",
+      "Interest-only on the funded balance, Actual/360: $240,000 × 10.25% ÷ 360 × 30 = $2,050.00"
+     ],
+     [
+      "Extension fee",
+      "0.50 point × $340,000 = $1,700 for one 3-month extension"
+     ],
+     [
+      "Default rate",
+      "10.25% + 5.00% = 15.25%, capped by state usury law"
+     ]
+    ],
+    "result": "10.25% and 1.50 points; each extension costs $1,700",
+    "rules": [
+     "CORE-PRC-01",
+     "CORE-PRC-02",
+     "CORE-PRC-06",
+     "CORE-SVC-01",
+     "CORE-SVC-02",
+     "CORE-SVC-03"
+    ]
+   },
+   "attach": [
+    {
+     "family": "Core",
+     "section": "Recourse, third-party reports, pricing and extensions",
+     "group": "RTL pricing grid (illustrative course figures)",
+     "kind": "md"
+    },
+    {
+     "family": "Core",
+     "section": "Recourse, third-party reports, pricing and extensions",
+     "group": "RTL pricing grid (illustrative course figures)",
+     "kind": "formula",
+     "id": "F-CORE-28"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "slug": "recourse-documents",
+   "name": "Recourse, documents, title and insurance",
+   "oneLine": "Who is personally liable, the title cover we need, and the insurance on every property.",
+   "summary": "Residential loans carry a full-recourse guaranty; multifamily and commercial bridges start non-recourse with bad-act carve-outs, and product rules can add more. Any future funding adds a completion guaranty, and the lender's title policy covers the full commitment, holdbacks included. Property cover is at least 100% of insurable value, plus liability, flood where required, and builder's risk during work.",
+   "apply": [
+    "Set recourse from the family rule, then check the product's own recourse terms.",
+    "Add a completion guaranty for any future funding, and an environmental indemnity for multifamily or commercial.",
+    "Check guaranty terms against the state's anti-deficiency and one-action rules before the term sheet.",
+    "Size the lender's title policy to the full commitment and add the draw endorsements.",
+    "Check each insurance policy's amount, form and mortgagee clause, and size any escrow cushion."
+   ],
+   "why": "Full recourse is the conservative default for residential loans, while institutional bridge loans are generally non-recourse with standard carve-outs. Completion risk sits with the sponsor, so future funding carries a completion guaranty.",
+   "modules": [
+    "C9"
+   ],
+   "rules": [
+    "CORE-DOC-01",
+    "CORE-DOC-02",
+    "CORE-DOC-03",
+    "CORE-DOC-04",
+    "CORE-DOC-05",
+    "CORE-CLS-01",
+    "CORE-CLS-06",
+    "CORE-INS-01",
+    "CORE-INS-02",
+    "CORE-INS-03",
+    "CORE-INS-04",
+    "RES-GEN-07",
+    "RES-GEN-08",
+    "MF-GEN-10",
+    "COM-GEN-16",
+    "COM-GEN-09"
+   ],
+   "seeAlso": [
+    "MF-BR-12",
+    "MF-TRM-07",
+    "COM-BR-07",
+    "COM-TRM-06",
+    "COM-DSCR-10",
+    "COM-CON-08",
+    "RES-STR-07"
+   ],
+   "glance": [
+    [
+     "Property cover",
+     "at least 100% of insurable value",
+     "CORE-INS-01"
+    ],
+    [
+     "Escrow cushion",
+     "2 months' deposits, one-sixth of the annual total",
+     "CORE-INS-02"
+    ],
+    [
+     "Flood cover",
+     "at least the lesser of the loan amount and the building's replacement cost",
+     "CORE-INS-03"
+    ],
+    [
+     "Builder's risk",
+     "100% of completed value",
+     "CORE-INS-04"
+    ],
+    [
+     "Rent-loss cover",
+     "landlord policy with 6 months' rent-loss cover on rentals",
+     "RES-GEN-08"
+    ],
+    [
+     "Estoppels and SNDAs",
+     "Estoppels from tenants paying 20%+ of rent and the top five tenants; SNDAs from tenants paying 10%+.",
+     "COM-GEN-09"
+    ]
+   ],
+   "check": {
+    "deal": "RD-MF-01",
+    "title": "Worked check: Cedar Court",
+    "lines": [
+     [
+      "Recourse",
+      "Multifamily bridge: non-recourse, with full recourse for fraud, misapplied funds, unpermitted transfer or voluntary bankruptcy"
+     ],
+     [
+      "Added guaranties",
+      "$800,000 of capex is future funding, so a completion guaranty; multifamily also adds an environmental indemnity"
+     ],
+     [
+      "Title policy amount",
+      "Full commitment: $4,340,000 + $800,000 capex holdback = $5,140,000"
+     ],
+     [
+      "Monthly tax and insurance escrow",
+      "($74,000 + $38,000) ÷ 12 = $9,333.33"
+     ],
+     [
+      "Escrow cushion at closing",
+      "$112,000 ÷ 6 = $18,666.67, two months' deposits"
+     ],
+     [
+      "Rent-loss cover",
+      "12 months' loss of rents, with replacement-cost property cover, liability and flood where required"
+     ]
+    ],
+    "result": "Carve-out guaranty, completion guaranty and environmental indemnity; $18,666.67 cushion at closing",
+    "rules": [
+     "CORE-DOC-02",
+     "CORE-DOC-03",
+     "CORE-CLS-06",
+     "CORE-INS-02",
+     "MF-GEN-10"
+    ]
+   }
+  },
+  {
+   "n": 10,
+   "slug": "approval-exceptions",
+   "name": "Approval authority and exceptions",
+   "oneLine": "Who may approve which loan, and how exceptions are limited, logged and reviewed.",
+   "summary": "Every approval needs a written underwriter recommendation and a separate approver, who cannot be the underwriter of record. Authority rises from senior underwriter to credit officer to credit committee with loan size, sponsor exposure and exceptions. Exceptions are approved before closing, at most two per loan (one for commercial), and never on legal, KYC, sanctions, business-purpose or fraud-bar rules.",
+   "apply": [
+    "Find the approver from the loan size, sponsor exposure, loan family and any exception.",
+    "Check the list of loans that always go to committee.",
+    "Log each exception with its rule, policy value, approved value, two compensating factors, approver and date.",
+    "Write the credit memo in the eleven required sections, in order."
+   ],
+   "why": "Examiners expect exceptions to be documented, approved and reported, and layered exceptions compound risk. The rules that can never be excepted protect compliance status, not just credit risk.",
+   "modules": [
+    "C2",
+    "C14"
+   ],
+   "rules": [
+    "CORE-AUTH-01",
+    "CORE-AUTH-02",
+    "CORE-AUTH-03",
+    "CORE-AUTH-04",
+    "CORE-EXC-01",
+    "CORE-EXC-02",
+    "CORE-EXC-03",
+    "CORE-EXC-04",
+    "CORE-EXC-05",
+    "COM-GEN-17"
+   ],
+   "seeAlso": [
+    "CORE-CONC-01",
+    "CORE-CONC-07",
+    "COM-BR-08",
+    "RES-GU-01",
+    "RES-GEN-04"
+   ],
+   "glance": [
+    [
+     "Commercial exceptions",
+     "one per loan, committee only, two documented compensating factors, LTV no more than 5% above limit",
+     "COM-GEN-17"
+    ]
+   ],
+   "check": {
+    "deal": "RD-MF-01",
+    "title": "Worked check: Cedar Court, with Maple Run for contrast",
+    "lines": [
+     [
+      "Loan size",
+      "$5,140,000, above the $2,000,000 credit officer limit"
+     ],
+     [
+      "Sponsor exposure",
+      "Marcus Hale is Tier 1 (2 counted projects): exposure cap $3,000,000, and $5,140,000 is over it"
+     ],
+     [
+      "Senior underwriter",
+      "Not eligible: $500,000 limit, Residential only"
+     ],
+     [
+      "Approver",
+      "Credit committee: three voters including the Chief Credit Officer; the underwriter presents but does not vote"
+     ],
+     [
+      "Contrast: Maple Run",
+      "$340,000, Residential, no exceptions: within the senior underwriter's $500,000 limit"
+     ]
+    ],
+    "result": "Cedar Court goes to committee; Maple Run can be approved by a senior underwriter",
+    "rules": [
+     "CORE-AUTH-01",
+     "CORE-AUTH-03",
+     "CORE-CONC-01"
+    ]
+   },
+   "attach": [
+    {
+     "family": "Core",
+     "section": "Concentration, exceptions and approval authority",
+     "group": "Exceptions",
+     "kind": "md"
+    },
+    {
+     "family": "Commercial",
+     "section": "Construction, land, approvals and exceptions",
+     "group": "Commercial approval matrix",
+     "kind": "md"
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "slug": "closing-funding",
+   "name": "Closing and funding",
+   "oneLine": "Who closes, what must clear before the wire, how prepaid interest works, and what to chase after.",
+   "summary": "The closing agent is a title agent or approved attorney, and a closing protection letter naming us is in hand before funds move. Funding needs a signed checklist, a same-day OFAC re-run, and two people: one prepares the wire and another releases it. Prepaid interest runs from the funding day, counted, to month-end, and every trailing document is chased until received.",
+   "apply": [
+    "Confirm the closing agent and the protection letter before any funds move.",
+    "Issue written closing instructions listing every condition and the exact disbursements.",
+    "Clear the funding checklist, re-run OFAC, and verify wire instructions by callback.",
+    "Collect prepaid interest from the funding day to month-end.",
+    "Log every trailing document at funding and report open items monthly."
+   ],
+   "why": "A closing protection letter covers the lender if the agent commits fraud or ignores written closing instructions. Until the documents are recorded, the lien rests on the title commitment and that letter.",
+   "modules": [
+    "C11"
+   ],
+   "rules": [
+    "CORE-CLS-02",
+    "CORE-CLS-03",
+    "CORE-CLS-04",
+    "CORE-CLS-05"
+   ],
+   "seeAlso": [
+    "CORE-CLS-01",
+    "CORE-CLS-06",
+    "CORE-KYC-01",
+    "CORE-KYC-07",
+    "CORE-INS-02"
+   ],
+   "glance": [
+    [
+     "Prepaid interest",
+     "from the funding day (counted) to month-end",
+     "CORE-CLS-04"
+    ],
+    [
+     "Wire release",
+     "One person prepares the wire and a second releases it.",
+     "CORE-CLS-03"
+    ]
+   ],
+   "check": {
+    "deal": "RD-RES-01",
+    "title": "Worked check: Maple Run",
+    "lines": [
+     [
+      "Prepaid interest days",
+      "15 Jan to 31 Jan 2027, funding day counted = 17 days"
+     ],
+     [
+      "Prepaid interest",
+      "$240,000 × 10.25% ÷ 360 × 17 = $1,161.67"
+     ],
+     [
+      "Cash at closing",
+      "$74,100 + $1,161.67 = $75,261.67"
+     ],
+     [
+      "Net funding wire",
+      "$240,000 − $5,100 points − $1,161.67 prepaid interest = $233,738.33"
+     ],
+     [
+      "Liquidity after prepaid interest",
+      "$90,900 − $1,161.67 = $89,738.33, still above the $34,000 required"
+     ],
+     [
+      "First regular bill",
+      "Monthly in arrears from 1 Feb 2027"
+     ]
+    ],
+    "result": "Wire $233,738.33 after the checklist, a same-day OFAC re-run and a two-person release",
+    "rules": [
+     "CORE-CLS-03",
+     "CORE-CLS-04"
+    ]
+   }
+  },
+  {
+   "n": 12,
+   "slug": "servicing-default",
+   "name": "Servicing, draws, risk rating and default",
+   "oneLine": "Draw controls, borrower reporting, watch-list ratings, cash sweeps, and how defaults are worked out.",
+   "summary": "Each draw needs an inspection, lien waivers, a title date-down, insurance in force and a loan still in balance. Loans are rated 1 to 5 at each monthly review, and a loan in default is rated on its exit cover. Before any workout, the borrower and every guarantor sign a pre-negotiation letter, and the resolution memo recommends the lowest expected loss or explains why not.",
+   "apply": [
+    "Before each draw, inspect the work, collect lien waivers, date down title and confirm insurance.",
+    "Track borrower reports against their due dates; a late item is a default after written notice.",
+    "Rate each loan monthly, and put ratings 2 to 5 on the watch list with an action and an owner.",
+    "Watch cash-sweep and lease triggers.",
+    "In a default, get the pre-negotiation letter signed, then compare workout options by net loss."
+   ],
+   "why": "The rating scale follows the one bank regulators share, so a rating means the same thing to every reader. The pre-negotiation letter blocks claims that talks changed the loan, and prudent workouts often serve both lender and borrower.",
+   "modules": [
+    "C12",
+    "C13"
+   ],
+   "rules": [
+    "CORE-SVC-04",
+    "CORE-SVC-05",
+    "CORE-SVC-06",
+    "CORE-SVC-07",
+    "CORE-SVC-08",
+    "CORE-DEF-01",
+    "CORE-DEF-02",
+    "CORE-DEF-03",
+    "CORE-DEF-04",
+    "CORE-DEF-05",
+    "CORE-DEF-06",
+    "RES-GEN-11",
+    "COM-GEN-12"
+   ],
+   "seeAlso": [
+    "CORE-SVC-03",
+    "RES-FF-09",
+    "MF-BR-10",
+    "COM-CON-10",
+    "COM-NNN-07",
+    "RES-DSCR-09"
+   ],
+   "glance": [
+    [
+     "Late fee",
+     "5% of the late installment, charged once, only after 10 days",
+     "CORE-SVC-04"
+    ],
+    [
+     "Watch list",
+     "Ratings 2-5 go on the watch list with an action and owner; reviewed monthly.",
+     "CORE-SVC-07"
+    ],
+    [
+     "Rating upgrade",
+     "Upgrade only after the default is cured and 6 straight months of payments on the loan terms.",
+     "CORE-SVC-08"
+    ],
+    [
+     "Commercial sweep",
+     "Sweep if DSCR falls below 1.10x or a 20%+ tenant gives notice.",
+     "COM-GEN-12"
+    ]
+   ],
+   "check": {
+    "deal": "RD-RES-01",
+    "otherDeals": [
+     "RD-COM-01"
+    ],
+    "title": "Worked check: Maple Run and Birchwood Plaza",
+    "lines": [
+     [
+      "Maple Run, month 7",
+      "Roof costs $8,000 more than its budget line. The $9,000 contingency covers it, so the holdback stays $100,000. The roof is re-inspected before the month-8 draw"
+     ],
+     [
+      "Maple Run, late payment (what-if)",
+      "The 1 Aug payment is 45 days late: an event of default"
+     ],
+     [
+      "Default interest per day",
+      "$315,000 × 15.25% ÷ 360 = $133.44, against $315,000 × 10.25% ÷ 360 = $89.69: $43.75 a day more"
+     ],
+     [
+      "Extra cost over 45 days",
+      "$43.75 × 45 = $1,968.75"
+     ],
+     [
+      "Exit effect",
+      "A 30-day late payment in the last 12 months bars the planned DSCR refinance, so the sale is the exit"
+     ],
+     [
+      "Birchwood Plaza, month 9",
+      "Largest tenant pays $90,000 ÷ $420,000 = 21.4% of rent, over 20%, and gives notice: the cash sweep starts"
+     ]
+    ],
+    "result": "Maple Run pays $1,968.75 more in default interest; Birchwood's excess cash is swept until a replacement lease is signed",
+    "rules": [
+     "CORE-SVC-03",
+     "CORE-SVC-05",
+     "RES-DSCR-09",
+     "COM-GEN-12"
+    ]
+   }
+  },
+  {
+   "n": 13,
+   "slug": "concentration",
+   "name": "Portfolio and concentration limits",
+   "oneLine": "Caps on one sponsor, one state, one metro area and the riskiest residential buckets.",
+   "summary": "Sponsor exposure is capped by experience tier, from $1,000,000 and 2 open loans at Tier 0 to $15,000,000 and 20 at Tier 3. No sponsor may exceed 5% of total portfolio commitments, one state 25% and one metro area 15%. Residential buckets cap ground-up and no-rehab bridge at 25% each and 5-9 units at 10%; a breached bucket takes no new loans without committee approval.",
+   "apply": [
+    "Add up every commitment to entities the sponsor controls, including this loan.",
+    "Compare the total with the tier cap, the open-loan count and 5% of the book.",
+    "Add the loan to its state, metro area and residential bucket, and compare each share with its cap.",
+    "Send any breach to committee."
+   ],
+   "why": "Securitizations cap borrower concentration, rating agencies focus on geographic concentration, and examiners expect aggregate tracking. The bucket caps are conservative training limits below what one rated pool held.",
+   "modules": [
+    "C14"
+   ],
+   "rules": [
+    "CORE-CONC-01",
+    "CORE-CONC-02",
+    "CORE-CONC-03",
+    "CORE-CONC-04",
+    "CORE-CONC-05",
+    "CORE-CONC-06",
+    "CORE-CONC-07"
+   ],
+   "seeAlso": [
+    "RES-LND-06",
+    "RES-GEN-01",
+    "CORE-AUTH-01"
+   ],
+   "glance": [],
+   "check": {
+    "deal": "RD-MF-01",
+    "otherDeals": [
+     "RD-RES-01"
+    ],
+    "title": "Worked check: Cedar Court, with Maple Run for contrast",
+    "lines": [
+     [
+      "Marcus Hale's tier",
+      "2 counted apartment projects: Tier 1"
+     ],
+     [
+      "Tier 1 caps",
+      "$3,000,000 and 5 open loans"
+     ],
+     [
+      "Exposure",
+      "$5,140,000 + $0 other loans with us = $5,140,000: over the $3,000,000 cap, so committee only"
+     ],
+     [
+      "Contrast: Maple Run",
+      "Dana Reyes, Tier 2: $340,000 against a $7,500,000 cap, so it passes"
+     ]
+    ],
+    "result": "Cedar Court needs committee approval for exposure; Maple Run is well inside its cap",
+    "rules": [
+     "CORE-CONC-01"
+    ]
+   },
+   "attach": [
+    {
+     "family": "Core",
+     "section": "Concentration, exceptions and approval authority",
+     "group": "Concentration limits",
+     "kind": "formula",
+     "id": "F-CORE-29"
+    },
+    {
+     "family": "Core",
+     "section": "Concentration, exceptions and approval authority",
+     "group": "Concentration limits",
+     "kind": "formula",
+     "id": "F-CORE-30"
+    }
+   ]
+  }
+ ]
+}

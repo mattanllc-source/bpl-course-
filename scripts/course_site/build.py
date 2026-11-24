@@ -436,6 +436,20 @@ def module_meta(raw: str) -> dict:
     return meta
 
 
+def measured_time() -> dict:
+    """Study minutes per module from the QAS word-count worksheet (decision 16; scripts/count_credits.py).
+
+    Only the figure the worksheet marks as shown ("spec": the qas-spec.md counting rule) reaches the page.
+    CPE credits stay hidden while "claimable" is false (no question yet qualifies as a QAS review item)."""
+    p = HERE / "measured-credits.json"
+    if not p.exists():
+        return {"modules": {}, "total": None, "claimable": False, "computed": ""}
+    d = json.loads(p.read_text(encoding="utf-8"))
+    key = "specMinutes" if d.get("shown") == "spec" else "minutes"
+    return {"modules": {c: v[key] for c, v in d["modules"].items()}, "total": d["total"][key],
+            "claimable": bool(d.get("claimable")), "computed": d.get("computed", "")}
+
+
 def glossary() -> list:
     """The Course Bible glossary (section 6): one entry per term, with its family."""
     md = read("docs/course-bible.md")
@@ -450,8 +464,12 @@ def glossary() -> list:
             continue
         cells = [c.strip() for c in re.split(r"(?<!\\)\|", line.strip())[1:-1]]
         if len(cells) >= 5 and cells[0].isdigit():
+            ex = "" if cells[3].lower() in ("none", "-", "") else cells[3]
+            # A worked example that names a formula duplicates that formula's page and would drift from it
+            # (decision 14): the learner gets a link to the formula page instead. Any other example is kept.
+            fid = re.findall(r"\bF-(?:CORE|RES|MF|COM)-\d{2}\b", ex)
             out.append({"n": int(cells[0]), "term": cells[1], "def": cells[2],
-                        "ex": "" if cells[3].lower() in ("none", "-", "") else cells[3],
+                        "ex": "" if len(set(fid)) == 1 else ex, "formula": fid[0] if len(set(fid)) == 1 else "",
                         "first": cells[4], "family": family})
     return out
 
@@ -671,6 +689,9 @@ def clean_title(t: str) -> str:
     return t.strip()
 
 
+POLICY_STOP = r"^(\*\*[^*]+\*\*\s*$|#{1,4}\s|\|\s*Rule ID\s*\||\*\*Exceptions\.\*\*\s|---\s*$)"
+
+
 def parse_policy() -> dict:
     md = read("docs/credit-policy/model-credit-policy.md").replace("\r\n", "\n")
     lines = md.split("\n")
@@ -684,6 +705,20 @@ def parse_policy() -> dict:
         while j < len(lines) and lines[j].startswith("|"):
             out.append(lines[j]); j += 1
         return out, j
+
+    by_id = {}
+
+    def add_rule(rule, group):
+        """One card per rule ID. COM-BR-09 and COM-TRM-09 appear twice in the source: as a bold heading over
+        the limits table and as a row in the rule table (spec section 10.2). Merge them: the row's text, then the table."""
+        old = by_id.get(rule["id"])
+        if not old:
+            by_id[rule["id"]] = rule
+            rules.append(rule); group["items"].append({"kind": "rule", "id": rule["id"]})
+            return
+        blk, row = (old, rule) if old.get("block") else (rule, old)
+        old.update({"name": blk["name"], "block": True, "text": (row["text"] + "\n\n" + blk["text"]).strip(),
+                    "basis": row["basis"] or blk["basis"], "why": row["why"] or blk["why"]})
 
     while i < len(lines):
         l = lines[i]
@@ -730,9 +765,14 @@ def parse_policy() -> dict:
             md_rows = ["| " + " | ".join(heads) + " |", "| " + " | ".join("---" for _ in keep) + " |"]
             md_rows += ["| " + " | ".join(r[k] if k < len(r) else "" for k in keep) + " |" for r in rows[1:]]
             fam["limits"].append("\n".join(md_rows))
+            # The same table as rows, for the topic pages (spec section 6).
+            fam.setdefault("tables", []).append({"head": heads, "rows": [[r[k] if k < len(r) else "" for k in keep] for r in rows[1:]], "foot": []})
             i = j; continue
         if part and part.startswith("3B") and l.strip() and not l.startswith(("**", "---")) and fam["limits"]:
-            fam["limits"].append(author_clean(l)); i += 1; continue
+            fam["limits"].append(author_clean(l))
+            if fam.get("tables"):
+                fam["tables"][-1]["foot"].append(author_clean(l))
+            i += 1; continue
         if not sec:
             i += 1; continue
         # inside a Part 2 section
@@ -745,9 +785,13 @@ def parse_policy() -> dict:
             rid = re.search(r"\(((?:CORE|RES|MF|COM)-[A-Z]+-\d+)(?:,[^)]*)?\)\s*$", title)
             if fid:
                 # A formula worked in the policy: learners get it on the formula page; keep the policy's example.
+                # Stop at a rule table, an "Exceptions." paragraph or a rule line too (spec section 10.1):
+                # without this the COM-NNN table after F-COM-11 was swallowed into the formula's example.
                 j = i + 1; body = []
-                while j < len(lines) and not re.match(r"^(\*\*[^*]+\*\*\s*$|#{1,4}\s)", lines[j]):
+                while j < len(lines) and not re.match(POLICY_STOP, lines[j]):
                     body.append(lines[j]); j += 1
+                while body and not body[-1].strip():
+                    body.pop()
                 target = sub if sub else {"title": "", "items": []}
                 if not sub:
                     sec["groups"].append(target); sub = target
@@ -758,7 +802,7 @@ def parse_policy() -> dict:
             if rid:
                 # The rule's own prose and tables, up to the next heading or the next rule table.
                 j = i + 1; body = []
-                while j < len(lines) and not re.match(r"^(\*\*[^*]+\*\*\s*$|#{1,4}\s|\|\s*Rule ID\s*\|)", lines[j]):
+                while j < len(lines) and not re.match(POLICY_STOP, lines[j]):
                     body.append(lines[j]); j += 1
                 parts, k = [], 0
                 while k < len(body):
@@ -775,7 +819,7 @@ def parse_policy() -> dict:
                 text = re.sub(r"\s*BASIS:\s*[A-Z +]+\.?\s*", " ", text).strip()
                 rule = {"id": rid.group(1), "name": clean_title(title), "text": text, "basis": basis_text(basis.group(1)) if basis else "",
                         "why": "", "topic": sub["title"], "section": sec["title"], "family": fam["name"], "block": True}
-                rules.append(rule); sub["items"].append({"kind": "rule", "id": rule["id"]})
+                add_rule(rule, sub)
                 i = j; continue
             i += 1; continue
         if l.startswith("|"):
@@ -794,7 +838,7 @@ def parse_policy() -> dict:
                     vals = "; ".join(f"{rows[0][k]} {r[k]}" for k in range(1, len(r)) if k not in (ci, bi, wi) and r[k])
                     rule = {"id": r[ci], "name": r[0], "text": f"{r[0]}: {vals}.", "basis": basis_text(r[bi]) if bi >= 0 else "",
                             "why": why_clean(r[wi]) if wi >= 0 else "", "topic": sub["title"] if sub["title"] not in ("", "Rules") else sec["title"], "section": sec["title"], "family": fam["name"]}
-                    rules.append(rule); sub["items"].append({"kind": "rule", "id": rule["id"]})
+                    add_rule(rule, sub)
                 sub["items"].append({"kind": "md", "md": md_table(rows)})
             elif rows and rows[0] and rows[0][0].lower() == "rule id":
                 if not sub:
@@ -804,7 +848,7 @@ def parse_policy() -> dict:
                         continue
                     rule = {"id": r[0], "name": "", "text": author_clean(r[1]), "basis": basis_text(r[2]), "why": why_clean(r[3]),
                             "topic": sub["title"] if sub["title"] not in ("", "Rules") else sec["title"], "section": sec["title"], "family": fam["name"]}
-                    rules.append(rule); sub["items"].append({"kind": "rule", "id": rule["id"]})
+                    add_rule(rule, sub)
             else:
                 if not sub:
                     sub = {"title": "", "items": []}; sec["groups"].append(sub)
@@ -826,6 +870,11 @@ def parse_policy() -> dict:
             if not para:
                 i += 1; continue
             text = author_clean("\n".join(para))
+            if para[0].startswith("**Exceptions.**"):
+                # A family's exceptions paragraph is its own group, so topic 10 can show it (spec section 10.3).
+                sub = {"title": "Exceptions", "items": [{"kind": "md", "md": text}]}
+                sec["groups"].append(sub)
+                i = j; continue
             if not sec["groups"] and not sec["intro"]:
                 sec["intro"] = text
             else:
@@ -842,6 +891,171 @@ def parse_policy() -> dict:
     for f in fams:
         f["sections"] = [s for s in f["sections"] if s["groups"] or s["intro"]]
     return {"families": fams, "rules": rules, "decisions": decisions}
+
+
+RULE_ID = r"(?:CORE|RES|MF|COM)-[A-Z]{2,5}-\d{2}"
+# A run of rule IDs joined by separators ("RES-FF-01, -03 to -05"): expanded as one citation group.
+RULE_GROUP = re.compile(r"\b" + RULE_ID + r"\b(?:\s*(?:,|;|/|&|\band\b|\bor\b|\bto\b)\s*(?:\b" + RULE_ID + r"\b|(?<![\w-])-\d{2}\b))*")
+LEARNER_CODE = re.compile(r"\b(?:F-(?:CORE|RES|MF|COM)-\d{2}|RD-(?:RES|MF|COM)-\d{2}|SLT-[A-Z]{2}-\d{2}|D-[A-Z]{2,5}-\d{2}|" + RULE_ID + r")\b")
+TOPICS_FILE = HERE / "policy_topics.json"
+
+
+def lesson_rule_use() -> dict:
+    """Rule ID -> core modules whose lesson cites it, ranges and short forms expanded ("CORE-BOR-11 to -13")."""
+    use = {}
+    for n in range(15):
+        raw = read(f"modules/core/c{n:02d}/lesson.md")
+        for m in RULE_GROUP.finditer(raw):
+            for rid in expand_ids(m.group(0)):
+                use.setdefault(rid, [])
+                if f"C{n}" not in use[rid]:
+                    use[rid].append(f"C{n}")
+    return use
+
+
+def policy_topics(pol: dict) -> dict:
+    """Load the deal-order topic map (decision 12; docs/design/policy-topics-spec.md) and check it against the
+    parsed policy. The map is read at build time and never copied into code. Any mismatch stops the build."""
+    data = json.loads(TOPICS_FILE.read_text(encoding="utf-8"))
+    topics = data["topics"]
+    rules = {r["id"]: r for r in pol["rules"]}
+    errors = []
+    home = {}                                   # rule ID -> (topic, product or None)
+    for t in topics:
+        for rid in t["rules"]:
+            if rid in home:
+                errors.append(f"{rid} is in topic {home[rid][0]['n']} and topic {t['n']}")
+            home[rid] = (t, None)
+        if t.get("products"):
+            union = []
+            for p in t["products"]:
+                for rid in p["rules"]:
+                    if rid in union:
+                        errors.append(f"{rid} is in two products of topic {t['n']}")
+                    union.append(rid)
+                    home[rid] = (t, p)
+            if sorted(union) != sorted(t["rules"]):
+                errors.append(f"topic {t['n']} rules differ from the union of its products: "
+                              f"{sorted(set(union) ^ set(t['rules']))}")
+    for rid in rules:
+        if rid not in home:
+            errors.append(f"{rid} is parsed from the policy but is in no topic")
+    for rid in home:
+        if rid not in rules:
+            errors.append(f"{rid} is in the topic map but not in the parsed policy")
+    # Authored copy may hold no codes (quality bar 1.1), and every glance limit must quote its rule (assertions 3-5).
+    def learner_copy(t):
+        out = [t["name"], t.get("oneLine", ""), t.get("summary", ""), t.get("why", ""), *t.get("apply", [])]
+        out += [g[0] for g in t.get("glance", [])]
+        for c in [t.get("check")] + [p.get("check") for p in t.get("products", []) or []]:
+            if c:
+                out += [c.get("title", ""), c.get("result", "")] + [x for line in c.get("lines", []) for x in line]
+        out += [p["name"] for p in t.get("products", []) or []]
+        return out
+    for t in topics:
+        for s in learner_copy(t):
+            for code in LEARNER_CODE.findall(s or ""):
+                errors.append(f"topic {t['n']}: code {code} in learner copy: {s[:60]}")
+        for label, limit, rid in t.get("glance", []):
+            if rid not in rules:
+                errors.append(f"topic {t['n']}: glance rule {rid} not found")
+            elif limit not in rules[rid]["text"]:
+                errors.append(f"topic {t['n']}: glance limit for {rid} is not in the rule text: {limit[:60]}")
+        for rid in t.get("seeAlso", []):
+            if rid not in rules:
+                errors.append(f"topic {t['n']}: seeAlso {rid} not found")
+            elif rid in t["rules"]:
+                errors.append(f"topic {t['n']}: seeAlso {rid} is in its own topic")
+        for c in [t.get("check")] + [p.get("check") for p in t.get("products", []) or []]:
+            for rid in (c or {}).get("rules", []):
+                if rid not in rules:
+                    errors.append(f"topic {t['n']}: check rule {rid} not found")
+
+    # Policy tables and formula examples a topic shows, found by family, section and group title.
+    fams = {f["name"]: f for f in pol["families"]}
+
+    def resolve(a, where):
+        f = fams.get(a["family"])
+        sec = next((s for s in (f or {}).get("sections", []) if s["title"] == a["section"]), None)
+        grp = next((g for g in (sec or {}).get("groups", []) if g["title"] == a["group"]), None)
+        if not grp:
+            errors.append(f"{where}: attach not found: {a['family']} / {a['section']} / {a['group']!r}")
+            return []
+        if a["kind"] == "formula":
+            hit = [it for it in grp["items"] if it["kind"] == "formula" and it["id"] == a["id"]]
+            if not hit:
+                errors.append(f"{where}: formula {a['id']} not in {a['group']!r}")
+            return hit[:1]
+        hit = [it for it in grp["items"] if it["kind"] == "md"]
+        if not hit:
+            errors.append(f"{where}: no table or text in {a['group']!r}")
+        return hit
+
+    # Part 3B tables: the Core table splits by row (first rule ID in its policy cell); the family tables are
+    # shown whole on topic 7 and row by row on product pages (spec section 6).
+    by_n = {t["n"]: t for t in topics}
+    core_rows = {}
+    ct = (fams["Core"].get("tables") or [None])[0]
+    if not ct:
+        errors.append("Core Part 3B table not found")
+    else:
+        ci = ct["head"].index("Policy section")
+        for row in ct["rows"]:
+            ids = expand_ids(row[ci])
+            first = next((x for x in ids if x in home), None)
+            if not first:
+                errors.append(f"Core Part 3B row does not route: {row[0]}")
+                continue
+            core_rows.setdefault(home[first][0]["n"], []).append({"cells": row, "rule": first})
+    fam_tables = {k: (fams[k].get("tables") or [None])[0] for k in ("Residential", "Multifamily", "Commercial")}
+
+    use = lesson_rule_use()
+    core = {rid for rid in use if rid in rules}
+    out = []
+    for t in topics:
+        topic = {k: t.get(k) for k in ("n", "slug", "name", "oneLine", "summary", "apply", "why", "modules", "rules", "seeAlso", "glance", "check")}
+        topic["attach"] = [x for a in t.get("attach") or [] for x in resolve(a, f"topic {t['n']}")]
+        topic["coreRows"] = core_rows.get(t["n"], [])
+        if t.get("products"):
+            prods = []
+            for p in t["products"]:
+                q = {k: p.get(k) for k in ("slug", "name", "family", "kind", "rules", "check")}
+                q["attach"] = [x for a in p.get("attach") or [] for x in resolve(a, f"product {p['slug']}")]
+                q["rows"] = []
+                tb = fam_tables.get(p["family"])
+                for g in p.get("glanceRows") or []:
+                    row = next((r for r in (tb or {}).get("rows", []) if r[0] == g), None)
+                    if not row:
+                        errors.append(f"product {p['slug']}: no Part 3B row {g!r}")
+                    else:
+                        q["rows"].append(row)
+                prods.append(q)
+            topic["products"] = prods
+            topic["familyTables"] = {k: v for k, v in fam_tables.items() if v}
+        out.append(topic)
+    # Family "Exceptions." paragraphs go with approval authority and exceptions (spec section 10.3).
+    t10 = next(x for x in out if x["n"] == 10)
+    for f in pol["families"]:
+        for s in f["sections"]:
+            for g in s["groups"]:
+                if g["title"] == "Exceptions" and f["name"] != "Core":
+                    t10["attach"] += [it for it in g["items"] if it["kind"] == "md"]
+    if errors:
+        raise SystemExit("policy_topics.json does not match the policy:\n  " + "\n  ".join(errors))
+    # Each rule learns its topic, its citation label and whether the core course uses it.
+    for rid, (t, p) in home.items():
+        r = rules[rid]
+        label = f"Credit Policy {t['n']}: {t['name']}"
+        if p:
+            pname = p["name"] if p["kind"] == "product" else ("every loan" if p["kind"] == "all" else f"every {p['family'].lower()} loan")
+            label += f", {pname}"
+            r["product"] = p["slug"]
+        r["topicN"] = t["n"]
+        r["topicLabel"] = label
+        r["sectionName"] = label           # every learner place that showed "Core Part 2B: ..." now shows the topic
+        r["core"] = rid in core
+        r["usedBy"] = use.get(rid, [])
+    return {"version": data.get("version", ""), "topics": out, "coreCount": len(core)}
 
 
 def expand_ids(cell: str) -> list:
@@ -864,9 +1078,19 @@ def expand_ids(cell: str) -> list:
 
 
 STATE_CODES = {"OH": "Ohio", "NC": "North Carolina", "IN": "Indiana", "CA": "California"}
-SLT_TOPICS = [("Lender licence", "lender"), ("Broker licence", "broker"), ("Interest rate cap", "usury"),
+# The State Law Table's first two column groups. Labels use US spelling (decision 13); a table header in either
+# spelling ("licence" or "license") maps to the same key. Any other group of columns is read from its own headers.
+SLT_TOPICS = [("Lender license", "lender"), ("Broker license", "broker"), ("Interest rate cap", "usury"),
               ("Default interest and late fees", "default"), ("Prepayment", "prepay"), ("Foreclosure", "foreclosure"),
               ("Deficiency", "deficiency")]
+# The table's own header for each core topic (either spelling), so a header maps to its key.
+SLT_HEADERS = {"lender license": "lender", "broker license": "broker", "usury limit and exemptions": "usury",
+               "default interest and late fees": "default", "prepayment limits": "prepay",
+               "foreclosure method and timeline": "foreclosure", "deficiency rules": "deficiency"}
+# Short route names for the dimension groups the Bible is adding (state-law-new-dimensions-draft.md). Any other
+# group gets a slug of its heading.
+SLT_GROUP_SLUGS = {"statutory right of redemption": "redemption", "mechanics' lien priority": "mechanics-liens",
+                   "qualifying to do business as an out-of-state lender": "doing-business"}
 CITE_RE = re.compile(r"\b(?:ORC|OAC|G\.S\.|IC|Civ\. Code|CCP|B&P|Fin\. Code|Cal\. Const\.|Art\.|RMLA|DFPI FAQ|CLTA)\s?[\w.:()\-]*(?:[\w.:()\-]|\s(?:\(\w+\)|\d[\w.()-]*))*")
 
 
@@ -882,7 +1106,7 @@ def verdict(topic: str, text: str) -> tuple:
         if re.match(r"^none found", low):
             return ("None found", "info")
         if re.search(r"licen[cs]e (required|for any)|^(real estate broker licence|dre licence|cfl licence required|california financing law licence)", low):
-            return ("Licence required", "check")
+            return ("License required", "check")
     if topic == "usury":
         if re.match(r"^10% cap", low):
             return ("Capped unless exempt", "check")
@@ -922,45 +1146,125 @@ def verdict(topic: str, text: str) -> tuple:
             return ("Allowed, with limits", "check")
         if re.match(r"^(no deficiency|barred)", low):
             return ("Limited", "check")
+    # Dimension groups after the core topics (redemption, mechanics' liens, doing business). Other wording: "See detail".
+    if topic.startswith("redemption-before") and re.search(r"\bmay (?:redeem|stop|reinstate)", low):
+        return ("Allowed before sale", "info")
+    if topic.startswith("redemption-after"):
+        if re.match(r"^none found", low):
+            return ("None found", "info")
+        if re.match(r"^none\.", low):
+            return ("None", "clear")
+    if topic.startswith("doing-business-safe") and re.match(r"^not (?:transacting|doing) business", low):
+        return ("Safe harbor", "clear")
+    if topic.startswith("doing-business-consequence") and re.match(r"^may not maintain", low):
+        return ("Suits barred until registered", "check")
     return ("See detail", "info")
 
 
 def slt_learner(text: str) -> str:
     text = re.sub(r"\bSame as SLT-[A-Z]{2}-01\b", "Same as for 1-4 unit loans", text)
     text = re.sub(r"\b[Aa]s (?:in )?SLT-[A-Z]{2}-01\b", lambda m: ("As" if m.group(0)[0] == "A" else "as") + " for 1-4 unit loans", text)
-    text = re.sub(r"\bSLT-[A-Z]{2}-0[12]\b", "this state's other row", text)
+    text = re.sub(r"\bsee SLT-[A-Z]{2}-0[12] ([a-z]+) cell\b", r"see the \1 topic", text)
+    text = re.sub(r"\bSLT-[A-Z]{2}-01\b", "this state's 1-4 unit row", text)
+    text = re.sub(r"\bSLT-[A-Z]{2}-02\b", "this state's commercial row", text)
     return text
 
 
+def state_law_md() -> str:
+    """The State Law Table export. BPL_STATE_LAW points the build at another copy (for example a merged test table)."""
+    src = os.environ.get("BPL_STATE_LAW")
+    return (pathlib.Path(src).read_text(encoding="utf-8") if src else read("docs/credit-policy/state-law-table.md")).replace("\r\n", "\n")
+
+
+VERIFY_RE = re.compile(r"\s*\\?\[VERIFY:?\s*([^\]]*?)\\?\]")
+CHECKED_RE = re.compile(r";?\s*checked (\d{1,2} [A-Z][a-z]{2} \d{4})")
+
+
+def topic_key(header: str) -> str:
+    """A table header -> topic key. Core headers map in either spelling; any other header gets a slug."""
+    norm = re.sub(r"licen[cs]e", "license", header.strip().lower())
+    return SLT_HEADERS.get(norm, slugify(header))
+
+
+def slt_cell(key: str, label: str, cell: str, default_checked: str) -> dict:
+    """One state-law answer: badge, learner text, statute, date checked and the counsel flag."""
+    tags = VERIFY_RE.findall(cell)
+    plain = VERIFY_RE.sub("", cell).strip()
+    v, tone = verdict(key, plain)
+    cites = []
+    for c in re.findall(r"\(([^()]*(?:\([^()]*\)[^()]*)*)\)", plain):
+        if re.search(r"\b(ORC|OAC|G\.S\.|IC \d|Civ\. Code|CCP|B&P|Fin\. Code|Cal\. Const|Corp\. Code|DFPI|Art\. XV|ELFA|secondary|Ohio Legal Help|Garrett|Honchariw|Stewart)", c):
+            cites.append(c)
+    checked = ""
+    for t in tags:
+        m = CHECKED_RE.search(t)
+        if not m:
+            continue                   # a tag without a date states a doubt ("whether ..."), not a source
+        checked = m.group(1)
+        # The tag's statute list, minus the check date and the note about which mirror was read.
+        src = CHECKED_RE.sub("", t)
+        src = re.sub(r",?\s*(?:FindLaw|california\.public\.law)[^;]*", "", src)
+        src = re.sub(r"\s*\([^()]*refused[^()]*\)", "", src).strip(" ;,")
+        if src and src not in cites:
+            cites.append(src)
+    confirm = bool(tags) or bool(re.search(r"counsel to confirm", plain, re.I))
+    return {"topic": label, "key": key, "verdict": v, "tone": tone, "detail": slt_learner(plain),
+            "cite": "; ".join(dict.fromkeys(cites)), "confirm": confirm, "checked": checked or default_checked}
+
+
 def parse_state_law() -> dict:
-    md = read("docs/credit-policy/state-law-table.md").replace("\r\n", "\n")
+    """The State Law Table: one answer per state, loan group and topic, for every column group the table has.
+
+    Groups (a) and (b) hold the core topics, one table per loan group. Any other "## Group (x): title" table holds one
+    dimension: its headers become sub-topic labels and its rows cover both loan groups (SLT-XX-01 and -02)."""
+    md = state_law_md()
     states = {k: {"code": k.lower(), "name": v, "rows": {}, "changes": "", "sources": [], "checked": ""} for k, v in STATE_CODES.items()}
+    dm = re.search(r"checked on (\d{1,2} [A-Z][a-z]{2} \d{4})", md) or DATE_RE.search(md)
+    default_checked = dm.group(1) if dm and dm.lastindex == 1 else (f"{dm.group(1)} {dm.group(2)} {dm.group(3)}" if dm else "")
+    topics = [{"key": k, "label": lab, "group": "core", "columns": [k], "why": ""} for lab, k in SLT_TOPICS]
+    seen_core = set()
     for grp in re.finditer(r"^\| Row \|(.*)\n\|[- |]+\n((?:\|.*\n?)+)", md, re.M):
         head = [c.strip() for c in grp.group(1).strip().strip("|").split("|")]
+        before = md[:grp.start()]
+        heads = list(re.finditer(r"^## (.+?)\s*$", before, re.M))
+        gh = re.match(r"Group \(([a-z])\):\s*(.+)$", heads[-1].group(1)) if heads else None
+        dim = None
+        if gh and not re.search(r"business-purpose loans|multifamily loans", gh.group(2)):
+            # A dimension group: one topic with its own sub-columns and the "Why it matters" line under the table.
+            title = gh.group(2).strip()
+            slug = SLT_GROUP_SLUGS.get(title.lower(), slugify(title))
+            after = md[grp.end():]
+            nxt = re.search(r"^## ", after, re.M)
+            why = re.search(r"\*\*Why it matters to the lender\.\*\*\s*(.+)", after[:nxt.start()] if nxt else after)
+            dim = {"key": slug, "label": title[0].upper() + title[1:], "group": gh.group(1), "why": why.group(1).strip() if why else "",
+                   "columns": [f"{slug}-{slugify(h)}" for h in head]}
+            topics.append(dim)
+        # A group's untagged cells were checked with the rest of that group: its newest tag date.
+        gdates = CHECKED_RE.findall(grp.group(2))
+        dim_checked = max(gdates, key=lambda d: (int(d.split()[2]), MONTHS[d.split()[1]], int(d.split()[0]))) if gdates else default_checked
         for row in table_rows(grp.group(2).strip().splitlines()):
             m = re.fullmatch(r"SLT-([A-Z]{2})-0(\d)", row[0])
             if not m or m.group(1) not in states:
                 continue
             st, n = states[m.group(1)], m.group(2)
             if n in ("1", "2"):
-                cells = {}
-                for (label, key), cell in zip(SLT_TOPICS, row[1:]):
-                    v, tone = verdict(key, cell)
-                    cites = []
-                    for c in re.findall(r"\(([^()]*(?:\([^()]*\)[^()]*)*)\)", cell):
-                        if re.search(r"\b(ORC|OAC|G\.S\.|IC \d|Civ\. Code|CCP|B&P|Fin\. Code|Cal\. Const|DFPI|Art\. XV|ELFA|secondary|Ohio Legal Help|Garrett|Honchariw|Stewart)", c):
-                            cites.append(c)
-                    detail = slt_learner(cell)
-                    confirm = "[VERIFY" in cell or "\\[VERIFY" in cell
-                    detail = re.sub(r"\s*\\?\[VERIFY[^\]]*\\?\]", "", detail).strip()
-                    st["rows"].setdefault("res" if n == "1" else "com", []).append(
-                        {"topic": label, "key": key, "verdict": v, "tone": tone, "detail": detail,
-                         "cite": "; ".join(dict.fromkeys(cites)), "confirm": confirm})
+                lt = "res" if n == "1" else "com"
+                for k, (h, cell) in enumerate(zip(head, row[1:])):
+                    if dim:
+                        c = slt_cell(dim["columns"][k], h, cell, dim_checked)
+                        c["group"] = dim["key"]
+                    else:
+                        key = topic_key(h)
+                        c = slt_cell(key, next((lab for lab, kk in SLT_TOPICS if kk == key), h), cell, default_checked)
+                        c["group"] = "core"
+                        seen_core.add(key)
+                    st["rows"].setdefault(lt, []).append(c)
             else:
                 f = dict(zip(head, row[1:]))
                 st["changes"] = f.get("Recent or pending changes", "")
                 st["sources"] = [{"label": a, "url": u} for a, u in re.findall(r"\[([^\]]+)\]\((https?://[^)]+)\)", f.get("Primary source URLs", ""))]
                 st["checked"] = f.get("Date checked", "")
+    topics = [t for t in topics if t["group"] != "core" or t["key"] in seen_core]
     pats = re.search(r"Three patterns hold in all four states:\s*\n((?:- .*\n?)+)", md)
     patterns = [author_clean(re.sub(r"\s*\((?:C\d+, )?CORE-[A-Z]+-\d+\)", "", l[2:].strip())) for l in pats.group(1).splitlines()] if pats else []
     notes = {}
@@ -980,9 +1284,40 @@ def parse_state_law() -> dict:
         res = {r["key"]: r for r in st["rows"].get("res", [])}
         for r in st["rows"].get("com", []):
             # "As SLT-NC-01" / "apply as in SLT-CA-01": the 1-4 unit verdict carries over.
-            if r["verdict"] == "See detail" and re.search(r"\b(?:[Aa]s|[Ss]ame as)(?: in)? for 1-4 unit loans", r["detail"]) and r["key"] in res:
-                r["verdict"], r["tone"] = res[r["key"]]["verdict"], res[r["key"]]["tone"]
-    return {"states": list(states.values()), "patterns": patterns, "checked": "20 Nov 2026", "open": open_points}
+            if re.search(r"\b(?:[Aa]s|[Ss]ame as)(?: in)? for 1-4 unit loans", r["detail"]) and r["key"] in res:
+                src = res[r["key"]]
+                if r["verdict"] == "See detail":
+                    r["verdict"], r["tone"] = src["verdict"], src["tone"]
+                if r["group"] != "core":
+                    # A dimension cell with no tag of its own takes the 1-4 unit cell's date and counsel flag.
+                    if not r["cite"]:
+                        r["checked"] = src["checked"]
+                    r["confirm"] = r["confirm"] or src["confirm"]
+    return {"states": list(states.values()), "topics": topics, "patterns": patterns, "checked": default_checked,
+            "open": open_points, "research": research_method()}
+
+
+def research_method() -> dict:
+    """How to research a new state (docs/credit-policy/state-law-research-method.md, a repo-owned learner source).
+    Each [VERIFY: ...] tag becomes a numbered source footnote; the raw tag never reaches the page."""
+    raw = read("docs/credit-policy/state-law-research-method.md").replace("\r\n", "\n")
+    md = re.sub(r"^\**Model policy for training - not for live lending decisions\.\**\s*\n", "", raw)
+    title = re.search(r"^# (.+)$", md, re.M)
+    md = md[title.end():] if title else md
+    notes = []
+
+    def fn(m):
+        t = m.group(1).strip()
+        chk = CHECKED_RE.search(t)
+        notes.append(CHECKED_RE.sub("", t).strip(" ;,") + (f". Checked {chk.group(1)}." if chk else "."))
+        return f'<sup class="fnref" data-n="{len(notes)}">{len(notes)}</sup>'
+    md = VERIFY_RE.sub(fn, md)
+    md = re.sub(r'(<sup class="fnref"[^>]*>\d+</sup>)([.,;:])', r"\2\1", md)   # the note number follows the punctuation
+    lede = re.match(r"\s*(.+?)\n", md)
+    dates = [m.group(1) for m in re.finditer(r"checked (\d{1,2} [A-Z][a-z]{2} \d{4})", raw)]
+    newest = max(dates, key=lambda d: (int(d.split()[2]), MONTHS[d.split()[1]], int(d.split()[0]))) if dates else ""
+    return {"title": title.group(1).strip() if title else "How to research a new state", "lede": lede.group(1).strip() if lede else "",
+            "md": md[lede.end():] if lede else md, "notes": notes, "reviewed": newest}
 
 
 def parse_deals() -> list:
@@ -1159,6 +1494,7 @@ def main() -> None:
     modules = []
     deals_md = read("data/running-deals/running-deals.md").replace("\r\n", "\n")
     jobs = job_tasks()
+    timing = measured_time()
     for n in range(15):
         key, code = f"c{n:02d}", f"C{n}"
         if code not in table:
@@ -1168,9 +1504,13 @@ def main() -> None:
         modules.append({"key": key, "code": code, **table[code], **module_meta(raw), "md": md, "comps": comps,
                         "job": jobs.get(code, ""), "objPages": objective_pages(raw),
                         "exercises": exercises.get(key, [])})
-    refs = [{"key": k, "title": t, "note": snapshot_note(p), "md": read(p)} for k, t, p in REFS]
+        modules[-1]["minutes"] = timing["modules"].get(code)
+        if not timing["claimable"]:
+            modules[-1]["credits"] = None    # never show a CPE figure that cannot be claimed (quality bar 2.2)
+    refs = [{"key": k, "title": t, "note": snapshot_note(p), "md": state_law_md() if k == "state-law" else read(p)} for k, t, p in REFS]
     gloss = glossary()
     lib, pol, slt = parse_formulas(), parse_policy(), parse_state_law()
+    pol["topics"] = policy_topics(pol)
     deal_data = parse_deals()
     lib, pol, slt, deal_data, gloss = (deep_clean(x) for x in (lib, pol, slt, deal_data, gloss))
     cats = [{"title": t, "blurb": b, "modules": [f"c{int(c[1:]):02d}" for c in cs]} for t, b, cs in CATEGORIES]
@@ -1179,7 +1519,8 @@ def main() -> None:
     smp = samples(deals_md)
     data = json.dumps({"modules": modules, "refs": refs, "glossary": gloss, "deals": deal_data, "layer": layer, "samples": smp,
                        "library": lib, "policy": pol, "stateLaw": slt, "categories": cats,
-                       "reviewed": snapshot_dates(), "outcomes": course_outcomes()}, ensure_ascii=False)
+                       "reviewed": snapshot_dates(), "outcomes": course_outcomes(),
+                       "studyTime": {"total": timing["total"], "computed": timing["computed"]}}, ensure_ascii=False)
     data = data.replace("</", "<\\/")  # never close the JSON <script> early
     app = "\n".join(inline_js(f) for f in sorted((HERE / "app").glob("*.js")))
     html = TEMPLATE.read_text(encoding="utf-8")
@@ -1197,6 +1538,7 @@ def main() -> None:
     print(f"{nex} exercises in {len(exercises)} modules")
     print(f"{len(gloss)} glossary terms; {len(layer)} formula learner layers; "
           f"{len(smp)} lesson-format sample(s) with {sum(len(x['comps']) for x in smp)} blocks")
+    print(f"{len(pol['topics']['topics'])} policy topics; {pol['topics']['coreCount']} rules used in the core course")
     print(f"{len(lib['formulas'])} formulas, {len(pol['rules'])} policy rules, {len(pol['decisions'])} decisions, "
           f"{sum(len(s['rows'].get('res', [])) + len(s['rows'].get('com', [])) for s in slt['states'])} state-law cells")
     print(f"{len(modules)} modules ({hours} planned hours), {len(refs)} references -> {OUT} "

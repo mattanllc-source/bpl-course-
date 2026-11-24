@@ -16,6 +16,7 @@
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "fixtures": "python scripts/export_formula_fixtures.py",
+    "measure:time": "python scripts/count_credits.py --json scripts/course_site/measured-credits.json",
     "xlsx:recalc": "python scripts/recalc_xlsx.py",
     "test:excel": "python -m pytest excel/tests -q",
     "test:all": "npm run lint && npm run typecheck && npm test && npm run test:excel && npm run test:e2e"

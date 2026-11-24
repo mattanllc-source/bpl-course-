@@ -217,7 +217,7 @@ What the fetched sources do:
 
 1. **Glossary.** Alphabetical with a letter jump bar. Each entry: term, one-sentence definition, "Used in" module links, related terms. Also give a per-module "Key terms" list (OpenStax pattern).
 2. **Formula sheet.** Grouped by family, then topic (interest, sizing, coverage, closing). Each row: formula ID, name, one-line formula, units, link to its formula page. Offer a PDF version.
-3. **Policy rules.** Grouped by family and topic code, matching rule IDs (`CORE-AUTH-01`). Each row: ID, plain-English rule, limit, modules that teach it. Label every page as model policy.
+3. **Policy rules.** Grouped into 13 topics in the order a deal is worked (decision 12, 24 Nov 2026), by the build-time map `scripts/course_site/policy_topics.json`; topic 7 holds one page per product. Each topic page: plain-English summary, limits at a glance, how to apply it, a worked check on a running deal, why the rules exist, the modules that teach it, then every rule card (plain-English rule, limit, modules that teach it). Rules used in the core course show by default. Rule IDs show in Audit mode only. Phones get a topic index, then the topic page. Label every page as model policy.
 4. **Downloads.** Per module: blank workbook, completed workbook, formula sheet PDF, print view. Never gated.
 
 Shared rules: one canonical page per term, formula or rule; everything else links to it. Show "Last reviewed" on each shelf. Put the snapshot date from `docs/SNAPSHOT.md` on printed sheets.

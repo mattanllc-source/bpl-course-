@@ -21,10 +21,11 @@ Decision numbers refer to [curriculum/review-2026-11-24/decisions.md](curriculum
 | 6c | **Legal check of the walkthrough's uncertain items** (report C list: California Article XV, HMDA temporary financing, 31 CFR 1029, Section 1071, Ohio 1343.01, undated shelf tags and others) by the legal-regulatory-verifier | C | M |
 | 7 | **Convert the 166 open-response quiz items to multiple choice** (C0–C2, C10–C14) | 8 | L |
 | 8 | **Quiz rules in the engine**: two items per critical skill (quality bar 8.7), option shuffle, a third form or item pool, one wording of the pass mark | 10, 11 | M |
-| 9 | **Honest hours**: count each module by the NASBA QAS word-count method; replace "38 hours" with measured figures | 16 | S |
-| 10 | **M4a: Model Credit Policy learner page**: 13 deal-order topics by a build-time map, plain topic names in citations, phone topic index, 147 core rules by default | 12 | M |
-| 11 | **M4a: State law**: "by topic" comparison view, "research a new state" page, research new dimensions (redemption, mechanics' liens, lending in another state) | 13 | M |
-| 12 | **Course Bible sync**: rewrite §2–3 (core + role track certificate); carry the M3.5 fixes (Bloom tags, retake text) into the Bible; re-export snapshots; fix pre-fix deal numbers in C0, C2, C3, C8–C12 and C14 (with 6b) | 2, 17 | M |
+| 9 | **Honest hours**: built 24 Nov 2026, awaiting owner sign-off. Measured about 17.1 h (QAS spec rule; 20.4 h by the baseline method); page shows study time, no CPE claim. Next: owner settles which counting rule; amend quality bar 2.2 wording; fix the Bible's "about 11 hours" (§2-3) and the lesson "Hours" rows | 16 | S |
+| 10 | **M4a: Model Credit Policy learner page**: built 24 Nov 2026, awaiting owner sign-off (13 topics, 167 core rules by default, citations "Credit Policy N"). Open: owner questions on CORE-DOC-02, CORE-PRC-04, RES-DSCR-01, CORE-EXC-04 vs COM-GEN-17; MF-BR-14 shows the raw word "JUDGMENT" | 12 | M |
+| 11 | **M4a: State law**: by-topic view and research page built 24 Nov 2026, awaiting owner sign-off. Three new dimensions are Bible suggestions: owner accepts, then re-export. Re-check every new cell on the official state sites in a normal browser (mirrors were used) | 13 | M |
+| 12 | **Course Bible sync, rest**: fix pre-fix deal numbers in C2, C8–C12 and C14, as part of 6b. Done 24 Nov 2026: §2–3, M3.5 fixes, C0 and C3 deal numbers, snapshots (6d163bd) | 2, 17 | S (within 6b) |
+| 28 | **Re-export C7** from the Bible: the repo file has the v1.0 header but a v0 body (credit audit, 24 Nov 2026) | 12 | S |
 
 ## P2: the main rewrite (M4, then M5)
 
@@ -33,7 +34,7 @@ Decision numbers refer to [curriculum/review-2026-11-24/decisions.md](curriculum
 | 13 | Fix the C4 sample before rollout: case outside the lesson's objectives; open-response self-check | 15 | S |
 | 14 | **M4: rewrite C0–C5** in the lesson format, in the repo, taking in report C's rewrite and add items for each module: new C0 (five job objectives), life cycle moved from C2, market data to C4, new multiple-choice quizzes, full review gate and owner screenshots per module; mark each in `SNAPSHOT.md` | 5, 6, 9, 15 | XL |
 | 15 | Rewrite the 164 existing multiple-choice items as each module is rewritten: full-question stems, a rationale for every option, balanced keys, exhibits, judgment items. (C3 Set A items 6 and 10, Set B item 6 and the C3 objective tags were fixed early, 24 Nov) | 9 | L (within 14, 17) |
-| 16 | Reference updates: show the 73 core formulas by default; drop 50 duplicate glossary examples; add analyst and founder tasks to the running deals; label Maple Run's two liquidity figures | 14 | M |
+| 16 | Reference updates: formulas (81 core by default) and glossary links built 24 Nov 2026. Analyst and founder deal tasks and the Maple Run liquidity labels are Bible suggestions: owner accepts, then re-export; owner questions in docs/curriculum/running-deals-additions-draft.md ("Needs the owner") | 14 | M |
 | 17 | **M5: rewrite C6–C14** the same way, with report C's rewrite and add items; move C07-O6 and C12-O8 to tracks; merge C09-O5 into C11-O2 | 7 | XL |
 | 18 | Bring sentences under 25 words (180 left) as each module is rewritten | CLAUDE.md | within 14, 17 |
 
@@ -52,6 +53,8 @@ Decision numbers refer to [curriculum/review-2026-11-24/decisions.md](curriculum
 | 27 | Product-family electives (residential, multifamily, commercial) after the core and tracks | XL |
 
 ## Done recently
+
+- Course Bible sync (to-do 12, main part): §2–3 rewritten for core + one role track; M3.5 fixes in the Bible; C0 and C3 deal numbers fixed; snapshots re-exported; course page reads the new §3 and shows only measured credits (6d163bd). D-CORE-32: DSCR part months charged Actual/360 per diem (b55fb45). Both pushed.
 
 - Learner walkthrough of every page (to-do 6): [C-learner-walkthrough.md](curriculum/review-2026-11-24/C-learner-walkthrough.md), 7 agents, ranked fix list.
 - Owner adopted all 17 review decisions (24 Nov 2026), and the four walkthrough recommendations (C13 at D-CORE-27 rates; full names for both Danas; F-CORE-44 renamed; policy gaps wait for the owner).

@@ -95,7 +95,7 @@ Rounding is half up, matching `formulas/shared/round.ts` (`roundHalfUp`) and the
 
 - One desk per lesson, tied to the lesson's key idea. Put the predict question before it.
 - Worked examples follow Inputs, Substitute, Compute, Read, Policy test, on a running deal. All steps print open.
-- Cite policy by section name, e.g. "Model Credit Policy, Multifamily Part 2B: Value-add bridge and stabilized bridge". Put rule and formula IDs in `audit:` or in the text, where the page turns them into markers.
+- Cite policy by topic: "Credit Policy N: Topic name" (decision 12, 24 Nov 2026), e.g. "Credit Policy 4: Guarantor credit, liquidity, net worth and experience". For a product limit, add the product: "Credit Policy 7: Limits and terms by product, Multifamily value-add bridge". Topic numbers and names come from `scripts/course_site/policy_topics.json`; never cite "Core Part 2B" or another research section. Put rule and formula IDs in `audit:` or in the text, where the page turns them into markers.
 - Every number from a running deal goes in `deal-figures` or a `| deal` let, so the build checks it.
 - End the lesson with Key takeaways, a self-check, "What to look up yourself" and "How to check it".
 - No points, streaks, confetti, timers, auto-advance or splash screens.

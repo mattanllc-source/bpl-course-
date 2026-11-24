@@ -41,6 +41,10 @@ const refs = await page.evaluate(() => REFS.map((r) => r.key));
 const shelf = await page.evaluate(() => [
   ...(typeof LIB !== "undefined" ? LIB.formulas.map((f) => "formulas/" + f.slug) : []),
   ...(typeof STATE_LAW !== "undefined" ? STATE_LAW.states.flatMap((s) => ["res", "com"].map((t) => `state-law/${s.code}/${t}`)) : []),
+  // State law guide: every topic compared across states, and the research method page (decision 13).
+  ...(typeof STATE_LAW !== "undefined" ? [...(STATE_LAW.topics || []).map((t) => `state-law/topic/${t.key}`), "state-law/research"] : []),
+  // Model Credit Policy: every topic and product page, with all rules shown (decision 12).
+  ...(typeof PTOP !== "undefined" ? [...PTOP.map((t) => `policy/${t.n}?all=1`), ...PPROD.map((p) => `policy/7/${p.slug}?all=1`), "policy/limits"] : []),
 ]);
 const samples = await page.evaluate(() => (typeof SAMPLES !== "undefined" ? SAMPLES.map((s) => "sample/" + s.key) : []));
 const pages = ["home", ...refs, ...shelf, "glossary", ...samples];

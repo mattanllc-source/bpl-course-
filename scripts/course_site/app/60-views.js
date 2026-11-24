@@ -160,8 +160,13 @@ function courseFiles(m, steps) {
 }
 function policyUsed(m) {
   const counts = new Map();
-  for (const id of m.md.match(/\b(?:CORE|RES|MF|COM)-[A-Z]{2,5}-\d{2}\b/g) || []) { const r = RULES.get(id); if (r && r.kind === "rule" && r.sectionName) counts.set(r.sectionName, (counts.get(r.sectionName) || 0) + 1); }
-  return [...counts].sort((a, b) => b[1] - a[1]).slice(0, 3).map((x) => x[0]);
+  // Counted by policy topic, named by its citation label ("Credit Policy 4: ..."), linked to the topic page.
+  for (const id of m.md.match(/\b(?:CORE|RES|MF|COM)-[A-Z]{2,5}-\d{2}\b/g) || []) {
+    const r = RULES.get(id); if (!r || r.kind !== "rule" || !r.topicLabel) continue;
+    if (!counts.has(r.topicLabel)) counts.set(r.topicLabel, { label: r.topicLabel, href: "#policy/" + (r.product ? "7/" + r.product : r.topicN), n: 0 });
+    counts.get(r.topicLabel).n++;
+  }
+  return [...counts.values()].sort((a, b) => b.n - a.n).slice(0, 3);
 }
 function railCard(title, ...nodes) { const s = el("section", "card rcardx"); const h = el("h2", "", title); s.append(h, ...nodes.filter(Boolean)); return s; }
 function policyCard(m, text) {
@@ -170,7 +175,7 @@ function policyCard(m, text) {
   const s = el("section", "card rcardx pside");
   s.append(el("h2", "", text ? "From the credit policy" : "Policy used in this module"));
   if (text) { const p = el("p"); p.append(mdInline(text)); s.append(p); }
-  else { s.append(el("p", "fine", "Model Credit Policy sections:")); const ul = el("ul", "plain-l"); for (const n of names) ul.append(el("li", "", n)); s.append(ul); }
+  else { s.append(el("p", "fine", "Model Credit Policy topics:")); const ul = el("ul", "plain-l"); for (const n of names) { const li = el("li"); const a = el("a", "", n.label); a.href = n.href; li.append(a); ul.append(li); } s.append(ul); }
   return s;
 }
 /** The bottom bar's Next names the page it opens ("Next: Vacancy and credit loss"); CSS cuts it to one line. */
@@ -271,7 +276,9 @@ function showHome(focus, anchor) {
   // learning path
   const path = el("section", "card path"); path.id = "path"; path.setAttribute("aria-labelledby", "path-h");
   const ph = el("h2", "", "Learning path"); ph.id = "path-h";
-  path.append(ph, el("p", "fine", "Five categories, three modules each. Work them in order: each builds on the last. A module shows its CPE credits once they are measured."));
+  const tot = DATA && DATA.studyTime && DATA.studyTime.total;
+  path.append(ph, el("p", "fine", "Five categories, three modules each. Work them in order: each builds on the last."),
+    el("p", "fine", (tot ? `The core takes about ${Math.floor(tot / 60)} hours of study. ` : "") + "Times are measured from each lesson's words and questions, by the NASBA word-count method. CPE credit is not offered yet."));
   const cats = CATS.length ? CATS : [{ title: "", blurb: "", modules: MODS.map((m) => m.key) }];
   cats.forEach((c, ci) => {
     const box = el("section", "catblock");
@@ -284,7 +291,7 @@ function showHome(focus, anchor) {
       if (r && r.m === m) li.setAttribute("aria-current", "step");
       const a = el("a", "pt", m.title); a.href = "#" + m.key;
       const st = el("span", "pst"); st.dataset.s = s; st.append(icon(s === "done" ? "tick" : s === "in-progress" ? "chev" : "ring"), STATUS_TEXT[s] === "Done" ? "Complete" : STATUS_TEXT[s]);
-      li.append(el("span", "pc", modNo(m)), a, el("span", "ph", m.credits != null ? `${num1(m.credits)} CPE` : ""), st); list.append(li);
+      li.append(el("span", "pc", modNo(m)), a, el("span", "ph", m.credits != null ? `${num1(m.credits)} CPE` : timeText(m.minutes)), st); list.append(li);
     }
     path.append(box); box.append(list);
   });
@@ -320,7 +327,7 @@ function showHome(focus, anchor) {
 const SHELF_TITLE = { policy: "Model Credit Policy", formulas: "Formula Library", deals: "Running deals", "state-law": "State law guide" };
 function showRef(r, a, b, focus) {
   if (r.key === "formulas") { const f = a && (FSLUG.get(a) || FORMULAS.get(a)); if (f) showFormula(f, focus); else showFormulaCatalog(focus); }
-  else if (r.key === "policy") showPolicy(a, focus);
+  else if (r.key === "policy") showPolicy(a, focus, b);
   else if (r.key === "state-law") showStateLaw(a, b, focus);
   else if (r.key === "deals") showDeals(a, focus);
 }
@@ -331,7 +338,9 @@ function showGlossary(anchor, focus) {
   view = "glossary"; routeTok++; cur = null;
   const doc = $("doc"); doc.className = "doc refpage";
   const head = el("header", "hero"); const h1 = el("h1", "display", "Glossary");
-  head.append(el("p", "eyebrow", "Reference"), h1, el("p", "lede", `${GLOSSARY.length} terms used across the course. Worked-example numbers are illustrative and fictional; a limit shown in an example is for arithmetic only, never policy.`));
+  head.append(el("p", "eyebrow", "Reference"), h1, el("p", "lede", GLOSSARY.some((g) => g.ex)
+    ? `${GLOSSARY.length} terms used across the course. Worked-example numbers are illustrative and fictional; a limit shown in an example is for arithmetic only, never policy.`
+    : `${GLOSSARY.length} terms used across the course. A term that is a calculation links to its formula page, where the worked example is.`));
   if (REVIEWED.glossary) { const meta = el("ul", "meta"); meta.append(el("li", "", `Last reviewed ${REVIEWED.glossary}`), el("li", "", "Model policy for training")); head.append(meta); }
   const tools = el("div", "gtools");
   const q = el("input"); q.type = "search"; q.id = "gq"; q.placeholder = "Filter terms, for example DSCR or draw"; q.autocomplete = "off";
@@ -349,7 +358,10 @@ function showGlossary(anchor, focus) {
     const d = el("dl", "gterm"); d.id = "term-" + g.n; d.style.margin = "0";
     const dt = el("dt", "", plainText(g.term)); dt.append(el("small", "", `${g.family} · first used in ${g.first}`));
     const dd = el("dd"); dd.append(...inlineMd(g.def).childNodes);
-    if (g.ex) { const det = el("details"); const box = inlineMd(g.ex); det.append(el("summary", "", "Formula and worked example"), box); dd.append(det); }
+    if (g.ex) { const det = el("details"); const box = inlineMd(g.ex); det.append(el("summary", "", "Worked example"), box); dd.append(det); }
+    // A formula's worked example lives on its formula page only, so the two never drift apart.
+    const gf = g.formula && FORMULAS.get(g.formula);
+    if (gf) { const p = el("p", "gform"); p.append("Formula and worked example: ", formulaLink(g.formula, gf.name)); dd.append(p); }
     d.append(dt, dd);
     return { g, d, hay: (g.term + " " + g.def).toLowerCase(), letter: (plainText(g.term)[0] || "#").toUpperCase() };
   });
@@ -408,7 +420,7 @@ function buildSearchIndex() {
     push();
   }
   for (const g of GLOSSARY) { const t = plainText(g.term), d = plainText(g.def); idx.push({ type: "glossary", n: g.n, title: t, text: d, low: (t + " " + d).toLowerCase() }); }
-  for (const r of [...RULES.values(), ...FORMULAS.values()]) if (r.kind !== "decision") idx.push({ type: "ref", id: r.id, title: r.name, text: r.kind === "formula" ? r.text : plainText(r.rule).slice(0, 400), low: (r.id + " " + r.name + " " + plainText(r.rule || r.purpose || r.text || "")).toLowerCase() });
+  for (const r of [...RULES.values(), ...FORMULAS.values()]) if (r.kind !== "decision") idx.push({ type: "ref", id: r.id, title: r.name, text: r.kind === "formula" ? r.text : (r.topicLabel ? r.topicLabel + ". " : "") + plainText(r.rule).slice(0, 400), low: (r.id + " " + r.name + " " + (r.topicLabel || "") + " " + plainText(r.rule || r.purpose || r.text || "")).toLowerCase() });
   return idx;
 }
 const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -645,7 +657,7 @@ function buildOverview(m, sec, stops, ctlRef) {
   htx.append(acts);
   const dl = el("dl", "facts");
   const fact = (k, v) => { if (!v) return; const d = el("div"); const dd = el("dd"); dd.append(v); d.append(el("dt", "", k), dd); dl.append(d); };
-  if (m.credits == null) fact("Time", "Not yet measured");
+  if (m.credits == null) fact("Study time", m.minutes != null ? `About ${timeText(m.minutes)}` : "Not yet measured");
   if (m.credits != null) fact("CPE credits", `${num1(m.credits)}`);
   const pre = MODS.find((x) => x.code === (m.prereq || "").trim());
   fact("Prerequisite", pre ? Object.assign(el("a", "", `Module ${modNo(pre)}: ${shortTitle(pre)}`), { href: "#" + pre.key }) : (/^none$/i.test((m.prereq || "").trim()) ? "None" : m.prereq));
@@ -1025,7 +1037,8 @@ function route(initial) {
   flushAll(); flushers = [];
   closePop(false);
   for (const o of [...modal.stack]) closeModal(o.node, false);
-  const raw = decodeURIComponent(location.hash.slice(1)) || "home";
+  // A query (#policy/4?all=1) carries page filters; the page reads it itself.
+  const raw = (decodeURIComponent(location.hash.slice(1)) || "home").split("?")[0] || "home";
   const [key, a, b] = raw.split("/");
   const focus = !initial;
   const m = MODS.find((x) => x.key === key), r = REFS.find((x) => x.key === key);

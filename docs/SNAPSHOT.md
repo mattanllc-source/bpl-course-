@@ -19,3 +19,17 @@ The live Course Bible (Claude Doc) is the source of truth until migration is fin
 | `../modules/core/c01`, `c02`, `c10`-`c14` | 22 Nov 2026 | Reviewed 22 Nov 2026 (round 2); check open items in the review manual. Some use pre-fix deal numbers: see `docs/curriculum/foundations-changes-2026-11-22.md` |
 
 **To refresh:** export each tab from the doc as Markdown and replace the file.
+
+## Pending in the live Bible (24 Nov 2026)
+
+- **Running Deals tab:** 14 suggestions (fund-analyst and founder roles for all three deals; Maple Run liquidity labels; US spelling), from docs/curriculum/running-deals-additions-draft.md. Not yet accepted. After the owner accepts, re-export the tab to data/running-deals/running-deals.md.
+- **State Law Table tab:** 6 suggestions (groups (c) redemption, (d) mechanics' lien priority, (e) doing business as an out-of-state lender; counsel and source lists; US spelling), from docs/credit-policy/state-law-new-dimensions-draft.md. Not yet accepted. After acceptance, re-export to docs/credit-policy/state-law-table.md and re-derive state-law-table.csv.
+- **C7 tab:** the committed modules/core/c07/lesson.md carries the v1.0-draft header but a v0 body (objectives, Teach, Practice, Job aid). Re-export C7 (found by the credit audit, 24 Nov 2026).
+
+## Repo-owned sources (not in the Bible)
+
+| File | Since | Note |
+| --- | --- | --- |
+| docs/credit-policy/state-law-research-method.md | 24 Nov 2026 | "How to research a new state" learner page (M4a). The repo copy is the source of truth |
+| scripts/course_site/policy_topics.json | 24 Nov 2026 | Build-time map of policy rules to the 13 learner topics, with topic summaries and worked checks. Rule text stays in the Bible's policy |
+| scripts/course_site/measured-credits.json | 24 Nov 2026 | Measured study time, from scripts/count_credits.py (`npm run measure:time`). Re-run after any lesson change |

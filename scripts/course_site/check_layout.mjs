@@ -31,6 +31,10 @@ async function listPages() {
     "home", ...REFS.map((r) => r.key), "glossary", ...(typeof SAMPLES !== "undefined" ? SAMPLES.map((s) => "sample/" + s.key) : []),
     ...(typeof LIB !== "undefined" ? LIB.formulas.map((f) => "formulas/" + f.slug) : []),
     ...(typeof STATE_LAW !== "undefined" ? STATE_LAW.states.flatMap((s) => ["res", "com"].map((t) => `state-law/${s.code}/${t}`)) : []),
+    // State law guide: every topic compared across states, and the research method page (decision 13).
+    ...(typeof STATE_LAW !== "undefined" ? [...(STATE_LAW.topics || []).map((t) => `state-law/topic/${t.key}`), "state-law/research"] : []),
+    // Model Credit Policy: every topic, every product page and the print view (decision 12).
+    ...(typeof PTOP !== "undefined" ? [...PTOP.map((t) => `policy/${t.n}`), ...PPROD.map((p) => `policy/7/${p.slug}`), "policy/limits", "policy?all=1&q=dscr"] : []),
   ]);
   const mods = await page.evaluate(() => MODS.map((m) => m.key));
   for (const m of mods) {

@@ -18,13 +18,20 @@ const DEALS = DATA ? DATA.deals : [];        // [{id, title, family, summary, bo
 
 const prereqText = (p) => (!p || /^none$/i.test(p.trim())) ? "No prerequisite" : "Prerequisite: " + p;
 const num1 = (n) => (Math.round(n * 10) / 10).toString();
-/** CPE credits where the lesson states a computed figure; otherwise "not yet measured".
- *  Planned credits from the Course Bible are planning estimates and are never shown (decision 16; quality bar 2.2). */
+/** Study time measured by the QAS word-count formula (scripts/count_credits.py), rounded down to 5 minutes:
+ *  never more than was measured. Planned credits from the Course Bible are planning estimates and are never
+ *  shown; CPE credits show only once they can be claimed (decision 16; quality bar 2.2). */
+function timeText(minutes) {
+  if (minutes == null) return "";
+  const t = Math.max(5, Math.floor(minutes / 5) * 5); const h = Math.floor(t / 60), mm = t % 60;
+  return h ? (mm ? `${h} h ${mm} min` : `${h} h`) : `${mm} min`;
+}
 function loadText(m) {
   if (m.credits != null) return `${num1(m.credits)} CPE ${m.credits === 1 ? "credit" : "credits"}`;
+  if (m.minutes != null) return `About ${timeText(m.minutes)}`;
   return "Time not yet measured";
 }
-const weight = (m) => (m.credits != null ? m.credits : (m.planned || 1));
+const weight = (m) => (m.credits != null ? m.credits : (m.minutes != null ? m.minutes : (m.planned || 1)));
 // Version and draft markers are author material (quality bar 1.2); the learner sees the review date only.
 const versionText = (m) => (m.reviewed ? "Last reviewed " + m.reviewed : "");
 

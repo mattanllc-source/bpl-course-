@@ -1,0 +1,137 @@
+{
+  "computed": "24 Nov 2026",
+  "method": "NASBA QAS self-study word count (Std 7.02)",
+  "worksheet": "docs/accreditation/credit-worksheet-2026-11-24.md",
+  "shown": "spec",
+  "claimable": false,
+  "modules": {
+    "C0": {
+      "minutes": 101.378,
+      "credits": 2.0,
+      "words": 10922,
+      "questions": 22,
+      "specMinutes": 88.428,
+      "specCredits": 1.6
+    },
+    "C1": {
+      "minutes": 51.728,
+      "credits": 1.0,
+      "words": 1652,
+      "questions": 23,
+      "specMinutes": 38.778,
+      "specCredits": 0.6
+    },
+    "C2": {
+      "minutes": 50.956,
+      "credits": 1.0,
+      "words": 1513,
+      "questions": 23,
+      "specMinutes": 39.856,
+      "specCredits": 0.6
+    },
+    "C3": {
+      "minutes": 121.689,
+      "credits": 2.4,
+      "words": 11581,
+      "questions": 31,
+      "specMinutes": 99.489,
+      "specCredits": 1.8
+    },
+    "C4": {
+      "minutes": 147.15,
+      "credits": 2.8,
+      "words": 16164,
+      "questions": 31,
+      "specMinutes": 124.95,
+      "specCredits": 2.4
+    },
+    "C5": {
+      "minutes": 153.511,
+      "credits": 3.0,
+      "words": 16976,
+      "questions": 32,
+      "specMinutes": 131.311,
+      "specCredits": 2.6
+    },
+    "C6": {
+      "minutes": 131.989,
+      "credits": 2.6,
+      "words": 14767,
+      "questions": 27,
+      "specMinutes": 120.889,
+      "specCredits": 2.4
+    },
+    "C7": {
+      "minutes": 56.978,
+      "credits": 1.0,
+      "words": 2264,
+      "questions": 24,
+      "specMinutes": 47.728,
+      "specCredits": 0.8
+    },
+    "C8": {
+      "minutes": 56.772,
+      "credits": 1.0,
+      "words": 1561,
+      "questions": 26,
+      "specMinutes": 47.522,
+      "specCredits": 0.8
+    },
+    "C9": {
+      "minutes": 61.578,
+      "credits": 1.2,
+      "words": 2759,
+      "questions": 25,
+      "specMinutes": 52.328,
+      "specCredits": 1.0
+    },
+    "C10": {
+      "minutes": 53.75,
+      "credits": 1.0,
+      "words": 2016,
+      "questions": 23,
+      "specMinutes": 44.5,
+      "specCredits": 0.8
+    },
+    "C11": {
+      "minutes": 54.311,
+      "credits": 1.0,
+      "words": 1451,
+      "questions": 25,
+      "specMinutes": 43.211,
+      "specCredits": 0.8
+    },
+    "C12": {
+      "minutes": 60.728,
+      "credits": 1.2,
+      "words": 1940,
+      "questions": 27,
+      "specMinutes": 49.628,
+      "specCredits": 0.8
+    },
+    "C13": {
+      "minutes": 61.244,
+      "credits": 1.2,
+      "words": 2033,
+      "questions": 27,
+      "specMinutes": 50.144,
+      "specCredits": 1.0
+    },
+    "C14": {
+      "minutes": 62.828,
+      "credits": 1.2,
+      "words": 1652,
+      "questions": 29,
+      "specMinutes": 48.028,
+      "specCredits": 0.8
+    }
+  },
+  "total": {
+    "minutes": 1226.589,
+    "hours": 20.443,
+    "credits": 23.6,
+    "specMinutes": 1026.789,
+    "specHours": 17.113,
+    "specCredits": 18.8
+  }
+}

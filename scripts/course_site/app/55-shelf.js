@@ -113,6 +113,11 @@ function showFormulaCatalog(focus) {
   how.append(ul);
   const { wrap, q, count } = searchBox("fq", "Search formulas", "Search, for example DSCR or payoff");
   let topic = "All";
+  // Default view: the formulas the core course uses (decision 14). The rest belong to the family courses.
+  const SCOPES = ["Used in the core course", "All formulas"];
+  let scope = SCOPES[0];
+  const nCore = LIB.formulas.filter((f) => formulaMods(f).length).length;
+  wrap.append(chipRow("Show", [`${SCOPES[0]} (${nCore})`, `${SCOPES[1]} (${LIB.formulas.length})`], `${SCOPES[0]} (${nCore})`, (t) => { scope = t.startsWith(SCOPES[0]) ? SCOPES[0] : SCOPES[1]; paint(); }));
   const topics = LIB.topics.filter((t) => LIB.formulas.some((f) => f.topic === t.title));
   const chips = chipRow("Topic", ["All", ...topics.map((t) => t.title)], topic, (t) => { topic = t; paint(); });
   wrap.append(chips);
@@ -124,7 +129,7 @@ function showFormulaCatalog(focus) {
       const a = el("a", "card fcardlink"); a.href = "#formulas/" + f.slug;
       a.append(el("b", "", f.name), el("span", "eq", formulaWords(f)), el("span", "pp", learnerString(plainText(f.purpose))), el("span", "mods", usedText(f)), codeA(f.id));
       grid.append(a);
-      return { f, a, hay: (f.name + " " + f.purpose + " " + f.words + " " + f.id).toLowerCase() };
+      return { f, a, core: formulaMods(f).length > 0, hay: (f.name + " " + f.purpose + " " + f.words + " " + f.id).toLowerCase() };
     });
     sec.append(hd, grid);
     return { t, sec, cards };
@@ -133,7 +138,7 @@ function showFormulaCatalog(focus) {
     const needle = q.value.trim().toLowerCase(); let n = 0;
     for (const g of groups) {
       let shown = 0;
-      for (const c of g.cards) { const ok = (topic === "All" || g.t.title === topic) && (!needle || needle.split(/\s+/).every((w) => c.hay.includes(w))); c.a.hidden = !ok; if (ok) shown++; }
+      for (const c of g.cards) { const ok = (scope !== SCOPES[0] || c.core || !!needle) && (topic === "All" || g.t.title === topic) && (!needle || needle.split(/\s+/).every((w) => c.hay.includes(w))); c.a.hidden = !ok; if (ok) shown++; }
       g.sec.hidden = !shown; n += shown;
     }
     count.textContent = `${n} ${n === 1 ? "formula" : "formulas"}`;
@@ -398,100 +403,87 @@ function showFormula(f, focus) {
 }
 
 /* ---------- policy rules ---------- */
-function ruleCard(r, ctx) {
+function ruleCard(r, ctx, level) {
   const art = el("article", "rcard"); art.id = "rule-" + r.id; art.dataset.id = r.id;
-  if (r.block) art.append(el("h5", "rname", r.name));
+  if (r.block) art.append(el("h" + Math.min(6, level || 5), "rname", r.name));
   art.append(mdNodes(r.text, "rtext", ctx));
   const dl = el("dl", "rfacts");
-  const row = (k, node) => { if (!node) return; const d = el("div"); const dd = el("dd"); dd.append(node); d.append(el("dt", "", k), dd); dl.append(d); };
+  const row = (k, node, cls) => { if (!node) return; const d = el("div", cls || ""); const dd = el("dd"); dd.append(node); d.append(el("dt", "", k), dd); dl.append(d); };
   if (r.limit) row("Limit at a glance", mdInline(r.limit, ctx));
   let evid = null;
   if (r.why || r.basis) {
-    // A rationale made of dated sources is research evidence: it sits in a collapsed "Market evidence" box.
-    // A reason in plain words, with no dated source, is shown as "Why it exists".
+    // A rationale made of dated sources is research evidence: Audit mode shows it in a collapsed "Market evidence" box.
+    // A reason in plain words, with no dated source, is shown to learners as "Why it exists". Basis is Audit-only too.
     const evidence = /\b(?:19|20)\d{2}\b|\[VERIFY|\bCFR\b|U\.S\.C\.|Guide\b|Bulletin\b/.test(r.why || "");
     if (r.why && !evidence) { const w = el("div"); w.append(mdInline(r.why, ctx)); row("Why it exists", w); }
-    if (r.basis) row("Basis", el("span", "rbasis", r.basis));
-    if (r.why && evidence) { evid = el("details", "evid"); evid.append(el("summary", "", "Market evidence"), mdNodes(r.why, "", ctx)); }
+    if (r.basis) row("Basis", el("span", "rbasis", r.basis), "aud");
+    if (r.why && evidence) { evid = el("details", "evid aud"); evid.append(el("summary", "", "Market evidence"), mdNodes(r.why, "", ctx)); }
   }
   const used = usedIn(r.id);
-  if (used.length) { const s = el("span"); used.forEach((m, k) => { if (k) s.append(", "); const a = el("a", "", `${m.code} ${m.title.split(":")[0]}`); a.href = "#" + m.key; s.append(a); }); row("Taught in", s); }
+  if (used.length) { const s = el("span"); used.forEach((m, k) => { if (k) s.append(", "); const a = el("a", "", `Module ${m.code.slice(1)} · ${m.title.split(":")[0]}`); a.href = "#" + m.key; s.append(a); }); row("Taught in", s); }
   art.append(dl, ...(evid ? [evid] : []), codeA(r.id));
   return art;
 }
-function showPolicy(anchor, focus) {
-  view = "ref"; routeTok++; cur = null;
-  const doc = $("doc"); const ctx = newCiteCtx();
-  const { head, h1 } = shelfHead("Reference", "Model Credit Policy", "Every rule in the course's model credit policy, by topic, in plain English: the rule, its limit, why it exists and where the course teaches it. When you cite policy in a memo, cite it by section name.", "policy");
-  const { wrap, q, count } = searchBox("pq", "Search policy rules", "Search, for example liquidity, title or DSCR");
-  let fam = "All";
-  wrap.append(chipRow("Loan family", ["All", ...POLICY.families.map((f) => f.name)], fam, (t) => { fam = t; paint(); }));
-  const cards = [], blocks = [];
-  const famSecs = POLICY.families.map((F) => {
-    const fs = el("section", "pfam"); fs.dataset.fam = F.name;
-    fs.append(el("h2", "h2", F.label));
-    if (F.limits.length) {
-      const d = el("section", "limits"); d.append(el("h3", "", `${F.name} limits at a glance`), mdNodes(F.limits.join("\n\n"), "", ctx));
-      fs.append(d);
-    }
-    for (const S of F.sections) {
-      const ss = el("section", "psec"); ss.append(el("h3", "", S.title));
-      if (S.intro) ss.append(mdNodes(S.intro, "pintro", ctx));
-      // Each topic's rules start collapsed: the heading, intro and rule count stay in view.
-      const nRules = S.groups.reduce((a, G) => a + G.items.filter((it) => it.kind === "rule" && RULES.has(it.id)).length, 0);
-      const box = el("details", "prules");
-      box.append(el("summary", "", `${nRules} ${nRules === 1 ? "rule" : "rules"}: show them`));
-      ss.append(box);
-      for (const G of S.groups) {
-        const gs = el("div", "pgroup");
-        if (G.title) gs.append(el("h4", "", G.title));
-        for (const it of G.items) {
-          if (it.kind === "rule") { const r = RULES.get(it.id); if (!r) continue; const c = ruleCard(r, ctx); gs.append(c); cards.push({ c, fam: F.name, hay: (r.id + " " + r.name + " " + r.text + " " + r.why + " " + r.topic).toLowerCase(), gs, ss, fs }); }
-          else if (it.kind === "md") { const b = mdNodes(it.md, "pmd", ctx); gs.append(b); blocks.push({ b, gs }); }
-          else if (it.kind === "formula" && FORMULAS.has(it.id)) {
-            const d = el("details", "pformula"); const fm = FORMULAS.get(it.id);
-            const sm = el("summary"); sm.append(`Worked example: ${fm.name}`); d.append(sm);
-            const p = el("p", "fine"); p.append("Formula page: ", formulaLink(it.id, fm.name)); d.append(p, mdNodes(it.md, "", ctx));
-            gs.append(d);
-          }
-        }
-        box.append(gs);
-      }
-      fs.append(ss);
-    }
-    return fs;
-  });
-  const empty = el("p", "loading", "No rule matches. Try a shorter word.");
-  function paint() {
-    const needle = q.value.trim().toLowerCase(); let n = 0;
-    for (const x of cards) { const ok = (fam === "All" || x.fam === fam) && (!needle || needle.split(/\s+/).every((w) => x.hay.includes(w))); x.c.hidden = !ok; if (ok) n++; }
-    for (const b of blocks) b.b.hidden = !!needle;
-    for (const g of doc.querySelectorAll(".pgroup")) g.hidden = !!needle && !g.querySelector(".rcard:not([hidden])");
-    for (const s of doc.querySelectorAll(".psec")) s.hidden = !!needle && !s.querySelector(".rcard:not([hidden])");
-    for (const f of famSecs) f.hidden = (fam !== "All" && f.dataset.fam !== fam) || (!!needle && !f.querySelector(".rcard:not([hidden])"));
-    // A search opens the topics it matches; clearing it closes them again.
-    for (const d of doc.querySelectorAll("details.prules")) {
-      if (needle) { if (!d.open) d.dataset.auto = "1"; d.open = true; }
-      else if (d.dataset.auto) { d.open = false; delete d.dataset.auto; }
-    }
-    count.textContent = `${n} ${n === 1 ? "rule" : "rules"}`;
-    empty.hidden = n > 0;
-  }
-  q.addEventListener("input", paint);
-  mountShelf(doc, [head, wrap, ...famSecs, empty, authorView("policy", "research, decision log and change notes")], "Model Credit Policy", ["Reference shelf", "Model Credit Policy"], focus && !anchor, h1);
-  paint();
-  const t = anchor ? $("rule-" + anchor) : null;
-  if (t) { const d = t.closest("details"); if (d) d.open = true; t.classList.add("hit"); t.tabIndex = -1; t.scrollIntoView({ block: "center" }); t.focus({ preventScroll: true }); }
-}
+/* showPolicy lives in 56-policy.js (deal-order topics, decision 12). */
 
-/* ---------- state law guide ---------- */
+/* ---------- state law guide (decision 13): by state, by topic, and how to research a new state ----------
+ * build.py reads every column group of the State Law Table: the core topics (groups a and b) and any dimension group
+ * the Bible adds later (redemption, mechanics' liens, doing business), so new groups appear here with no code change. */
 const LOAN_TYPES = [["res", "1-4 unit residential"], ["com", "Commercial and 5+ units"]];
+const LOAN_LONG = { res: "1-4 unit residential business-purpose loans", com: "Commercial and 5+ unit loans" };
+const SLT_TOPICS = STATE_LAW.topics || [];
+const sltTopic = (key) => SLT_TOPICS.find((t) => t.key === key) || null;
+/** One answer: badge, detail, statute, date checked and the counsel flag. */
+function slCell(r, ctx, hLevel, title) {
+  const a = el("article", "sltopic");
+  const left = el("div");
+  if (title) left.append(el("h" + hLevel, "", title));
+  left.append(Object.assign(el("span", "verdict", r.verdict), { className: "verdict v-" + r.tone }));
+  const right = el("div"); right.append(mdNodes(r.detail, "", ctx));
+  const c = el("p", "slcite");
+  if (r.cite) c.append(el("span", "cite-txt", r.cite));
+  if (r.checked) c.append(el("span", "chk", `Checked ${r.checked}`));
+  if (r.confirm) c.append(el("span", "confirm", "Counsel to confirm"));
+  if (c.childNodes.length) right.append(c);
+  a.append(left, right);
+  return a;
+}
+/** By state, By topic, How to research: three views of the same guide. */
+function slViews(cur, st, lt) {
+  const nav = el("nav", "slviews"); nav.setAttribute("aria-label", "State law guide views");
+  const first = SLT_TOPICS[0] ? SLT_TOPICS[0].key : "";
+  for (const [k, label, href] of [["state", "By state", `#state-law/${st ? st.code : "oh"}/${lt || "res"}`], ["topic", "By topic", `#state-law/topic/${first}`], ["research", "Research a new state", "#state-law/research"]]) {
+    const a = el("a", "", label); a.href = href; if (k === cur) a.setAttribute("aria-current", "page"); nav.append(a);
+  }
+  return nav;
+}
+function slHead(title, lede, reviewed) {
+  const head = el("header", "hero");
+  const h1 = el("h1", "display", title); h1.tabIndex = -1;
+  head.append(el("p", "eyebrow", "Reference · State law guide"), h1);
+  if (lede) head.append(el("p", "lede", lede));
+  const meta = el("ul", "meta"); if (reviewed) meta.append(el("li", "", `Last reviewed ${reviewed}`));
+  meta.append(el("li", "", "Not legal advice"));
+  head.append(meta, el("div", "rule"));
+  return { head, h1 };
+}
+const SL_LEDE = "What each course state's law says about licensing, interest, fees, prepayment and foreclosure. This is not legal advice: counsel in the state confirms every point before any live deal.";
+function researchLink() {
+  const p = el("p", "slresearch");
+  const a = el("a", "", "How to research a new state"); a.href = "#state-law/research";
+  p.append("A deal in another state? ", a, " gives the eight steps and a source map.");
+  return p;
+}
 function showStateLaw(stKey, typeKey, focus) {
+  if (stKey === "topic") return showStateTopic(typeKey, focus);
+  if (stKey === "research") return showStateResearch(focus);
   view = "ref"; routeTok++; cur = null;
   const doc = $("doc");
   const states = STATE_LAW.states;
   let st = states.find((s) => s.code === stKey) || states[0], lt = LOAN_TYPES.some((t) => t[0] === typeKey) ? typeKey : (st && st.dealType) || "res";
-  const { head, h1 } = shelfHead("Reference", "State law guide", "What each course state's law says about licensing, interest, fees, prepayment and foreclosure. Pick a state and a loan type. This is not legal advice: counsel in the state confirms every point before any live deal.", "state-law");
+  const { head, h1 } = slHead("State law guide", SL_LEDE + " Pick a state and a loan type, or compare one topic across states.", REVIEWED["state-law"]);
+  head.append(researchLink());
+  const views = slViews("state", st, lt);
   const picks = el("div", "picks");
   const g1 = el("div"); const l1 = el("p", "plabel", "State"); l1.id = "st-l"; const r1 = el("div", "chips"); r1.setAttribute("role", "group"); r1.setAttribute("aria-labelledby", "st-l");
   const g2 = el("div"); const l2 = el("p", "plabel", "Loan type"); l2.id = "lt-l"; const r2 = el("div", "seg"); r2.setAttribute("role", "group"); r2.setAttribute("aria-labelledby", "lt-l");
@@ -509,17 +501,18 @@ function showStateLaw(stKey, typeKey, focus) {
     if (st.note && (!st.dealType || st.dealType === lt)) summary.append(mdNodes(st.note.text, "", newCiteCtx()));
     else summary.append(el("p", "", st.dealType ? `No running deal uses this combination. ${st.deal} is a ${st.dealType === "res" ? "1-4 unit" : "commercial or 5+ unit"} loan. Read each topic below.` : "Read each topic below."));
     const ctx = newCiteCtx();
-    list.replaceChildren(...(st.rows[lt] || []).map((r) => {
-      const a = el("article", "sltopic");
-      const left = el("div"); left.append(el("h3", "", r.topic), Object.assign(el("span", "verdict", r.verdict), { className: "verdict v-" + r.tone }));
-      const right = el("div"); right.append(mdNodes(r.detail, "", ctx));
-      const c = el("p", "slcite");
-      if (r.cite) c.append(el("span", "cite-txt", r.cite));
-      if (r.confirm) c.append(el("span", "confirm", "Counsel to confirm"));
-      if (c.childNodes.length) right.append(c);
-      a.append(left, right);
-      return a;
-    }));
+    const rows = st.rows[lt] || [];
+    const nodes = rows.filter((r) => r.group === "core").map((r) => slCell(r, ctx, 3, r.topic));
+    // Dimension groups: a heading, why it matters, then each sub-answer.
+    for (const t of SLT_TOPICS.filter((x) => x.group !== "core")) {
+      const cells = rows.filter((r) => r.group === t.key); if (!cells.length) continue;
+      const s = el("section", "slgroup");
+      const h = el("h3", ""); const a = el("a", "", t.label); a.href = `#state-law/topic/${t.key}`; h.append(a); s.append(h);
+      if (t.why) s.append(el("p", "slwhy", t.why));
+      for (const r of cells) s.append(slCell(r, ctx, 4, r.topic));
+      nodes.push(s);
+    }
+    list.replaceChildren(...nodes);
     foot.replaceChildren();
     foot.append(el("p", "fine", `Checked against statutes and regulator pages on ${st.checked || STATE_LAW.checked}. “None found” means no statute or regulator page was found on the point. It does not mean no rule exists. “Secondary” marks a law-firm or legal-aid page used where no primary page gave the point.`));
     if (st.changes) { const s = el("section"); s.append(el("h3", "", "Recent or pending changes"), mdNodes(st.changes, "", ctx)); foot.append(s); }
@@ -529,6 +522,7 @@ function showStateLaw(stKey, typeKey, focus) {
       s.append(u); foot.append(s);
     }
     if (user) { try { history.replaceState(null, "", `#state-law/${st.code}/${lt}`); } catch { /* sandboxed */ } }
+    const vs = views.querySelector("a"); if (vs) vs.href = `#state-law/${st.code}/${lt}`;
     renderMath(list); markScrollers(doc);
   }
   const pats = el("section", "card note");
@@ -540,7 +534,77 @@ function showStateLaw(stKey, typeKey, focus) {
     const ol = el("ol"); for (const p of STATE_LAW.open) { const li = el("li"); li.append(mdInline(p)); ol.append(li); } open.append(ol);
   }
   paint(false);
-  mountShelf(doc, [head, picks, summary, list, foot, pats, ...(STATE_LAW.open.length ? [open] : []), authorView("state-law", "the State Law Table export")], "State law guide", ["Reference shelf", "State law guide"], focus, h1);
+  mountShelf(doc, [head, views, picks, summary, list, foot, pats, ...(STATE_LAW.open.length ? [open] : []), authorView("state-law", "the State Law Table export")], "State law guide", ["Reference shelf", "State law guide"], focus, h1);
+}
+
+/* ---------- one topic across all four states ---------- */
+function showStateTopic(key, focus) {
+  view = "ref"; routeTok++; cur = null;
+  const doc = $("doc");
+  const t = sltTopic(key) || SLT_TOPICS[0];
+  const { head, h1 } = slHead(`${t.label} in four states`, "One topic across all four course states, side by side for each loan group. Pick another topic to compare.", REVIEWED["state-law"]);
+  head.append(researchLink());
+  const views = slViews("topic", null, null);
+  const pickBox = el("div", "sltpick");
+  const pl = el("p", "plabel", "Topic"); pl.id = "slt-l";
+  const chips = el("ul", "chips sltchips"); chips.setAttribute("aria-labelledby", "slt-l");
+  for (const x of SLT_TOPICS) {
+    const li = el("li"); const a = el("a", "chip", x.label); a.href = `#state-law/topic/${x.key}`;
+    if (x === t) a.setAttribute("aria-current", "page");
+    li.append(a); chips.append(li);
+  }
+  pickBox.append(pl, chips);
+  const nodes = [head, views, pickBox];
+  if (t.why) { const w = el("p", "slwhy slwhy-top"); w.append(el("strong", "", "Why it matters to the lender. "), t.why); nodes.push(w); }
+  const ctx = newCiteCtx();
+  for (const [lt] of LOAN_TYPES) {
+    const sec = el("section", "slcmpsec");
+    sec.append(el("h2", "", LOAN_LONG[lt]));
+    const grid = el("div", "slcmp");
+    for (const st of STATE_LAW.states) {
+      const cells = (st.rows[lt] || []).filter((r) => t.columns.includes(r.key));
+      const card = el("section", "slstate");
+      const h = el("h3", ""); h.append(st.name);
+      card.append(h, el("p", "sldeal", st.dealType === lt ? `Running deal: ${st.deal}` : st.dealType ? `${st.deal} is the other loan type` : st.deal));
+      if (!cells.length) card.append(el("p", "", "Not in the table yet."));
+      for (const r of cells) card.append(slCell(r, ctx, 4, t.columns.length > 1 ? r.topic : ""));
+      const more = el("p", "fine"); const a = el("a", "", `All topics for ${st.name}`); a.href = `#state-law/${st.code}/${lt}`; more.append(a); card.append(more);
+      grid.append(card);
+    }
+    sec.append(grid); nodes.push(sec);
+  }
+  nodes.push(el("p", "fine", "“None found” means no statute or regulator page was found on the point. It does not mean no rule exists. Each answer shows the date it was checked."));
+  const i = SLT_TOPICS.indexOf(t), pv = SLT_TOPICS[i - 1], nx = SLT_TOPICS[i + 1];
+  const nav = el("nav", "modnav"); nav.setAttribute("aria-label", "Other topics");
+  if (pv) { const a = el("a", "prev"); a.href = `#state-law/topic/${pv.key}`; a.append(el("span", "dir", "Previous topic"), el("b", "", pv.label)); nav.append(a); }
+  if (nx) { const a = el("a", "next"); a.href = `#state-law/topic/${nx.key}`; a.append(el("span", "dir", "Next topic"), el("b", "", nx.label)); nav.append(a); }
+  nodes.push(nav);
+  mountShelf(doc, nodes, `${t.label} · State law guide`, ["Reference shelf", { text: "State law guide", href: "#state-law" }, `By topic: ${t.label}`], focus, h1);
+  if (!focus) scrollTo(0, 0);
+}
+
+/* ---------- how to research a new state (docs/credit-policy/state-law-research-method.md) ---------- */
+function showStateResearch(focus) {
+  view = "ref"; routeTok++; cur = null;
+  const doc = $("doc");
+  const R = STATE_LAW.research || { title: "How to research a new state", lede: "", md: "", notes: [], reviewed: "" };
+  const { head, h1 } = slHead(R.title, R.lede, R.reviewed);
+  const views = slViews("research", null, null);
+  const body = mdNodes(R.md, "slmethod", newCiteCtx());
+  // Source notes: each [VERIFY] tag in the source is a numbered footnote, listed at the end of the page.
+  const notes = el("section", "fnotes"); notes.append(el("h2", "", "Sources"));
+  const ol = el("ol");
+  R.notes.forEach((n, k) => { const li = el("li", "", n); li.id = `rs-fn-${k + 1}`; li.tabIndex = -1; ol.append(li); });
+  notes.append(ol);
+  for (const s of body.querySelectorAll("sup.fnref")) {
+    const n = s.dataset.n;
+    const b = el("button", "fnbtn", n); b.type = "button"; b.setAttribute("aria-label", `Source note ${n}`);
+    b.addEventListener("click", () => { const li = $(`rs-fn-${n}`); if (!li) return; for (const x of ol.querySelectorAll(".hit")) x.classList.remove("hit"); li.classList.add("hit"); li.scrollIntoView({ block: "center" }); li.focus({ preventScroll: true }); });
+    s.replaceChildren(b);
+  }
+  const back = el("p", "fine"); const a = el("a", "", "Back to the four states in the guide"); a.href = "#state-law"; back.append(a);
+  mountShelf(doc, [head, views, body, ...(R.notes.length ? [notes] : []), back], R.title, ["Reference shelf", { text: "State law guide", href: "#state-law" }, R.title], focus, h1);
+  if (!focus) scrollTo(0, 0);
 }
 
 /* ---------- running deals ---------- */

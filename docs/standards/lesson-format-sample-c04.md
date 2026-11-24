@@ -10,7 +10,7 @@ minutes: 14
 level: Intermediate
 replaces: 4, 5
 reviewed: 23 Nov 2026
-policy: Each loan type sets its own coverage minimum and test rate. For Cedar Court, see Model Credit Policy, Multifamily Part 2B: Value-add bridge and stabilized bridge.
+policy: Each loan type sets its own coverage minimum and test rate. For Cedar Court, see Credit Policy 7: Limits and terms by product, Multifamily value-add bridge.
 audit: Converted from C4 T4 (DSCR at full precision) and T5 (break-even and the cushion). Formulas F-CORE-11, F-CORE-12, F-MF-12. Rules MF-BR-07, MF-BR-09, MF-BR-11.
 ```
 
@@ -119,7 +119,7 @@ Break-even occupancy is the quick method. It holds all expenses fixed, including
 
 ```bpl:policy
 title: From the credit policy
-text: Below 1.00x, a value-add bridge must fund an interest reserve for the shortfall for 12 months. At 5 extra points the shortfall is $490 a year. See Model Credit Policy, Multifamily Part 2B: Value-add bridge and stabilized bridge.
+text: Below 1.00x, a value-add bridge must fund an interest reserve for the shortfall for 12 months. At 5 extra points the shortfall is $490 a year. See Credit Policy 7: Limits and terms by product, Multifamily value-add bridge.
 audit: MF-BR-07
 ```
 
@@ -201,7 +201,7 @@ stem: The loan has two 6-month extension options. Choose the response that the f
   why: You impose a test the policy does not set. With every test met, a forced paydown has no policy basis.
 - D: Approve with no conditions: the borrower has performed.
   why: The loan would run six months with no hedge while SOFR sits above the strike. The policy requires the cap to be extended.
-policy: Multifamily Part 2B: an extension needs no default, an extended cap, capex at least 75% complete and a current debt yield of at least 7.5%.
+policy: Credit Policy 7: Limits and terms by product, Multifamily value-add bridge: an extension needs no default, an extended cap, capex at least 75% complete and a current debt yield of at least 7.5%.
 working: Debt yield: $520,000 ÷ $5,140,000 = 10.12%. Capex: 100% complete.
 decision: What hedge do you require for the extension?
 stem: The cap ends at initial maturity. SOFR is 5.00%, above the 4.25% strike, so a new cap is in the money and costs more.
@@ -213,7 +213,7 @@ stem: The cap ends at initial maturity. SOFR is 5.00%, above the 4.25% strike, s
   why: A reserve covers a shortfall that already exists. It does not cap future rate rises, and it does not satisfy the cap rule.
 - D: Cap only the $4,340,000 funded at closing, to save cost.
   why: The capex draws, now $800,000, would float unhedged. The notional must equal the full commitment.
-policy: Multifamily Part 2B: a rate cap is required for the initial term and any extension, from an A-rated counterparty, on a notional equal to the full commitment. Multifamily Part 2D allows no exception to the cap rule.
+policy: Credit Policy 7: Limits and terms by product, Multifamily value-add bridge: a rate cap is required for the initial term and any extension, from an A-rated counterparty, on a notional equal to the full commitment. Credit Policy 10: Approval authority and exceptions allows no exception to the cap rule.
 working: Course assumption: $5,140,000 × (5.00% − 4.25%) × 6 ÷ 12 = $19,275.
 decision: How do you handle the cost of extending?
 stem: The fee and the cap cost $44,975 together. The borrower may need Marcus Hale, the qualifying guarantor, to fund them.
@@ -225,7 +225,7 @@ stem: The fee and the cap cost $44,975 together. The borrower may need Marcus Ha
   why: Coverage on the extension is 1.12x, above 1.00x, so the policy does not call for a reserve. You add cost with no basis.
 - D: Decline: the costs cut his liquidity too far.
   why: His liquidity after costs still clears the requirement by $371,025. Declining loses a performing loan.
-policy: Core Part 2B: post-closing liquidity must meet the greater of 10% of the commitment or 6 months' interest, plus 5% of other open loans with us. It is verified with the two most recent monthly statements.
+policy: Credit Policy 4: Guarantor credit, liquidity, net worth and experience: post-closing liquidity must meet the greater of 10% of the commitment or 6 months' interest, plus 5% of other open loans with us. It is verified with the two most recent monthly statements.
 working: $930,000 − $25,700 − $19,275 = $885,025; required 10% × $5,140,000 = $514,000.
 debrief: **Decision:** approve the first 6-month extension, with three conditions.
 
@@ -260,7 +260,7 @@ debrief: **Decision:** approve the first 6-month extension, with three condition
 ## What to look up yourself
 
 1. Open Fannie Mae's Multifamily Selling and Servicing Guide and find the section on underwritten net cash flow. Note the vacancy and management figures it uses. Compare them with the course's 5% vacancy floor and 3% management minimum.
-2. Find a published bridge-lender term sheet that states an interest-reserve trigger. Compare its coverage test with Multifamily Part 2B.
+2. Find a published bridge-lender term sheet that states an interest-reserve trigger. Compare its coverage test with Credit Policy 7: Limits and terms by product, Multifamily value-add bridge.
 
 ## How to check it
 

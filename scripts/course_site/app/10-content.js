@@ -539,6 +539,7 @@ function openCitePop(b, focusIn) {
     const r = refInfo(id); if (!r) continue;
     const row = el("button", "row"); row.type = "button";
     const top = el("span", "nm"); top.append(el("b", "", refHead(id)), " ", codeA(id));
+    if (r.kind === "rule" && r.topicLabel) row.append(el("span", "tl", r.topicLabel));
     row.append(top, el("span", "tx", refBody(id)));
     row.addEventListener("click", () => { closePop(false); openDrawer(id, b); });
     const li = el("li"); li.append(row); ul.append(li);
@@ -607,7 +608,7 @@ function paintDrawer(id) {
   const r = refInfo(id); if (!r) return false;
   $("drawer-title").replaceChildren(codeA(id));
   const famKey = id.replace(/^F-/, "").split("-")[0];
-  $("drawer-fam").textContent = r.kind === "formula" ? `${FAMILY[famKey] || ""} formula` : r.kind === "decision" ? "Policy decision" : `${FAMILY[famKey] || ""} policy rule`;
+  $("drawer-fam").textContent = r.kind === "formula" ? `${FAMILY[famKey] || ""} formula` : r.kind === "decision" ? "Policy decision" : r.topicLabel || `${FAMILY[famKey] || ""} policy rule`;
   const body = $("drawer-body"); body.replaceChildren();
   const h = el("h2", "", r.name); h.id = "drawer-name"; h.tabIndex = -1;
   body.append(h);
@@ -630,7 +631,7 @@ function paintDrawer(id) {
   }
   const used = usedIn(id);
   if (used.length) body.append(drawerSection("Taught in", modLinks(used)));
-  const go = el("a", "btn sm", r.kind === "formula" ? "Open the formula page" : "Open in the policy rules");
+  const go = el("a", "btn sm", r.kind === "formula" ? "Open the formula page" : "Open in the Model Credit Policy");
   go.href = r.kind === "formula" ? formulaHref(id) : "#policy/" + id; go.style.justifySelf = "start";
   body.append(go);
   if (typeof renderMath === "function") renderMath(body);
