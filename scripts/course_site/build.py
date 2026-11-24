@@ -336,13 +336,28 @@ def problems_to_list(md: str) -> str:
     return "\n".join(out)
 
 
+# A Core-table row marked "(working title)" names the module as planned, not the lesson as written.
+# Until that module is rewritten (M4, decision 5), the page keeps the title that matches the lesson.
+CURRENT_TITLES = {"C0": "Program orientation and the BPL market"}
+
+
 def core_table() -> dict:
-    """Module code, title, hours and prerequisite from the Course Bible's Core table."""
+    """Module code, title, planned credits and prerequisite from the Course Bible's Core table (section 3).
+
+    Rows read "| Category | C0 | Title | 2.0 | None | Roles |" (24 Nov 2026 layout). Planned credits are
+    planning estimates (decision 16; quality bar 2.2): they only weight progress and are never shown."""
     rows = {}
     for line in read("docs/course-bible.md").splitlines():
-        m = re.match(r"^\| (C\d{1,2}) \| (.+?) \| (\d+) \| (.+?) \|$", line)
-        if m:
-            rows[m.group(1)] = {"title": m.group(2), "hours": int(m.group(3)), "prereq": m.group(4)}
+        if not line.startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        for i, c in enumerate(cells[:-3]):
+            if re.fullmatch(r"C\d{1,2}", c) and re.fullmatch(r"\d+(?:\.\d+)?", cells[i + 2]):
+                title = cells[i + 1]
+                if title.endswith("(working title)"):
+                    title = CURRENT_TITLES.get(c, re.sub(r"\s*\(working title\)$", "", title))
+                rows[c] = {"title": title, "planned": float(cells[i + 2]), "prereq": cells[i + 3]}
+                break
     return rows
 
 
@@ -1177,14 +1192,14 @@ def main() -> None:
         html = html.replace(mark, text)
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(html, encoding="utf-8")
-    hours = sum(m["hours"] for m in modules)
+    hours = round(sum(m["planned"] for m in modules) * 50 / 60, 1)  # planning estimate, console only
     nex = sum(len(v) for v in exercises.values())
     print(f"{nex} exercises in {len(exercises)} modules")
     print(f"{len(gloss)} glossary terms; {len(layer)} formula learner layers; "
           f"{len(smp)} lesson-format sample(s) with {sum(len(x['comps']) for x in smp)} blocks")
     print(f"{len(lib['formulas'])} formulas, {len(pol['rules'])} policy rules, {len(pol['decisions'])} decisions, "
           f"{sum(len(s['rows'].get('res', [])) + len(s['rows'].get('com', [])) for s in slt['states'])} state-law cells")
-    print(f"{len(modules)} modules ({hours} hours), {len(refs)} references -> {OUT} "
+    print(f"{len(modules)} modules ({hours} planned hours), {len(refs)} references -> {OUT} "
           f"({OUT.stat().st_size / 1024:.0f} KB)")
 
 

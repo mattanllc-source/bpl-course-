@@ -32,7 +32,7 @@ Decision numbers refer to [curriculum/review-2026-11-24/decisions.md](curriculum
 | --- | --- | --- | --- |
 | 13 | Fix the C4 sample before rollout: case outside the lesson's objectives; open-response self-check | 15 | S |
 | 14 | **M4: rewrite C0–C5** in the lesson format, in the repo, taking in report C's rewrite and add items for each module: new C0 (five job objectives), life cycle moved from C2, market data to C4, new multiple-choice quizzes, full review gate and owner screenshots per module; mark each in `SNAPSHOT.md` | 5, 6, 9, 15 | XL |
-| 15 | Rewrite the 164 existing multiple-choice items as each module is rewritten: full-question stems, a rationale for every option, balanced keys, exhibits, judgment items | 9 | L (within 14, 17) |
+| 15 | Rewrite the 164 existing multiple-choice items as each module is rewritten: full-question stems, a rationale for every option, balanced keys, exhibits, judgment items. (C3 Set A items 6 and 10, Set B item 6 and the C3 objective tags were fixed early, 24 Nov) | 9 | L (within 14, 17) |
 | 16 | Reference updates: show the 73 core formulas by default; drop 50 duplicate glossary examples; add analyst and founder tasks to the running deals; label Maple Run's two liquidity figures | 14 | M |
 | 17 | **M5: rewrite C6–C14** the same way, with report C's rewrite and add items; move C07-O6 and C12-O8 to tracks; merge C09-O5 into C11-O2 | 7 | XL |
 | 18 | Bring sentences under 25 words (180 left) as each module is rewritten | CLAUDE.md | within 14, 17 |

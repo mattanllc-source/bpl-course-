@@ -4,28 +4,17 @@
 
 | Item | Detail |
 | --- | --- |
-| Assets in this tab | C7-lesson-v0, C7-quiz-v0 (sets A and B), C7-ojt-v0, C7-jobaid-v0 |
-| Hours | 2 (120 minutes) plus a 30-minute OJT task |
-| Prerequisite | C1 |
-| Bloom's levels | 2, 3 and 4 (LD-02) |
-| Formulas | None in the library. Two calculations are taught: aggregate blocked ownership (OFAC 50 Percent Rule) and calendar deadlines |
-| Rules | CORE-KYC-01 to -09; CORE-BP-02; CORE-BOR-03, -09, -19; CORE-EXC-03 (no exceptions to KYC or OFAC rules) |
-| Running deals | Worked examples: RD-RES-01 Maple Run and RD-MF-01 Cedar Court. Practice: RD-COM-01 Birchwood Plaza (LD-08). Red-flag scenarios are marked "what-if" and are not part of the deals |
-| Status | v0.2. Self-review against Bible Section 7 is at the end of this tab |
-| Change log | v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check. v0, 20 Nov 2026: first draft. CORE-KYC-04 to -07 added to the Model Credit Policy the same day, on the learner's decision |
-
-## Timing plan
-
-| Segment (LD-04) | Minutes |
-| --- | --- |
-| 1 Hook | 5 |
-| 2 Objectives | 5 |
-| 3 Teach chunks T1-T5, with worked examples | 50 |
-| 5 Practice | 25 |
-| 6 Quiz | 20 |
-| 8 Job aid walk-through and wrap-up | 15 |
-| Total | 120 |
-| 7 OJT task (extra, per LD-03) | 30 |
+| Assets in this tab | C7-lesson-v1.0-draft, C7-quiz-v0 (sets A and B, unchanged until Phase 3), C7-ojt-v1.0-draft, C7-jobaid-v1.0-draft |
+| Objectives | O1 classify AML, sanctions and ownership duties by lender type and collateral; O2 apply OFAC screening, the 50 Percent Rule and reporting deadlines to an ownership chart; O3 diagnose fraud red flags with clearing path and approver; O4 execute the first-hour response to a wire diversion; O5 calculate SAR deadlines and apply the filing, confidentiality and record rules; O6 evaluate a small lender's AML and sanctions program |
+| Hours | Blueprint projection 3.6 CPE credits (QAS Self Study word-count formula, blueprint section 7). Recount from the final lesson and assessment. The OJT task (30 minutes) is extra and earns no credit |
+| Knowledge level | Intermediate (qas-spec.md). Field of study: Specialized Knowledge |
+| Prerequisite | C1 (regulatory map, business purpose, CORE-BP rules) and C6 (look-through ownership, CORE-BOR-03). No advance preparation |
+| Bloom's levels | 2 Understand (O1), 3 Apply (O2, O4, O5), 4 Analyze (O3) and 5 Evaluate (O6), within LD-02 as amended 22 Nov 2026 (levels 1-5, at least half at Apply or above) |
+| Formulas | None in the Library yet. F-CORE-38 and -39 are reserved for C7's two calculations: aggregate blocked ownership and deadline dates (P-C7-1). Look-through share (CORE-KYC-02) and the prior-sale discount (CORE-KYC-07) are worked from the rules |
+| Rules | CORE-KYC-01 to -09; CORE-BP-01, -02; CORE-BOR-01, -03, -09, -19; CORE-CLS-02, -03; CORE-EXC-03 (no exceptions to KYC or OFAC rules); CORE-AUTH-04; D-CORE-21, -24, -25 |
+| Running deals | Worked examples: RD-RES-01 Maple Run and RD-MF-01 Cedar Court, with all three deals in T1 and T6. Practice: RD-COM-01 Birchwood Plaza and RD-MF-01 Cedar Court (LD-05, LD-08). Red-flag scenarios are marked "what-if" and are not part of the deals |
+| Status | v1.0-draft. Teach, Practice, OJT task and Job aid rewritten to the C7 blueprint. Review questions and exam forms follow in Phase 3. Self-review is at the end of this tab |
+| Change log | v0, 20 Nov 2026: first draft. CORE-KYC-04 to -07 added to the Model Credit Policy the same day, on the learner's decision. v0.2, 22 Nov 2026: review fixes, policy decisions D-CORE-17 onward, self-check. v1.0-draft, 22 Nov 2026: rewritten to blueprint (Phase 2b) |
 
 ## 1. Hook (5 minutes)
 
@@ -49,15 +38,15 @@ By the end of C7, you will be able to:
 
 We are a non-bank lender. Many people assume the Bank Secrecy Act therefore skips us. For part of our book, that is wrong.
 
-FinCEN treats non-bank residential mortgage lenders as "loan or finance companies." Its definition of a residential mortgage loan depends on the collateral: a 1-4 unit residential structure, or land for one. It has no personal-use limit [VERIFY: 31 CFR 1010.100(lll), eCFR (current to 19 Nov 2026); checked 22 Nov 2026]. So a business-purpose loan on a house can still be covered. Covered lenders need a written AML program with a compliance officer, training and independent testing (31 CFR 1029.210). They must also file SARs (31 CFR 1029.320) [VERIFY: 31 CFR 1029.210(b) and 1029.320(a), eCFR; checked 22 Nov 2026].
+FinCEN treats non-bank residential mortgage lenders as "loan or finance companies." Its definition of a residential mortgage loan depends on the collateral: a 1-4 unit residential structure, or land for one. It has no personal-use limit \[VERIFY: 31 CFR 1010.100(lll), eCFR (current to 19 Nov 2026); checked 22 Nov 2026\]. So a business-purpose loan on a house can still be covered. Covered lenders need a written AML program with a compliance officer, training and independent testing (31 CFR 1029.210). They must also file SARs (31 CFR 1029.320) \[VERIFY: 31 CFR 1029.210(b) and 1029.320(a), eCFR; checked 22 Nov 2026\].
 
 | Rule set | Applies to us? | Course rule |
 | --- | --- | --- |
 | AML program and SAR filing (31 CFR 1029) | Likely yes for 1-4 unit loans; counsel to confirm | CORE-KYC-04 applies one program to every loan |
 | OFAC sanctions | Yes, to every US person | CORE-KYC-01, -06 |
 | Bank CDD beneficial-ownership rule (31 CFR 1010.230) | Written for banks and other covered institutions; we follow it by policy | CORE-KYC-02 |
-| Corporate Transparency Act ownership reports | US companies permanently exempt from 14 Aug 2026 [VERIFY: FinCEN BOI page, fincen.gov/boi; checked 22 Nov 2026] | None: our own chart is the record |
-| FinCEN residential real estate report (non-financed transfers) | Vacated by the US District Court for the Eastern District of Texas on 19 Mar 2026; FinCEN has appealed. Covers non-financed deals only [VERIFY: FinCEN RRE page, fincen.gov/resources/rre; checked 22 Nov 2026] | None |
+| Corporate Transparency Act ownership reports | US companies permanently exempt from 14 Aug 2026 \[VERIFY: FinCEN BOI page, fincen.gov/boi; checked 22 Nov 2026\] | None: our own chart is the record |
+| FinCEN residential real estate report (non-financed transfers) | Vacated by the US District Court for the Eastern District of Texas on 19 Mar 2026; FinCEN has appealed. Covers non-financed deals only \[VERIFY: FinCEN RRE page, fincen.gov/resources/rre; checked 22 Nov 2026\] | None |
 
 **Worked example 1: which loans fall under 31 CFR 1029?**
 
@@ -70,9 +59,9 @@ FinCEN treats non-bank residential mortgage lenders as "loan or finance companie
 
 CORE-KYC-01 screens the borrower, every guarantor and every 20% owner. Screening happens before the term sheet and again before funding. An unresolved match is a decline, and no exception is allowed (CORE-EXC-03).
 
-**The 50 Percent Rule.** An entity owned 50% or more, directly or indirectly, in aggregate by blocked persons is itself blocked. That is true even if it is not on the list. Stakes held by different blocked persons are added together. Control without ownership does not trigger the rule [VERIFY: OFAC FAQs 398-401, ofac.treasury.gov/faqs/398, /399 and /401; checked 22 Nov 2026].
+**The 50 Percent Rule.** An entity owned 50% or more, directly or indirectly, in aggregate by blocked persons is itself blocked. That is true even if it is not on the list. Stakes held by different blocked persons are added together. Control without ownership does not trigger the rule \[VERIFY: OFAC FAQs 398-401, ofac.treasury.gov/faqs/398, /399 and /401; checked 22 Nov 2026\].
 
-**Records and reports (CORE-KYC-06).** Keep screening records for 10 years, the period OFAC set in March 2025. Report a rejected transaction within 10 business days [VERIFY: 31 CFR 501.601 and 501.604(c), eCFR; OFAC final rule FR 2025-04864, effective 21 Mar 2025; checked 22 Nov 2026]. Report blocked property within 10 business days of blocking it. Then report all blocked property held on 30 June by 30 September each year [VERIFY: 31 CFR 501.603(b), Cornell LII; checked 22 Nov 2026].
+**Records and reports (CORE-KYC-06).** Keep screening records for 10 years, the period OFAC set in March 2025. Report a rejected transaction within 10 business days \[VERIFY: 31 CFR 501.601 and 501.604(c), eCFR; OFAC final rule FR 2025-04864, effective 21 Mar 2025; checked 22 Nov 2026\]. Report blocked property within 10 business days of blocking it. Then report all blocked property held on 30 June by 30 September each year \[VERIFY: 31 CFR 501.603(b), Cornell LII; checked 22 Nov 2026\].
 
 **Worked example 2: aggregate ownership (what-if)**
 
@@ -85,7 +74,7 @@ CORE-KYC-01 screens the borrower, every guarantor and every 20% owner. Screening
 
 You cannot screen people you have not found. CORE-KYC-02 names every 20% owner and one control person, with government ID. It is set lower than FinCEN's 25% bank prong to match the guaranty rule (CORE-BOR-03).
 
-Build the chart down to people. Multiply percentages through each layer. Since 14 Aug 2026, US LLCs file no ownership report with FinCEN [VERIFY: FinCEN BOI page, fincen.gov/boi; checked 22 Nov 2026]. Our chart, with a signed ownership certification, is the only record.
+Build the chart down to people. Multiply percentages through each layer. Since 14 Aug 2026, US LLCs file no ownership report with FinCEN \[VERIFY: FinCEN BOI page, fincen.gov/boi; checked 22 Nov 2026\]. Our chart, with a signed ownership certification, is the only record.
 
 **Trusts (CORE-KYC-08, -09; CORE-BOR-19).** A trust may own part of a borrower but never be the borrower. Chart each kind of owner this way.
 
@@ -132,7 +121,7 @@ CORE-KYC-07 lists red flags that stop the file until the BSA officer clears them
 - **Credit officer path.** The subject is the guarantor's old address. It is now leased to an unrelated tenant. The file holds the lease and proof of her new home.
 - **BSA officer path.** A homestead exemption, or a second loan application, claims the subject as a primary residence. That contradicts the CORE-BP-01 certification.
 
-The split fits FinCEN's view that a red flag calls for due diligence, not a verdict. Its advisory says "No single red flag will be definitive proof" of fraud [VERIFY: FinCEN Advisory FIN-2012-A009, fincen.gov/system/files/advisory/FIN-2012-A009.pdf; checked 22 Nov 2026].
+The split fits FinCEN's view that a red flag calls for due diligence, not a verdict. Its advisory says "No single red flag will be definitive proof" of fraud \[VERIFY: FinCEN Advisory FIN-2012-A009, fincen.gov/system/files/advisory/FIN-2012-A009.pdf; checked 22 Nov 2026\].
 
 **Stop-and-verify flags (CORE-KYC-07, D-CORE-25).** Two more signs hold the wire, not the file, until a callback is done. One is a rush request to fund early or skip a step. The other is a new or changed email address, domain or phone number for any party. Call back on the number already in our file. A failed or refused callback is a red flag for the BSA officer. Any change to wire instructions is still a full red flag that only the BSA officer clears.
 
@@ -145,7 +134,7 @@ The split fits FinCEN's view that a red flag calls for due diligence, not a verd
 
 ### T5. Escalation and SARs (Objective 5, 10 minutes)
 
-CORE-KYC-05 sends every red flag to the BSA officer the same business day. Only the BSA officer decides whether to file a SAR. A SAR is required when $5,000 or more is involved and the activity looks suspicious [VERIFY: 31 CFR 1029.320(a)(2) and (b)(3), eCFR; checked 22 Nov 2026]. Attempted transactions count, so a failed wire fraud can still need one.
+CORE-KYC-05 sends every red flag to the BSA officer the same business day. Only the BSA officer decides whether to file a SAR. A SAR is required when $5,000 or more is involved and the activity looks suspicious \[VERIFY: 31 CFR 1029.320(a)(2) and (b)(3), eCFR; checked 22 Nov 2026\]. Attempted transactions count, so a failed wire fraud can still need one.
 
 | Timing | Rule |
 | --- | --- |
@@ -192,7 +181,7 @@ Work alone, then check the model answer. The case is RD-COM-01 Birchwood Plaza. 
 
 ## 6. Quiz: C7-quiz-v0
 
-Pass mark: 80% (8 of 10) and every item marked **critical** correct. Two retakes, each with the other set.
+Pass mark: 80% (8 of 10) and every item marked **critical** correct. Each retake uses the other form.
 
 ### Set A
 
@@ -312,7 +301,7 @@ Escalation note (what-if): "On 20 Nov 2026 the underwriter found that $400,000 o
 | Check | Result |
 | --- | --- |
 | Named code-asset-vN with change log | Met (v0) |
-| No open [POLICY], [CONFIRM] or [DATA] tags | Met. The policy gap was closed with CORE-KYC-04 to -07. [VERIFY] tags on legal statements carry source and date |
+| No open \[POLICY\], \[CONFIRM\] or \[DATA\] tags | Met. The policy gap was closed with CORE-KYC-04 to -07. \[VERIFY\] tags on legal statements carry source and date |
 | Every calculation cites a formula ID; thresholds cite rules | Met for rules. The two calculations (aggregate blocked ownership and deadline dates) have no library formula yet |
 | Four-line worked examples; re-checked by a second person | Four lines met; second-person check pending (solo: re-run the dates in a spreadsheet) |
 | Deal numbers match the running deals | Met: RD-RES-01, RD-MF-01, RD-COM-01. All red-flag scenarios are labeled what-if |
@@ -324,7 +313,7 @@ Escalation note (what-if): "On 20 Nov 2026 the underwriter found that $400,000 o
 
 **Real-world check (researched 20 Nov 2026).**
 
-- **Coverage.** FinCEN's 2012 rule brought non-bank residential mortgage lenders under AML program and SAR duties from August 2012 ([Federal Register, 14 Feb 2012](https://www.federalregister.gov/documents/2012/02/14/2012-3074/anti-money-laundering-program-and-suspicious-activity-report-filing-requirements-for-residential)). The definition of a residential mortgage loan rests on 1-4 unit collateral ([31 CFR 1010.100, Cornell LII](https://www.law.cornell.edu/cfr/text/31/1010.100)). Whether a given business-purpose lender is covered is a question for counsel [VERIFY: 31 CFR 1010.100(lll) and 1029.210, eCFR; counsel; checked 22 Nov 2026].
+- **Coverage.** FinCEN's 2012 rule brought non-bank residential mortgage lenders under AML program and SAR duties from August 2012 ([Federal Register, 14 Feb 2012](https://www.federalregister.gov/documents/2012/02/14/2012-3074/anti-money-laundering-program-and-suspicious-activity-report-filing-requirements-for-residential)). The definition of a residential mortgage loan rests on 1-4 unit collateral ([31 CFR 1010.100, Cornell LII](https://www.law.cornell.edu/cfr/text/31/1010.100)). Whether a given business-purpose lender is covered is a question for counsel \[VERIFY: 31 CFR 1010.100(lll) and 1029.210, eCFR; counsel; checked 22 Nov 2026\].
 - **SAR rule.** $5,000 threshold; 30 days, extendable to 60 with no suspect; 5-year records; confidentiality ([31 CFR 1029.320](https://www.law.cornell.edu/cfr/text/31/1029.320)).
 - **OFAC.** Records went from 5 to 10 years with a rule effective 21 Mar 2025 ([Federal Register, 21 Mar 2025](https://www.govinfo.gov/content/pkg/FR-2025-03-21/html/2025-04864.htm)). Ownership stakes of blocked persons are aggregated, and control alone does not block an entity ([OFAC FAQs](https://ofac.treasury.gov/faqs/topic/1521)).
 - **Residential real estate reporting.** The FinCEN rule took effect on 1 Mar 2026. A federal court in Texas vacated it on 19 Mar 2026 ([Gibson Dunn, 1 Apr 2026](https://www.gibsondunn.com/fincen-residential-real-estate-reporting-rule-vacated-nationwide/)). It covered non-financed transfers, so our financed deals were never in scope.

@@ -271,7 +271,7 @@ function showHome(focus, anchor) {
   // learning path
   const path = el("section", "card path"); path.id = "path"; path.setAttribute("aria-labelledby", "path-h");
   const ph = el("h2", "", "Learning path"); ph.id = "path-h";
-  path.append(ph, el("p", "fine", "Five categories, three modules each. Hours are the course estimates. Work them in order: each builds on the last."));
+  path.append(ph, el("p", "fine", "Five categories, three modules each. Work them in order: each builds on the last. A module shows its CPE credits once they are measured."));
   const cats = CATS.length ? CATS : [{ title: "", blurb: "", modules: MODS.map((m) => m.key) }];
   cats.forEach((c, ci) => {
     const box = el("section", "catblock");
@@ -284,7 +284,7 @@ function showHome(focus, anchor) {
       if (r && r.m === m) li.setAttribute("aria-current", "step");
       const a = el("a", "pt", m.title); a.href = "#" + m.key;
       const st = el("span", "pst"); st.dataset.s = s; st.append(icon(s === "done" ? "tick" : s === "in-progress" ? "chev" : "ring"), STATUS_TEXT[s] === "Done" ? "Complete" : STATUS_TEXT[s]);
-      li.append(el("span", "pc", modNo(m)), a, el("span", "ph", `${m.hours} h`), st); list.append(li);
+      li.append(el("span", "pc", modNo(m)), a, el("span", "ph", m.credits != null ? `${num1(m.credits)} CPE` : ""), st); list.append(li);
     }
     path.append(box); box.append(list);
   });
@@ -645,7 +645,7 @@ function buildOverview(m, sec, stops, ctlRef) {
   htx.append(acts);
   const dl = el("dl", "facts");
   const fact = (k, v) => { if (!v) return; const d = el("div"); const dd = el("dd"); dd.append(v); d.append(el("dt", "", k), dd); dl.append(d); };
-  fact("Time", `${m.hours} ${m.hours === 1 ? "hour" : "hours"}`);
+  if (m.credits == null) fact("Time", "Not yet measured");
   if (m.credits != null) fact("CPE credits", `${num1(m.credits)}`);
   const pre = MODS.find((x) => x.code === (m.prereq || "").trim());
   fact("Prerequisite", pre ? Object.assign(el("a", "", `Module ${modNo(pre)}: ${shortTitle(pre)}`), { href: "#" + pre.key }) : (/^none$/i.test((m.prereq || "").trim()) ? "None" : m.prereq));

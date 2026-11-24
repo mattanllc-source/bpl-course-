@@ -8,18 +8,20 @@ This bible is **DRAFT v0.1**. It is the single source of truth for how every BPL
 
 **What this draft is built on.** The program Overview guide was not available. The policy, formula library, running deals and State Law Table now exist as tabs (19-20 Nov 2026). So:
 
-- Section 3 (program structure) is a **proposal** for sign-off, not a copy of the Overview guide.
+- Sections 2 and 3 (learners and program structure) follow the curriculum review decisions confirmed 24 Nov 2026. They are not a copy of the Overview guide. Their hours and credits are planning estimates until lessons are final.
 - Every policy limit appears as a placeholder, e.g. `[POLICY: max LTC]`. Since 19 Nov 2026 most are replaced by rule IDs from the Model Credit Policy tab; Section 8 lists the rest.
 - Industry ranges are shown only as market context, labelled "market range", with a source.
 - Legal and regulatory statements carry `[VERIFY]` with source and date.
 
-**Decisions already confirmed (18 Nov 2026).** ID prefixes are CORE, RES, MF and COM. Learners are originators, underwriters and analysts, and closing, servicing and asset management staff. The bible lives as a shared doc.
+**Decisions already confirmed (18 Nov 2026).** ID prefixes are CORE, RES, MF and COM. The bible lives as a shared doc. The 18 Nov learner list (originators, underwriters, analysts, and closing, servicing and asset management staff) is superseded by Section 2.
+
+**Structure confirmed 24 Nov 2026 (curriculum review decisions 1-17).** Four learner roles: loan originator, new underwriter, analyst at a private lender or fund, and founder of a lending business. The certificate is the core plus one role track. Product families become later electives.
 
 **Working assumptions.** A1: "FF" in RES-FF-03 is the Fix-and-Flip topic code. A2: asset names follow `code-asset-vN`, e.g. `C3-lesson-v1`. A3: credit committee members take the program as reviewers, not learners.
 
 ## 1. Purpose and scope
 
-BPL trains our people to originate, underwrite, close and manage business-purpose real estate loans to a common standard. A graduate can size a loan, defend it at credit committee and manage it to repayment.
+BPL trains underwriters, originators, analysts and founders in business-purpose real estate lending to a common standard. A graduate can size a loan, defend it at credit committee and manage it to repayment.
 
 **Program goals**
 
@@ -28,7 +30,7 @@ BPL trains our people to originate, underwrite, close and manage business-purpos
 3. Every learner can tell a business-purpose loan from a consumer one and escalate doubt.
 4. Every asset uses the same names, data rules and review steps.
 
-**In scope: four product families**
+**In scope: the core and three product families (the families are later electives; Section 3)**
 
 | Family | Code | Collateral | Typical products | Primary sizing tests |
 | --- | --- | --- | --- | --- |
@@ -43,7 +45,7 @@ BPL trains our people to originate, underwrite, close and manage business-purpos
 - Loans on property the borrower or a relative occupies, or will occupy, as a dwelling.
 - Owner-occupied commercial (owner-user) loans. Confirmed out of scope, 18 Nov 2026.
 - Agency (Fannie Mae, Freddie Mac), HUD/FHA and SBA programs, except as comparison.
-- Securities trading, fund management and capital-markets execution, except as context in C14.
+- Securities trading, fund management and capital-markets execution, except as context in C14 and at issue-spotting level in Tracks A and F.
 
 **The business-purpose test (taught in C1, used everywhere)**
 
@@ -55,125 +57,167 @@ Business purpose does not mean compliance-exempt. ECOA/Reg B, BSA/AML, OFAC, UDA
 
 ## 2. Learners and certificate paths
 
-Every learner completes Core, then at least one family track for their desk. Roles differ in their on-the-job (OJT) tasks and capstone role, not in the modules they take. This keeps one shared vocabulary across the loan life cycle.
+Every learner takes the same core (C0-C14), then one role track. Roles differ in their track, on-the-job (OJT) tasks and capstone, not in the core. One core keeps one shared vocabulary across the loan life cycle. An originator who can size a loan and read a value makes fewer bad promises. (Decisions 1-3, 24 Nov 2026.)
+
+The role list rests on a 31-task chart: 21 tasks are taught in the core and 10 in the tracks. Closing, servicing and credit-officer work stays in the core as content every role learns. These are not separate audiences. (Decision 1; curriculum review A, §1.2-1.3.)
 
 **Learner roles**
 
-| Role | What they do on a deal | Entry level assumed | Required path | Capstone role |
+| Role | What they do on a deal | Entry level assumed | Required path | Capstone |
 | --- | --- | --- | --- | --- |
-| Originator / sales | Sources borrowers, screens purpose, builds the term sheet, manages the borrower to close | Can read a closing statement; no formal credit training | BPL-CORE + one family certificate for their desk | Pitches the deal and term sheet; answers committee questions on sponsor and market |
-| Underwriter / credit analyst | Spreads financials, sizes the loan, writes the credit memo, sets conditions | Spreadsheet skills; basic accounting | BPL-CORE + every family certificate they will underwrite | Writes and defends the credit memo |
-| Closing, servicing and asset management | Clears conditions, funds, administers draws, monitors, handles extensions and defaults | Loan file and document handling | BPL-CORE + one family certificate for their portfolio | Runs the closing checklist, draw and default scenarios |
+| Loan originator (L) | Sources and qualifies borrowers and brokers, screens purpose and occupancy, quick-sizes and quotes, issues the term sheet, manages the borrower to close | College graduate with basic finance. Can read a closing statement; no formal credit training | Core + Track L | L6: term sheet and a 5-minute committee pitch on the capstone deal; answers 10 committee multiple-choice questions |
+| New underwriter (U) | Spreads the rent roll and T-12, reviews value and third-party reports, analyzes the sponsor, sizes the loan, writes the credit memo, sets conditions | College graduate with basic finance. Spreadsheet skills; basic accounting | Core + Track U | U5: full credit memo on the capstone deal, then a critique from the committee side |
+| Analyst at a private lender or fund (A) | Spreads and models deals, researches markets, monitors loans, analyzes the portfolio, reports to investors and lenders | College graduate with basic finance. Spreadsheet skills \[CONFIRM\] | Core + Track A | A6: investment memo, model and portfolio-impact note on the capstone deal |
+| Founder of a lending business (F) | Designs products and the credit policy, maps the firm's legal footprint, raises capital, models unit economics, sets up operations and vendors | College graduate with basic finance. No lending experience assumed \[CONFIRM\] | Core + Track F | F6: 12-month plan for a new lender whose first loan is the capstone deal |
+
+The founder task list rests on thin evidence. A practitioner should confirm it before Track F is written. \[CONFIRM\]
 
 Credit committee members do not take the program as learners. They act as reviewers and capstone panelists. \[CONFIRM\]
 
-**Certificates (proposed)**
+**The certificate: core plus one role track (planning estimates)**
 
-| Certificate | Modules | Hours | Who needs it |
-| --- | --- | --- | --- |
-| BPL-CORE: Business-Purpose Lending Foundations | C0-C14 | 38 | All three roles |
-| BPL-RES: Residential 1-4 Credit | BPL-CORE + R1-R6 | 38 + 20 = 58 | Residential desk (RTL and rental) |
-| BPL-MF: Multifamily 5+ Credit | BPL-CORE + M1-M6 | 38 + 20 = 58 | Multifamily desk |
-| BPL-CRE: Commercial Credit | BPL-CORE + CM1-CM6 | 38 + 20 = 58 | Commercial desk |
+| Certificate path | Modules and units | Planned hours | Planned credits (50 min) | Who needs it |
+| --- | --- | --: | --: | --- |
+| Core (required for every path) | C0-C14 | 46.5 | 55.8 | L, U, A, F |
+| Core + Track L | C0-C14, L1-L6 | 54.5 | 65.4 | L |
+| Core + Track U | C0-C14, U1-U5 | 54.5 | 65.4 | U |
+| Core + Track A | C0-C14, A1-A6 | 58.5 | 70.2 | A |
+| Core + Track F | C0-C14, F1-F6 | 58.5 | 70.2 | F |
 
-**Path rules (proposed, for sign-off)**
+**How to read the hours.** We claim only hours counted by the NASBA QAS self-study word-count method. Today the written lessons measure about 11 hours; only C0 and C3 are written to full depth. The figures above are planning estimates from the module blueprints and the curriculum review. Final credits come from word and item counts once lessons are final. (Decision 16.)
 
-1. Core modules C0-C2 come first and in order. After that, a family module may start once its listed prerequisites pass.
-2. A learner may not sign a credit memo, term sheet or closing checklist alone until the matching certificate is issued. (CORE-AUTH-01)
-3. Target time to BPL-CORE: 90 days from start. Target to first family certificate: 150 days. \[CONFIRM\]
-4. Certificates last 24 months. Renewal needs a refresher quiz and one live-file OJT review. \[CONFIRM\]
-5. Experienced hires may test out of a module by passing its quiz and OJT task at the pass mark. They may not test out of C1, C7 or the capstone.
+**Path rules** (all roles: L, U, A, F)
 
-**Solo study mode (decided 18 Nov 2026)**
+1. Core modules C0-C2 come first and in order. After that, a core module or a track unit may start once its listed prerequisites pass. Track units list theirs under "Opens after" in Section 3. (L, U, A, F)
+2. A learner may not sign a credit memo, term sheet or closing checklist alone until their certificate (core + role track) is issued. (CORE-AUTH-01) (L, U, A, F)
+3. Target time to finish the core: 90 days from start. Target to the certificate (core + one track): 150 days. \[CONFIRM\] (L, U, A, F)
+4. Certificates last 24 months. Renewal needs a refresher quiz and one live-file OJT review. \[CONFIRM\] (L, U, A, F)
+5. Experienced hires may test out of a module by passing its quiz and OJT task at the pass mark. They may not test out of C1, C7 or their track capstone. (L, U, A, F)
+6. The residential, multifamily and commercial product families (R1-R6, M1-M6, CM1-CM6) are later electives. They open once the core is complete and do not count toward the certificate. (Decision 2.) (L, U, A, F)
+7. Track F teaches securities, fund and licensing law at issue-spotting level only. It gives no legal advice. Its unit-economics content uses only formulas the owner supplies; none are invented. (Decision 4.) (F)
 
-This course is being built and taken by one learner. The three roles stay, and the learner rotates through all of them on every deal.
+**Solo study mode (decided 18 Nov 2026; updated to four roles 24 Nov 2026)**
 
-1. **Originator:** screen the fictional borrower for business purpose, gather the file and draft the term sheet.
-2. **Underwriter:** size the loan with the model policy, write the credit memo and decide approve, decline or restructure.
-3. **Closing, servicing and asset management:** clear conditions, fund, run draws and extensions, and work a default scenario.
+This course is being built and taken by one learner. The four roles stay, and the learner rotates through all of them on every deal.
 
-The roles hand work to each other through written outputs: term sheet, then credit memo, then closing checklist. That way each role checks the one before it.
+1. **Loan originator:** screen the fictional borrower for business purpose, gather the file and draft the term sheet.
+2. **New underwriter:** size the loan with the model policy, write the credit memo and decide approve, decline or restructure. Then clear conditions, fund, run draws and extensions, and work a default scenario. That closing and servicing work is core content every role learns.
+3. **Analyst:** spread the deal into the workbook, test it against market data, and write a portfolio-impact note.
+4. **Founder:** check the deal against the lender's credit box and a capital partner's eligibility criteria. Note where the firm's policy, licences or funding would need to change.
+
+The roles hand work to each other through written outputs: term sheet, then credit memo, then closing checklist, then portfolio-impact note. That way each role checks the one before it.
 
 - **OJT tasks** become role tasks on the running deals or on public material (a for-sale listing, a lender's public term sheet, public rent data). No live loan files are used.
 - **Supervisor sign-off** becomes self-review against the module's model answer and rubric. The learner records a score and the gaps found.
 - **Certificates** are personal milestones. Pass marks in Section 3 still apply.
 - **Credit committee** is simulated: the learner writes the memo as underwriter, then critiques it from the committee's side using the CORE-AUTH-01 matrix.
 
-## 3. Program structure (DRAFT proposal)
+## 3. Program structure
 
-The program has 33 modules and 98 hours: Core 38 hours, then 20 hours per family track. **This structure is a proposal.** The Overview guide was not available. Replace titles, hours and pass marks with the guide's figures once supplied.
+The certificate is the core (C0-C14, 15 modules) plus one role track (five or six units). The core runs in five categories of three modules. Each track ends with a capstone on the ground-up capstone deal (RES-GU; owner decision 22 Nov 2026). Structure confirmed 24 Nov 2026 (curriculum review decisions 1-17).
 
-**Assessment and pass marks (proposed)**
+All hours and credits here are planning estimates. Hours = credits × 50 ÷ 60. Today's written lessons measure about 11 hours by the NASBA QAS word-count method. Final credits come from word and item counts once lessons are final. (Decision 16.)
 
-| Assessment | Where | Pass mark | Retakes |
-| --- | --- | --- | --- |
-| Module quiz | Every module | 80%, and every item tagged "critical" correct | 2 retakes, new item set each time |
-| Practice exercise | Every module | Completed with worked numbers; coach sign-off | Unlimited |
-| OJT task | Every module | Supervisor rates "meets standard" on the module rubric | 1 redo |
-| Family capstone | R6, M6, CM6 | 85% on the rubric, no critical credit error, panel sign-off | 1 retake after coaching |
+**Assessment and pass marks**
+
+| Assessment | Where | Format | Pass mark | Retakes | Roles |
+| --- | --- | --- | --- | --- | --- |
+| Module quiz | Every core module and track unit | Multiple choice only: single best answer, four options, auto-scored, a rationale for every option | 80%, and the critical-item rule below | Two retakes \[CONFIRM\]. Two parallel forms with shuffled item and option order: Form A first, and each retake uses the other form. A third form or a blueprint-drawn pool is planned (decision 11) | L, U, A, F |
+| Practice exercise | Every module | Worked with real numbers against a model answer | Completed with worked numbers; coach sign-off | Unlimited | L, U, A, F |
+| OJT task | Every module | Role task on a running deal or public material | Supervisor rates "meets standard" on the module rubric (self-review in solo mode) | 1 redo | L, U, A, F |
+| Track capstone | L6, U5, A6, F6 | Role work product on the capstone deal, scored on a rubric. L6 adds 10 committee multiple-choice questions | 85% on the rubric, no critical credit error, panel sign-off \[CONFIRM\] | 1 retake after coaching | One per role |
+
+**Critical items (quality bar 8.7).** Each critical skill is tested by at least two items per form. A learner fails if they miss both, or miss one with a total under 80%. Each critical item is tied to a loss-causing or legal error from the needs analysis. It passes a two-reviewer ambiguity check. (Decision 10.)
 
 A "critical credit error" is any of: a wrong sizing result that changes the loan amount or approver; a missed business-purpose or occupancy red flag; a breach of a policy limit without an approved exception; an approval outside authority; or a missed KYC or OFAC hit. The final outcome of the loan does not matter. (Confirmed 20 Nov 2026 with C14 and CORE-AUTH-04.)
 
-**Core: C0-C14 (38 hours)**
+**Core: C0-C14 (planned 55.8 credits, about 46.5 hours)**
 
-| Code | Module | Hours | Prerequisite |
-| --- | --- | --- | --- |
-| C0 | Program orientation and the BPL market | 1 | None |
-| C1 | Business purpose vs consumer: the purpose test and regulatory map | 2 | C0 |
-| C2 | Credit fundamentals and the loan life cycle | 2 | C1 |
-| C3 | Real estate finance math: interest, amortization, debt service | 3 | C2 |
-| C4 | Property cash flow: from gross potential rent to NOI | 3 | C3 |
-| C5 | Valuation: appraisals, cap rates, as-is, ARV and as-stabilized | 3 | C4 |
-| C6 | Borrower, sponsor and guarantor analysis | 3 | C2 |
-| C7 | KYC, BSA/AML, OFAC and fraud red flags | 2 | C1 |
-| C8 | Loan structuring and sizing: leverage tests, reserves, pricing | 3 | C3, C5 |
-| C9 | Loan documents, title, insurance and collateral | 3 | C2 |
-| C10 | State law: licensing, usury, foreclosure and recourse | 2 | C1, C9 |
-| C11 | Closing and funding | 2 | C9 |
-| C12 | Servicing, draws and asset management | 3 | C11 |
-| C13 | Default, workout, foreclosure and REO | 3 | C10, C12 |
-| C14 | Credit memo, committee and portfolio context | 3 | C8, C6 |
+Every role takes every core module. "Roles served most" shows where each role draws the most job value (curriculum review A, §2.1).
 
-**Residential 1-4: R1-R6 (20 hours)**
+| Category | Code | Module | Planned credits | Prerequisite | Roles served most |
+| --- | --- | --- | --: | --- | --- |
+| Foundations (8.4 credits, 7.0 h) | C0 | The BPL deal: who, what and the two credit questions (working title) | 2.0 | None | L, U, A, F |
+|  | C1 | Business purpose vs consumer: the purpose test and regulatory map | 3.4 | C0 | U, L, F |
+|  | C2 | Credit fundamentals | 3.0 | C1 | L, U, A, F |
+| Real estate analysis (11.4 credits, 9.5 h) | C3 | Real estate finance math: interest, amortization, debt service | 3.4 | C2 | L, U, A, F |
+|  | C4 | Property cash flow: from gross potential rent to NOI | 4.0 | C3 | U, A |
+|  | C5 | Valuation: appraisals, cap rates, as-is, ARV and as-stabilized | 4.0 | C4 | U, A |
+| Underwriting (12.6 credits, 10.5 h) | C6 | Borrower, sponsor and guarantor analysis | 4.4 | C2 | U, L, A |
+|  | C7 | KYC, BSA/AML, OFAC and fraud red flags | 3.4 | C1 | U, L, F |
+|  | C8 | Loan structuring and sizing: leverage tests, reserves, pricing | 4.8 | C3, C5 | L, U, A, F |
+| Legal and closing (10.4 credits, 8.7 h) | C9 | Loan documents, title, insurance and collateral | 4.0 | C2 | U, L, A |
+|  | C10 | State law: licensing, usury, foreclosure and recourse | 3.4 | C1, C9 | U, L, F |
+|  | C11 | Closing and funding | 3.0 | C9 | U, L, F |
+| Managing the loan (13.0 credits, 10.8 h) | C12 | Servicing, draws and asset management | 4.0 | C11 | A, F |
+|  | C13 | Default, workout, foreclosure and REO | 4.4 | C10, C12 | A, F |
+|  | C14 | Credit memo, committee and portfolio context | 4.6 | C8, C6 | L, U, A, F |
+| **Total** |  |  | **55.8** |  |  |
 
-| Code | Module | Hours | Prerequisite |
-| --- | --- | --- | --- |
-| R1 | Residential BPL products: RTL and rental | 2 | BPL-CORE |
-| R2 | RTL underwriting: purchase, rehab budget, LTC and LTARV | 4 | R1 |
-| R3 | Rehab and ground-up: budgets, draws and inspections | 3 | R2 |
-| R4 | DSCR rental underwriting: rent, PITIA and DSCR | 4 | R1 |
-| R5 | Rental portfolios and short-term rentals | 3 | R4 |
-| R6 | Residential capstone: from application to committee | 4 | R2-R5 |
+**What moved (decisions 5-7).** The loan life-cycle objective moves from C2 to C0. Market data moves to Track A (unit A1) and one submarket series in C4. The market cycle becomes content in C8 and C14. Funding routes and risk retention move to the shared A3/F3 unit; C14 keeps a buyer-eligibility check. C07-O6 and C12-O8 move to tracks. C09-O5 merges into C11-O2. C8 sits at 4.0 hours, the LD-03 cap; any further growth forces a C8 split.
 
-**Multifamily 5+: M1-M6 (20 hours)**
+**Track L: Loan originator (about 8 hours)**
 
-| Code | Module | Hours | Prerequisite |
-| --- | --- | --- | --- |
-| M1 | Multifamily market, asset classes and submarkets | 2 | BPL-CORE |
-| M2 | Rent roll and T-12 analysis | 4 | M1 |
-| M3 | Multifamily sizing: DSCR, debt yield, LTV and the binding constraint | 4 | M2 |
-| M4 | Value-add bridge: business plan, stabilization and extension tests | 3 | M3 |
-| M5 | Construction and lease-up | 3 | M3 |
-| M6 | Multifamily capstone | 4 | M2-M5 |
+| Unit | Content | Hours | Opens after |
+| --- | --- | --: | --- |
+| L1 | The originator's market: channels, brokers, referral partners, reading a competitor's public term sheet | 1.5 | C2 |
+| L2 | The first call: discovery, purpose and occupancy screen, what not to say (Reg B discouragement) | 1.5 | C1, C2 |
+| L3 | Quick-size and price: back-of-envelope sizing, points versus rate, all-in yield to the borrower | 1.5 | C3, C8 |
+| L4 | Term sheet and LOI: anatomy, non-binding language, deposits, conditions; commitment letter contrasted | 1.5 | C8, C9 |
+| L5 | Pipeline to close: third parties, condition chasing, counter-offers and declines, adverse-action handoff | 1.0 | C11 |
+| L6 | **Capstone:** term sheet and a 5-minute committee pitch for the capstone deal; answer 10 committee multiple-choice questions | 1.0 | C14 |
 
-**Commercial: CM1-CM6 (20 hours)**
+**Track U: New underwriter (about 8 hours)**
 
-| Code | Module | Hours | Prerequisite |
-| --- | --- | --- | --- |
-| CM1 | CRE asset types and their risks | 2 | BPL-CORE |
-| CM2 | Leases, tenants and rollover | 4 | CM1 |
-| CM3 | CRE cash flow and valuation: TI, LC, reserves and NCF | 4 | CM2 |
-| CM4 | CRE structuring: sizing, cash management and covenants | 3 | CM3 |
-| CM5 | Specialty assets: hospitality, self-storage, mixed-use | 3 | CM3 |
-| CM6 | Commercial capstone | 4 | CM2-CM5 |
+| Unit | Content | Hours | Opens after |
+| --- | --- | --: | --- |
+| U1 | Spreading lab: full rent roll and T-12 into the workbook, with planted defects | 2.0 | C4 |
+| U2 | Third-party report lab: whole appraisal, Phase I, property condition report, title commitment | 2.0 | C5, C9 |
+| U3 | Rehab and construction budget review on the capstone deal | 1.5 | C8 |
+| U4 | Conditions, exceptions and capital-partner eligibility in practice | 1.0 | C14 |
+| U5 | **Capstone:** full credit memo on the capstone deal, then a critique from the committee side | 1.5 | C14 |
 
-**Running deals.** Each family uses one fictional deal from first module to capstone, so numbers carry forward. They live in the Running Deals tab (RD-RES-01, RD-MF-01, RD-COM-01). Section 6 glossary examples stay separate and are labelled "illustrative".
+**Track A: Analyst at a private lender or fund (about 12 hours)**
+
+| Unit | Content | Hours | Opens after |
+| --- | --- | --: | --- |
+| A1 | Market and submarket analysis: public series, percent versus percentage point, cycle indicators | 2.0 | C4 |
+| A2 | The underwriting model: build, audit, sensitivity and scenario tables, IRR | 2.5 | C5, C8 |
+| A3 | Capital markets (shared with F): warehouse, whole-loan sale, securitization, data tape, repurchase, risk retention | 2.0 | C14 |
+| A4 | Portfolio analytics: delinquency, roll rates, vintages, concentration, expected loss | 2.0 | C14 |
+| A5 | Investor reporting (shared with F): remittance, loan-level and fund-level reports | 2.0 | C12, C14 |
+| A6 | **Capstone:** investment memo plus model plus portfolio-impact note for the capstone deal | 1.5 | A1-A5 |
+
+**Track F: Founder of a lending business (about 12 hours)**
+
+| Unit | Content | Hours | Opens after |
+| --- | --- | --: | --- |
+| F1 | Business model and unit economics (needs owner formulas) | 2.0 | C8 |
+| F2 | Legal footprint: entity, state licence map, AML duty and program design (former C07-O6), compliance calendar | 2.0 | C7, C10 |
+| F3 | Capital: equity, notes, private fund issue-spotting, warehouse line, forward-flow buyer; shares A3 and A5 | 2.5 | C14 |
+| F4 | Writing the credit policy: credit box, authority matrix, exceptions, QC and loan review | 2.0 | C14 |
+| F5 | Operations: LOS, vendors, subservicer oversight, wire controls | 1.5 | C11, C12 |
+| F6 | **Capstone:** 12-month plan for a new lender whose first loan is the capstone deal: product sheet, one policy section, capital plan, risk register | 2.0 | F1-F5 |
+
+Track F stays at issue-spotting for securities, fund and licensing law, with no legal advice. F1 waits for owner-supplied unit-economics formulas; none may be invented. (Decision 4.) Units A3 and A5 are built once and also serve Track F.
+
+**Product families: later electives (not part of the certificate)**
+
+The residential 1-4 (R1-R6), multifamily 5+ (M1-M6) and commercial (CM1-CM6) families become later electives. They open once the core is complete. Their module lists below are kept from the 18 Nov 2026 draft and will be reviewed when the electives are built. The earlier estimate was 20 hours per family; it is not part of any certificate claim.
+
+| Family | Modules (draft titles) |
+| --- | --- |
+| Residential 1-4 | R1 Residential BPL products: RTL and rental · R2 RTL underwriting: purchase, rehab budget, LTC and LTARV · R3 Rehab and ground-up: budgets, draws and inspections · R4 DSCR rental underwriting: rent, PITIA and DSCR · R5 Rental portfolios and short-term rentals · R6 Residential capstone |
+| Multifamily 5+ | M1 Multifamily market, asset classes and submarkets · M2 Rent roll and T-12 analysis · M3 Multifamily sizing: DSCR, debt yield, LTV and the binding constraint · M4 Value-add bridge: business plan, stabilization and extension tests · M5 Construction and lease-up · M6 Multifamily capstone |
+| Commercial | CM1 CRE asset types and their risks · CM2 Leases, tenants and rollover · CM3 CRE cash flow and valuation: TI, LC, reserves and NCF · CM4 CRE structuring: sizing, cash management and covenants · CM5 Specialty assets: hospitality, self-storage, mixed-use · CM6 Commercial capstone |
+
+**Running deals.** The core uses three fictional deals from first module to last, so numbers carry forward. They live in the Running Deals tab (RD-RES-01, RD-MF-01, RD-COM-01). The track capstones use the ground-up capstone deal (RES-GU). Section 6 glossary examples stay separate and are labelled "illustrative".
 
 ## 4. Learning design rules
 
 Every module is 1-4 hours, has 3-6 measurable objectives, and ends with practice plus an on-the-job task. A module that breaks a rule below is not done.
 
-**Rule LD-01: Objectives use one Bloom's verb each.** Each module has 3-8 measurable objectives. Write "By the end of \[code\], you will be able to \[verb\] \[object\] \[standard\]." Each objective has one observable verb. Never use "understand", "know", "learn", "be aware of" or "appreciate". Amended 22 Nov 2026 (Flagship plan; QAS Self Study).
+**Rule LD-01: Objectives use one Bloom's verb each.** Each module has 3-8 measurable objectives. Write "By the end of \[code\], you will be able to \[verb\] \[object\] \[standard\]." Each objective has one observable verb. Never use "understand", "know", "learn", "be aware of" or "appreciate". Bloom levels and section links are author metadata. They stay in blueprints, metadata tables and alignment matrices, never in learner-facing objective text (decision 17, 24 Nov 2026; M3.5). Amended 22 Nov 2026 (Flagship plan; QAS Self Study).
 
 | Bloom's level | Use for | Approved verbs | BPL example |
 | --- | --- | --- | --- |

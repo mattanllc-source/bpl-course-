@@ -237,7 +237,7 @@ Work alone, then check the model answer. The case is RD-MF-01 Cedar Court, a $5,
 
 ## 6. Quiz: C9-quiz-v0
 
-Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retakes, each with the other set.
+Pass mark: 80% (10 of 12) and every item marked **critical** correct. Each retake uses the other form.
 
 ### Set A
 

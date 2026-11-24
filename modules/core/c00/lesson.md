@@ -40,14 +40,14 @@ That is the market you are joining. You will follow these three deals through th
 
 By the end of C0, you will be able to:
 
-1. **Distinguish** a business-purpose loan from bank, agency and consumer mortgage loans by borrower, collateral, term, repayment source and governing law (Understand; T1).
-2. **Explain** where banks, debt funds, mortgage REITs and specialist BPL lenders sit in the capital stack, and which regulator or law reaches each (Understand; T2).
-3. **Trace** a running-deal loan through a funding route, naming the party whose eligibility criteria and risk-retention rule apply at each step (Apply; T3).
-4. **Calculate** shares, growth rates and percentage-point changes from a named primary data series, and reconcile each to its published headline (Apply; T4).
-5. **Analyze** how a market-cycle phase and four indicators change the refinance and collateral risk of a bridge loan (Analyze; T5).
-6. **Locate**, for a given credit question, the governing rule ID, formula ID, State Law Table row and [VERIFY] source in the course tabs (Apply; T6).
+1. **Distinguish** a business-purpose loan from bank, agency and consumer mortgage loans by borrower, collateral, term, repayment source and governing law.
+2. **Explain** where banks, debt funds, mortgage REITs and specialist BPL lenders sit in the capital stack, and which regulator or law reaches each.
+3. **Trace** a running-deal loan through a funding route, naming the party whose eligibility criteria and risk-retention rule apply at each step.
+4. **Calculate** shares, growth rates and percentage-point changes from a named primary data series, and reconcile each to its published headline.
+5. **Analyze** how a market-cycle phase and four indicators change the refinance and collateral risk of a bridge loan.
+6. **Locate**, for a given credit question, the governing rule ID, formula ID, State Law Table row and [VERIFY] source in the course tabs.
 
-Four of the six objectives are at Apply or above. C0 teaches no job task in full. It previews fifteen tasks from the needs analysis, and T6 names the module that teaches each.
+C0 teaches no job task in full. It previews fifteen tasks from the needs analysis, and T6 names the module that teaches each.
 
 ## 3. Teach
 
@@ -145,7 +145,7 @@ Each running deal is one product. Read each row as a credit officer would: who b
 | Total commitment | $340,000 | $5,140,000 | $3,520,000 |
 | Repayment source | The exit, not today's income | The exit, not today's income | The exit, not today's income |
 | Planned exit | Renovate in 5 months, lease, then refinance into a DSCR loan. Back-up: sell at the $520,000 ARV | Renovate over 18 months, then refinance into a term loan | Lease up the empty 12,000 sf, then refinance into a term loan |
-| What happens in the deal file | Month 14: DSCR refinance approved at $338,000 | Month 27: term loan of $5,472,000 repays the bridge | Month 24: term loan of $3,900,000 repays the bridge |
+| What happens in the deal file | Month 14: the DSCR refinance fails at the $2,400 market rent (0.76x). A DSCR lender would lend only $245,000, so the sale is the exit | Month 27: a $5,472,000 term loan from a third-party agency small-loan lender repays the bridge and its $25,700 exit fee | Month 24: a $3,900,000 term loan from a third-party regional bank repays the bridge |
 
 Now test two of the policy rules on Maple Run.
 
@@ -159,7 +159,7 @@ Then measure Maple Run's leverage the way an RTL lender does, on cost.
 - **Substitution:** $340,000 ÷ ($300,000 + $100,000) = $340,000 ÷ $400,000 = 0.850000.
 - **Result:** LTC 85.0%, exactly at the Tier 2 cap of 85% (RES-FF-03). The loan passes at the limit.
 
-The two bridge exits are refinances, so their repayment depends on a future lender. The Maple Run exit is a refinance too, but with a sale as a back-up. That back-up is why a flip lender sizes on cost and ARV, not only on rent.
+The two bridge exits are refinances, so their repayment depends on a future lender. The Maple Run plan is a refinance too, with a sale as a back-up. At the $2,400 market rent the refinance fails, so the back-up becomes the exit (RD-RES-01, Role 2). That back-up is why a flip lender sizes on cost and ARV, not only on rent.
 
 **Why it matters to a credit officer.** The product decides which rules apply, which test binds and what can go wrong. Classify every request first. Then ask what repays it and how sure that exit is.
 
@@ -220,7 +220,7 @@ Cedar Court has two layers: our senior loan and the owners' equity. Build the st
 
 1. **Senior share of the stack.** Inputs: commitment $5,140,000; total sources $7,380,066.67. Substitution: $5,140,000 ÷ $7,380,066.67 = 0.696471. Result: senior debt is 69.6% of the stack.
 2. **Equity share.** Inputs: cash to close $2,240,066.67. Substitution: $2,240,066.67 ÷ $7,380,066.67 = 0.303529. Result: equity is 30.4% of the stack, and it takes the first loss.
-3. **How far value can fall before our loan is hurt.** Formula: cushion = 1 − (loan ÷ value). Inputs: fully funded loan $5,140,000; as-stabilized value $8,600,000 (appraisal by a Member of the Appraisal Institute, or MAI). Substitution: 1 − ($5,140,000 ÷ $8,600,000) = 1 − 0.597674 = 0.402326. Result: the stabilized value could fall 40.2% before the senior loan is impaired, before sale costs.
+3. **How far value can fall before our loan is hurt.** Formula: cushion = 1 − (loan ÷ value). Inputs: fully funded loan $5,140,000; as-stabilized value $8,600,000 (appraisal by a Member of the Appraisal Institute, or MAI). Substitution: 1 − ($5,140,000 ÷ $8,600,000) = 1 − 0.597674 = 0.402326. Result: the stabilized value could fall 40.2% before the senior loan is impaired, before sale costs. Committee leans on the as-is cushions instead, because a stalled plan recovers on as-is value less sale costs. On the $6,200,000 as-is basis (the lower of price and appraisal), the day-one cushion is 1 − ($4,340,000 ÷ $6,200,000) = 30.0%. If the plan stalls at month 10 with $4,740,000 funded, it is 1 − ($4,740,000 ÷ $6,200,000) = 23.5% (RD-MF-01, Role 2).
 
 Now add a layer. The Formula Library tests F-MF-16 with a hypothetical $800,000 mezzanine loan on Cedar Court. It is not part of the running deal.
 
@@ -439,7 +439,7 @@ The rule gives two basic forms, which a sponsor may combine.
 | Eligible vertical interest | "Not less than 5 percent" of each class of the deal | 5% of every loss, at every level | 17 CFR 246.4(a)(1) |
 | Eligible horizontal residual interest | The first-loss piece, worth "at least 5 percent of the fair value of all ABS interests," measured under generally accepted accounting principles (GAAP) | Every loss first, until the piece is gone | 17 CFR 246.4(a)(2) |
 
-[VERIFY: 17 CFR 246.4(a)(1)-(2); law.cornell.edu/cfr/text/17/246.4; checked 22 Nov 2026]
+&#91;VERIFY: 17 CFR 246.4(a)(1)-(2); law.cornell.edu/cfr/text/17/246.4; checked 22 Nov 2026]
 
 Commercial mortgage-backed securities (CMBS) have a third option. Up to two third-party purchasers may hold the horizontal piece instead of the sponsor. The deal must then appoint an operating advisor who acts for investors "as a collective whole" [VERIFY: 17 CFR 246.7(b)(1), (b)(6); law.cornell.edu/cfr/text/17/246.7; checked 22 Nov 2026].
 
@@ -451,13 +451,13 @@ A sponsor that makes a weak loan to sell it pays for 5% of the damage. That is t
 
 **Worked example 4: Maple Run's funding chain (RD-RES-01).**
 
-Follow Maple Run from closing to its long-term lender. Each step names the party whose rules apply.
+Follow Maple Run from closing to its exit. Each step names the party whose rules apply.
 
 1. **Fund.** We fund the $340,000 RTL loan to Harborline Holdings LLC. Our credit policy applies: entity, purpose, leverage at the 85% LTC cap (RES-FF-03).
 2. **Warehouse or hold.** We fund it on our balance sheet or pledge it to a warehouse line. The warehouse bank's eligibility rules apply. A loan at the top of our leverage range may need more equity from us.
 3. **Sell or pool.** We hold it, or sell it into an RTL pool. The pool buyer's guidelines and, if rated, the rating agency's criteria apply. Our representations go with the loan.
-4. **Refinance.** In month 14 the borrower refinances into a DSCR loan of $338,000 (RD-RES-01, Role 3). That repays the RTL loan. The DSCR loan is sized under our DSCR rules (RES-DSCR-01 to -12).
-5. **Long-term pool.** The DSCR loan may go into a non-qualified mortgage (non-QM) securitization. A new sponsor and new investors apply their rules, and Regulation RR generally applies to the sponsor.
+4. **Exit.** In month 14 the borrower asks to refinance into a $347,000 DSCR loan. The take-out lender would be a third-party DSCR lender. The course sizes that loan on our DSCR rules as a stand-in (RES-DSCR-01 to -12; D-CORE-31). At the $2,400 market rent it could lend only $245,000 (RD-RES-01, Role 3). The refinance fails, so a sale of the house repays the RTL loan.
+5. **Long-term pool (had the refinance worked).** A DSCR loan may go into a non-qualified mortgage (non-QM) securitization. A new sponsor and new investors apply their rules, and Regulation RR generally applies to the sponsor.
 
 ```mermaid
 flowchart LR
@@ -468,12 +468,12 @@ flowchart LR
   D --> E
   E -->|Keep| F["Held to payoff"]
   E -->|Sell| G["RTL pool<br/>buyer and rating criteria<br/>our representations"]
-  F --> H["Month 14: DSCR refinance<br/>$338,000 repays the RTL loan"]
+  F --> H["Month 14: DSCR refinance fails<br/>at $2,400 rent; a sale of the house<br/>repays the RTL loan"]
   G --> H
-  H --> I["DSCR loan may enter a<br/>non-QM securitization<br/>Regulation RR generally applies"]
+  H --> I["Had it worked: the DSCR loan could enter<br/>a non-QM securitization<br/>Regulation RR generally applies"]
 ```
 
-The diagram shows Maple Run's loan moving through hold or warehouse, an optional sale, the month-14 refinance and a possible securitization.
+The diagram shows Maple Run's loan moving through hold or warehouse, an optional loan sale and the failed month-14 refinance. A sale of the house repays the loan. The last box shows where a working refinance would have gone.
 
 Now put a number on risk retention. This step is illustrative only. Suppose a pool that holds Maple Run's RTL loan is securitized, and the sponsor keeps a vertical interest.
 
@@ -687,7 +687,7 @@ Vacancy and prices tell you about the space and asset markets. Rates and maturit
 
 | Deal | Market that matters most | Indicator to watch first | Why |
 | --- | --- | --- | --- |
-| Maple Run (Ohio) | Columbus single-family rentals | Rental vacancy and DSCR loan rates | The exit is a DSCR refinance sized on rent and rate. Its DSCR was already thin: 1.02x at $338,000 (RD-RES-01, Role 3) |
+| Maple Run (Ohio) | Columbus single-family resales | Sale prices and days on market for renovated houses | The planned DSCR refinance fails at the $2,400 market rent: 0.76x on the $347,000 needed. So the loan relies on the sale at the $520,000 ARV (RD-RES-01, Role 2). If the tenant stays, the buyer is an investor, so rents and DSCR rates still matter |
 | Cedar Court (North Carolina) | Charlotte apartments | Submarket vacancy and new completions | The exit needs rents to rise to a $560,000 net cash flow (NCF) |
 | Birchwood Plaza (Indiana) | Indianapolis unanchored retail | Retail vacancy and tenant demand | The exit needs 12,000 sf leased. One tenant pays 21.4% of rent |
 
@@ -717,23 +717,23 @@ Fast growth brings one more risk: fraud follows volume, and fast-growing product
 
 **Worked example 6: Cedar Court's exit under stress (RD-MF-01).**
 
-Cedar Court is repaid by a term loan at month 27. Two market forces can shrink that take-out: a higher rate and a lower net cash flow (NCF). Work both.
+Cedar Court is repaid at month 27 by a term loan from a third-party agency small-loan lender (D-CORE-31). Two market forces can shrink that take-out: a higher rate and a lower net cash flow (NCF). Work both.
 
 1. **The underwritten exit.**
    - Formula F-MF-20: exit take-out = the lower of stabilized NCF ÷ minimum DSCR ÷ loan constant and 80% of as-stabilized value. The constant is the 30-year amortizing constant (F-CORE-04).
    - Inputs: stabilized NCF $560,000; minimum DSCR 1.25x; exit rate 6.55% agency 10-year + 0.50% = 7.05%, constant 0.0802397 (MF-BR-08).
    - Substitution: $560,000 ÷ 1.25 ÷ 0.0802397 = $5,583,273.69. LTV leg: 0.80 × $8,600,000 = $6,880,000, so the DSCR leg binds. Cushion: $5,583,273.69 − $5,140,000 = $443,273.69.
-   - Result: the take-out exceeds the bridge payoff by $443,273.69. The exit test passes.
+   - Result: the take-out exceeds the $5,140,000 bridge by $443,273.69. The exit test passes. It breaks even if NCF falls to $5,140,000 × 1.25 × 0.0802397 = $515,539.84, a 7.9% miss.
 2. **The rate effect.**
    - Formula F-MF-14, DSCR test: $560,000 ÷ 1.25 ÷ constant, at the 7.25% band rate actually used at month 27 (F-MF-25).
    - Inputs: same NCF and DSCR; constant 0.0818612 at 7.25%.
    - Substitution: $560,000 ÷ 1.25 ÷ 0.0818612 = $5,472,681.24. Change: $5,583,273.69 − $5,472,681.24 = $110,592.44 at full precision ($110,592.45 if you subtract the rounded figures).
-   - Result: a 0.20-point higher rate cuts the DSCR-sized take-out by about $110,592. The term loan is still $5,472,000 and repays the bridge.
+   - Result: a 0.20-point higher rate cuts the DSCR-sized take-out by about $110,592. The term loan is still $5,472,000. It repays the $5,140,000 bridge plus the $25,700 exit fee, a $5,165,700 payoff, leaving $306,300 before closing costs. At 7.25% the test on the bridge breaks even at $525,957.91 of NCF, only a 6.1% miss.
 3. **The cash-flow stress (what-if 5).**
    - Formula F-MF-14, DSCR test, as above.
    - Inputs: stabilized NCF only $500,000; DSCR 1.25x; constant 0.0818612.
-   - Substitution: $500,000 ÷ 1.25 ÷ 0.0818612 = $4,886,322.54. Shortfall: $5,140,000 − $4,886,322.54 = $253,677.46.
-   - Result: the take-out falls $253,677.46 short of the payoff. The $443,273.69 cushion is gone after a drop in NCF of 1 − ($500,000 ÷ $560,000) = 10.7%.
+   - Substitution: $500,000 ÷ 1.25 ÷ 0.0818612 = $4,886,322.54. Shortfall: $5,165,700 − $4,886,322.54 = $279,377.46, against the payoff of the bridge plus its 0.50% exit fee.
+   - Result: the take-out falls $279,377.46 short of the $5,165,700 payoff. NCF has dropped 1 − ($500,000 ÷ $560,000) = 10.7%. The $443,273.69 cushion was already gone at a 7.9% miss on the 7.05% exit test. At 7.25% it goes at a 6.1% miss, or 5.6% once the exit fee is added.
 
 The constants are shown rounded to seven places. The results use full precision, so recomputing with the rounded constants gives slightly different cents.
 
@@ -743,7 +743,7 @@ The constants are shown rounded to seven places. The results use full precision,
 
 Census rental vacancy rose 0.5 point in the year to Q3 2026 (T4). For Cedar Court you would track the Charlotte apartment submarket's vacancy and new completions each quarter. C4 teaches submarket evidence.
 
-**What the borrower can do.** The running deal lists three options. The borrower pays down about $254,000; or uses the second 6-month extension to finish lease-up; or refinances elsewhere. The extension still needs a 7.5% debt yield (MF-BR-11): $500,000 ÷ $5,140,000 = 9.73%, so it passes.
+**What the borrower can do.** The running deal lists three options. The borrower pays down about $280,000; or uses the second 6-month extension to finish lease-up; or refinances elsewhere. The extension still needs a 7.5% debt yield (MF-BR-11): $500,000 ÷ $5,140,000 = 9.73%, so it passes.
 
 C8 owns the exit break-even, and C12 owns the extension decision. C14 takes the stress to committee.
 
@@ -854,6 +854,7 @@ Every source below was opened on 22 Nov 2026 unless the row says otherwise. Mark
 | 7 | 15 U.S.C. 78o-11, credit risk retention (Dodd-Frank Act § 941) | T2 | [law.cornell.edu/uscode/text/15/78o-11](https://www.law.cornell.edu/uscode/text/15/78o-11) | 22 Nov 2026 |
 | 8 | 17 CFR 246.4, Regulation RR standard risk retention | T3; Practice 3 | [law.cornell.edu/cfr/text/17/246.4](https://www.law.cornell.edu/cfr/text/17/246.4) | 22 Nov 2026 |
 | 9 | 17 CFR 246.7(b)(1), (b)(6), CMBS third-party purchaser option | T3; Practice 3 | [law.cornell.edu/cfr/text/17/246.7](https://www.law.cornell.edu/cfr/text/17/246.7) | 22 Nov 2026 |
+| 9a | 17 CFR 246.8(a), Fannie Mae and Freddie Mac ABS (full guarantee meets risk retention while in conservatorship with US capital support); FHFA conservatorship page (dated 6 Feb 2024) | Practice 3 | [law.cornell.edu/cfr/text/17/246.8](https://www.law.cornell.edu/cfr/text/17/246.8) | 24 Nov 2026 |
 | 10 | OCC Bulletin 2024-29, *Commercial Lending: Refinance Risk*, 3 Oct 2024 | T5 | [occ.gov bulletin 2024-29](https://www.occ.gov/news-issuances/bulletins/2024/bulletin-2024-29.html) | 22 Nov 2026 |
 | 11 | OCC Bulletin 2026-56, guarantor support and commercial risk ratings, 10 Nov 2026 | T5 | [occ.gov bulletin 2026-56](https://www.occ.gov/news-issuances/bulletins/2026/bulletin-2026-56.html) | 22 Nov 2026 |
 | 12 | Ohio Revised Code 1322.01(II) and 1343.01(A), (B)(1), (B)(6)(a) (FindLaw mirror, current as of 1 Jan 2026; codes.ohio.gov refused the connection) | T6 | [codes.findlaw.com, ORC 1322.01 and 1343.01](https://codes.findlaw.com/oh/title-xiii-commercial-transactions/oh-rev-code-sect-1343-01/) | 22 Nov 2026 |
@@ -901,7 +902,7 @@ Every source below was opened on 22 Nov 2026 unless the row says otherwise. Mark
    2. We fund it on our balance sheet or a warehouse line. The warehouse bank's eligibility rules and margin terms apply.
    3. We may sell it or pool it in a CRE CLO. The buyer's guidelines, a rating agency's criteria and Regulation RR's 5% retention floor apply (17 CFR 246.4(a)).
    4. At month 24 the borrower asks to extend. Our extension tests apply (MF-BR-11).
-   5. At month 27 our term loan of $5,472,000 repays the $5,140,000 bridge. Our MF-TRM rules apply. The term loan may itself be sold or securitized; in a CMBS deal, the third-party purchaser option may apply (17 CFR 246.7).
+   5. At month 27 a $5,472,000 term loan from a third-party agency small-loan lender repays the $5,140,000 bridge plus the $25,700 exit fee. That lender's own criteria apply. The course sizes the loan with our MF-TRM rules as a stand-in (D-CORE-31). That lender, not us, decides whether to sell or securitize it. If Fannie Mae or Freddie Mac securitizes it and fully guarantees the bonds, that guarantee meets the retention rule. This holds while each stays in federal conservatorship with US capital support [VERIFY: 17 CFR 246.8(a); law.cornell.edu/cfr/text/17/246.8; conservatorship and Treasury support per fhfa.gov/conservatorship, page dated 6 Feb 2024; checked 24 Nov 2026]. The CMBS third-party purchaser option (17 CFR 246.7) matters only if the loan goes into a private CMBS deal instead.
 4. **(T4.)** The IMF's US CRE price series reads +1.09% for Q4 2025 and +6.58% for Q1 2026 (FRED COMREPUSQ159N, updated 1 Oct 2026). (a) Compute the change between the two readings. (b) One headline says "US CRE prices up 6.58%." Another says "CRE price growth up 5.49." Which is a percent and which is points? (c) A third headline says "RTL securitization fell 12% in 2026." What does it tell you about total RTL lending?
 
    **Model answer:** (a) 6.58 − 1.09 = 5.49 percentage points. Both readings are already percent changes from a year earlier, so the gap between them is in points.
@@ -1006,7 +1007,7 @@ Pass mark 80%. Items marked (C) are critical. Each set has 7 items and covers al
 | LD-04 order; fits 1 hour | Not met: the timing plan totals 92 minutes, plus 30 OJT |
 | Every threshold cites a rule | Met |
 | Numbers worked step by step | Met: 72.9%, −12.7%, 62.0%, 3 times |
-| Deal numbers match the running deals file | Met |
+| Deal numbers match the running deals file | Met: re-checked 24 Nov 2026 against the 22 Nov 2026 running-deal fixes |
 | Quiz sets; critical items | Met: 7 items each; 2 critical in Set A, 1 in Set B |
 | Sources dated | Met: all market data from 2026, checked 20 Nov 2026 |
 | No open tags | Met: every legal point carries a [VERIFY] tag checked 22 Nov 2026 |

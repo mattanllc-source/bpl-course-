@@ -178,7 +178,7 @@ Work alone, then check the model answer. The case is RD-MF-01 Cedar Court, a mul
 
 ## 6. Quiz: C8-quiz-v0
 
-Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retakes, each with the other set. Items 1-6 share one flip; items 7-10 share one term loan.
+Pass mark: 80% (10 of 12) and every item marked **critical** correct. Each retake uses the other form. Items 1-6 share one flip; items 7-10 share one term loan.
 
 ### Set A
 

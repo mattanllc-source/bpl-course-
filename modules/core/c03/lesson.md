@@ -10,8 +10,8 @@
 | Knowledge level | Intermediate (qas-spec.md) |
 | Prerequisite | C1 and C2. Spreadsheet use (cell references, absolute references, ROUND); percentages and exponents. No advance preparation |
 | Bloom's levels | 3 Apply (O1-O5) and 4 Analyze (O6), within LD-02 as amended 22 Nov 2026 (levels 1-5, at least half at Apply or above) |
-| Formulas | F-CORE-01 to F-CORE-06, F-CORE-33, F-CORE-40, F-CORE-45 to F-CORE-48 |
-| Rules | D-CONV-01, D-CONV-02, D-CORE-27; CORE-CLS-04; CORE-PRC-01, -02, -03, -05; COM-BR-03, -06; COM-TRM-02, -03, -04, -09; MF-BR-09, -14; MF-TRM-02, -05, -08 |
+| Formulas | F-CORE-01 to F-CORE-06, F-CORE-33, F-CORE-40, F-CORE-45 to F-CORE-49 |
+| Rules | D-CONV-01, D-CONV-02, D-CORE-27, D-CORE-29 to -31; CORE-CLS-04; CORE-PRC-01, -02, -03, -05, -06; COM-BR-03, -06; COM-TRM-02, -03, -04, -09; MF-BR-09, -14; MF-TRM-02, -05, -08 |
 | Conventions | D-CONV-01 (tests use the nominal rate), D-CONV-02 (funding day counts, payoff day does not) |
 | Running deals | Worked examples: RD-RES-01 Maple Run, RD-COM-01 Birchwood Plaza and RD-MF-01 Cedar Court. Practice uses a second deal for each chunk (LD-05, LD-08) |
 | Status | v1.0-draft. Teach, Practice and Job aid rewritten to the C3 blueprint. Review questions and exam forms follow in Phase 3. Self-review is at the end of this tab |
@@ -29,12 +29,10 @@ By the end of C3, you will be able to:
 
 1. **O1. Calculate** the interest for any billing period on an interest-only loan, Actual/360, with mid-period draws and paydowns, to the cent (F-CORE-01, F-CORE-05; D-CONV-02).
 2. **O2. Convert** a quoted rate between nominal, effective annual and Actual/360 bases, using present value, future value and annuity formulas (F-CORE-45, F-CORE-46).
-3. **O3. Calculate** the amortizing payment, the schedule rows and the balloon balance at maturity (F-CORE-02, F-CORE-47).
+3. **O3. Calculate** the amortizing payment, the schedule rows and the balloon balance at maturity (F-CORE-02, F-CORE-47, F-CORE-49).
 4. **O4. Calculate** annual debt service and the loan constant on the test basis for interest-only, amortizing and partial interest-only loans (F-CORE-03, F-CORE-04; D-CONV-01).
 5. **O5. Calculate** a floating note rate and its coverage test rate from Term SOFR (the Secured Overnight Financing Rate), the spread and the cap strike (COM-BR-03; MF-BR-09).
 6. **O6. Analyze** the lender's yield and the borrower's all-in cost from the note rate, points and term (F-CORE-06, F-CORE-40, F-CORE-48).
-
-O1 to O5 are at Bloom level 3 (Apply). O6 is at level 4 (Analyze).
 
 ## 3. Teach
 
@@ -123,7 +121,7 @@ A clear clause wins the first question. Only an exemption or a rate safely below
 
 **Market practice.** The Alternative Reference Rates Committee (ARRC), whose papers the New York Fed publishes, wrote conventions for business loans that use SOFR in arrears. Its recommendation "is Actual/360 days for SOFR, which is the standard convention in U.S. money markets". [VERIFY: ARRC, *SOFR "In Arrears" Conventions for Syndicated Business Loans*, 22 Jul 2020, "Daycount"; checked 22 Nov 2026]
 
-Cedar Court and Birchwood Plaza, our floating-rate bridges, bill on that basis. Maple Run's fixed rate uses it too, so one rule covers the book.
+Cedar Court and Birchwood Plaza, our floating-rate bridges, bill on that basis. Maple Run's fixed rate uses it too, so one rule covers every RTL loan and bridge (CORE-PRC-06). Term notes and DSCR loans differ, as T3 shows.
 
 **Reading the clause: what to check.** Before you bill or test a loan, find the interest clause in the note and check five things.
 
@@ -137,7 +135,7 @@ Cedar Court and Birchwood Plaza, our floating-rate bridges, bill on that basis. 
 
 When the note and the servicing system disagree, the note wins. Raise the gap before the first bill, not after a dispute.
 
-**How our model policy applies it.** Every note bills Actual/360 (F-CORE-01). The funding day counts and the payoff day does not (D-CONV-02).
+**How our model policy applies it.** Every RTL and bridge note bills Actual/360 (F-CORE-01; CORE-PRC-06). DSCR loans accrue 30/360. MF and COM term notes set the payment on 30/360 but accrue interest Actual/360 (T3). The funding day counts and the payoff day does not (D-CONV-02).
 
 Interest is charged on the funded balance only, never the undrawn commitment (RES-FF-08; MF-BR-10). Prepaid interest runs to month-end and is collected at closing (CORE-CLS-04). Credit tests use a different basis, covered in T4 (D-CONV-01).
 
@@ -162,7 +160,7 @@ Notice the rounding. Round each segment first and you get $956.67 + $1,306.88 = 
 
 **Worked example 2: Maple Run payoff period (RD-RES-01, what-if date)**
 
-The DSCR (debt service coverage ratio) refinance in Role 3 happens in month 14. Place the payoff on 15 Mar 2028 as a what-if date; Running Deals gives the month, not the day.
+In Role 3 the month-14 DSCR (debt service coverage ratio) refinance fails at the $2,400 market rent, so a sale repays the loan. Running Deals gives no sale date. As a what-if, place the payoff on 15 Mar 2028, in month 14.
 
 1. **Formula.** F-CORE-01, counting days up to but not including the payoff day (D-CONV-02).
 2. **Inputs.** Balance $340,000 after the final draw; 10.250%; payoff 15 Mar 2028; interest paid through 29 Feb 2028 (2028 is a leap year).
@@ -173,7 +171,7 @@ A paydown works the same way in reverse. The balance falls on the day the paymen
 
 **Common slips.**
 
-- Using balance × rate ÷ 12. That gives $2,050.00 for every month on $240,000. It is right only for a 30-day month under 30/360, which our notes do not use.
+- Using balance × rate ÷ 12. That gives $2,050.00 for every month on $240,000. It is right only for a 30-day month under 30/360, which our RTL and bridge notes do not use (CORE-PRC-06).
 - Counting both the funding day and the payoff day. That bills one day too many.
 - Billing interest on the commitment. Maple Run's commitment is $340,000, but only $240,000 was funded at closing.
 - Using 365 in a leap year by habit. Actual/360 always divides by 360; only the day count changes. Maple Run's extension to 15 Apr 2028 includes 29 Feb 2028, a billable day.
@@ -239,7 +237,7 @@ So the payment formula is not a rule to memorize. It is the annuity solved for P
 
 Run the same payments forward instead. Each $27,564.39, reinvested at 7.000% to month 300, grows to $22,329,132.07 in total (F-CORE-45). That is $3,900,000.18, the payments' present value, times 1.0058333^300 (5.725418): today's value grown for 25 years.
 
-The lender who reinvests every payment ends where it would have been with the loan left to compound. That equality is what "earning 7.000%" means.
+The two figures match because of the arithmetic, not because of any forecast. They are not what "earning 7.000%" means: the yield needs no reinvestment (T6; F-CORE-48).
 
 **Why "ordinary" matters.** F-CORE-45 assumes each payment falls at the end of its month. That is how loans work: interest is paid in arrears, after it accrues.
 
@@ -249,11 +247,11 @@ The $159.86 gap is one month's interest on the payment. Leases often pay rent in
 
 **What compounding assumes.** The FV above assumes every payment is reinvested at 7.000% until month 300. A real lender reinvests at whatever rates exist when each payment arrives.
 
-So TVM results are exact statements about rates, not forecasts of wealth. The same assumption sits inside every internal rate of return (IRR) in T6.
+So TVM results are exact statements about rates, not forecasts of wealth. The internal rate of return (IRR) in T6 makes no such assumption. It is the rate earned on the money still invested each period (F-CORE-48).
 
 **Worked example 4: Maple Run as a present value (RD-RES-01, simplified)**
 
-1. **Formula.** F-CORE-45 with a lump sum: PV = PMT × annuity factor + FV\_n × (1 + i)^−n.
+1. **Formula.** F-CORE-45 with a lump sum: PV = PMT × annuity factor + FV_n × (1 + i)^−n.
 2. **Inputs.** Simplify Maple Run to full funding on day one: $340,000 at 10.250%, interest-only, 12 months. PMT = $340,000 × 10.25% ÷ 12 = $2,904.17; lump sum $340,000 at month 12.
 3. **Substitution.** At i = 0.1025 ÷ 12: PV = $2,904.17 × 11.359479 + $340,000 × 0.902971 = $340,000.04. At a 12.000% discount rate, i = 0.01: PV = $334,419.39.
 4. **Result.** At its own rate the loan is worth its face, plus 4 cents of payment rounding. To an investor who demands 12.000%, the same loan is worth $334,419.39, which is $5,580.65 less than at its own rate.
@@ -295,16 +293,16 @@ Use m = 12 for monthly payments. Use m = 1 when interest is not paid or added du
 
 The table shows that one quote can describe five different costs. Each line is right for its own question. The skill is matching the line to the question.
 
-**Comparing two quotes.** Suppose a bank quotes Birchwood's term loan at 7.000%, 30/360, paid monthly. Our note is 7.000%, Actual/360, paid monthly. They look identical.
+**Comparing two quotes.** Suppose one bank quotes Birchwood's term loan at 7.000%, 30/360, paid monthly. A second quotes 7.000%, Actual/360, paid monthly: the accrual basis our term rules use (CORE-PRC-06). They look identical.
 
-On F-CORE-46 the bank's costs 7.229% effective (D = 360). Ours costs (1 + 0.07 × 365 ÷ 360 ÷ 12)^12 − 1 = 7.333% (D = 365). The same quoted rate differs by about 0.10 points a year, purely from the day count.
+On F-CORE-46 the first costs 7.229% effective (D = 360). The second costs (1 + 0.07 × 365 ÷ 360 ÷ 12)^12 − 1 = 7.333% (D = 365). The same quoted rate differs by about 0.10 points a year, purely from the day count.
 
-A borrower who knows this asks for the basis before comparing rates. A credit officer who knows it can explain why our quote is not "the same" as a bank's.
+A borrower who knows this asks for the basis before comparing rates. A credit officer who knows it can explain why two 7.000% quotes are not "the same".
 
 **When to use which rate.**
 
 1. To bill interest, use the note rate on its day count (F-CORE-01).
-2. To build a payment or schedule, use the nominal rate ÷ 12, with no 365/360 uplift (F-CORE-02).
+2. To set a payment, use the nominal rate ÷ 12, with no 365/360 uplift (F-CORE-02). Schedule interest follows the note's accrual basis (CORE-PRC-06; T3).
 3. To run DSCR, coverage, sizing or liquidity tests, use the nominal rate (D-CONV-01).
 4. To compare two loans' true cost, convert both to an EAR (F-CORE-46) or an IRR (F-CORE-48, T6).
 
@@ -318,7 +316,7 @@ State usury law can still care about the basis. *American Timber* (T1) turned on
 
 When a cap applies, counsel decides how the state measures the rate. C10 owns that test.
 
-**How our model policy applies it.** Tests use the nominal rate, never an EAR (D-CONV-01). Payments use a 12-period year (F-CORE-02). Bills use Actual/360 (F-CORE-01).
+**How our model policy applies it.** Tests use the nominal rate, never an EAR (D-CONV-01). Payments use a 12-period year (F-CORE-02). RTL and bridge bills, and term-note interest, use Actual/360; DSCR loans accrue 30/360 (F-CORE-01; CORE-PRC-06).
 
 F-CORE-45 and F-CORE-46 carry no policy limit; they are tools for comparison and for the payment, balance and yield formulas.
 
@@ -353,36 +351,36 @@ The formula uses 12 equal months by market convention, not Actual/360. Round P t
 
 **The schedule.** Each payment first covers that month's interest. The rest repays principal.
 
-1. Interest = opening balance × i, rounded to the cent.
+1. Interest = opening balance × i on a 30/360 note, such as a DSCR loan. On an Actual/360 term note it is opening balance × rate ÷ 360 × days in the month (F-CORE-49; CORE-PRC-06). Round to the cent.
 2. Principal = payment − interest.
 3. Closing balance = opening balance − principal.
 4. The closing balance becomes next month's opening balance.
 
-Interest is charged on a falling balance, so it shrinks each month. The payment is fixed, so the principal part grows by the same amount.
+On a 30/360 note, interest is charged on a falling balance, so it shrinks each month. The payment is fixed, so the principal part grows by the same amount. On an Actual/360 note the days in each month also move the split, as worked example 6 shows.
 
 Early payments are mostly interest. Late payments are mostly principal. That shape is why the balance falls slowly in the first years.
 
 **Worked example 6: Birchwood Plaza schedule, months 1-3 (RD-COM-01)**
 
-1. **Formula.** F-CORE-02 schedule rows: interest = opening × i; principal = P − interest; closing = opening − principal.
-2. **Inputs.** Term loan $3,900,000; 7.000%; n = 300; P = $27,564.39 (worked example 3).
-3. **Substitution.** Month 1 interest: $3,900,000 × 0.07 ÷ 12 = $22,750.00. Principal: $27,564.39 − $22,750.00 = $4,814.39. Closing: $3,900,000.00 − $4,814.39 = $3,895,185.61.
-4. **Result.** The table carries the same steps to month 3. Principal rises by about $28 a month as interest falls.
+1. **Formula.** F-CORE-49 schedule rows (CORE-PRC-06): interest = opening × rate ÷ 360 × days in the month; principal = P − interest; closing = opening − principal.
+2. **Inputs.** Term loan $3,900,000; 7.000%; n = 300; P = $27,564.39 (worked example 3). The first payment period is January 2029, 31 days (a what-if date; Running Deals gives none).
+3. **Substitution.** Month 1 interest (31 days): $3,900,000 × 7.000% ÷ 360 × 31 = $23,508.33. Principal: $27,564.39 − $23,508.33 = $4,056.06. Closing: $3,900,000.00 − $4,056.06 = $3,895,943.94.
+4. **Result.** The table carries the same steps to month 3. Principal moves with the days in each month: $4,056.06 in January, $6,353.14 in February and $4,118.80 in March. Over the years it still rises as interest falls.
 
 | Month | Opening balance | Interest | Principal | Closing balance |
 | --- | --- | --- | --- | --- |
-| 1 | $3,900,000.00 | $22,750.00 | $4,814.39 | $3,895,185.61 |
-| 2 | $3,895,185.61 | $22,721.92 | $4,842.47 | $3,890,343.14 |
-| 3 | $3,890,343.14 | $22,693.67 | $4,870.72 | $3,885,472.42 |
-| 120 | $3,076,321.45 | $17,945.21 | $9,619.18 | $3,066,702.27 |
+| 1 (Jan 2029, 31 days) | $3,900,000.00 | $23,508.33 | $4,056.06 | $3,895,943.94 |
+| 2 (Feb 2029, 28 days) | $3,895,943.94 | $21,211.25 | $6,353.14 | $3,889,590.80 |
+| 3 (Mar 2029, 31 days) | $3,889,590.80 | $23,445.59 | $4,118.80 | $3,885,472.00 |
+| 120 (Dec 2038, 31 days) | $3,127,160.98 | $18,849.83 | $8,714.56 | $3,118,446.42 |
 
-In month 1, principal is 17.5% of the payment. By month 120 it is 34.9%.
+In month 1, principal is 14.7% of the payment. By month 120 it is 31.6%.
 
-After ten years the borrower has paid $3,307,726.80. Only $833,297.73 of that repaid principal; the other $2,474,429.07 was interest.
+After ten years the borrower has paid $3,307,726.80. Only $781,553.58 of that repaid principal; the other $2,526,173.22 was interest.
 
-**The shape over the full life.** The balance does not fall in a straight line. It falls slowly, then faster. The table runs Birchwood's schedule to the end with F-CORE-47.
+**The shape over the full life.** The balance does not fall in a straight line. It falls slowly, then faster. The table runs Birchwood's payment schedule to the end with F-CORE-47. That schedule accrues 30/360, the basis that sets the payment (F-CORE-02). Birchwood's note accrues Actual/360, so its real balances run a little higher (F-CORE-49).
 
-| End of year | Balance (F-CORE-47) | Share of $3,900,000 still owed |
+| End of year | Payment-schedule balance, 30/360 (F-CORE-47) | Share of $3,900,000 still owed |
 | --- | --- | --- |
 | 1 | $3,840,337.26 | 98.5% |
 | 5 | $3,555,323.85 | 91.2% |
@@ -391,7 +389,7 @@ After ten years the borrower has paid $3,307,726.80. Only $833,297.73 of that re
 | 20 | $1,392,055.90 | 35.7% |
 | 25 | −$1.06 | 0.0% |
 
-The principal part first exceeds the interest part in month 182, past year 15: $13,795.95 of principal against $13,768.44 of interest. Half the loan is still owed after about 17 years of a 25-year schedule. The −$1.06 at month 300 comes from rounding the payment up; the last payment is cut by that amount (F-CORE-47 edge case).
+On this 30/360 schedule, principal first exceeds interest in month 182, past year 15: $13,795.95 against $13,768.44. Half the loan is still owed after about 17 years of a 25-year schedule. The −$1.06 at month 300 comes from rounding the payment up; the last payment is cut by that amount (F-CORE-47 edge case). On Actual/360 accrual the same payment leaves $204,756.03 unpaid after month 300 (F-CORE-49, first payment period January 2029). Both milestones above also come a few months later. That is one reason DSCR loans accrue 30/360: the payment then fully amortizes the loan (CORE-PRC-06).
 
 **The remaining balance (F-CORE-47).** You do not need to build 120 rows to find a balance.
 
@@ -407,34 +405,34 @@ A second route gives nearly the same answer. The balance is also the present val
 
 The routes can differ by cents. A row-by-row schedule rounds each month's interest. F-CORE-47 does not.
 
-Birchwood's row-by-row balance after 120 payments is $3,066,702.27, four cents above the formula's $3,066,702.23. The present value of the last 180 payments is $3,066,702.61, because the payment was rounded up. Our standard is F-CORE-47, with P rounded to the cent first.
+On the 30/360 payment schedule, Birchwood's row-by-row balance after 120 payments is $3,066,702.27, four cents above the formula's $3,066,702.23. The present value of the last 180 payments is $3,066,702.61, because the payment was rounded up. For 30/360 notes our standard is F-CORE-47, with P rounded to the cent first. MF and COM term notes accrue Actual/360, so their balance comes from the F-CORE-49 schedule.
 
 **Worked example 7: Birchwood Plaza balloon after 120 payments (RD-COM-01, what-if term)**
 
 Running Deals sets no term for the Birchwood term loan. COM-TRM-02 allows 5, 7 or 10 years, and the owner has not yet picked one. The 120-month term below is a what-if.
 
-1. **Formula.** F-CORE-47: B\_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i.
+1. **Formula.** F-CORE-47: B_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i.
 2. **Inputs.** L = $3,900,000; i = 0.07 ÷ 12 = 0.0058333; P = $27,564.39; k = 120.
 3. **Substitution.** (1 + i)^120 = 2.009661. Loan grown: $3,900,000 × 2.009661 = $7,837,679.37. Payments grown: $27,564.39 × (2.009661 − 1) ÷ 0.0058333 = $4,770,977.14.
-4. **Result.** Balance after 120 payments = $7,837,679.37 − $4,770,977.14 = $3,066,702.23. That is the balloon at a 10-year maturity: 78.6% of the original loan.
+4. **Result.** Balance after 120 payments = $7,837,679.37 − $4,770,977.14 = $3,066,702.23. That is 78.6% of the loan: the balloon if the note accrued 30/360. Birchwood's term note accrues Actual/360 (CORE-PRC-06), so its real balloon is $3,118,446.42, or 80.0% (F-CORE-49, first payment period January 2029). That is $51,744.19, or 1.7%, more.
 
-| Birchwood term (what-if, COM-TRM-02) | Payments made | Balloon (F-CORE-47) | Share of the $3,900,000 loan still owed |
+| Birchwood term (what-if, COM-TRM-02) | Payments made | Balloon, Actual/360 (F-CORE-49, first payment period Jan 2029); 30/360 schedule balance in brackets (F-CORE-47) | Share of the $3,900,000 loan still owed |
 | --- | --- | --- | --- |
-| 5 years | 60 | $3,555,323.85 | 91.2% |
-| 7 years | 84 | $3,380,050.79 | 86.7% |
-| 10 years | 120 | $3,066,702.23 | 78.6% |
+| 5 years | 60 | $3,577,647.68 ($3,555,323.85) | 91.7% |
+| 7 years | 84 | $3,412,896.13 ($3,380,050.79) | 87.5% |
+| 10 years | 120 | $3,118,446.42 ($3,066,702.23) | 80.0% |
 
-Even a 10-year term leaves more than three-quarters of the loan unpaid. On a 5-year term the borrower has repaid less than 9%.
+Even a 10-year term leaves about four-fifths of the loan unpaid. On a 5-year term the borrower has repaid less than 9%.
 
 **The amortization trade-off.** A longer amortization lowers the payment but leaves a bigger balloon. The table holds Birchwood's $3,900,000 and 7.000% and changes only the amortization. COM-TRM-02 fixes ours at 25 years; the 20- and 30-year rows are what-ifs.
 
-| Amortization | n | Payment (F-CORE-02) | Annual debt service (F-CORE-03) | Balloon after 120 (F-CORE-47) |
+| Amortization | n | Payment (F-CORE-02) | Annual debt service (F-CORE-03) | Balloon after 120, Actual/360 (F-CORE-49, first payment period Jan 2029) |
 | --- | --- | --- | --- | --- |
-| 20 years (what-if) | 240 | $30,236.66 | $362,839.92 | $2,604,172.90 |
-| 25 years (COM-TRM-02) | 300 | $27,564.39 | $330,772.68 | $3,066,702.23 |
-| 30 years (what-if) | 360 | $25,946.80 | $311,361.60 | $3,346,682.49 |
+| 20 years (what-if) | 240 | $30,236.66 | $362,839.92 | $2,653,258.28 |
+| 25 years (COM-TRM-02) | 300 | $27,564.39 | $330,772.68 | $3,118,446.42 |
+| 30 years (what-if) | 360 | $25,946.80 | $311,361.60 | $3,400,036.14 |
 
-Moving from 25 to 30 years saves the borrower $19,411.08 a year in debt service. It costs $279,980.26 more balloon at year 10.
+Moving from 25 to 30 years saves the borrower $19,411.08 a year in debt service. It costs $281,589.72 more balloon at year 10.
 
 That is the choice the Office of the Comptroller of the Currency (OCC) describes. Properties with volatile income streams "usually merit shorter amortization periods", because slow early paydown can leave collateral coverage uncertain [VERIFY: OCC CRE Handbook v2.0, p. 40; checked 22 Nov 2026].
 
@@ -442,19 +440,19 @@ That is the choice the Office of the Comptroller of the Currency (OCC) describes
 
 The table tests the 10-year balloon against our term-loan DSCR minimum. It holds net cash flow (NCF) at $434,000, a what-if; real NCF will move.
 
-| Refinance rate at maturity (what-if) | Refinance $3,066,702.23 amortized balloon: DSCR | Refinance $3,900,000 if the loan had been interest-only: DSCR |
+| Refinance rate at maturity (what-if) | Refinance $3,118,446.42 amortized balloon: DSCR | Refinance $3,900,000 if the loan had been interest-only: DSCR |
 | --- | --- | --- |
-| 7.00% | 1.67x | 1.31x |
-| 8.00% | 1.53x | 1.20x |
-| 9.00% | 1.41x | 1.11x |
+| 7.00% | 1.64x | 1.31x |
+| 8.00% | 1.50x | 1.20x |
+| 9.00% | 1.38x | 1.11x |
 
 Each DSCR is $434,000 ÷ the new loan's ADS on 25-year amortization (F-CORE-02, F-CORE-03). COM-TRM-09 needs 1.30x for unanchored retail.
 
 The amortized balloon passes even at 9.00%. The interest-only balloon fails at 8.00%. Ten years of principal payments are the borrower's cushion against higher rates.
 
-Value matters as much as rates. Birchwood's balloon is 51.1% of today's $6,000,000 stabilized value.
+Value matters as much as rates. Birchwood's balloon is 52.0% of today's $6,000,000 stabilized value.
 
-A refinance at our 65% loan-to-value (LTV) limit (COM-TRM-09) needs a value of at least $3,066,702.23 ÷ 65% = $4,718,003.43. So the property's value could fall 21.4% over ten years and the balloon would still fit the LTV test.
+A refinance at our 65% loan-to-value (LTV) limit (COM-TRM-09) needs a value of at least $3,118,446.42 ÷ 65% = $4,797,609.88. So the property's value could fall 20.0% over ten years and the balloon would still fit the LTV test.
 
 Without amortization, the interest-only $3,900,000 would need the full $6,000,000: no room for any decline. These are what-ifs on a what-if term, but the method is the one C8 uses to judge refinance risk.
 
@@ -477,7 +475,7 @@ Terms are 5, 7 or 10 years in both families (COM-TRM-02, MF-TRM-05). Interest-on
 - Using the term for n. A 10-year loan on 25-year amortization has n = 300, not 120. With n = 120, Birchwood's payment rises from $27,564.39 to $45,282.31, about 64% more.
 - Building the schedule with an unrounded payment. The schedule then drifts from what the borrower pays.
 - Reading the balance after k payments as the payoff. Payoff adds accrued interest, any prepayment premium and fees (F-CORE-32; C12).
-- Applying Actual/360 to schedule interest. Schedules use rate ÷ 12, the F-CORE-02 convention.
+- Using F-CORE-47 for the balloon on an MF or COM term note. Those notes accrue Actual/360, so the balloon comes from the F-CORE-49 schedule (CORE-PRC-06). The payment itself is still set on rate ÷ 12.
 
 **Why it matters to a credit officer.** Term-loan trouble often surfaces at maturity, not in month 3. A loan that pays on time for ten years can still fail if the balloon cannot be refinanced. Knowing the balloon, and testing it at higher rates, is how you see that risk on day one.
 
@@ -497,7 +495,7 @@ Terms are 5, 7 or 10 years in both families (COM-TRM-02, MF-TRM-05). Interest-on
 On an amortizing loan it equals 12i ÷ (1 − (1 + i)^−n), which depends only on the rate and the amortization. On an interest-only loan K equals the rate. Show K to at least six decimals; sizing divides by it, and two decimals move a loan by thousands.
 
 ```latex
-K = \frac{ADS}{L} = \frac{12\,i}{1-(1+i)^{-n}}
+K = \frac{ADS}{L} = \frac{12,i}{1-(1+i)^{-n}}
 ```
 
 **Worked example 8: Birchwood Plaza ADS and constant (RD-COM-01)**
@@ -520,11 +518,11 @@ The constant is 8.481% though the rate is 7.000%. The extra 1.481 points are fir
 
 Every step down the table raises the supportable loan. That is why policy fixes the amortization in the test, not the borrower's preference.
 
-C5 compares the constant with the cap rate to show positive and negative leverage. One example is Birchwood's 8.481% constant against a 7.23% cap rate ($434,000 ÷ $6,000,000).
+C5 compares the constant with the cap rate to show positive and negative leverage. One example is Birchwood's 8.481% constant against its 8.00% cap rate ($480,000 NOI ÷ $6,000,000; F-CORE-13).
 
 **Why sizing divides by the constant.** A DSCR sizing test asks: what loan would this income cover at the minimum ratio?
 
-Rearrange DSCR = NCF ÷ (L × K) and you get L = NCF ÷ (DSCR\_min × K). Put the rate in place of K and you ignore principal. The test then overstates the loan the income can carry.
+Rearrange DSCR = NCF ÷ (L × K) and you get L = NCF ÷ (DSCR_min × K). Put the rate in place of K and you ignore principal. The test then overstates the loan the income can carry.
 
 For Birchwood, the DSCR test gives $434,000 ÷ 1.30 ÷ 0.0848135 = $3,936,238.02 (F-COM-08). With the 7.000% rate instead it gives $4,769,230.77, 21.2% more.
 
@@ -534,7 +532,7 @@ The error matters when DSCR binds. Cedar Court's term loan is DSCR-bound: $560,0
 
 At $6,179,000 the true ADS would be $505,820.04 and the true DSCR 1.11x, well under the 1.25x minimum (MF-TRM-02). Other tests would also cut that loan (MF-TRM-03). The lesson stands: the "about 21% more debt" warning applies only when DSCR is the binding test.
 
-**Test basis versus billed basis (D-CONV-01).** Credit tests use the nominal annual rate. Bills use Actual/360. Over a 365-day year the bill is 365 ÷ 360 = 1.0139 times the test figure.
+**Test basis versus billed basis (D-CONV-01).** Credit tests use the nominal annual rate. RTL and bridge bills use Actual/360 (CORE-PRC-06). Over a 365-day year the bill is 365 ÷ 360 = 1.0139 times the test figure.
 
 The two bases answer different questions. The test compares one loan with a policy minimum and with other loans, so it needs one stable yardstick.
 
@@ -545,7 +543,7 @@ The bill is what the borrower actually pays, so it follows the note. Mixing them
 1. **Formula.** F-CORE-03 interest-only test: ADS = balance × test rate. F-CORE-01 billed over a 365-day year: balance × rate ÷ 360 × 365.
 2. **Inputs.** Funded balance $2,860,000. Test rate 8.25%, the higher of the 7.65% note rate and the 4.25% cap strike + 4.00% spread (COM-BR-03; T5). In-place NCF $254,000.
 3. **Substitution.** Test ADS = $2,860,000 × 8.25% = $235,950.00. Billed over 365 days = $2,860,000 × 8.25% ÷ 360 × 365 = $239,227.08.
-4. **Result.** Coverage uses $235,950.00: $254,000 ÷ $235,950 = 1.08x, so no interest reserve is needed (COM-BR-04). The billed figure would be $3,277.08 higher at the same rate.
+4. **Result.** Coverage uses $235,950.00: $254,000 ÷ $235,950 = 1.08x, so COM-BR-04 requires no interest reserve. Committee still sets one as a deal condition, $23,983.33, because the largest tenant's lease ends in month 20 (RD-COM-01, Role 2). The billed figure would be $3,277.08 higher at the same rate.
 
 | Item | Test basis (D-CONV-01) | Billed basis (F-CORE-01) |
 | --- | --- | --- |
@@ -591,16 +589,16 @@ The flowchart shows that an IO period changes what the borrower pays, never the 
 
 Notice the trap in Birchwood's 1.59x. It looks stronger than 1.31x, but it measures a payment the loan will not always have. A credit officer who tests on IO debt service approves loans that fail once amortization starts.
 
-**What an IO period does to the balloon (what-if).** Suppose Birchwood had qualified for two years of interest-only, then amortized on a 25-year schedule. Years 1 and 2 would cost $273,000.00 each.
+**What an IO period does to the balloon (what-if).** Suppose Birchwood had qualified for two years of interest-only, then amortized on a 25-year schedule. Years 1 and 2 would be tested at $273,000.00 each (D-CONV-01). The note accrues Actual/360, so in 2029 and 2030 each year's twelve bills total $276,791.64.
 
 From month 25 the payment would be $27,564.39, the same as worked example 3. At a 10-year maturity only 96 amortizing payments would have been made.
 
-| Structure (Birchwood, 7.000%, what-if 10-year term) | Paid over 10 years | Balloon at year 10 (F-CORE-47) |
+| Structure (Birchwood, 7.000%, what-if 10-year term) | Paid over 10 years (as billed) | Balloon at year 10 (F-CORE-49, first payment period Jan 2029) |
 | --- | --- | --- |
-| Fully amortizing, 25 years (actual structure) | $3,307,726.80 | $3,066,702.23 |
-| 2 years IO, then 25-year amortization | $3,192,181.44 | $3,282,800.88 |
+| Fully amortizing, 25 years (actual structure) | $3,307,726.80 | $3,118,446.42 |
+| 2 years IO, then 25-year amortization | $3,199,764.72 | $3,322,396.07 |
 
-The IO period saves the borrower $115,545.36 in payments over ten years. It leaves $216,098.65 more owing at maturity. That extra balloon is the risk the IO gates price and limit.
+The IO period saves the borrower $107,962.08 in payments over ten years. It leaves $203,949.65 more owing at maturity. That extra balloon is the risk the IO gates price and limit.
 
 **The real-world rule: examiners test as if amortizing.** The OCC states the same principle. "Even if the terms of a loan permits interest-only payments, the property should nonetheless meet" the coverage requirement "as though the loan were amortizing". It adds that LTV and as-if amortizing coverage limits for IO loans are generally "more conservative". [VERIFY: OCC, *Comptroller's Handbook: Commercial Real Estate Lending*, v2.0, Mar 2022, p. 40; checked 22 Nov 2026]
 
@@ -662,7 +660,7 @@ The cap is assigned to the lender, so the payments support the loan.
 
 Our policy requires one. Multifamily bridges need a cap for the initial term and any extension. The counterparty must be rated A or A2 or better, with "strike set so F-MF-12 is at least 1.00x" (MF-BR-09).
 
-Commercial bridges need "a SOFR cap for the initial term" (COM-BR-03). Both running-deal caps have a 4.25% strike for 24 months.
+Commercial bridges need "a SOFR cap for the initial term" (COM-BR-03). Both running-deal caps have a 4.25% strike for 24 months, on a notional equal to the full commitment (D-CORE-30).
 
 **The coverage test rate.** With a cap in place, the worst index the borrower pays net is the strike. So the worst all-in rate is strike + spread.
 
@@ -692,25 +690,25 @@ The flowchart sets out the test-rate decision. The test rate never falls below s
 
 **Worked example 12: Cedar Court in month 10, SOFR at 5.00% (RD-MF-01)**
 
-1. **Formula.** F-CORE-01 at the reset note rate; cap payment = funded balance × (SOFR − strike) ÷ 360 × days.
-2. **Inputs.** Funded balance $4,740,000 ($4,340,000 + $400,000 of capital expenditure, or capex, drawn). SOFR 5.00% from month 10 (Running Deals timeline); spread 4.00%; strike 4.25%; a 30-day month.
-3. **Substitution.** Note rate 5.00% + 4.00% = 9.00%. Interest $4,740,000 × 9.00% ÷ 360 × 30 = $35,550.00. Cap pays $4,740,000 × 0.75% ÷ 360 × 30 = $2,962.50.
-4. **Result.** The borrower pays $35,550.00 and receives $2,962.50, a net $32,587.50. That is exactly 8.25% on $4,740,000 for 30 days: strike + spread.
+1. **Formula.** F-CORE-01 at the reset note rate; cap payment = cap notional × (SOFR − strike) ÷ 360 × days.
+2. **Inputs.** Funded balance $4,740,000 ($4,340,000 + $400,000 of capital expenditure, or capex, drawn). SOFR 5.00% from month 10 (Running Deals timeline); spread 4.00%; strike 4.25%; cap notional $5,140,000, the full commitment (D-CORE-30); a 30-day month.
+3. **Substitution.** Note rate 5.00% + 4.00% = 9.00%. Interest $4,740,000 × 9.00% ÷ 360 × 30 = $35,550.00. Cap pays $5,140,000 × 0.75% ÷ 360 × 30 = $3,212.50.
+4. **Result.** The borrower pays $35,550.00 and receives $3,212.50, a net $32,337.50. That is 8.187% on the $4,740,000 funded for 30 days. It is below strike + spread (8.25%), because the cap also pays on the $400,000 not yet drawn. A 31-day month nets $36,735.00 − $3,319.58 = $33,415.42.
 
 Now the note rate, 9.00%, is above strike + spread. The test rate for month 10 is therefore 9.00%.
 
-But the borrower's net cost stays at 8.25%, because the cap pays the excess. That is why MF-BR-09 sizes the cap strike: the capped rate is the rate the property must be able to carry.
+But the borrower's net cost stays at or below 8.25%, because the cap pays the excess on the full notional. That is why MF-BR-09 sizes the cap strike: the capped rate is the rate the property must be able to carry.
 
 **What the cap protects (what-if).** The table holds Cedar Court's day-one funded balance ($4,340,000) and in-place NCF ($395,000), and moves SOFR. It shows coverage three ways.
 
-| SOFR | Note rate | Coverage at the note rate, no cap | Borrower's net rate with the 4.25% cap | Policy test rate (MF-BR-09) | Coverage on the policy test |
+| SOFR | Note rate | Coverage at the note rate, no cap | Borrower's net rate with the 4.25% cap on a $5,140,000 notional | Policy test rate (MF-BR-09) | Coverage on the policy test |
 | --- | --- | --- | --- | --- | --- |
 | 3.65% (closing) | 7.65% | 1.19x | 7.65% | 8.25% | 1.10x |
 | 4.25% (at the strike) | 8.25% | 1.10x | 8.25% | 8.25% | 1.10x |
-| 5.00% (month 10 rate) | 9.00% | 1.01x | 8.25% | 9.00% | 1.01x |
-| 6.00% (what-if) | 10.00% | 0.91x | 8.25% | 10.00% | 0.91x |
+| 5.00% (month 10 rate) | 9.00% | 1.01x | 8.112% | 9.00% | 1.01x |
+| 6.00% (what-if) | 10.00% | 0.91x | 7.927% | 10.00% | 0.91x |
 
-Read across the 6.00% row. Without a cap the property could not cover its interest. With the cap, the borrower's net cost stops at 8.25%, and coverage on that cost stays at 1.10x.
+Read across the 6.00% row. Without a cap the property could not cover its interest. With the cap, the borrower's net cost is 7.927%, below 8.25%. The cap pays on the full $5,140,000 notional, not the $4,340,000 funded. Coverage on that net cost is 1.15x.
 
 The policy test is stricter: once the note rate passes strike + spread, it tests at the note rate. That reads coverage before cap income, so a result under 1.00x shows the loan now leans on the cap payments. The counterparty's strength then matters, and MF-BR-09 requires A / A2 or better.
 
@@ -720,7 +718,7 @@ Any later what-if uses the latest stated rate, labeled "course assumption, not a
 
 **The test rate at extension.** Extensions repeat the coverage test on the same basis. In Birchwood's month-24 what-if, NCF has fallen to $380,000.
 
-The extension test (COM-BR-02) uses the F-MF-12 basis: $3,520,000 × 8.25% = $290,400.00 of test interest. $380,000 ÷ $290,400 = 1.31x, at least 1.00x, so a 6-month extension is allowed (Running Deals). The borrower must also extend the cap, because the worst-case rate exists only while the cap runs.
+The extension test (COM-BR-02) uses the F-MF-12 basis. SOFR is 4.75% (D-CORE-27), so the 8.75% note rate is above strike + spread (8.25%) and sets the test rate. Test interest is $3,520,000 × 8.75% = $308,000.00. $380,000 ÷ $308,000 = 1.23x, at least 1.00x, so a 6-month extension is allowed (Running Deals). COM-BR-02 does not require a new cap. If the borrower buys one, it is in the money (4.75% against the 4.25% strike). Course assumption: it costs about its intrinsic value, $3,520,000 × 0.50% × 6 ÷ 12 = $8,800.00.
 
 **History: how LIBOR left US contracts.** Before SOFR, most US floating loans used LIBOR, a rate built from bank submissions. Some old notes had no workable fallback for LIBOR's end. Congress passed the Adjustable Interest Rate (LIBOR) Act to fix them.
 
@@ -757,7 +755,7 @@ C8 uses this to size the strike; C12 runs cap operations. Neither reteaches it.
 - Treating COM-BR-06's spread floor as an index floor.
 - Using a real market rate in place of a running-deal input.
 
-**Why it matters to a credit officer.** A bridge loan's coverage is only as good as its worst-case rate. If the cap expires before the loan, that worst case disappears. Extensions therefore require the cap to be extended too (MF-BR-11).
+**Why it matters to a credit officer.** A bridge loan's coverage is only as good as its worst-case rate. If the cap expires before the loan, that worst case disappears. Multifamily extensions therefore require the cap to be extended too (MF-BR-11). Commercial extensions do not (COM-BR-02), so an uncapped Birchwood extension carries the full rate risk.
 
 **Review questions.** Added in Phase 3 (blueprint section 6).
 
@@ -774,7 +772,7 @@ The question is how much more. Answering it needs the time value of money from T
 **The internal rate of return (F-CORE-48).** Write down every cash flow on a timeline. Money out is negative; money in is positive. The IRR is the one rate per period at which the present value of all the flows is zero.
 
 ```latex
-\sum_{t=0}^{N} \frac{CF_t}{(1+i)^{t}} = 0,\quad IRR_{nom} = 12\,i,\quad IRR_{eff} = (1+i)^{12}-1
+\sum_{t=0}^{N} \frac{CF_t}{(1+i)^{t}} = 0,\quad IRR_{nom} = 12,i,\quad IRR_{eff} = (1+i)^{12}-1
 ```
 
 No formula solves for i directly, so we search. Bisection is the simplest method. Start with a low rate where the net present value (NPV) is positive and a high rate where it is negative.
@@ -789,11 +787,11 @@ The nominal IRR is i × 12, comparable with a note rate. The effective IRR compo
 
 Take Maple Run's simplified flows at a 12.000% target. Their present value is $334,419.39 (worked example 4), but the lender wired $334,900. So the NPV at 12.000% is −$480.61: the loan earns a little less than 12%.
 
-The IRR below confirms it, at 11.848%. When flows change sign more than once, use NPV; it always has one answer.
+The IRR below confirms it, at 11.848%. When flows change sign more than once, add them up period by period. If that running total changes sign only once, the IRR is still unique. If not, report the NPV at a stated rate (F-CORE-48).
 
 **Worked example 13: Maple Run lender yield (RD-RES-01, simplified)**
 
-1. **Formula.** F-CORE-48: find i with NPV = Σ CF\_t ÷ (1 + i)^t = 0; nominal = 12i; effective = (1 + i)^12 − 1.
+1. **Formula.** F-CORE-48: find i with NPV = Σ CF_t ÷ (1 + i)^t = 0; nominal = 12i; effective = (1 + i)^12 − 1.
 2. **Inputs.** Simplify to full funding on day one: $340,000 commitment; 1.50 points = $5,100; 10.250%; 12 months, interest-only. Monthly interest $340,000 × 10.25% ÷ 12 = $2,904.17.
 3. **Substitution.** t = 0: −$340,000 + $5,100 = −$334,900. t = 1 to 11: +$2,904.17. t = 12: +$342,904.17. Bisection gives i = 0.009873 a month.
 4. **Result.** Lender yield 0.009873 × 12 = 11.848% nominal, and (1.009873)^12 − 1 = 12.513% effective. The 1.50 points add about 1.6 points of nominal yield over one year.
@@ -818,7 +816,7 @@ In the secondary market a loan sold below face is said to trade at a discount; a
 **What drives the gap.** Three things move the yield away from the note rate.
 
 1. **Term.** Points are earned once, so a shorter loan spreads them over fewer months. Repay Maple Run after 6 months and the nominal IRR rises to 13.368%. The F-CORE-40 screen gives 10.25% + 1.50% ÷ 0.5 = 13.25%.
-2. **Funding pattern.** Points are charged on the commitment, but cash goes out only as draws fund. On Maple Run's real schedule, $240,000 funds at closing and the rest over 10 months. Those flows change sign several times, so F-CORE-48 says to report NPV at a stated rate. At 12.000% nominal (1% a month) the NPV is +$222.37 on a monthly grid. The real pattern yields more than 12%, above the simplified 11.848%.
+2. **Funding pattern.** Points are charged on the commitment, but cash goes out only as draws fund. On Maple Run's real schedule, $240,000 funds at closing and the rest over 10 months. Those flows change sign 11 times, but their running total turns positive only once, at month 12. So the IRR is unique (F-CORE-48): 12.081% nominal and 12.772% effective, above the simplified 11.848%. At 12.000% nominal (1% a month) the NPV is +$222.37, which agrees.
 3. **Day count.** F-CORE-48's example bills rate ÷ 12. The note bills Actual/360, which adds about 1.4% of the rate over a year (T2). On the billed basis the yield is higher again.
 
 **Sensitivity: points against months held.** The table holds Maple Run's $340,000 and 10.250% and varies the points and the months before payoff. The points are the CORE-PRC-02 tier levels; in the grid each tier also has its own rate, so this isolates the points. Each cell shows the nominal IRR (F-CORE-48) with the F-CORE-40 screen in brackets.
@@ -834,15 +832,15 @@ Two patterns stand out. Yield climbs steeply as the hold shortens, because the s
 
 So short bridge loans that pay off early can earn far more than their note rate. A usury screen on a short loan needs care.
 
-**Exit fees are yield too.** Cedar Court's bridge carries a 1.00% origination fee ($51,400) and a 0.50% exit fee ($25,700), waived if the loan refinances into our term loan (MF-BR-14). Simplify to the full $5,140,000 funded on day one, 7.65% fixed, 24 months.
+**Exit fees are yield too.** Cedar Court's bridge carries a 1.00% origination fee ($51,400) and a 0.50% exit fee ($25,700), waived only if the loan refinances into our own term loan (MF-BR-14). Its take-out is a third-party agency small-loan lender, so the fee is paid (RD-MF-01, month 27). Simplify to the full $5,140,000 funded on day one, 7.65% fixed, 24 months.
 
-With the exit fee waived, the lender's nominal IRR is 8.194%. Collect the exit fee and it rises to 8.425%. The F-CORE-40 screen moves from 8.15% to 8.40% (7.65% + 1.50% ÷ 2).
+With the exit fee waived, the lender's nominal IRR would be 8.194%. Collect the fee, as at Cedar Court's payoff, and it rises to 8.425%. The F-CORE-40 screen moves from 8.15% to 8.40% (7.65% + 1.50% ÷ 2).
 
-So the waiver gives up about 0.23 points of yield to keep the borrower for the term loan. That is a pricing choice, and an IRR shows its cost.
+So a waiver gives up about 0.23 points of yield to keep a borrower for our own term loan. That is a pricing choice, and an IRR shows its cost.
 
 **The borrower's all-in cost.** Flip the signs and the lender's flows become the borrower's. If every fee goes to the lender, the borrower's all-in cost equals the lender's yield.
 
-But borrowers often pay third parties to get the loan. A rate cap premium is the clearest case: Cedar Court's cap cost $60,000 and Birchwood's $40,000 (Running Deals).
+But borrowers often pay third parties to get the loan. A rate cap premium is the clearest case: Cedar Court's cap cost $60,000 and Birchwood's $40,000 (Running Deals; both are course assumptions, not quotes).
 
 Those costs raise the borrower's cost without raising the lender's yield. Practice problem 12 measures the gap for Birchwood.
 
@@ -853,7 +851,7 @@ Costs caused by the loan, such as the cap, go in. State your choice next to the 
 **How to analyze a pricing quote.**
 
 1. List every cash flow by month: fees and net funding out, interest and principal in.
-2. Solve the IRR (F-CORE-48), or the NPV at a stated rate if the signs change more than once.
+2. Solve the IRR (F-CORE-48). If the running total of the flows changes sign more than once, report the NPV at a stated rate instead.
 3. Quote it nominal and effective, so it compares with note rates and EARs.
 4. Compare it with the F-CORE-40 screen and say why they differ: term, funding pattern or day count.
 5. For the borrower view, add loan-caused third-party costs and solve again.
@@ -940,23 +938,23 @@ Each differs from its section's worked example in at least two inputs. Show the 
 3. **Substitution.** (1 + i)^−360 = 0.114354. Factor = (1 − 0.114354) ÷ 0.0060417 = 146.589676. $5,472,000 ÷ 146.589676 = $37,328.686.
 4. **Result.** Payment $37,328.69 a month.
 
-**Problem 5 (O3, T3).** Find month 1's interest, principal and closing balance on that term loan.
+**Problem 5 (O3, T3).** Find month 1's interest, principal and closing balance on that term loan. The first payment period is April 2029, 30 days (a what-if date).
 
 **Model answer**
 
-1. **Formula.** Schedule row (F-CORE-02): interest = opening × i; principal = P − interest; closing = opening − principal.
+1. **Formula.** Schedule row (F-CORE-49; CORE-PRC-06): interest = opening × rate ÷ 360 × days; principal = P − interest; closing = opening − principal.
 2. **Inputs.** $5,472,000; 7.25%; P = $37,328.69.
-3. **Substitution.** Interest $5,472,000 × 7.25% ÷ 12 = $33,060.00. Principal $37,328.69 − $33,060.00 = $4,268.69.
+3. **Substitution.** Interest $5,472,000 × 7.25% ÷ 360 × 30 = $33,060.00. Principal $37,328.69 − $33,060.00 = $4,268.69.
 4. **Result.** Closing balance $5,472,000.00 − $4,268.69 = $5,467,731.31.
 
-**Problem 6 (O3, T3).** Running Deals sets no term for Cedar Court's term loan; MF-TRM-05 allows 5, 7 or 10 years. As a what-if, find the balloon after 120 payments and its share of the original loan.
+**Problem 6 (O3, T3).** Running Deals sets no term for Cedar Court's term loan; MF-TRM-05 allows 5, 7 or 10 years. As a what-if, find the 30/360 payment-schedule balance after 120 payments and its share of the original loan. Then say why the real balloon is larger.
 
 **Model answer**
 
-1. **Formula.** F-CORE-47: B\_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i.
+1. **Formula.** F-CORE-47: B_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i.
 2. **Inputs.** L = $5,472,000; i = 0.0060417; P = $37,328.69; k = 120.
 3. **Substitution.** (1 + i)^120 = 2.060232. Loan grown: $11,273,590.40. Payments grown: $37,328.69 × (2.060232 − 1) ÷ 0.0060417 = $6,550,688.73.
-4. **Result.** Balloon $11,273,590.40 − $6,550,688.73 = $4,722,901.67, which is 86.3% of $5,472,000. The 30-year amortization leaves more owing than Birchwood's 25-year loan (78.6%).
+4. **Result.** Schedule balance $11,273,590.40 − $6,550,688.73 = $4,722,901.67, which is 86.3% of $5,472,000. The note accrues Actual/360 (CORE-PRC-06), so the real balloon is larger: $4,803,418.77, or 87.8% (F-CORE-49, first payment period April 2029). The 30-year amortization leaves more owing than Birchwood's 25-year loan (80.0%).
 
 **Problem 7 (O4, T4).** Find the term loan's ADS, its constant to six decimals and its DSCR on stabilized NCF of $560,000.
 
@@ -985,14 +983,14 @@ Each differs from its section's worked example in at least two inputs. Show the 
 3. **Substitution.** 63.6% passes the LTV prong. 1.25x fails the 1.35x prong.
 4. **Result.** Not allowed; the loan stays fully amortizing. Even if allowed, the test would use the amortizing ADS of $447,944.28, not $5,472,000 × 7.25% = $396,720.00, and the rate would rise 0.25% (MF-TRM-08).
 
-**Problem 10 (O5, T5).** In month 18 Birchwood Plaza's funded balance is $3,460,000 and SOFR is 4.75%. Find the note rate, the interest for a 30-day month, the cap payment and the net cost.
+**Problem 10 (O5, T5).** In month 18 Birchwood Plaza's funded balance is $3,460,000, its cap notional is $3,520,000 and SOFR is 4.75%. Find the note rate, the interest for a 30-day month, the cap payment and the net cost.
 
 **Model answer**
 
-1. **Formula.** Note rate = Term SOFR + spread (COM-BR-06); F-CORE-01; cap pays balance × (SOFR − strike) ÷ 360 × days.
-2. **Inputs.** $3,460,000; SOFR 4.75%; spread 4.00%; strike 4.25%; 30 days.
-3. **Substitution.** Note rate 8.75%. Interest $3,460,000 × 8.75% ÷ 360 × 30 = $25,229.17. Cap $3,460,000 × 0.50% ÷ 360 × 30 = $1,441.67.
-4. **Result.** Net cost $25,229.17 − $1,441.67 = $23,787.50, which is 8.25% for 30 days: strike + spread.
+1. **Formula.** Note rate = Term SOFR + spread (COM-BR-06); F-CORE-01; cap pays notional × (SOFR − strike) ÷ 360 × days.
+2. **Inputs.** $3,460,000 funded; notional $3,520,000; SOFR 4.75%; spread 4.00%; strike 4.25%; 30 days.
+3. **Substitution.** Note rate 8.75%. Interest $3,460,000 × 8.75% ÷ 360 × 30 = $25,229.17. Cap $3,520,000 × 0.50% ÷ 360 × 30 = $1,466.67.
+4. **Result.** Net cost $25,229.17 − $1,466.67 = $23,762.50, or 8.241% on the $3,460,000 funded for 30 days. That is just under strike + spread (8.25%), because the cap also pays on the $60,000 not yet drawn.
 
 **Problem 11 (O5, T5).** Find Birchwood's coverage test rate at closing (SOFR 3.65%) and in month 18 (SOFR 4.75%). Say which input sets it each time.
 
@@ -1001,7 +999,7 @@ Each differs from its section's worked example in at least two inputs. Show the 
 1. **Formula.** Test rate = max(note rate, strike + spread) (COM-BR-03).
 2. **Inputs.** Spread 4.00%; strike 4.25%; SOFR 3.65%, then 4.75% (D-CORE-27).
 3. **Substitution.** Closing: max(7.65%, 8.25%) = 8.25%. Month 18: max(8.75%, 8.25%) = 8.75%.
-4. **Result.** At closing the cap strike sets the test rate (8.25%). In month 18 the note rate does (8.75%), though the cap holds the borrower's net cost at 8.25%.
+4. **Result.** At closing the cap strike sets the test rate (8.25%). In month 18 the note rate does (8.75%), though the cap holds the borrower's net cost at or below 8.25% (8.241% in problem 10).
 
 **Problem 12 (O6, T6).** Birchwood's bridge commitment is $3,520,000 with 1.00% origination ($35,200). Simplify to full funding on day one, 24 months, at a fixed 7.65%. Find the lender's IRR, compare it with F-CORE-40, then add the $40,000 cap premium for the borrower's all-in cost.
 
@@ -1016,22 +1014,22 @@ Each differs from its section's worked example in at least two inputs. Show the 
 
 ## 6. Quiz: C3-quiz-v0
 
-Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retakes, each with the other set. Answers and rationale follow each set.
+Pass mark: 80% (10 of 12) and every item marked **critical** correct. Each retake uses the other form. Answers and rationale follow each set.
 
 ### Set A
 
 1. **(Critical, O1)** A $600,000 interest-only loan at 9.500% Actual/360. Interest for a 31-day month? A) $4,750.00 B) $4,841.10 C) $4,908.33 D) $4,987.50
 2. (O1) Per diem on $1,200,000 at 8.750%? A) $287.67 B) $291.67 C) $8,750.00 D) $29.17
 3. (O1) A loan funds on 20 April and April has 30 days. How many interest days in April? A) 10 B) 11 C) 30 D) 20
-4. **(Critical, O2)** Monthly payment on $750,000 at 7.500%, 10-year term, 30-year amortization? A) $4,687.50 B) $5,244.11 C) $8,902.63 D) $5,542.97
-5. (O2) A 10-year term loan amortizes over 25 years. What is n in F-CORE-02? A) 120 B) 240 C) 300 D) 360
-6. (O3) The monthly payment is $5,244.11. ADS? A) $62,929.32 B) $62,929.44 C) $5,244.11 D) $63,804.01
-7. (O3) Loan constant at 8.000% on 25-year amortization, to six decimals? A) 0.080000 B) 0.092618 C) 0.088052 D) 0.092600
-8. **(Critical, O3)** Why do sizing formulas divide by the constant, not the note rate? A) The rate ignores Actual/360 B) The constant includes principal repayment C) The constant is always lower D) Policy rounds the rate
+4. **(Critical, O3)** Monthly payment on $750,000 at 7.500%, 10-year term, 30-year amortization? A) $4,687.50 B) $5,244.11 C) $8,902.63 D) $5,542.97
+5. (O3) A 10-year term loan amortizes over 25 years. What is n in F-CORE-02? A) 120 B) 240 C) 300 D) 360
+6. (O4) An amortizing loan has a monthly payment of $5,244.11. What is its annual debt service for the coverage test? A) $62,929.32 B) $62,929.44 C) $5,244.11 D) $63,803.34
+7. (O4) Loan constant at 8.000% on 25-year amortization, to six decimals? A) 0.080000 B) 0.092618 C) 0.088052 D) 0.092600
+8. **(Critical, O4)** Why do sizing formulas divide by the constant, not the note rate? A) The rate ignores Actual/360 B) The constant includes principal repayment C) The constant is always lower D) Policy rounds the rate
 9. (O4) A $2,000,000 interest-only bridge at 9.00%. ADS for the coverage test? A) $180,000.00 B) $182,500.00 C) $15,000.00 D) $185,000.00
-10. (O4) Which statement matches D-CONV-01? A) Tests and bills both use Actual/360 B) Tests use the nominal rate; bills use Actual/360 C) Tests use 365/360; bills use 30/360 D) Both use the nominal rate
-11. (O5) $1,000,000 at 7.200%, 30-year amortization, payment $6,787.88. Month 1 principal? A) $6,000.00 B) $787.88 C) $6,787.88 D) $833.33
-12. (O5) Over the life of a level-payment loan, the interest part of each payment: A) rises B) falls C) stays the same D) falls, then rises
+10. (O4) A bridge loan is billed monthly. Which pair matches our model policy for its coverage test and its monthly bill? A) Test and bill both use Actual/360 B) Test uses the nominal annual rate; bill uses Actual/360 C) Test uses Actual/360; bill uses the nominal rate ÷ 12 D) Test and bill both use the nominal rate ÷ 12
+11. (O3) $1,000,000 at 7.200%, 30-year amortization, 30/360 accrual, payment $6,787.88. Month 1 principal? A) $6,000.00 B) $787.88 C) $6,787.88 D) $833.33
+12. (O3) Over the life of a level-payment loan, the interest part of each payment: A) rises B) falls C) stays the same D) falls, then rises
 
 **Answer key, Set A**
 
@@ -1040,11 +1038,11 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 3. B. 20-30 April inclusive is 11 days; the funding day counts (D-CONV-02).
 4. B. F-CORE-02 with i = 0.625%, n = 360. C uses n = 120 (the term). A is interest only.
 5. C. n = amortization months: 25 × 12 = 300.
-6. A. $5,244.11 × 12 = $62,929.32 (F-CORE-03). B multiplies a different payment.
+6. A. Tests use payment × 12: $5,244.11 × 12 = $62,929.32 (F-CORE-03; CORE-PRC-06). B rounds the payment up a cent first ($5,244.12 × 12). C is one month's payment, not a year's. D grosses up by 365 ÷ 360; that uplift applies to interest-only bills, and a level payment does not change.
 7. B. 12 × i ÷ (1 − (1 + i)⁻³⁰⁰) = 0.092618 (F-CORE-04). A is the rate.
 8. B. ADS includes principal, so the constant exceeds the rate on an amortizing loan.
 9. A. Tests use L × r = $180,000.00 (F-CORE-03, D-CONV-01). B is the 365-day billed amount.
-10. B. D-CONV-01.
+10. B. Tests use the nominal annual rate; bridges bill Actual/360 on the funded balance (D-CONV-01; CORE-PRC-06). A puts the bill's basis into the test. C swaps the two bases. D is the 30/360 basis of a DSCR loan, not a bridge.
 11. B. Interest $1,000,000 × 7.2% ÷ 12 = $6,000.00; principal $6,787.88 − $6,000.00 = $787.88.
 12. B. Interest is charged on a falling balance.
 
@@ -1053,15 +1051,15 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 1. **(Critical, O1)** An $850,000 interest-only loan at 10.750% Actual/360. Interest for a 30-day month? A) $7,614.58 B) $7,868.40 C) $7,510.27 D) $9,137.50
 2. (O1) Per diem on $2,500,000 at 8.250%? A) $565.07 B) $572.92 C) $20,625.00 D) $687.50
 3. (O1) A loan funds on 3 March and is paid off on 31 March. How many interest days? A) 29 B) 28 C) 31 D) 27
-4. **(Critical, O2)** Monthly payment on $1,250,000 at 6.750%, 10-year term, 25-year amortization? A) $7,031.25 B) $8,107.48 C) $8,636.39 D) $14,353.01
-5. (O2) A 5-year loan amortizes over 30 years. What is n in F-CORE-02? A) 60 B) 300 C) 360 D) 30
-6. (O3) The monthly payment is $31,877.45. ADS? A) $382,529.40 B) $31,877.45 C) $388,000.00 D) $382,529.00
-7. (O3) Loan constant at 8.250% on 25-year amortization, to six decimals? A) 0.082500 B) 0.094614 C) 0.090150 D) 0.094600
-8. **(Critical, O3)** A 7.000% loan on 25-year amortization is sized at the rate instead of the constant. The result is: A) too small B) correct C) too large D) unaffected
+4. **(Critical, O3)** Monthly payment on $1,250,000 at 6.750%, 10-year term, 25-year amortization? A) $7,031.25 B) $8,107.48 C) $8,636.39 D) $14,353.01
+5. (O3) A 5-year loan amortizes over 30 years. What is n in F-CORE-02? A) 60 B) 300 C) 360 D) 30
+6. (O4) An amortizing loan has a monthly payment of $31,877.45. What is its annual debt service for the coverage test? A) $382,529.40 B) $31,877.45 C) $387,842.31 D) $382,529.52
+7. (O4) Loan constant at 8.250% on 25-year amortization, to six decimals? A) 0.082500 B) 0.094614 C) 0.090150 D) 0.094600
+8. **(Critical, O4)** A 7.000% loan on 25-year amortization is sized at the rate instead of the constant. The result is: A) too small B) correct C) too large D) unaffected
 9. (O4) A $3,200,000 interest-only bridge at 8.50%. ADS for the coverage test? A) $275,777.78 B) $272,000.00 C) $22,666.67 D) $279,555.56
 10. (O4) Over a 365-day year, billed Actual/360 interest compared with the test figure is: A) the same B) about 1.4% lower C) about 1.4% higher D) 5% higher
-11. (O5) $2,000,000 at 6.900%, 25-year amortization, payment $14,008.25. Month 1 principal? A) $11,500.00 B) $2,508.25 C) $14,008.25 D) $2,333.33
-12. (O5) Month 1 closing balance equals: A) opening − payment B) opening − interest C) opening − principal D) opening + interest
+11. (O3) $2,000,000 at 6.900%, 25-year amortization, 30/360 accrual, payment $14,008.25. Month 1 principal? A) $11,500.00 B) $2,508.25 C) $14,008.25 D) $2,333.33
+12. (O3) Month 1 closing balance equals: A) opening − payment B) opening − interest C) opening − principal D) opening + interest
 
 **Answer key, Set B**
 
@@ -1070,7 +1068,7 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 3. B. 3-30 March: the funding day counts and the payoff day (31st) does not (D-CONV-02). That is 28 days.
 4. C. F-CORE-02 with i = 0.5625%, n = 300. A is interest only; B uses n = 360; D uses n = 120.
 5. C. 30 × 12 = 360.
-6. A. $31,877.45 × 12 = $382,529.40 (F-CORE-03).
+6. A. $31,877.45 × 12 = $382,529.40 (F-CORE-03; CORE-PRC-06). B is one month's payment. C grosses up by 365 ÷ 360, which applies to interest-only bills. D rounds the payment up a cent first ($31,877.46 × 12).
 7. B. 0.094614 (F-CORE-04).
 8. C. The rate (7.000%) is below the constant (8.481%), so dividing by the rate gives a loan about 21% too large.
 9. B. L × r = $272,000.00 (D-CONV-01). A is the 365-day billed amount.
@@ -1126,21 +1124,21 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 
 | Job | Rate and basis | Rule |
 | --- | --- | --- |
-| Bill, payoff, prepaid interest | Note rate ÷ 360 × actual days | F-CORE-01 |
-| Payment and schedule | Note rate ÷ 12; n = amortization months | F-CORE-02 |
+| Bill, payoff, prepaid interest on RTL loans and bridges; monthly interest on MF and COM term notes | Note rate ÷ 360 × actual days | F-CORE-01, CORE-PRC-06 |
+| Payment (every product); monthly interest on DSCR loans | Note rate ÷ 12; n = amortization months | F-CORE-02, CORE-PRC-06 |
 | DSCR, coverage, sizing, liquidity | Nominal rate | D-CONV-01 |
 | Floating bridge coverage | Higher of note rate and strike + spread | COM-BR-03, MF-BR-09 |
 | Comparing costs | EAR or IRR | F-CORE-46, F-CORE-48 |
 
-**Time value of money (F-CORE-45)**: PV = PMT × (1 − (1 + i)^−n) ÷ i + FV\_n × (1 + i)^−n. Excel: =PV(rate/12, n, −pmt, −lump).
+**Time value of money (F-CORE-45)**: PV = PMT × (1 − (1 + i)^−n) ÷ i + FV_n × (1 + i)^−n. Excel: =PV(rate/12, n, −pmt, −lump).
 
 **Effective annual rate (F-CORE-46)**: (1 + r × D ÷ 360 ÷ m)^m − 1. D = 365 (366 leap year) for Actual/360; 360 for 30/360. Never use it in a test.
 
 **Amortizing payment (F-CORE-02)**: i = rate ÷ 12; n = amortization months (not the term). Excel: =ROUND(PMT(rate/12, n, −loan), 2).
 
-**Schedule row**: interest = opening × rate ÷ 12; principal = payment − interest; closing = opening − principal.
+**Schedule row**: interest = opening × rate ÷ 12 on a 30/360 note (DSCR loans), or opening × rate ÷ 360 × days on an Actual/360 term note (F-CORE-49; CORE-PRC-06); principal = payment − interest; closing = opening − principal.
 
-**Balloon (F-CORE-47)**: B\_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i, with P rounded first. Excel: =FV(rate/12, k, P, −loan).
+**Balloon (F-CORE-47)**: B_k = L × (1 + i)^k − P × ((1 + i)^k − 1) ÷ i, with P rounded first. Excel: =FV(rate/12, k, P, −loan). That gives the 30/360 balance. MF and COM term notes accrue Actual/360, so build the F-CORE-49 schedule month by month.
 
 **ADS (F-CORE-03)**: amortizing = rounded payment × 12; interest-only test = balance × rate. Partial IO loans are tested on amortizing ADS (MF-TRM-02, COM-TRM-09).
 
@@ -1148,7 +1146,7 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 
 **IO gates**: commercial, LTV 60% or less and amortizing DSCR 1.40x or more, up to 2 years (COM-TRM-03). Multifamily, LTV 65% or less and DSCR 1.35x or more, rate + 0.25% (MF-TRM-05, -08).
 
-**Floating rate**: note rate = Term SOFR + spread (MF-BR-14, COM-BR-06). Cap pays balance × (SOFR − strike) ÷ 360 × days. Test rate = max(note rate, strike + spread).
+**Floating rate**: note rate = Term SOFR + spread (MF-BR-14, COM-BR-06). Cap pays notional (the full commitment, D-CORE-30) × (SOFR − strike) ÷ 360 × days. Test rate = max(note rate, strike + spread).
 
 **Yield (F-CORE-48)**: cash flows out negative, in positive; solve NPV = 0; nominal = 12i; effective = (1 + i)^12 − 1. Excel: =IRR(range)*12. F-CORE-40 is a screen, not a yield.
 
@@ -1165,7 +1163,7 @@ Pass mark: 80% (10 of 12) and every item marked **critical** correct. Two retake
 | O5 Floating and test rates | T5 | 11, 12 | 10, 11 | None yet (Phase 3) | n/a (C8 and C12 OJT) |
 | O6 Lender yield and all-in cost | T6 | 13 | 12 | None yet (Phase 3) | n/a |
 
-The OJT covers O1 and O4. The v0 quiz items keep their old objective labels (O1-O5) until Phase 3 replaces them with review questions and two exam forms (blueprint section 6). O2, O5 and O6 have no quiz items yet, so LD-07 is not met for them until Phase 3.
+The OJT covers O1 and O4. The v0 quiz items carry the objective labels in this matrix (relabelled 24 Nov 2026). Phase 3 replaces them with review questions and two exam forms (blueprint section 6). O2, O5 and O6 have no quiz items yet, so LD-07 is not met for them until Phase 3.
 
 ## Self-review against Bible Section 7 (22 Nov 2026, v1.0-draft)
 
@@ -1175,7 +1173,7 @@ The OJT covers O1 and O4. The v0 quiz items keep their old objective labels (O1-
 | No open [VERIFY], [POLICY], [CONFIRM] or [DATA] tags | Partly met: legal review checked the [VERIFY] tags on 22 Nov 2026. Official copies of the Ohio case, ORC 1343.01, G.S. 24-9 and current IC 35-45-7-3 remain to confirm. The 120-month balloons are labeled what-ifs because Running Deals sets no term-loan term |
 | Every calculation cites a formula ID; thresholds cite rules | Met |
 | Four-line worked formulas; re-checked by a second person | Four lines met (13 worked examples); every number recomputed in Python with Decimal, half up; second-person check pending (solo: re-run in a spreadsheet) |
-| Deal numbers match the running deals | Met: RD-RES-01, RD-COM-01, RD-MF-01. Simplified and what-if cases are labeled |
+| Deal numbers match the running deals | Met, re-checked 24 Nov 2026 against the 22 Nov 2026 running-deal fixes: RD-RES-01, RD-COM-01, RD-MF-01. Simplified and what-if cases are labeled |
 | Lesson follows LD-04 order; alignment matrix; fits the hours | Order met; review questions after each chunk pending Phase 3. Projected 3.4 credits (blueprint section 7) |
 | Quiz: items per objective, critical flagged, two sets, pass mark | Not met for O2, O5, O6: v0 sets A and B unchanged until Phase 3 |
 | OJT: output, source, time, rubric, sign-off, data note | Met |
@@ -1206,7 +1204,7 @@ The OJT covers O1 and O4. The v0 quiz items keep their old objective labels (O1-
 **How to check it**
 
 1. In a spreadsheet, `=ROUND(240000*10.25%/360*14+270000*10.25%/360*17,2)` should give 2263.54, the March bill in the hook.
-2. `=FV(7%/12,120,27564.39,-3900000)` should return about 3,066,702.23, the Birchwood what-if balloon.
+2. `=FV(7%/12,120,27564.39,-3900000)` should return about 3,066,702.23, the Birchwood 30/360 schedule balance. The real Actual/360 balloon, $3,118,446.42, comes from the F-CORE-49 schedule.
 3. `=10.25%*365/360` should return 0.103924, and `=(1+10.25%*365/360/12)^12-1` should return 0.109019.
 4. Enter −334,900, eleven cells of 2,904.17 and 342,904.17; `=IRR(range)*12` should return about 11.848%.
 5. Open 12 CFR 253.4 on eCFR and confirm the 0.11448% one-month tenor spread.

@@ -11,19 +11,20 @@ try {
   if (typeof marked === "undefined" || typeof DOMPurify === "undefined") throw new Error("renderer missing");
   marked.setOptions({ gfm: true, breaks: false });
 } catch (e) { BOOT_ERROR = String(e && e.message || e); }
-const MODS = DATA ? DATA.modules : [];       // [{key, code, title, hours, prereq, version, reviewed, credits, projected, md, exercises}]
+const MODS = DATA ? DATA.modules : [];       // [{key, code, title, planned, prereq, version, reviewed, credits, projected, md, exercises}]
 const REFS = DATA ? DATA.refs : [];          // [{key, title, note, md}]
 const GLOSSARY = DATA ? DATA.glossary : [];  // [{n, term, def, ex, first, family}]
 const DEALS = DATA ? DATA.deals : [];        // [{id, title, family, summary, borrower, state}]
 
 const prereqText = (p) => (!p || /^none$/i.test(p.trim())) ? "No prerequisite" : "Prerequisite: " + p;
 const num1 = (n) => (Math.round(n * 10) / 10).toString();
-/** CPE credits where the lesson states a computed figure; the Course Bible hours otherwise (projections are never shown). */
+/** CPE credits where the lesson states a computed figure; otherwise "not yet measured".
+ *  Planned credits from the Course Bible are planning estimates and are never shown (decision 16; quality bar 2.2). */
 function loadText(m) {
   if (m.credits != null) return `${num1(m.credits)} CPE ${m.credits === 1 ? "credit" : "credits"}`;
-  return `${m.hours} ${m.hours === 1 ? "hour" : "hours"}`;
+  return "Time not yet measured";
 }
-const weight = (m) => (m.credits != null ? m.credits : m.hours);
+const weight = (m) => (m.credits != null ? m.credits : (m.planned || 1));
 // Version and draft markers are author material (quality bar 1.2); the learner sees the review date only.
 const versionText = (m) => (m.reviewed ? "Last reviewed " + m.reviewed : "");
 
