@@ -5,7 +5,7 @@ The live Course Bible (Claude Doc) is the source of truth until migration is fin
 | File | Snapshot taken | Fresh? |
 | --- | --- | --- |
 | `course-bible.md` | 24 Nov 2026 (re-exported, doc rev 90) | Current. §2-3 rewritten for the certificate as core + one role track (curriculum review decisions 1-17, 24 Nov 2026); status lines and §1 scope lines updated to match; LD-01 adds that Bloom levels are author metadata |
-| `credit-policy/model-credit-policy.md` | 22 Nov 2026 (re-exported) | Current (includes D-CORE-17 to -31 and CORE-PRC-06; CORE-DEF-04 source cell cites *Thorp v. Hartigan*). D-CORE-29 to -31 edits mirrored by hand on 22 Nov 2026, not re-exported |
+| `credit-policy/model-credit-policy.md` | 22 Nov 2026 (re-exported) | Current (includes D-CORE-17 to -31 and CORE-PRC-06; CORE-DEF-04 source cell cites *Thorp v. Hartigan*). D-CORE-29 to -31 edits mirrored by hand on 22 Nov 2026, not re-exported. D-CORE-32 and the CORE-PRC-06 (2) part-month sentence (24 Nov 2026, live rev 242) mirrored by hand, not re-exported |
 | `formulas/formula-library.md` | 22 Nov 2026 (re-exported) | Current (includes F-CORE-44 to -49; MF and COM loans round to $1,000). F-CORE-49 and the F-CORE-01, -02, -45, -47, -48 edits mirrored by hand on 22 Nov 2026, not re-exported |
 | `credit-policy/state-law-table.md` | 22 Nov 2026 | Current (no change since 21 Nov) |
 | `state-law-table.csv` | 21 Nov 2026 | Current: derived from the State Law Table, which did not change on 22 Nov |
