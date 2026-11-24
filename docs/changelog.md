@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-11-24
+- Milestone 3.5 (curriculum review follow-up, decisions 17 and 11 in docs/curriculum/review-2026-11-24/decisions.md): the build strips Bloom-level author tags such as "(Understand; T1)" from learner pages, and `check:copy` fails on them; the quiz rules line "Two retakes, each with the other set" shows as "Each retake uses the other form", matching the page. Source snapshots unchanged; carry both fixes into the Course Bible when C3–C9 move to the repo.
+- Curriculum review 24 Nov 2026: reports A (roles and mapping) and B (reference shelf, assessments, experience) and the merged decision list in docs/curriculum/review-2026-11-24/.
 - BPL Academy page, Milestone 2c follow-up: on phones the training label sits directly under the visible page title on every page (quality bar 1.4 updated); the slider label reads "Extra vacancy, in points"; the phone bottom bar shows "Module 4 · 0%" on one line.
 - CLAUDE.md: audience widened to underwriters, originators, analysts and founders (shared core plus role tracks); lessons from Milestone 4 are written in the repo; IDs and VERIFY tags render as plain names and footnotes on learner pages; multiple-choice-only assessments; check and commit procedure.
 

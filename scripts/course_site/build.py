@@ -226,7 +226,19 @@ def name_teach_refs(line: str, titles: dict) -> str:
     return re.sub(r"(?<![\w-])T(\d)(?![\w-])", sub, line)
 
 
+# Author metadata on objectives, e.g. "(Understand; T1)" or "(Apply)": Bloom level and section link are
+# for course designers (CLAUDE.md, quality bar 1.2). The source keeps them; learners never see them.
+BLOOM_TAG = re.compile(r"\s*\((?:Remember|Understand|Apply|Analy[sz]e|Evaluate|Create)(?:;[^)]*)?\)")
+
+
+# The quiz page alternates the two forms on every retake (Milestone 2c). The Bible text still says
+# "Two retakes, each with the other set"; show what the page does until the module moves into the repo.
+RETAKE_TEXT = re.compile(r"Two retakes, each with the other set\.")
+
+
 def learner_view(md: str) -> str:
+    md = BLOOM_TAG.sub("", md)
+    md = RETAKE_TEXT.sub("Each retake uses the other form.", md)
     titles = teach_titles(md)
     lines = md.replace("\r\n", "\n").split("\n")
     out, i, in_code, seen_section = [], 0, False, False

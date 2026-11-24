@@ -23,6 +23,7 @@ const RULES = [
   ["author-verify", "Raw VERIFY tag", /\[?VERIFY\b/g],
   ["author-heading", "Author section name", /\b(?:Hook|OJT|Sources for Teach|Teach chunk|Wrap-up)\b/g],
   ["author-source", "Author source wording", /Course Bible|\bthis file\b|as in every policy example|\bfamilies set\b/g],
+  ["author-bloom", "Bloom-level tag", /\((?:Remember|Understand|Apply|Analy[sz]e|Evaluate|Create)[;)]/g],
   ["draft-marker", "Draft or projection marker", /\d\.\d-draft|\(projected\)|\bv\d+-draft\b/gi],
 ];
 const LONG = 25; // words per sentence (CLAUDE.md)
