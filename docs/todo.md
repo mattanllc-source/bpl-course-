@@ -9,7 +9,6 @@ Decision numbers refer to [curriculum/review-2026-11-24/decisions.md](curriculum
 
 | # | Task | Who | Notes |
 | --- | --- | --- | --- |
-| 3 | Answer the four walkthrough questions (C13 rate basis, two Danas, F-CORE-44 name, three policy gaps) | Owner | [C-learner-walkthrough.md](curriculum/review-2026-11-24/C-learner-walkthrough.md), "Questions for the owner" |
 | 4 | Stop the PC sleeping while checks run | Owner | Settings → System → Power → Never (plugged in). Sleep froze two check runs |
 | 5 | End the old `node.exe` processes from 15 Nov | Owner | Possibly another project's dev server, so your call |
 
@@ -18,7 +17,7 @@ Decision numbers refer to [curriculum/review-2026-11-24/decisions.md](curriculum
 | # | Task | Decision | Size |
 | --- | --- | --- | --- |
 | 6a | **Walkthrough fix-now, repo side** (report C items 19–25, 30–33, S1–S2, S4–S5): desk contradictions in `scripts/course_site/exercises/`; "Workplace task task" heading in `build.py`; footnote conversion for `[VERIFY]` in desk text; desks that reuse quiz items; shelf `dealOfTest` replaced by an explicit deal field; residential formula cases updated to current Maple Run pricing (rebuild fixtures, changelog); MF-BR-14 card split and COM-BR-09 / COM-TRM-09 duplicate IDs | C | M |
-| 6b | **Walkthrough fix-now, Course Bible side** (report C items 1–18, 26–29, S3, S6): carry the 22 Nov deal fixes into the module tabs and fix the new errors (C11/C9 interest reserve, C13 rate, C1 occupancy and HMDA lines, C5 seasoning, C2 "second source", C9 coinsurance cap, C4 vacancy and hook); glossary definitions; then re-export. Widens to-do 12 | C | L |
+| 6b | **Walkthrough fix-now, Course Bible side** (report C items 1–18, 26–29, S3, S6): carry the 22 Nov deal fixes into the module tabs and fix the new errors (C11/C9 interest reserve, C13 rerun at 8.75% / 9.00%, C1 occupancy and HMDA lines, C5 seasoning, C2 "second source", C9 coinsurance cap, C4 vacancy and hook); glossary definitions; then re-export. Widens to-do 12 | C | L |
 | 6c | **Legal check of the walkthrough's uncertain items** (report C list: California Article XV, HMDA temporary financing, 31 CFR 1029, Section 1071, Ohio 1343.01, undated shelf tags and others) by the legal-regulatory-verifier | C | M |
 | 7 | **Convert the 166 open-response quiz items to multiple choice** (C0–C2, C10–C14) | 8 | L |
 | 8 | **Quiz rules in the engine**: two items per critical skill (quality bar 8.7), option shuffle, a third form or item pool, one wording of the pass mark | 10, 11 | M |
@@ -55,7 +54,7 @@ Decision numbers refer to [curriculum/review-2026-11-24/decisions.md](curriculum
 ## Done recently
 
 - Learner walkthrough of every page (to-do 6): [C-learner-walkthrough.md](curriculum/review-2026-11-24/C-learner-walkthrough.md), 7 agents, ranked fix list.
-- Owner adopted all 17 review decisions (24 Nov 2026).
+- Owner adopted all 17 review decisions (24 Nov 2026), and the four walkthrough recommendations (C13 at D-CORE-27 rates; full names for both Danas; F-CORE-44 renamed; policy gaps wait for the owner).
 - M2b design and M2c mobile pass: commit 8018f18; published to the course artifact (version 9).
 - CLAUDE.md updated for the four roles and the check and commit procedure.
 - Curriculum review (reports A and B, decision list).

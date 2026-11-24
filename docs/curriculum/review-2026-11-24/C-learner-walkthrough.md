@@ -309,7 +309,16 @@ Every limit a layer quotes traces to a policy rule. The training label renders o
 - **Confirmed in the data:** Maple Run lease $2,450 (RD-RES-01 month 11); Birchwood's $23,983.33 interest reserve as a closing condition (RD-COM-01 Role 3 item 1); the D-CORE-27 SOFR path (8.75% Birchwood, 9.00% Cedar Court); 16 raw `[VERIFY` tags in desk text; the "OJT task" heading rewrite in `build.py`; the amount-matching `dealOfTest` in `55-shelf.js`; and the pre-fix $75,800 and $54,300 in `formulas/residential/reference/library_source.py`.
 - **Already on the 22 Nov follow-up list:** items 1–8, 11–14 and 17. New from this walkthrough: items 9, 10, 15, 16 and 18–33.
 
-## Questions for the owner
+## Owner decisions (24 Nov 2026)
+
+The owner said "do what is best", so the lead's recommendations were adopted:
+
+1. **C13 rate:** follow D-CORE-27, using 8.75% for Birchwood and 9.00% for Cedar Court; rerun the C13 figures (item 15). The 7.65% is an error, not a frozen what-if.
+2. **Two Danas:** no rename. Use full names (Dana Reyes, Dana Whitlow) every time in lessons and desks.
+3. **F-CORE-44:** rename it "Return on equity at stabilized value". The numbers are unchanged, and the slip list stays as written.
+4. **Policy gaps** (short-form approval, tax and insurance repricing, expected loss): leave them out until the owner supplies the rules (to-do 20). Nothing is invented.
+
+## Questions for the owner (answered above)
 
 1. **C13's 7.65% rate.** Was the 3.65% SOFR meant as a frozen what-if for C13? If yes, label it. If no, the C13 figures are rerun at 8.75% and 9.00% (D-CORE-27).
 2. **Two Danas.** Rename one sponsor in the running deals (for example, Birchwood's guarantor)? It is a data change across modules.
