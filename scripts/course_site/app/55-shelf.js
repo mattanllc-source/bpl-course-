@@ -142,7 +142,7 @@ function showFormulaCatalog(focus) {
   const empty = el("p", "loading", "No formula matches. Try a shorter word, or search the whole course with the search button.");
   q.addEventListener("input", paint);
   paint();
-  mountShelf(doc, [head, wrap, how, ...groups.map((g) => g.sec), empty, authorView("formulas", "the Formula Library export")], "Formula Library", ["Reference", "Formula Library"], focus, h1);
+  mountShelf(doc, [head, wrap, how, ...groups.map((g) => g.sec), empty, authorView("formulas", "the Formula Library export")], "Formula Library", ["Reference shelf", "Formula Library"], focus, h1);
 }
 
 /* ---------- Formula Library: one formula ---------- */
@@ -173,7 +173,119 @@ function dealOfTest(t) {
   return DEALS.find((d) => { const all = JSON.stringify(d); return amts.every((a) => all.includes(a)); }) || null;
 }
 function idsIn(s) { return expandIds(s || "").filter((x) => known(x)); }
+const LAYER = (DATA && DATA.layer) || {};
+/** Formula page from the learner layer (docs/formulas/learner-layer-core.json): what it is, analogy, where, conventions,
+ * worked example on a running deal, In Excel, reading, slips, checks, takeaways, related. Source checks show in Audit mode only. */
+function showFormulaLayer(f, L, focus) {
+  view = "ref"; routeTok++; cur = null;
+  const doc = $("doc"); const ctx = newCiteCtx();
+  const main = el("article", "fmain");
+  const head = el("header", "card fhead");
+  const h1 = el("h1", "display", L.name); h1.tabIndex = -1;
+  const meta = el("ul", "meta");
+  for (const x of [REVIEWED.formulas ? `Last reviewed ${REVIEWED.formulas}` : "", `${FAMILY[f.fam]} formula`, "Model policy for training"]) if (x) meta.append(el("li", "", x));
+  head.append(el("p", "eyebrow", `Formula Library · ${f.topic}`), h1, mdNodes(firstSentence(L.whatItIs), "lede", ctx), meta);
+  main.append(head);
+  const sec = (title, cls, ...nodes) => { const s = el("section", "lcard fsec" + (cls ? " " + cls : "")); s.append(el("h2", "", title), ...nodes.filter(Boolean)); main.append(s); return s; };
+  const an = el("p", "analogy"); an.append(el("strong", "", "Think of it this way. "), mdInline(L.analogy, ctx));
+  sec("What it is", "", mdNodes(L.whatItIs, "", ctx), L.analogy ? an : null);
+  const hl = el("section", "lcard hl hl-top"); hl.append(el("h2", "", "Key highlights")); const hul = el("ul");
+  const addHl = (lab, md) => { if (!md) return; const li = el("li"); li.append(el("b", "", lab + " "), mdInline(md, ctx)); hul.append(li); };
+  addHl("In words:", f.words); addHl("Read it:", firstSentence(L.readTheResult || f.read)); addHl("Precision:", f.rounding);
+  hl.append(hul); main.append(hl);
+  const fig = el("figure", "fformula");
+  if (f.tex) { const mth = el("div", "math", f.tex); mth.dataset.tex = f.tex; mth.tabIndex = 0; mth.setAttribute("role", "region"); mth.setAttribute("aria-label", `Formula: ${L.name}`); fig.append(mth); }
+  const cap = el("figcaption"); cap.append(mdInline(f.words, ctx)); fig.append(cap);
+  const where = el("dl", "where");
+  for (const v of L.variables || []) {
+    const dt = el("dt"); dt.append(mdInline(v.symbol, ctx), el("span", "expand", v.name));
+    const dd = el("dd"); dd.append(mdInline(v.definition, ctx));
+    if (v.unit) dd.append(el("span", "unit", ` · ${v.unit[0].toUpperCase()}${v.unit.slice(1)}`));
+    if (v.sourceDocument) { const sd = el("span", "srcdoc"); sd.append(el("b", "", "Source document: "), v.sourceDocument); dd.append(sd); }
+    if (v.docId) dd.append(codeA(v.docId));
+    where.append(dt, dd);
+  }
+  sec("The formula", "", fig, el("p", "where-h", "Where:"), where);
+  if (f.rounding) sec("Conventions", "", mdNodes(f.rounding, "", ctx), (() => { const p = el("p", "fine"); const a = el("a", "", "How the numbers work across the course"); a.href = "#formulas"; p.append(a); return p; })());
+  const W = L.workedExample;
+  if (W) {
+    const s = el("section", "lcard dsheet fwork");
+    const hd = el("div", "dsh-head");
+    hd.append(el("p", "dsh-kicker", "WORKED EXAMPLE · DEAL SHEET"), el("h2", "dsh-title", `Worked example: ${W.deal || "running deal"}`));
+    const dl = el("dl", "dsh-facts"); for (const [k, v] of [["Deal", W.deal], ["Source", W.exampleSource]]) if (v) { const x = el("div"); x.append(el("dt", "", k), el("dd", "", v)); dl.append(x); } hd.append(dl);
+    s.append(hd);
+    const tw = el("div", "tbl ledger"); const t = el("table");
+    t.innerHTML = `<thead><tr><th scope="col">Input</th><th scope="col" class="num">Value</th></tr></thead>`;
+    const tb = el("tbody");
+    for (const i of W.inputs || []) { const tr = el("tr"); const a = el("td"); a.append(mdInline(i.name, ctx)); if (i.source) a.append(el("span", "isrc", "From " + i.source)); const b = el("td", "num"); b.append(mdInline(i.value, ctx)); tr.append(a, b); tb.append(tr); }
+    const tr = el("tr", "total"); const r1 = el("td", "", "Result"); const r2 = el("td", "num"); r2.append(mdInline(W.result, ctx)); tr.append(r1, r2); tb.append(tr);
+    t.append(tb); tw.append(t); s.append(tw);
+    const ol = el("ol", "wsteps"); for (const x of W.steps || []) { const li = el("li"); li.append(mdInline(x, ctx)); ol.append(li); }
+    s.append(el("p", "ws-lab", "Step by step"), ol);
+    main.append(s);
+  }
+  const X = L.inExcel;
+  if (X) {
+    const tw = el("div", "tbl ledger"); const t = el("table"); t.innerHTML = `<thead><tr><th scope="col">Cell</th><th scope="col">Holds</th></tr></thead>`;
+    const tb = el("tbody"); for (const c of X.cells || []) { const tr = el("tr"); tr.append(el("td", "mono", c.cell)); const h = el("td"); h.append(mdInline(c.holds, ctx)); tr.append(h); tb.append(tr); } t.append(tb); tw.append(t);
+    const fp = el("p"); fp.append("Formula: ", el("code", "", X.formula));
+    sec("In Excel", "", tw, fp, X.note ? mdNodes(X.note, "", ctx) : null);
+  }
+  if (L.readTheResult) sec("How to read the result", "", mdNodes(L.readTheResult, "", ctx));
+  if ((L.commonSlips || []).length || f.edge) {
+    const box = el("aside", "lcard watch"); box.setAttribute("aria-label", "Common slips");
+    box.append(el("h2", "", "Common slips"));
+    const wl = el("ul"); for (const x of L.commonSlips || []) { const li = el("li"); li.append(mdInline(x, ctx)); wl.append(li); } box.append(wl);
+    if (f.edge) box.append(el("h3", "", "When it misleads"), mdNodes(f.edge, "", ctx));
+    main.append(box);
+  }
+  if (f.tests.length) {
+    const list = el("div", "tchecks");
+    for (const t of f.tests) {
+      const d = el("details", "tcheck");
+      const sm = el("summary"); sm.append(el("span", "lab", `Check ${t.n}`), mdInline(t.inputs, ctx));
+      const ans = el("p", "ans"); ans.append(el("b", "", "Answer: "), mdInline(t.expected, ctx));
+      d.append(sm, ans); list.append(d);
+    }
+    sec("Check yourself", "", el("p", "", "Work each one by hand, then show the answer. These are the library's own test cases."), list);
+  }
+  if ((L.takeaways || []).length) { const tk = el("section", "lcard hl hl-end"); tk.append(el("h2", "", "Key takeaways")); const u = el("ul"); for (const x of L.takeaways) { const li = el("li"); li.append(mdInline(x, ctx)); u.append(li); } tk.append(u); main.append(tk); }
+  const rel = (L.related || []).filter((x) => FORMULAS.has(x));
+  if (rel.length) { const u = el("ul", "rel"); for (const id of rel) { const li = el("li"); li.append(formulaLink(id, FORMULAS.get(id).name)); u.append(li); } sec("Related formulas", "", u); }
+  const au = el("section", "lcard audit-only");
+  au.append(el("h2", "", "Source checks (Audit mode)"));
+  const ul = el("ul"); for (const v of L.verify || []) ul.append(el("li", "", v));
+  if (L.checks) ul.append(el("li", "", `Numbers re-computed against the library tests and the workbook: ${L.checks.allMatch ? "all match" : "see the learner-layer file"}.`));
+  for (const c of L.concepts || []) ul.append(el("li", "", `Concept ${c}`));
+  au.append(ul); main.append(au);
+  const side = formulaSide(f);
+  const wrap = el("div", "fpage"); wrap.append(main, side);
+  mountShelf(doc, [wrap, formulaNav(f)], L.name, ["Reference shelf", { text: "Formula Library", href: "#formulas" }, L.name], focus, h1);
+}
+function formulaSide(f) {
+  const mods = formulaMods(f);
+  const side = el("aside", "fside"); side.setAttribute("aria-label", "Related");
+  const panel = (title, items) => { if (!items.length) return; const s = el("section", "card"); s.append(el("h2", "", title)); const u = el("ul"); for (const n of items) { const li = el("li"); li.append(n); u.append(li); } s.append(u); side.append(s); };
+  panel("Taught in", mods.map((c) => modByCode(c)).filter(Boolean).map((m) => { const a = el("a", "", `Module ${m.code.slice(1)} · ${m.title.split(":")[0]}`); a.href = "#" + m.key; return a; }));
+  if (!mods.length && f.familyModules.length) panel("Taught in", [el("span", "", `The ${joinAnd(f.familyModules)} course`)]);
+  const builds = [...new Set(idsIn(f.words + " " + f.vars.map((v) => v.sym + " " + v.def).join(" ") + " " + f.steps.join(" ")).filter((x) => x !== f.id && FORMULAS.has(x)))];
+  const leads = LIB.formulas.filter((g) => g.id !== f.id && idsIn(g.words + " " + g.vars.map((v) => v.sym + " " + v.def).join(" ")).includes(f.id)).map((g) => g.id);
+  const flink = (id) => formulaLink(id, FORMULAS.get(id).name);
+  panel("Builds on", builds.map(flink));
+  panel("Leads to", leads.map(flink));
+  panel("Policy rules that use it", [...new Set(idsIn(f.related).filter((x) => RULES.has(x) && RULES.get(x).kind === "rule"))].map((id) => { const b = el("button", "refname", ruleLabel(id)); b.type = "button"; b.dataset.ref = id; b.append(" ", codeA(id)); return b; }));
+  const codes = el("p", "fine", "Reference codes for this formula show in Audit mode. "); codes.append(codeA(f.id)); side.append(codes);
+  return side;
+}
+function formulaNav(f) {
+  const nav = el("nav", "modnav"); nav.setAttribute("aria-label", "Other formulas");
+  const i = LIB.formulas.indexOf(f), pv = LIB.formulas[i - 1], nx = LIB.formulas[i + 1];
+  if (pv) { const a = el("a", "prev"); a.href = "#formulas/" + pv.slug; a.append(el("span", "dir", "Previous formula"), el("b", "", pv.name)); nav.append(a); }
+  if (nx) { const a = el("a", "next"); a.href = "#formulas/" + nx.slug; a.append(el("span", "dir", "Next formula"), el("b", "", nx.name)); nav.append(a); }
+  return nav;
+}
 function showFormula(f, focus) {
+  if (LAYER[f.id]) return showFormulaLayer(f, LAYER[f.id], focus);
   view = "ref"; routeTok++; cur = null;
   const doc = $("doc"); const ctx = newCiteCtx();
   const main = el("article", "fmain");
@@ -282,7 +394,7 @@ function showFormula(f, focus) {
   const i = LIB.formulas.indexOf(f), pv = LIB.formulas[i - 1], nx = LIB.formulas[i + 1];
   if (pv) { const a = el("a", "prev"); a.href = "#formulas/" + pv.slug; a.append(el("span", "dir", "Previous formula"), el("b", "", pv.name)); nav.append(a); }
   if (nx) { const a = el("a", "next"); a.href = "#formulas/" + nx.slug; a.append(el("span", "dir", "Next formula"), el("b", "", nx.name)); nav.append(a); }
-  mountShelf(doc, [wrap, nav], f.name, ["Reference", "Formula Library", f.name], focus, h1);
+  mountShelf(doc, [wrap, nav], f.name, ["Reference shelf", "Formula Library", f.name], focus, h1);
 }
 
 /* ---------- policy rules ---------- */
@@ -366,7 +478,7 @@ function showPolicy(anchor, focus) {
     empty.hidden = n > 0;
   }
   q.addEventListener("input", paint);
-  mountShelf(doc, [head, wrap, ...famSecs, empty, authorView("policy", "research, decision log and change notes")], "Model Credit Policy", ["Reference", "Model Credit Policy"], focus && !anchor, h1);
+  mountShelf(doc, [head, wrap, ...famSecs, empty, authorView("policy", "research, decision log and change notes")], "Model Credit Policy", ["Reference shelf", "Model Credit Policy"], focus && !anchor, h1);
   paint();
   const t = anchor ? $("rule-" + anchor) : null;
   if (t) { const d = t.closest("details"); if (d) d.open = true; t.classList.add("hit"); t.tabIndex = -1; t.scrollIntoView({ block: "center" }); t.focus({ preventScroll: true }); }
@@ -428,7 +540,7 @@ function showStateLaw(stKey, typeKey, focus) {
     const ol = el("ol"); for (const p of STATE_LAW.open) { const li = el("li"); li.append(mdInline(p)); ol.append(li); } open.append(ol);
   }
   paint(false);
-  mountShelf(doc, [head, picks, summary, list, foot, pats, ...(STATE_LAW.open.length ? [open] : []), authorView("state-law", "the State Law Table export")], "State law guide", ["Reference", "State law guide"], focus, h1);
+  mountShelf(doc, [head, picks, summary, list, foot, pats, ...(STATE_LAW.open.length ? [open] : []), authorView("state-law", "the State Law Table export")], "State law guide", ["Reference shelf", "State law guide"], focus, h1);
 }
 
 /* ---------- running deals ---------- */
@@ -494,7 +606,7 @@ function showDeals(slugKey, focus) {
       t.append(el("h2", "dname", x.name), el("span", "tags", [x.family, x.state, x.title.replace(x.name, "").trim()].filter(Boolean).join(" · ")), el("p", "", x.summary), el("span", "go", "Open the deal file"));
       a.append(dealArt(x.id), t); grid.append(a);
     }
-    mountShelf(doc, [head, grid, authorView("deals", "the Running Deals export")], "Running deals", ["Reference", "Running deals"], focus, h1);
+    mountShelf(doc, [head, grid, authorView("deals", "the Running Deals export")], "Running deals", ["Reference shelf", "Running deals"], focus, h1);
     return;
   }
   const card = cards[DEALS.indexOf(d)];
@@ -506,5 +618,5 @@ function showDeals(slugKey, focus) {
   card.querySelector(".dtop h2").textContent = "Overview";
   const nav = el("nav", "modnav"); nav.setAttribute("aria-label", "Other deals");
   for (const x of DEALS) if (x !== d) { const a = el("a", "next"); a.href = "#deals/" + x.slug; a.append(el("span", "dir", "Running deal"), el("b", "", x.name)); nav.append(a); }
-  mountShelf(doc, [top, back, card, nav], d.name, ["Reference", "Running deals", d.name], focus, h1d);
+  mountShelf(doc, [top, back, card, nav], d.name, ["Reference shelf", "Running deals", d.name], focus, h1d);
 }

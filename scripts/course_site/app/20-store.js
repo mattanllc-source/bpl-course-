@@ -45,10 +45,10 @@ const store = {
   },
   async loadQuiz(key) {
     const v = await this.read(`data/users/${this.uid}/quiz-${key}`, "quiz-" + key);
-    return { answers: { ...(v && v.answers) }, marks: { ...(v && v.marks) }, practice: { ...(v && v.practice) }, exercises: { ...(v && v.exercises) } };
+    return { answers: { ...(v && v.answers) }, marks: { ...(v && v.marks) }, practice: { ...(v && v.practice) }, exercises: { ...(v && v.exercises) }, submitted: { ...(v && v.submitted) } };
   },
   saveQuiz(key, qs) {
-    const body = { answers: qs.answers, marks: qs.marks, practice: qs.practice, exercises: qs.exercises || {} };
+    const body = { answers: qs.answers, marks: qs.marks, practice: qs.practice, exercises: qs.exercises || {}, submitted: qs.submitted || {} };
     const local = this.localSet("quiz-" + key, body);
     if (this.mode === "db") return this.write(`data/users/${this.uid}/quiz-${key}`, { ...body, updatedAt: new Date().toISOString() }).catch(() => {});
     return local ? Promise.resolve() : Promise.resolve();

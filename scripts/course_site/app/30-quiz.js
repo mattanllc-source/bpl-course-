@@ -102,12 +102,20 @@ function revealToggle(btn, panel, labels) {
   set(!panel.hidden);
   return set;
 }
+/**
+ * The module quiz, graded. Taking: one item per screen, no feedback until you submit.
+ * Review: score and verdict first, missed items first with "Your answer" and "Correct answer",
+ * the rationale, a link back to the lesson, and a retake with the other form.
+ * Open-response items are self-marked on the review page (Got it / Missed it).
+ */
 function buildQuiz(sec, qs, saver, m) {
+  qs.submitted = qs.submitted || {};
   const groups = []; let cur = null;
   for (const n of [...sec.children]) {
     if (n.tagName === "H3") { cur = { h: n, nodes: [] }; groups.push(cur); } else if (cur) cur.nodes.push(n);
   }
   const sets = [];
+  const objPage = (o) => (m && m.objPages && o && m.objPages[o]) || 0;
   for (const g of groups) {
     const setId = ((/Set\s+([A-Za-z0-9]+)/i.exec(g.h.textContent) || [, g.h.textContent.trim()])[1]).toUpperCase();
     const ki = g.nodes.findIndex(isKeyLabel);
@@ -115,22 +123,20 @@ function buildQuiz(sec, qs, saver, m) {
     if (ki >= 0) keyOl = g.nodes.slice(ki + 1).find((n) => n.tagName === "OL") || null;
     const ol = g.nodes.find((n) => n.tagName === "OL" && n !== keyOl);
     if (!ol) continue;
+    g.h.textContent = g.h.textContent.replace(/\bSet\s+([A-Za-z0-9]+)/i, "Form $1");
+    g.h.classList.add("sr");              // the form heading is for screen readers and focus; the course picks the form
     const items = [...ol.children].filter((x) => x.tagName === "LI");
     const panel = el("div", "qpanel"); panel.dataset.set = setId;
-    const wrap = el("div", "qset"); wrap.dataset.set = setId;
-    const score = el("div", "score");
-    const ring = ringSvg(23, 56);
-    score.innerHTML = `<div class="sring">${ring.html}<b></b></div><div class="big"></div><div class="cap"><span class="rule"></span> <span class="verdict" role="status"></span></div>`;
-    wrap.append(score);
     const cards = [];
     items.forEach((li, i) => {
       const id = `${setId}${i + 1}`;
-      let ansBox = el("div");
+      const ansBox = el("div");
       const st = [...li.querySelectorAll("strong")].find((s) => /^answer:?$/i.test(s.textContent.trim()) && s.parentNode === li);
       if (st) { let n = st.nextSibling; while (n) { const nx = n.nextSibling; ansBox.append(n); n = nx; } st.remove(); }
       else if (keyOl && keyOl.children[i]) ansBox.append(...keyOl.children[i].childNodes);
       const body = el("div", "qbody");
       while (li.firstChild) body.append(li.firstChild);
+      const qo = body.querySelector(".qo"); const obj = qo ? qo.dataset.o : ""; for (const x of body.querySelectorAll(".qo")) x.remove();
       const crit = takeCritical(body);
       const opts = takeOptions(body);
       let correct = null;
@@ -140,136 +146,208 @@ function buildQuiz(sec, qs, saver, m) {
         if (lm && opts.some((o) => o.letter === lm[1])) { correct = lm[1]; tn.nodeValue = tn.nodeValue.slice(lm[0].length); }
       }
       linkIds(body, "quiet"); linkIds(ansBox, "quiet");
-      const hasAns = ansBox.textContent.trim().length > 0;
       const card = el("article", "qcard"); card.dataset.id = id; if (crit) card.dataset.critical = "1";
-      const head = el("div", "qhead"); const qn = el("span", "qnum", `Set ${setId} · Question ${i + 1} of ${items.length}`); qn.id = uid("q"); head.append(qn);
+      const head = el("div", "qhead"); const qn = el("span", "qnum", `Question ${i + 1} of ${items.length}`); qn.id = uid("q"); head.append(qn);
+      if (crit) head.append(el("span", "crit", "Critical item"));
+      head.append(el("span", "qgrade", "Graded · no feedback until you submit"));
       card.setAttribute("aria-labelledby", qn.id);
-      if (crit) head.append(el("span", "crit", "Critical"));
       card.append(head, body);
-      const c = { id, crit, card, mc: !!(opts && correct) };
-      const paintMark = () => { const mk = qs.marks[id] || ""; if (mk) card.dataset.m = mk; else delete card.dataset.m; };
+      const c = { id, n: i + 1, crit, card, body, ansBox, obj, mc: !!(opts && correct), correct, opts: opts || [] };
       if (c.mc) {
         const grp = el("div", "opts"); grp.setAttribute("role", "group"); grp.setAttribute("aria-label", `Options for question ${i + 1}`);
-        const fb = el("div", "qfb"); fb.setAttribute("aria-live", "polite");
-        const btns = opts.map((o) => {
+        c.btns = opts.map((o) => {
           const b = el("button", "opt"); b.type = "button"; b.dataset.letter = o.letter;
           const tx = el("span", "otx"); tx.append(...o.nodes); linkIdsPlain(tx);
           b.append(el("span", "ltr", o.letter), tx, el("span", "mk"));
-          b.addEventListener("click", () => { if (qs.answers[id]) return; qs.answers[id] = o.letter; qs.marks[id] = o.letter === correct ? "got" : "missed"; saver.touch(); c.paint(true); updateScore(true); });
+          b.addEventListener("click", () => { if (qs.submitted[setId]) return; qs.answers[id] = o.letter; saver.touch(); c.paint(); paintMap(); });
           grp.append(b); return b;
         });
-        c.paint = (announce) => {
-          const chosen = qs.answers[id] || "";
-          for (const b of btns) {
-            const L = b.dataset.letter, mk = b.querySelector(".mk");
-            if (!chosen) { delete b.dataset.r; b.removeAttribute("aria-disabled"); b.removeAttribute("aria-pressed"); mk.textContent = ""; continue; }
-            b.setAttribute("aria-disabled", "true"); b.setAttribute("aria-pressed", String(L === chosen));
-            b.dataset.r = L === correct ? "right" : L === chosen ? "wrong" : "dim";
-            mk.textContent = L === correct ? (L === chosen ? "Your answer · correct" : "Correct answer") : L === chosen ? "Your answer" : "";
-          }
-          fb.replaceChildren();
-          if (chosen) {
-            const ok = chosen === correct;
-            fb.append(el("span", "v " + (ok ? "ok" : "no"), ok ? "Correct." : `Not quite. The answer is ${correct}.`));
-            if (hasAns) { const at = el("div", "ans-text"); at.append(...[...ansBox.childNodes].map((n) => n.cloneNode(true))); fb.append(at); }
-            if (!ok && crit) fb.append(el("span", "qflag", "Critical item: a miss fails the set."));
-          }
-          paintMark();
-          if (announce) { const nx = card.nextElementSibling; if (nx && nx.classList.contains("qcard")) { /* focus stays on the chosen option */ } }
-        };
-        card.append(grp, fb);
+        c.paint = () => { for (const b of c.btns) b.setAttribute("aria-pressed", String(qs.answers[id] === b.dataset.letter)); };
+        card.append(grp);
       } else {
         if (opts) { const ul = el("ul"); for (const o of opts) { const li2 = el("li"); li2.append(`${o.letter}) `, ...o.nodes); ul.append(li2); } body.append(ul); }
-        const ta = answerBox(`Your answer to Set ${setId} question ${i + 1}`, qs.answers[id], (v) => { qs.answers[id] = v; saver.touch(); }, "Your answer and working");
-        const acts = el("div", "qacts");
-        const rev = el("button", "btn sm", "Show model answer"); rev.type = "button";
-        const hint = el("span", "qhint"); hint.setAttribute("role", "status");
-        acts.append(rev, hint);
-        const ans = el("div", "qans"); ans.hidden = true;
-        const at = el("div", "ans-text"); if (hasAns) at.append(...ansBox.childNodes); else at.append(el("em", "", "No answer is listed for this item."));
-        const marks = el("div", "qacts"); marks.setAttribute("role", "group"); marks.setAttribute("aria-label", "Mark your answer");
-        const got = el("button", "btn sm", "Got it"), miss = el("button", "btn sm miss", "Missed it");
-        got.type = miss.type = "button";
-        marks.append(got, miss);
-        if (crit) marks.append(el("span", "qflag", "Critical item: a miss fails the set."));
-        ans.append(el("span", "lab", "Model answer"), at, marks);
-        const setOpen = revealToggle(rev, ans, ["Show model answer", "Hide model answer"]);
-        let nudged = false;
-        rev.addEventListener("click", () => {
-          if (ans.hidden && !ta.value.trim() && !nudged) { nudged = true; hint.textContent = "Write your own answer first. Press again to show it anyway."; ta.focus(); return; }
-          hint.textContent = ""; setOpen(ans.hidden);
-        });
-        const setMark = (v) => { qs.marks[id] = qs.marks[id] === v ? "" : v; if (!qs.marks[id]) delete qs.marks[id]; c.paint(); saver.touch(); updateScore(true); };
-        got.addEventListener("click", () => setMark("got")); miss.addEventListener("click", () => setMark("missed"));
-        c.paint = () => {
-          const mk = qs.marks[id] || "";
-          got.setAttribute("aria-pressed", String(mk === "got")); miss.setAttribute("aria-pressed", String(mk === "missed"));
-          ta.value = qs.answers[id] || "";
-          if (!mk && !qs.answers[id]) { setOpen(false); nudged = false; }
-          paintMark();
-        };
-        card.append(ta, acts, ans);
-        if (qs.marks[id]) setOpen(true);
+        c.ta = answerBox(`Your answer to question ${i + 1}`, qs.answers[id], (v) => { qs.answers[id] = v; saver.touch(); paintMap(); }, "Your answer and working");
+        c.paint = () => { c.ta.value = qs.answers[id] || ""; };
+        card.append(c.ta);
       }
-      c.paint(false);
-      cards.push(c); wrap.append(card);
+      c.paint();
+      cards.push(c);
     });
-    const end = el("div", "qend");
-    function updateScore(live) {
+    const answered = (c) => !!String(qs.answers[c.id] || "").trim();
+    // ---- taking ----
+    const take = el("div", "qtake");
+    const stage = el("div", "qstage");
+    const dots = el("ol", "qdots"); dots.setAttribute("aria-hidden", "true");
+    const dotEls = cards.map(() => { const d = el("li"); dots.append(d); return d; });
+    const nav = el("div", "qnav");
+    const prev = el("button", "btn", "‹ Previous"); prev.type = "button";
+    const next = el("button", "btn primary", "Next ›"); next.type = "button";
+    nav.append(prev, next);
+    const side = el("section", "card qside"); side.setAttribute("aria-label", `Your answers, Form ${setId}`);
+    const sideH = el("h4", "", "Your answers");
+    const cnt = el("p", "qcount"); cnt.setAttribute("role", "status");
+    const map = el("ol", "qmap"); map.setAttribute("aria-label", "Questions");
+    const mapBtns = cards.map((c, k) => { const li = el("li"); const b = el("button"); b.type = "button"; b.append(String(k + 1), el("span", "sr", "")); b.addEventListener("click", () => show(k, true)); li.append(b); map.append(li); return b; });
+    const submit = el("button", "btn primary", "Submit quiz"); submit.type = "button";
+    const warn = el("p", "qwarn"); warn.setAttribute("role", "status");
+    const critN = cards.filter((c) => c.crit).length;
+    side.append(sideH, cnt, map, submit, warn);
+    take.append(dots, stage, nav, side);
+    let at = 0, armed = false;
+    function paintMap() {
+      const n = cards.filter(answered).length;
+      cnt.textContent = `${n} of ${cards.length} answered. You can return to any question before you submit.`;
+      mapBtns.forEach((b, k) => { const a = answered(cards[k]); b.dataset.a = a ? "1" : ""; b.querySelector(".sr").textContent = a ? ", answered" : ", not answered"; if (k === at) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+      dotEls.forEach((d, k) => { d.dataset.a = answered(cards[k]) ? "1" : ""; d.dataset.cur = k === at ? "1" : ""; });
+      armed = false; warn.textContent = ""; submit.textContent = "Submit quiz";
+      paintStrip();
+    }
+    function show(k, focus) {
+      at = Math.max(0, Math.min(cards.length - 1, k));
+      stage.replaceChildren(cards[at].card);
+      prev.disabled = at === 0; next.textContent = at === cards.length - 1 ? "Review your answers ›" : "Next ›";
+      paintMap();
+      if (focus) { const t = cards[at].card.querySelector(".qnum"); t.tabIndex = -1; t.focus({ preventScroll: true }); cards[at].card.scrollIntoView({ block: "nearest" }); }
+      document.dispatchEvent(new CustomEvent("bpl:layout"));
+    }
+    prev.addEventListener("click", () => show(at - 1, true));
+    next.addEventListener("click", () => { if (at === cards.length - 1) { submit.focus(); return; } show(at + 1, true); });
+    submit.addEventListener("click", () => {
+      const left = cards.length - cards.filter(answered).length;
+      if (left && !armed) { armed = true; warn.textContent = `${left} ${left === 1 ? "question is" : "questions are"} not answered. Press Submit quiz again to submit anyway.`; submit.textContent = "Submit anyway"; return; }
+      for (const c of cards) if (c.mc) qs.marks[c.id] = qs.answers[c.id] === c.correct ? "got" : "missed";
+      qs.submitted[setId] = { at: new Date().toISOString() };
+      score(); saver.touch(); paint(true);
+    });
+    // ---- review ----
+    const review = el("div", "qreview");
+    function score() {
       const total = cards.length, need = Math.ceil(PASS * total - 1e-9);
       const got = cards.filter((c) => qs.marks[c.id] === "got").length;
       const marked = cards.filter((c) => qs.marks[c.id]).length;
-      const missedCrit = cards.filter((c) => c.crit && qs.marks[c.id] === "missed").map((c) => c.id.replace(setId, "Q"));
-      let v = "", msg = "";
-      if (missedCrit.length) { v = "fail"; msg = `Not passed: critical item missed (${missedCrit.join(", ")}).`; }
-      else if (marked === total) { v = got >= need ? "pass" : "fail"; msg = got >= need ? "Passed." : "Not passed: below the pass mark."; }
-      else if (marked - got > total - need) { v = "fail"; msg = "Not passed: below the pass mark."; }
-      score.dataset.v = v;
-      score.querySelector(".val").style.strokeDashoffset = String(ring.c * (1 - (total ? got / total : 0)));
-      score.querySelector(".sring b").textContent = `${total ? Math.round(got / total * 100) : 0}%`;
-      score.querySelector(".big").textContent = `Set ${setId}: ${got} of ${total} correct`;
-      score.querySelector(".rule").textContent = `${marked} answered. Pass mark ${Math.round(PASS * 100)}% (${need} of ${total}), with every critical item right.`;
-      const vd = score.querySelector(".verdict"); if (vd.textContent !== msg) vd.textContent = msg;
-      end.replaceChildren();
-      if (marked) {
-        const other = sets.find((s) => s.id !== setId);
-        const again = el("button", "btn sm", `Clear Set ${setId} and start again`); again.type = "button";
-        again.addEventListener("click", () => { resetSet(); g.h.focus(); g.h.scrollIntoView({ block: "start" }); });
-        if (other && (v === "fail" || marked === total)) {
-          const b = el("button", "btn sm primary", `Retake with Set ${other.id}`); b.type = "button";
-          b.addEventListener("click", () => { other.reset(); showSet(other.id, true); });
-          end.append(b);
-        }
-        end.append(again);
-      }
-      if (live && m) paintProgress();
+      const missedCrit = cards.filter((c) => c.crit && qs.marks[c.id] === "missed").map((c) => c.n);
+      const pass = !missedCrit.length && marked === total && got >= need;
+      const sub = qs.submitted[setId];
+      if (sub) Object.assign(sub, { got, total, marked, need, critMissed: missedCrit, pass, form: setId, module: m ? m.key : "" });
+      return { total, need, got, marked, missedCrit, pass };
     }
-    function resetSet() { for (const c of cards) { delete qs.answers[c.id]; delete qs.marks[c.id]; c.paint(false); } saver.touch(); updateScore(true); }
-    wrap.append(end);
-    updateScore(false);
-    ol.replaceWith(wrap);
+    function reviewItem(c) {
+      const art = el("article", "qitem"); art.dataset.r = qs.marks[c.id] || "open"; art.id = `qi-${m ? m.key : "x"}-${c.id}`;
+      const top = el("p", "qitop"); top.append(el("span", "qnum", `Question ${c.n}`)); if (c.crit) top.append(el("span", "crit", "Critical item"));
+      const stem = el("div", "qbody"); stem.append(...[...c.body.childNodes].map((x) => x.cloneNode(true)));
+      art.append(top, stem);
+      const ans = String(qs.answers[c.id] || "");
+      if (c.mc) {
+        const grid = el("div", "qpair");
+        const box = (letter, kind) => {
+          const o = c.opts.find((x) => x.letter === letter);
+          const d = el("div", "qans-opt"); d.dataset.r = kind;
+          const tx = el("span", "otx"); if (o) tx.append(...o.nodes.map((x) => x.cloneNode(true)));
+          d.append(el("b", "", `${letter}. `), tx, el("span", "mk", kind === "right" ? (ans === c.correct ? "✓ Your answer · Correct answer" : "✓ Correct answer") : "✗ Your answer"));
+          return d;
+        };
+        if (!ans) grid.append(Object.assign(el("div", "qans-opt"), { textContent: "No answer given." }));
+        else if (ans !== c.correct) grid.append(box(ans, "wrong"));
+        grid.append(box(c.correct, "right"));
+        art.append(grid);
+      } else {
+        const yours = el("div", "qopen"); yours.append(el("span", "lab", "Your answer"), el("p", "", ans || "No answer given."));
+        const model = el("div", "qopen"); const mt = el("div", "ans-text"); mt.append(...[...c.ansBox.childNodes].map((x) => x.cloneNode(true)));
+        model.append(el("span", "lab", "Model answer"), mt);
+        const marks = el("div", "qacts"); marks.setAttribute("role", "group"); marks.setAttribute("aria-label", `Mark question ${c.n}`);
+        const got = el("button", "btn sm", "Got it"), miss = el("button", "btn sm miss", "Missed it"); got.type = miss.type = "button";
+        const setMark = (v) => { qs.marks[c.id] = v; score(); saver.touch(); paint(false, c.id); };
+        got.addEventListener("click", () => setMark("got")); miss.addEventListener("click", () => setMark("missed"));
+        got.setAttribute("aria-pressed", String(qs.marks[c.id] === "got")); miss.setAttribute("aria-pressed", String(qs.marks[c.id] === "missed"));
+        marks.append(el("span", "qhint", qs.marks[c.id] ? "Marked." : "Compare, then mark it:"), got, miss);
+        art.append(yours, model, marks);
+      }
+      if (c.mc && c.ansBox.textContent.trim()) { const why = el("div", "qwhy"); why.append(el("b", "", "Why: ")); const at2 = el("span", "ans-text"); at2.append(...[...c.ansBox.childNodes].map((x) => x.cloneNode(true))); why.append(at2); art.append(why); }
+      const p = objPage(c.obj);
+      const link = el("a", "qlink", p ? `Review lesson ${m.code.slice(1)}.${p}` : "Review the lessons"); link.href = m ? `#${m.key}/learn${p ? "/" + p : ""}` : "#home";
+      const lp = el("p", "qlinkp"); lp.append(link); art.append(lp);
+      return art;
+    }
+    function paintReview(focusId) {
+      const s = score();
+      review.replaceChildren();
+      const head = el("section", "card qscore"); head.setAttribute("aria-labelledby", `qs-${setId}`);
+      const tx = el("div", "qs-tx");
+      const lab = el("p", "eyebrow", `Form ${setId} review`);
+      const h = el("h4", "qs-h"); h.id = `qs-${setId}`; h.tabIndex = -1;
+      h.append(`${s.got} of ${s.total} correct `, el("span", "qs-pct", `${s.total ? Math.round(s.got / s.total * 100) : 0}%`));
+      const rule = el("p", "", `Pass mark: ${Math.round(PASS * 100)}% (${s.need} of ${s.total})${critN ? " with every critical item correct" : ""}.${s.missedCrit.length ? ` You missed ${s.missedCrit.length} critical ${s.missedCrit.length === 1 ? "item" : "items"}.` : ""}`);
+      tx.append(lab, h, rule);
+      const open = s.total - s.marked;
+      const verdict = el("div", "qverdict"); verdict.setAttribute("role", "status");
+      const kind = open ? "wait" : s.pass ? "pass" : "fail"; verdict.dataset.v = kind;
+      verdict.append(el("span", "vi", kind === "pass" ? "✓" : kind === "fail" ? "!" : "…"));
+      const vt = el("span");
+      if (kind === "wait") vt.append(el("strong", "", "Not scored yet. "), `Mark the ${open} open ${open === 1 ? "answer" : "answers"} below against the model answer.`);
+      else if (kind === "pass") vt.append(el("strong", "", "Passed. "), "You met the pass mark with every critical item correct.");
+      else if (s.missedCrit.length) vt.append(el("strong", "", "Not passed yet. "), `A critical item was missed (question ${s.missedCrit.join(", ")}). Review it, then retake with the other form.`);
+      else vt.append(el("strong", "", "Not passed yet. "), "You are below the pass mark. Review the missed items, then retake with the other form.");
+      verdict.append(vt);
+      const acts = el("div", "qend");
+      const other = sets.find((x) => x.id !== setId);
+      if (other) { const b = el("button", "btn primary", "Retake the quiz"); b.type = "button"; b.addEventListener("click", () => { other.reset(); showSet(other.id, true); }); acts.append(b); }
+      const jump = el("a", "btn", "Jump to missed items"); jump.href = "#"; jump.addEventListener("click", (e) => { e.preventDefault(); const t = review.querySelector(".qmissed-h"); if (t) { t.tabIndex = -1; t.scrollIntoView({ block: "start" }); t.focus({ preventScroll: true }); } });
+      acts.append(jump);
+      // With one form, a retake clears it; with two, every retake uses the other form.
+      if (!other) { const again = el("button", "btn", "Clear your answers and start again"); again.type = "button"; again.addEventListener("click", () => { resetSet(); paint(true); }); acts.append(again); }
+      head.append(tx, verdict, acts);
+      if (other) head.append(el("p", "fine qs-next", `A retake uses Form ${other.id}, with different questions.`));
+      review.append(head);
+      const missed = cards.filter((c) => qs.marks[c.id] === "missed"), opens = cards.filter((c) => !qs.marks[c.id]), right = cards.filter((c) => qs.marks[c.id] === "got");
+      if (opens.length) { const h2 = el("h4", "qsec-h", `To mark (${opens.length})`); review.append(h2, ...opens.map(reviewItem)); }
+      const mh = el("h4", "qsec-h qmissed-h", missed.length ? `Missed items first (${missed.length})` : "No missed items");
+      review.append(mh, ...missed.map(reviewItem));
+      if (right.length) { const d = el("details", "qright"); d.append(el("summary", "", `Correct items (${right.length})`), ...right.map(reviewItem)); review.append(d); }
+      if (focusId) { const t = $(`qi-${m ? m.key : "x"}-${focusId}`); if (t) t.querySelector("button[aria-pressed='true']")?.focus(); }
+      paintStrip();
+    }
+    function paint(focus, focusId) {
+      const done = !!qs.submitted[setId];
+      take.hidden = done; review.hidden = !done;
+      if (done) { paintReview(focusId); if (focus) focusHeading(review.querySelector(".qs-h")); }
+      else { show(at, false); if (focus) focusHeading(g.h); }
+      document.dispatchEvent(new CustomEvent("bpl:layout"));
+    }
+    function resetSet() { for (const c of cards) { delete qs.answers[c.id]; delete qs.marks[c.id]; c.paint(); } delete qs.submitted[setId]; at = 0; saver.touch(); }
     if (ki >= 0) { g.nodes[ki].remove(); if (keyOl) keyOl.remove(); }
+    ol.remove();
     g.h.before(panel); g.h.tabIndex = -1;
-    panel.append(g.h, ...g.nodes.filter((n) => n.isConnected && n !== wrap), wrap);
-    panel.querySelector(".qset") || panel.append(wrap);
-    sets.push({ id: setId, panel, reset: resetSet, cards, h: g.h });
+    panel.append(g.h, ...g.nodes.filter((n) => n.isConnected && n !== ol), take, review);
+    const S = { id: setId, panel, reset: resetSet, cards, h: g.h, paint, score };
+    sets.push(S);
+    paint(false);
   }
-  let tabBtns = [];
+  function paintStrip() { if (m) document.dispatchEvent(new CustomEvent("bpl:quiz")); }
   function showSet(id, focus) {
     for (const s of sets) s.panel.hidden = s.id !== id;
-    tabBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.set === id)));
     savePos(m ? m.key : "x", { qset: id });
     const s = sets.find((x) => x.id === id);
-    if (focus && s) { s.h.focus(); s.h.scrollIntoView({ block: "start" }); }
+    if (s) s.paint(focus);
     document.dispatchEvent(new CustomEvent("bpl:layout"));
   }
+  // No form tabs: the course assigns Form A first and the other form on each retake.
+  // The quiz rules fold into "How this quiz works" so the first question shows on the first screen.
+  if (sets.length) {
+    const intro = [];
+    for (const n of [...sec.children]) { if (n === sets[0].panel) break; if (n.tagName !== "H2") intro.push(n); }
+    const anyCrit = sets.some((x) => x.cards.some((c) => c.crit));
+    const how = el("details", "qhowto"); const sm = el("summary");
+    sm.append(el("span", "qh-t", "How this quiz works"), el("span", "qh-s", `Pass mark ${Math.round(PASS * 100)}%${anyCrit ? " · every critical item correct" : ""}`));
+    const ul = el("ul", "qhow");
+    for (const t of [`Pass mark ${Math.round(PASS * 100)}%${anyCrit ? ", with every critical item correct" : ""}.`, "Graded. No feedback until you submit.", "You cannot change answers after you submit.", sets.length > 1 ? "A retake uses the other form, with different questions." : ""]) if (t) ul.append(el("li", "", t));
+    const body = el("div", "qh-b"); body.append(...intro, ul);
+    how.append(sm, body);
+    sets[0].panel.before(how);
+  }
   if (sets.length > 1) {
-    const tabs = el("div", "qtabs"); tabs.setAttribute("role", "group"); tabs.setAttribute("aria-label", "Question set");
-    tabBtns = sets.map((s) => { const b = el("button", "", `Set ${s.id}`); b.type = "button"; b.dataset.set = s.id; b.addEventListener("click", () => showSet(s.id, false)); tabs.append(b); return b; });
-    sets[0].panel.before(tabs);
     const saved = m && pos[m.key] && pos[m.key].qset;
-    const withMarks = sets.find((s) => s.cards.some((c) => qs.marks[c.id]));
-    showSet((sets.find((s) => s.id === saved) || withMarks || sets[0]).id, false);
+    const withWork = sets.find((s) => s.cards.some((c) => qs.answers[c.id] || qs.marks[c.id]));
+    showSet((sets.find((s) => s.id === saved) || withWork || sets[0]).id, false);
   }
   return sets;
 }

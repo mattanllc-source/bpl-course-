@@ -36,7 +36,9 @@ const ICONS = {
   home: "M4 11l8-7 8 7M6 10v9h12v-9M10 19v-5h4v5", book: "M5 4h9a4 4 0 0 1 4 4v12H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10",
   policy: "M7 3h8l4 4v14H7zM15 3v4h4M10 12h6M10 16h6", fx: "M5 19c3 0 3-14 6-14M4 11h6M13 13l6 6M19 13l-6 6",
   deal: "M3 20h18M5 20V9l7-5 7 5v11M10 20v-6h4v6", map: "M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14",
-  hash: "M9 4L7 20M17 4l-2 16M4 9h17M3 15h17", play: "M8 5l11 7-11 7z", stop: "M7 7h10v10H7z", list: "M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01",
+  hash: "M9 4L7 20M17 4l-2 16M4 9h17M3 15h17", tick: "M5 12l5 5 9-10", chev: "M9 6l6 6-6 6", ring: "M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z",
+  file: "M6 3h9l4 4v14H6zM9 12h7M9 16h7", lock: "M5 11h14v9H5zM8 11V8a4 4 0 0 1 8 0v3", print: "M7 9V3h10v6M3 9h18v8H3zM7 14h10v7H7z",
+  calc: "M5 4h14v16H5zM9 9h6M9 13h6M12 10v6", play: "M8 5l11 7-11 7z", stop: "M7 7h10v10H7z", list: "M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01",
 };
 function icon(name, cls) {
   const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -76,11 +78,14 @@ function applyTheme(t) {
   if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
   const b = $("theme"); const name = t[0].toUpperCase() + t.slice(1);
   b.replaceChildren(icon(THEME_ICON[t])); b.setAttribute("aria-label", `Theme: ${name}. Change theme`); b.title = `Theme: ${name}`;
+  // The phone menu carries the same control with its name in words.
+  const m = $("theme-m"); if (m) { m.replaceChildren(icon(THEME_ICON[t]), `Theme: ${name}`); m.setAttribute("aria-label", `Theme: ${name}. Change theme`); }
 }
 let themePref = THEMES.includes(prefs.get("theme")) ? prefs.get("theme") : "system";
 function applyAudit(on) {
   if (on) document.documentElement.dataset.audit = "1"; else delete document.documentElement.dataset.audit;
   $("audit").setAttribute("aria-pressed", String(on));
+  if ($("audit-m")) $("audit-m").setAttribute("aria-pressed", String(on));
 }
 let auditOn = /[?&]audit=1\b/.test(location.search) || prefs.get("audit") === true;
 

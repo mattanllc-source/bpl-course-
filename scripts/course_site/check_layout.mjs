@@ -28,14 +28,14 @@ async function listPages() {
   await page.goto(url + "#home");
   await page.waitForFunction(() => typeof MODS !== "undefined", null, { timeout: 15000 });
   const base = await page.evaluate(() => [
-    "home", ...REFS.map((r) => r.key), "glossary",
+    "home", ...REFS.map((r) => r.key), "glossary", ...(typeof SAMPLES !== "undefined" ? SAMPLES.map((s) => "sample/" + s.key) : []),
     ...(typeof LIB !== "undefined" ? LIB.formulas.map((f) => "formulas/" + f.slug) : []),
     ...(typeof STATE_LAW !== "undefined" ? STATE_LAW.states.flatMap((s) => ["res", "com"].map((t) => `state-law/${s.code}/${t}`)) : []),
   ]);
   const mods = await page.evaluate(() => MODS.map((m) => m.key));
   for (const m of mods) {
     await page.goto(url + "#" + m); await page.waitForTimeout(300);
-    const nLearn = await page.evaluate(() => document.querySelectorAll("a[href*='/learn/']").length);
+    const nLearn = await page.evaluate(() => new Set([...document.querySelectorAll("a[href*='/learn/']")].map((a) => a.getAttribute("href"))).size);
     base.push(`${m}/overview`);
     for (let p = 1; p <= Math.max(1, nLearn); p++) base.push(`${m}/learn/${p}`);
     for (const s of ["exercises", "practice", "quiz", "ojt", "jobaid", "wrapup"]) base.push(`${m}/${s}`);
@@ -93,7 +93,9 @@ for (const w of widths) {
   await ctx.addInitScript(() => { try { localStorage.clear(); } catch { /* storage may be blocked */ } });
   const page = await ctx.newPage();
   for (const h of pages) {
-    await page.goto("about:blank"); await page.goto(url + "#" + h);
+    // One retry: the page loads web fonts, and a slow font request can stall the "load" event.
+    await page.goto("about:blank");
+    await page.goto(url + "#" + h, { timeout: 60000 }).catch(async () => { await page.goto("about:blank"); await page.goto(url + "#" + h, { timeout: 60000 }); });
     await page.waitForSelector("#doc h1, #doc .steps", { timeout: 15000 }).catch(() => {});
     await page.waitForTimeout(250);
     await page.evaluate(() => document.querySelectorAll("#doc details").forEach((d) => { d.open = true; }));

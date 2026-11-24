@@ -2,40 +2,48 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+Math&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+Math&display=swap">
 <style>
 /*__CSS__*/
 </style>
 
 <a class="skip" href="#main">Skip to lesson</a>
 <header class="appbar">
-  <button class="ib" id="menu" type="button" aria-expanded="false" aria-controls="rail" aria-label="Course menu"></button>
-  <a class="wordmark" href="#home" aria-label="BPL Academy, course home">
-    <svg class="mono" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="5" fill="var(--brand)"/><path d="M8 7.5h6.2a3.3 3.3 0 0 1 1.6 6.2 3.6 3.6 0 0 1-1.2 7H8z M10.6 9.8v3h3.2a1.5 1.5 0 0 0 0-3z M10.6 15v3.4h3.8a1.7 1.7 0 0 0 0-3.4z" fill="var(--on-brand)" fill-rule="evenodd" transform="translate(2.4 -1.6)"/><path d="M6 21.4h16M6 23.6h16" stroke="var(--on-brand)" stroke-width="1"/></svg>
-    <span class="w1">BPL</span><span class="w2">ACADEMY</span>
-  </a>
-  <span class="barmod" id="barmod" aria-hidden="true"></span>
-  <div class="crumbs" id="crumbs" aria-hidden="true"></div>
+  <button class="ib onbar" id="menu" type="button" aria-expanded="false" aria-controls="rail" aria-label="Course menu"></button>
+  <a class="wordmark" href="#home" aria-label="BPL Academy, course home"><span class="w1">BPL</span><span class="w2">Academy</span></a>
+  <nav class="topnav" id="topnav" aria-label="Main"></nav>
+  <div class="crumbs" id="crumbs"></div>
   <span class="sp"></span>
-  <button class="ib searchbtn" id="search-open" type="button" aria-haspopup="dialog" aria-label="Search the course"><span class="t">Search lessons</span><kbd>/</kbd></button>
-  <button class="ib" id="audit" type="button" aria-pressed="false" title="Audit mode shows every rule and formula ID in the text"><span class="t">Audit mode</span></button>
-  <button class="ib" id="theme" type="button"></button>
-  <a class="ring" id="ring" href="#home"><svg viewBox="0 0 36 36" aria-hidden="true"><circle class="trk" cx="18" cy="18" r="15"/><circle class="val" cx="18" cy="18" r="15" stroke-dasharray="94.25" stroke-dashoffset="94.25"/></svg><b aria-hidden="true"></b><span class="sr" id="ring-text"></span></a>
+  <button class="ib onbar searchbtn" id="search-open" type="button" aria-haspopup="dialog" aria-label="Search the course"><span class="t">Search</span><kbd>/</kbd></button>
+  <button class="ib onbar" id="audit" type="button" aria-pressed="false" title="Audit mode shows every rule and formula ID in the text"><span class="t">Audit mode</span></button>
+  <button class="ib onbar" id="theme" type="button"></button>
+  <a class="fsheet" id="fsheet" href="#formulas">Formula sheet</a>
 </header>
-<section class="notice" aria-label="Training notice">
-  <span class="lbl">Model policy for training - not for live lending decisions.</span>
-  <span class="sync" id="sync-top" aria-hidden="true"></span>
+<section class="notice" aria-label="Training notice and progress">
+  <div class="strip">
+    <span class="ctx" id="strip-ctx">Core course</span>
+    <span class="pbar" id="strip-bar" aria-hidden="true"><i></i></span>
+    <span class="pct" id="strip-pct"></span>
+    <span class="lbl">Model policy for training - not for live lending decisions.</span>
+    <span class="sync" id="sync-top" aria-hidden="true"></span>
+  </div>
 </section>
 
 <div class="shell">
-  <nav class="rail" id="rail" aria-label="Course">
-    <div class="rail-head"><span class="navlabel" style="margin:0">Course menu</span><button class="ib" id="rail-close" type="button" aria-label="Close menu"></button></div>
-    <ul class="plain" id="nav-home"></ul>
-    <div><h2 class="navlabel">Core course</h2><ol id="nav-modules"></ol></div>
-    <div><h2 class="navlabel">Reference</h2><ul class="plain" id="nav-refs"></ul></div>
+  <div class="rail" id="rail">
+    <div class="rail-head"><span class="navlabel" id="rail-title" style="margin:0">Course menu</span><button class="btn sm" id="rail-close" type="button">Close</button></div>
+    <nav class="railnav" aria-label="Course">
+      <div id="nav-module" hidden></div>
+      <ul class="plain" id="nav-home"></ul>
+      <div><h2 class="navlabel">Core course</h2><ol id="nav-modules"></ol></div>
+      <div><h2 class="navlabel">Reference shelf</h2><ul class="plain" id="nav-refs"></ul></div>
+    </nav>
+    <div class="railprefs" id="railprefs"><h2 class="navlabel">Display</h2>
+      <div class="rp-row"><button class="btn sm" id="audit-m" type="button" aria-pressed="false">Audit mode</button><button class="btn sm" id="theme-m" type="button"></button></div>
+    </div>
     <p class="sync" id="sync" role="status">Loading your progress…</p>
-  </nav>
-  <main id="main" tabindex="-1"><div class="doc" id="doc"><p class="loading">Loading the course…</p></div></main>
+  </div>
+  <main id="main" tabindex="-1"><div class="doc" id="doc"><p class="loading">Loading the course…</p></div><p class="flowlabel">Model policy for training - not for live lending decisions.</p></main>
 </div>
 
 <div class="scrim" id="scrim" hidden></div>
@@ -50,7 +58,7 @@
 </div>
 <div class="search" id="search" hidden role="dialog" aria-modal="true" aria-labelledby="search-h">
   <div class="top"><h2 class="sr" id="search-h">Search the course</h2><label class="sr" for="search-q">Search lessons, glossary, rules and formulas</label>
-    <input id="search-q" type="search" placeholder="Search lessons, glossary, rules and formulas" autocomplete="off" spellcheck="false">
+    <input id="search-q" type="search" placeholder="Search lessons, formulas and policy, for example break-even" autocomplete="off" spellcheck="false">
     <button class="btn sm" id="search-close" type="button">Close</button></div>
   <div class="res" id="search-res"></div>
   <div class="foot" id="search-foot" role="status"></div>

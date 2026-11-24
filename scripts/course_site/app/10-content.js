@@ -21,11 +21,15 @@ function preMd(md) {
     if (l.includes("VERIFY") || l.includes("POLICY") || l.includes("CONFIRM")) {
       l = l.replace(TAG_MD_RE, (_, t) => `<cite class="srctag" data-full="${escAttr(t.replace(/\\([\[\]_*()])/g, "$1").replace(/[*_]{1,2}([^*_]+)[*_]{1,2}/g, "$1").replace(/\s+/g, " ").trim())}"></cite>`);
     }
+    if (l.includes("[/")) l = varTags(l);
     if (l.includes("\\(")) l = l.replace(/\\\((.+?)\\\)/g, (_, t) => `<span class="imath" data-tex="${escAttr(t)}"></span>`);
     out.push(l);
   }
   return out.join("\n");
 }
+/** Input colour tags: [ncf]net cash flow[/ncf], [ds]...[/ds], [rent]...[/rent]. The words stay the label; colour is a second cue. */
+const VAR_TAG_RE = /\[(ncf|ds|rent)\]([\s\S]*?)\[\/\1\]/g;
+const varTags = (s) => String(s || "").replace(VAR_TAG_RE, (_, v, t) => `<span class="v-${v}">${t}</span>`);
 const SRC_KIND = { VERIFY: ["source", "Source"], POLICY: ["policy", "Course choice"], CONFIRM: ["confirm", "To confirm"] };
 function decorateSources(box) {
   for (const c of [...box.querySelectorAll("cite.srctag")]) {
@@ -454,6 +458,15 @@ function linkIds(root, mode, ctx) {
     }
     cx.append(raw, lv);
     n.replaceWith(cx);
+    // The marker's 24 px tap area reaches back over the word before it. After a link or button it keeps
+    // its own space instead, so two targets never overlap.
+    const isTarget = (e) => e && e.nodeType === 1 && (e.matches("a, button, .cx-m") || !!e.querySelector("a:last-child, button:last-child, .cx-m:last-child"));
+    for (const w of lv.querySelectorAll(":scope > .cx-m")) {
+      let pv = w.previousSibling;
+      while (pv && pv.nodeType === 3 && pv.nodeValue.trim().length < 3) pv = pv.previousSibling;
+      if (!pv) { pv = cx.previousSibling; while (pv && pv.nodeType === 3 && pv.nodeValue.trim().length < 3) pv = pv.previousSibling; }
+      if (isTarget(pv)) w.classList.add("roomL");
+    }
     const cell = cx.closest("td, th");
     if (cell && cell.closest(".tbl") && lv.textContent.trim().length > 12) cell.classList.add("wcell");
   }

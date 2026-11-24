@@ -34,7 +34,7 @@ CLAUDE.md content rules apply in full: training label, no invented limits, step-
 | 1.1 | No codes in learner prose: no rule, formula, deal, state-row or decision IDs. Codes show only in Audit mode. Where a learner must cite policy (memo practice, exception requests), they cite it by plain section name, e.g. "Model Credit Policy, Leverage limits". | A |
 | 1.2 | No author material: status words (REQUIRED, SUGGESTED), "Your decision", research notes, draft or version markers, "projected", phase notes, raw `[VERIFY]` tags, author section names (Hook, OJT, Teach). | A |
 | 1.3 | Sentences of 25 words or fewer in learner prose (CLAUDE.md). | A |
-| 1.4 | The training label shows once, in the notice bar. | V |
+| 1.4 | The training label shows once per page: in the notice bar on screens 720 px and wider, and in the page flow directly under the page title on phones. | V |
 | 1.5 | One clear purpose per page, stated in its first two lines. | V |
 | 1.6 | Line length 60-80 characters. No more than one screen of text without a heading, table, example or check. (QM 8.2) | A (CSS measure), V |
 | 1.7 | No table or element overflows its box. No table column so narrow that a cell wraps to one word per line. | A (overflow and column-width check) |

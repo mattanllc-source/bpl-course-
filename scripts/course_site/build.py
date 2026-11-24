@@ -15,6 +15,10 @@ import pathlib
 import re
 import shutil
 import subprocess
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import lesson_format  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 HERE = pathlib.Path(__file__).resolve().parent
@@ -142,8 +146,20 @@ def mermaid_clean(line: str) -> str:
     return line.replace("Course Bible glossary", "Course glossary").replace("Course Bible", "the course")
 
 
+QO_RE = re.compile(r"^(\s*\d+\.\s+)(?:\*\*)?\((?:Critical,\s*)?O(\d+)\)")
+
+
 def clean_line(line: str) -> str:
+    qo = QO_RE.match(line)
     line = author_clean(line)
+    line = _clean_line(line)
+    if qo:
+        # The objective a quiz item tests, as an empty marker: the quiz review links back to its lesson.
+        line = re.sub(r"^(\s*\d+\.\s+)", lambda m: m.group(1) + f'<span class="qo" data-o="{qo.group(2)}"></span>', line, count=1)
+    return line
+
+
+def _clean_line(line: str) -> str:
     # Skip "](...)" link targets: only plain parentheticals are cleaned.
     line = re.sub(r"(?<!\])(\s?)\(([^()]*)\)", _clean_paren, line)
     line = re.sub(r"^(\s*\d+\.\s+)\(O\d+\)\s*", r"\1", line)          # quiz objective tags
@@ -653,7 +669,7 @@ def parse_policy() -> dict:
             part = hm.group(2) + hm.group(3)
             sec = None; sub = None
             if part.startswith("2"):
-                sec = {"title": clean_title(hm.group(4)), "intro": "", "groups": []}
+                sec = {"title": clean_title(hm.group(4)), "intro": "", "groups": [], "part": f"{fam['name']} Part {part}"}
                 fam["sections"].append(sec)
             i += 1; continue
         if l.startswith("## "):
@@ -791,8 +807,11 @@ def parse_policy() -> dict:
                 sub["items"].append({"kind": "md", "md": text})
             i = j; continue
         i += 1
+    part_of = {(f["name"], sc["title"]): sc["part"] for f in fams for sc in f["sections"]}
     for r in rules:
         r["limit"] = summary.get(r["id"], "")
+        part = part_of.get((r["family"], r["section"]))
+        r["sectionName"] = f"{part}: {r['section']}" if part else r["section"]
     for f in fams:
         f["sections"] = [s for s in f["sections"] if s["groups"] or s["intro"]]
     return {"families": fams, "rules": rules, "decisions": decisions}
@@ -1040,6 +1059,57 @@ def course_outcomes() -> list:
     return out
 
 
+
+def job_tasks() -> dict:
+    """Module code -> the job task it covers in full, in words (needs analysis, task-to-module map)."""
+    md = read("docs/curriculum/needs-analysis.md")
+    tasks = {}
+    for m in re.finditer(r"^\| ([OUSFK]\d+) \| (.+?) \| (?:App|UW|Cls|Svc|Def)[^|]* \|", md, re.M):
+        t = re.sub(r"\s*\([^()]*\)", "", m.group(2)).strip().rstrip(".")
+        tasks.setdefault(m.group(1), t)
+    out = {}
+    for m in re.finditer(r"^\| (C\d{1,2}) \| [^|]+\| ([^|]+)\|", md, re.M):
+        codes = re.findall(r"\b([OUSFK]\d+)\b", m.group(2))
+        if codes and codes[0] in tasks:
+            t = tasks[codes[0]]
+            out[m.group(1)] = t[0].upper() + t[1:] + "."
+    return out
+
+
+def objective_pages(raw: str) -> dict:
+    """Objective number -> Learn part (1-based), from the teach headings: "### T2. ... (Objective 2, ...)" or "(O2)"."""
+    teach = re.search(r"^## (?:\d+\.\s*)?Teach\b.*?(?=^## )", raw, re.M | re.S)
+    out = {}
+    if not teach:
+        return out
+    for n, h in enumerate(re.findall(r"^### (.+)$", teach.group(0), re.M), 1):
+        for o in re.findall(r"\((?:Objectives?|O)\s*(\d+)", h):
+            out.setdefault(o, n)
+    return out
+
+
+def learner_layer() -> dict:
+    """Formula ID -> its learner layer (docs/formulas/learner-layer-core.json)."""
+    rows = json.loads(read("docs/formulas/learner-layer-core.json"))
+    return {r["id"]: r for r in rows}
+
+
+SAMPLES = [("docs/standards/lesson-format-sample-c04.md",)]
+
+
+def samples(deals_md: str) -> list:
+    out = []
+    for (rel,) in SAMPLES:
+        raw = read(rel).replace("\r\n", "\n")
+        raw = re.sub(r"^\*\*Model policy for training - not for live lending decisions\.\*\*(?: Fictional data only\.)?\s*\n", "", raw)
+        md, comps = lesson_format.extract(raw, rel, deals_md)
+        meta = next((c for c in comps if c["type"] == "lesson"), None)
+        if not meta or not meta.get("key") or not meta.get("module"):
+            raise SystemExit(f"{rel}: a sample needs a bpl:lesson block with key and module")
+        out.append({"key": meta["key"], "meta": meta, "md": md, "comps": comps, "source": rel})
+    return out
+
+
 def deep_clean(obj):
     """bible_clean over every string in parsed shelf data (IDs and slugs are left alone)."""
     if isinstance(obj, str):
@@ -1060,13 +1130,16 @@ def main() -> None:
     table = core_table()
     bplf, exercises = bundle_and_exercises()
     modules = []
+    deals_md = read("data/running-deals/running-deals.md").replace("\r\n", "\n")
+    jobs = job_tasks()
     for n in range(15):
         key, code = f"c{n:02d}", f"C{n}"
         if code not in table:
             raise SystemExit(f"{code} missing from the Course Bible Core table")
         raw = read(f"modules/core/{key}/lesson.md")
-        md = learner_view(raw)
-        modules.append({"key": key, "code": code, **table[code], **module_meta(raw), "md": md,
+        md, comps = lesson_format.extract(learner_view(raw), f"modules/core/{key}/lesson.md", deals_md)
+        modules.append({"key": key, "code": code, **table[code], **module_meta(raw), "md": md, "comps": comps,
+                        "job": jobs.get(code, ""), "objPages": objective_pages(raw),
                         "exercises": exercises.get(key, [])})
     refs = [{"key": k, "title": t, "note": snapshot_note(p), "md": read(p)} for k, t, p in REFS]
     gloss = glossary()
@@ -1074,7 +1147,10 @@ def main() -> None:
     deal_data = parse_deals()
     lib, pol, slt, deal_data, gloss = (deep_clean(x) for x in (lib, pol, slt, deal_data, gloss))
     cats = [{"title": t, "blurb": b, "modules": [f"c{int(c[1:]):02d}" for c in cs]} for t, b, cs in CATEGORIES]
-    data = json.dumps({"modules": modules, "refs": refs, "glossary": gloss, "deals": deal_data,
+    layer = {k: {**deep_clean({x: y for x, y in v.items() if x not in ("verify", "checks")}), "verify": v["verify"], "checks": v["checks"]}
+             for k, v in learner_layer().items()}
+    smp = samples(deals_md)
+    data = json.dumps({"modules": modules, "refs": refs, "glossary": gloss, "deals": deal_data, "layer": layer, "samples": smp,
                        "library": lib, "policy": pol, "stateLaw": slt, "categories": cats,
                        "reviewed": snapshot_dates(), "outcomes": course_outcomes()}, ensure_ascii=False)
     data = data.replace("</", "<\\/")  # never close the JSON <script> early
@@ -1092,7 +1168,8 @@ def main() -> None:
     hours = sum(m["hours"] for m in modules)
     nex = sum(len(v) for v in exercises.values())
     print(f"{nex} exercises in {len(exercises)} modules")
-    print(f"{len(gloss)} glossary terms")
+    print(f"{len(gloss)} glossary terms; {len(layer)} formula learner layers; "
+          f"{len(smp)} lesson-format sample(s) with {sum(len(x['comps']) for x in smp)} blocks")
     print(f"{len(lib['formulas'])} formulas, {len(pol['rules'])} policy rules, {len(pol['decisions'])} decisions, "
           f"{sum(len(s['rows'].get('res', [])) + len(s['rows'].get('com', [])) for s in slt['states'])} state-law cells")
     print(f"{len(modules)} modules ({hours} hours), {len(refs)} references -> {OUT} "

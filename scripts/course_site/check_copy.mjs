@@ -41,10 +41,11 @@ const shelf = await page.evaluate(() => [
   ...(typeof LIB !== "undefined" ? LIB.formulas.map((f) => "formulas/" + f.slug) : []),
   ...(typeof STATE_LAW !== "undefined" ? STATE_LAW.states.flatMap((s) => ["res", "com"].map((t) => `state-law/${s.code}/${t}`)) : []),
 ]);
-const pages = ["home", ...refs, ...shelf, "glossary"];
+const samples = await page.evaluate(() => (typeof SAMPLES !== "undefined" ? SAMPLES.map((s) => "sample/" + s.key) : []));
+const pages = ["home", ...refs, ...shelf, "glossary", ...samples];
 for (const m of mods) {
   await page.goto(url + "#" + m); await page.waitForTimeout(300);
-  const nLearn = await page.evaluate(() => document.querySelectorAll("a[href*='/learn/']").length);
+  const nLearn = await page.evaluate(() => new Set([...document.querySelectorAll("a[href*='/learn/']")].map((a) => a.getAttribute("href"))).size);
   pages.push(`${m}/overview`);
   for (let p = 1; p <= Math.max(1, nLearn); p++) pages.push(`${m}/learn/${p}`);
   for (const s of ["exercises", "practice", "quiz", "ojt", "jobaid", "wrapup"]) pages.push(`${m}/${s}`);

@@ -172,6 +172,13 @@ Each pattern lists where it was seen and how BPL Academy should apply it. "Seen"
 - Seen: OpenStax places "Previous" and "Next" after the content. Its header has Contents, Highlights, Print, Search and text size.
 - Apply (lesson page): Keep prev/next at the bottom. Add a Print control and keep Search in the header. Meets QM 8.1.
 
+**P19. Phones are designed, not shrunk (M2c, 23 Nov 2026).**
+- Seen: our own 390 px review. Top bar, notice strip and bottom bar took about 200 of 844 px; cards sat inside cards; the quiz opened on its rules.
+- Apply (every page under 720 px): The top bar keeps Menu, the wordmark and Search; Audit mode and the theme sit in the course menu. The bar slides away while reading down and returns on scroll up, at the top and when it takes focus. The training label shows once, in the page flow at the foot of the content, not in a pinned strip. Desktop keeps the notice strip.
+- Apply (under 600 px): Outer cards become edge-to-edge sections with 16 px gutters; inner tables and callouts keep their borders.
+- Apply (lesson, quiz): One Next at a time. The bottom bar's Next names its page ("Next: Underwritten NOI") and the pager keeps Previous. While a quiz is taken, its Previous and Next own the bottom bar; the module bar returns on the review. The quiz opens on the question and its options; the rules fold into "How this quiz works". The course assigns the form (Form A first, the other form on each retake), so learners see no form tabs.
+- Apply (interactive desk): Sliders get a 44 px thumb and labelled − and + buttons. On phones the working shows as stacked steps.
+
 ---
 
 ## C. Formula presentation standard
